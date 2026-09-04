@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>欢迎使用 jp-blog 主题 · 我的博客</title>
+<meta name="description" content="jp-blog 是一套日式漫画风格的 Hexo 主题。这篇文章带你熟悉它的目录结构、常用配置与写作方式，并顺手演示一遍各种排版组件的效果。">
+<meta name="theme-color" content="#f7f1e3">
+
+<!-- 防主题闪烁：在任何渲染前确定主题 -->
+<script>
+(function () {
+    var k = 'manga-blog-theme';
+    var saved = null;
+    try { saved = localStorage.getItem(k); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/Blog/css/style.css">
+<link rel="alternate" href="/Blog/atom.xml" title="我的博客" type="application/atom+xml">
+<script>window.SEARCH_JSON_URL = '/Blog/search.json';</script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body data-root="/Blog/">
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="site-header">
+    <div class="shell">
+        <nav class="navbar" aria-label="主导航">
+            <a class="brand" href="/Blog/" aria-label="我的博客 首页">
+                <span class="brand-seal" aria-hidden="true">博客</span>
+                我的博客
+            </a>
+
+            <ul class="nav-links">
+                
+                    
+                    <li><a href="/Blog/" data-nav="/">首页</a></li>
+                
+                    
+                    <li><a href="/Blog/archives" data-nav="/archives">归档</a></li>
+                
+                    
+                    <li><a href="/Blog/tags" data-nav="/tags">标签</a></li>
+                
+                    
+                    <li><a href="/Blog/about" data-nav="/about">关于</a></li>
+                
+            </ul>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn" type="button" aria-label="搜索文章" title="搜索（Ctrl / ⌘ + K）">🔍</button>
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="切换至暗色模式" aria-pressed="false" title="切换至暗色模式">🌙</button>
+                <button class="icon-btn burger" id="burgerBtn" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="drawer">☰</button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<nav class="drawer" id="drawer" aria-label="移动端导航" aria-hidden="true">
+    <div class="drawer-head">
+        <span class="drawer-title">📖 目录导航</span>
+        <button class="icon-btn" id="drawerClose" type="button" aria-label="关闭菜单">✕</button>
+    </div>
+    
+        
+        <a href="/Blog/" data-nav="/">首页</a>
+    
+        
+        <a href="/Blog/archives" data-nav="/archives">归档</a>
+    
+        
+        <a href="/Blog/tags" data-nav="/tags">标签</a>
+    
+        
+        <a href="/Blog/about" data-nav="/about">关于</a>
+    
+    <p class="drawer-note">我的博客 — 日式漫画风 · Hexo 主题</p>
+</nav>
+
+
+
+<main class="site-main" id="articleRoot"
+      data-post-id="welcome"
+      data-post-title="欢迎使用 jp-blog 主题"
+      data-post-likes="0">
+
+    
+
+<script>
+    /* 供 app.js 的目录滚动高亮使用（headings 由模板计算） */
+    var headings = [{"level":"2","id":"目录结构","text":"目录结构"},{"level":"2","id":"常用命令","text":"常用命令"},{"level":"2","id":"三步改成你的站","text":"三步改成你的站"},{"level":"2","id":"排版演示","text":"排版演示"},{"level":"3","id":"提示框","text":"提示框"},{"level":"3","id":"代码块","text":"代码块"},{"level":"3","id":"列表与引用","text":"列表与引用"},{"level":"2","id":"下一步","text":"下一步"}];
+</script>
+
+<div class="shell">
+    <nav class="crumbs" aria-label="面包屑导航">
+        <a href="/Blog/">首页</a><span class="sep" aria-hidden="true">›</span>
+        
+            <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a><span class="sep" aria-hidden="true">›</span>
+        
+        <span id="crumbCurrent">欢迎使用 jp-blog 主题</span>
+    </nav>
+</div>
+
+<div class="shell">
+    <div class="grid grid--sidebar">
+
+        <!-- ============ 正文 ============ -->
+        <div class="stack">
+            <section class="article-head" id="articleHead">
+                
+                    <a class="chip chip--cat" href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                
+                <h1 class="article-title">欢迎使用 jp-blog 主题</h1>
+                <div class="article-meta">
+                    <span>✍️ 博主</span>
+                    <span>📅 令和8年9月1日</span>
+                    <span>⏱ 阅读约 4 分钟</span>
+                    
+                    
+                </div>
+                <div class="tag-list" style="margin-top:14px">
+                    
+                        <a class="tag-chip" href="/Blog/tags/Hexo/">#Hexo</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/jp-blog/">#jp-blog</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E4%B8%BB%E9%A2%98%E4%BB%8B%E7%BB%8D/">#主题介绍</a>
+                    
+                </div>
+            </section>
+
+            <article class="card article-body" id="articleBody">
+                <p>欢迎使用 <strong>jp-blog</strong>——一套日式漫画风格的 Hexo 主题。集中线、网点纸、对话框与和历日期，都是为了让技术博客少一点冰冷、多一点手感。</p>
+<p>这篇文章会带你熟悉主题的目录结构、常用配置和写作方式，顺便把各种排版组件演示一遍。读完就可以删掉它，开始写你自己的第一篇了。</p>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p>主题文件都在 <code>themes/jp-blog/</code> 下，你最常打交道的就这几个：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>路径</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>_config.yml</code></td>
+<td>站名、导航、英雄区、作者卡、社交链接、页脚、404 文案</td>
+</tr>
+<tr>
+<td><code>layout/</code></td>
+<td>页面模板：首页、文章页、归档、标签、分类、404</td>
+</tr>
+<tr>
+<td><code>source/css/style.css</code></td>
+<td>全部样式，配色集中在文件开头的 CSS 变量里</td>
+</tr>
+<tr>
+<td><code>source/js/app.js</code></td>
+<td>交互脚本：主题切换、搜索、目录高亮、代码块等</td>
+</tr>
+</tbody></table></div>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><div class="code-block" data-lang="bash" data-file="bash"><div class="code-bar"><span class="code-lang">bash</span><span class="code-file">bash</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npx hexo server -p 4000    <span class="comment"># 本地预览</span></span><br><span class="line">npx hexo generate          <span class="comment"># 生成静态文件</span></span><br><span class="line">npx hexo new post <span class="string">&quot;标题&quot;</span>    <span class="comment"># 新建一篇文章</span></span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--info"><span class="note-title">※ 提示</span>改主题配置不用重启服务，刷新页面即可生效；改站点根目录的 `_config.yml` 则需要重启一次。</div>
+
+<h2 id="三步改成你的站"><a href="#三步改成你的站" class="headerlink" title="三步改成你的站"></a>三步改成你的站</h2><ol>
+<li><strong>改站点信息</strong>：根目录 <code>_config.yml</code> 的 Site 段，填站名、副标题、作者。</li>
+<li><strong>改主题外观</strong>：<code>themes/jp-blog/_config.yml</code>，导航、英雄区标语、作者卡、社交链接、页脚都在这里。</li>
+<li><strong>换配色</strong>：<code>source/css/style.css</code> 顶部的 CSS 变量，改几个色值就能换一套皮。</li>
+</ol>
+<div class="note note--tip"><span class="note-title">💡 技巧</span>侧边栏组件可以按需增删，配置项是主题 `_config.yml` 里的 `widgets`，目前支持 `profile`、`latest`、`tags`、`archive`、`subscribe` 五种。</div>
+
+<h2 id="排版演示"><a href="#排版演示" class="headerlink" title="排版演示"></a>排版演示</h2><p>下面是这套主题支持的常见元素，写文章时可以直接参考。</p>
+<h3 id="提示框"><a href="#提示框" class="headerlink" title="提示框"></a>提示框</h3><div class="note note--info"><span class="note-title">※ 说明</span>蓝色是补充说明，用来交代背景或前提。</div>
+
+<div class="note note--tip"><span class="note-title">💡 技巧</span>绿色是经验技巧，适合放一些踩过坑之后的心得。</div>
+
+<div class="note note--warn"><span class="note-title">⚠️ 注意</span>黄色是警告提醒，提醒读者这里容易出错。</div>
+
+<h3 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h3><p>代码块用标准 Markdown 围栏写法，发布时自动带上语言标签、复制和折叠按钮。</p>
+<p>短代码块会完整展开，不会出现折叠按钮：</p>
+<div class="code-block" data-lang="yaml" data-file="yaml"><div class="code-bar"><span class="code-lang">yaml</span><span class="code-file">yaml</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hero:</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">欢迎来到我的博客！</span></span><br><span class="line">  <span class="attr">kicker:</span> <span class="string">日式漫画风</span> <span class="string">·</span> <span class="string">开箱即用</span></span><br><span class="line"><span class="attr">profile:</span></span><br><span class="line">  <span class="attr">avatar:</span> <span class="string">🐱</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">博主</span></span><br><span class="line">  <span class="attr">role:</span> <span class="string">BLOGGER</span></span><br></pre></td></tr></table></div></div></div>
+
+<p>超过一屏的长代码块会<strong>默认折叠</strong>——按钮变成实心红、底部带渐隐提示，点一下即可展开：</p>
+<div class="code-block" data-lang="yaml" data-file="yaml"><div class="code-bar"><span class="code-lang">yaml</span><span class="code-file">yaml</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># themes/jp-blog/_config.yml</span></span><br><span class="line"><span class="attr">brand:</span> <span class="string">我的博客</span></span><br><span class="line"><span class="attr">brand_seal:</span> <span class="string">博客</span></span><br><span class="line"><span class="attr">brand_note:</span> <span class="string">日式漫画风</span> <span class="string">·</span> <span class="string">Hexo</span> <span class="string">主题</span></span><br><span class="line"></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">首页:</span> <span class="string">/</span></span><br><span class="line">  <span class="string">归档:</span> <span class="string">/archives</span></span><br><span class="line">  <span class="string">标签:</span> <span class="string">/tags</span></span><br><span class="line">  <span class="string">关于:</span> <span class="string">/about</span></span><br><span class="line"></span><br><span class="line"><span class="attr">hero:</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">欢迎来到我的博客！</span></span><br><span class="line">  <span class="attr">kicker:</span> <span class="string">日式漫画风</span> <span class="string">·</span> <span class="string">开箱即用</span></span><br><span class="line">  <span class="attr">speech:</span> <span class="string">这里写一句想对读者说的话。</span></span><br><span class="line">  <span class="attr">speech_small:</span> <span class="string">—</span> <span class="string">开始你的第一篇</span> <span class="string">—</span></span><br><span class="line">  <span class="attr">update_freq:</span> <span class="string">不定期</span></span><br><span class="line"></span><br><span class="line"><span class="attr">profile:</span></span><br><span class="line">  <span class="attr">avatar:</span> <span class="string">🐱</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">博主</span></span><br><span class="line">  <span class="attr">role:</span> <span class="string">BLOGGER</span></span><br><span class="line"></span><br><span class="line"><span class="attr">widgets:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">profile</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">latest</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">tags</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">archive</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">subscribe</span></span><br></pre></td></tr></table></div></div></div>
+
+<h3 id="列表与引用"><a href="#列表与引用" class="headerlink" title="列表与引用"></a>列表与引用</h3><p>无序列表用来罗列要点：</p>
+<ul>
+<li>支持多级标题与目录自动生成</li>
+<li>支持有序列表、无序列表与任务列表</li>
+<li>段落、引用、表格、图片都用标准 Markdown 写</li>
+</ul>
+<p>引用块用来强调一句话：</p>
+<blockquote>
+<p>工具是服务于表达的。选顺手的那个，然后一直用下去。</p>
+</blockquote>
+<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><div class="note note--tip"><span class="note-title">💡 技巧</span>跑熟之后，删掉这篇文章（`source/_posts/welcome.md`），再用 `npx hexo new post "标题"` 开一篇新的——你的博客就正式开张了。</div>
+
+<p>如果遇到问题，先看看 <code>hexo-docs/</code> 里的官方文档，或者打开浏览器控制台看看有没有脚本报错。祝你写得开心。</p>
+
+            </article>
+
+            <div class="share-row" id="shareRow">
+                <span class="share-label">分享这篇文章：</span>
+            </div>
+
+            <nav class="post-nav" id="postNav" aria-label="上下篇导航">
+                
+                    <a class="post-nav-item" href="/Blog/2026/09/craft-heatmap/">
+                        <span class="k">← 上一篇</span><span class="t">手把手：给博客做一张漫画风「创作热力图」</span>
+                    </a>
+                
+                <span></span>
+            </nav>
+
+            <!-- ---- 评论（Giscus：数据存于 GitHub Discussions） ---- -->
+            
+            
+            
+            <section class="card comments" aria-labelledby="commentTitle">
+                <h2 class="card-title" id="commentTitle" style="text-align:left">
+                    💬 读者留言
+                </h2>
+                <p style="margin:0 0 18px;font-size:.76rem;color:var(--ink-3)">
+                    评论由 GitHub Discussions 托管，需登录 GitHub 后参与（评论区的 +1 即点赞）。
+                </p>
+                <script src="https://giscus.app/client.js"
+                        data-repo="molunanli/Blog"
+                        data-repo-id="R_kgDOUMGUlQ"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOUMGUlc4DEuis"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                </script>
+            </section>
+            
+            
+        </div>
+
+        <!-- ============ 侧边栏 ============ -->
+        <aside class="sidebar toc-sticky" aria-label="文章侧边信息">
+
+            
+            <button class="toc-toggle-mobile" id="tocToggle" type="button" aria-expanded="false" aria-controls="tocPanel">
+                📑 目录导航 <span class="arrow" aria-hidden="true">▼</span>
+            </button>
+
+            <nav class="card toc-card toc-panel" id="tocPanel" aria-label="文章目录">
+                <h2 class="card-title">📑 目录</h2>
+                <div class="toc-list" id="tocList">
+                    
+                        <a class="toc-link toc-link--h2" href="#目录结构">目录结构</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#常用命令">常用命令</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#三步改成你的站">三步改成你的站</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#排版演示">排版演示</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#提示框">提示框</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#代码块">代码块</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#列表与引用">列表与引用</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#下一步">下一步</a>
+                    
+                </div>
+            </nav>
+            
+
+            
+            <section class="card" aria-labelledby="relTitle">
+                <h2 class="card-title" id="relTitle">📎 相关文章</h2>
+                <ul class="related-list" id="relatedList">
+                    
+                        <li><a href="/Blog/2026/09/writing-publishing-manual/">jp-blog 写作与发布手册：从新建文章到上线</a></li>
+                    
+                        <li><a href="/Blog/2026/09/deploy-hexo-github-pages/">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</a></li>
+                    
+                        <li><a href="/Blog/2026/09/craft-heatmap/">手把手：给博客做一张漫画风「创作热力图」</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a></li>
+                    
+                </ul>
+            </section>
+            
+
+            <section class="card" aria-labelledby="authorTitle">
+                <h2 class="card-title" id="authorTitle">✍️ 关于作者</h2>
+                <div class="profile-avatar" style="width:76px;height:76px;font-size:2.3rem" aria-hidden="true">🐱</div>
+                <p class="profile-name" style="text-align:center">博主</p>
+                <p class="profile-role" style="text-align:center">BLOGGER</p>
+                <p class="profile-bio" style="text-align:center;font-size:.82rem">这里是作者简介。
+用一两句话介绍你自己，或者这个博客打算写些什么。
+</p>
+                <p style="text-align:center;margin-top:12px">
+                    <a class="link-more" href="/Blog/about">▶ 了解更多</a>
+                </p>
+            </section>
+
+        </aside>
+    </div>
+</div>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="shell">
+        <div class="footer-grid">
+            <div>
+                <span class="footer-h">关于本站</span>
+                <p style="font-size:.88rem;color:var(--ink-2);line-height:1.8">
+                    这里是页脚简介。用一两句话说明这个博客的内容方向，
+让读者一眼知道这里在写什么。
+
+                </p>
+                <p style="margin-top:12px">
+                    <span class="footer-seal" aria-hidden="true">我的<br>博客</span>
+                </p>
+            </div>
+            <div>
+                <span class="footer-h">快速导航</span>
+                <nav class="footer-list" aria-label="页脚导航">
+                    
+                        
+                        <a href="/Blog/">首页</a>
+                    
+                        
+                        <a href="/Blog/archives">归档</a>
+                    
+                        
+                        <a href="/Blog/tags">标签</a>
+                    
+                        
+                        <a href="/Blog/about">关于</a>
+                    
+                </nav>
+            </div>
+            <div>
+                <span class="footer-h">热门分类</span>
+                <nav class="footer-list" aria-label="分类导航">
+                    
+                        <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                    
+                        <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <span>&copy; 2026 我的博客 — 保持热爱，持续记录。</span>
+            <span>Made with Hexo</span>
+        </div>
+    </div>
+</footer>
+
+<div class="fabs">
+    <button class="fab fab--top" id="topBtn" type="button" data-tip="回到顶部" title="回到顶部" aria-label="回到顶部" aria-hidden="true">⬆</button>
+    <button class="fab" id="fabSearch" type="button" data-tip="搜索文章" title="搜索文章" aria-label="搜索文章">🔍</button>
+</div>
+
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="站内搜索" aria-hidden="true">
+    <div class="search-panel">
+        <div class="search-field">
+            <span aria-hidden="true" style="font-size:1.1rem">🔍</span>
+            <input class="search-input" id="searchInput" type="search" placeholder="搜索文章标题、标签或关键词…" aria-label="搜索关键词" autocomplete="off">
+            <button class="icon-btn" id="searchClose" type="button" aria-label="关闭搜索">✕</button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+        <div class="search-hint">
+            <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
+            <span><kbd>Enter</kbd> 打开</span>
+            <span><kbd>Esc</kbd> 关闭</span>
+            <span><kbd>Ctrl</kbd>+<kbd>K</kbd> 随时唤起</span>
+        </div>
+    </div>
+</div>
+
+
+<script src="/Blog/js/app.js" defer></script>
+</body>
+</html>

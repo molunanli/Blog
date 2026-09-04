@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>jp-blog 写作与发布手册：从新建文章到上线 · 我的博客</title>
+<meta name="description" content="欢迎页讲的是主题长什么样；这篇是你每天都要用的操作手册——怎么写一篇文章、front-matter 每个字段是干什么的、正文里有哪些主题特性、写完怎么本地预览、最后怎么发布上线，以及遇到「文章没出现在首页」这类问题时去哪找原因。">
+<meta name="theme-color" content="#f7f1e3">
+
+<!-- 防主题闪烁：在任何渲染前确定主题 -->
+<script>
+(function () {
+    var k = 'manga-blog-theme';
+    var saved = null;
+    try { saved = localStorage.getItem(k); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/Blog/css/style.css">
+<link rel="alternate" href="/Blog/atom.xml" title="我的博客" type="application/atom+xml">
+<script>window.SEARCH_JSON_URL = '/Blog/search.json';</script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body data-root="/Blog/">
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="site-header">
+    <div class="shell">
+        <nav class="navbar" aria-label="主导航">
+            <a class="brand" href="/Blog/" aria-label="我的博客 首页">
+                <span class="brand-seal" aria-hidden="true">博客</span>
+                我的博客
+            </a>
+
+            <ul class="nav-links">
+                
+                    
+                    <li><a href="/Blog/" data-nav="/">首页</a></li>
+                
+                    
+                    <li><a href="/Blog/archives" data-nav="/archives">归档</a></li>
+                
+                    
+                    <li><a href="/Blog/tags" data-nav="/tags">标签</a></li>
+                
+                    
+                    <li><a href="/Blog/about" data-nav="/about">关于</a></li>
+                
+            </ul>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn" type="button" aria-label="搜索文章" title="搜索（Ctrl / ⌘ + K）">🔍</button>
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="切换至暗色模式" aria-pressed="false" title="切换至暗色模式">🌙</button>
+                <button class="icon-btn burger" id="burgerBtn" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="drawer">☰</button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<nav class="drawer" id="drawer" aria-label="移动端导航" aria-hidden="true">
+    <div class="drawer-head">
+        <span class="drawer-title">📖 目录导航</span>
+        <button class="icon-btn" id="drawerClose" type="button" aria-label="关闭菜单">✕</button>
+    </div>
+    
+        
+        <a href="/Blog/" data-nav="/">首页</a>
+    
+        
+        <a href="/Blog/archives" data-nav="/archives">归档</a>
+    
+        
+        <a href="/Blog/tags" data-nav="/tags">标签</a>
+    
+        
+        <a href="/Blog/about" data-nav="/about">关于</a>
+    
+    <p class="drawer-note">我的博客 — 日式漫画风 · Hexo 主题</p>
+</nav>
+
+
+
+<main class="site-main" id="articleRoot"
+      data-post-id="writing-publishing-manual"
+      data-post-title="jp-blog 写作与发布手册：从新建文章到上线"
+      data-post-likes="0">
+
+    
+
+<script>
+    /* 供 app.js 的目录滚动高亮使用（headings 由模板计算） */
+    var headings = [{"level":"2","id":"一、新建一篇文章","text":"一、新建一篇文章"},{"level":"2","id":"二、front-matter：一篇文章的”档案卡”","text":"二、front-matter：一篇文章的”档案卡”"},{"level":"2","id":"三、正文写作：Markdown-主题特性","text":"三、正文写作：Markdown + 主题特性"},{"level":"3","id":"1-标题、列表、引用、表格","text":"1. 标题、列表、引用、表格"},{"level":"3","id":"2-代码块：语言标签、复制、长代码自动折叠","text":"2. 代码块：语言标签、复制、长代码自动折叠"},{"level":"3","id":"3-提示框：三种颜色，顶格写-HTML","text":"3. 提示框：三种颜色，顶格写 HTML"},{"level":"3","id":"4-插图","text":"4. 插图"},{"level":"2","id":"四、本地预览","text":"四、本地预览"},{"level":"2","id":"五、发布上线","text":"五、发布上线"},{"level":"2","id":"六、发布后的核验清单（每次必做）","text":"六、发布后的核验清单（每次必做）"},{"level":"2","id":"七、日常高频问题速查","text":"七、日常高频问题速查"},{"level":"2","id":"下一步","text":"下一步"}];
+</script>
+
+<div class="shell">
+    <nav class="crumbs" aria-label="面包屑导航">
+        <a href="/Blog/">首页</a><span class="sep" aria-hidden="true">›</span>
+        
+            <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a><span class="sep" aria-hidden="true">›</span>
+        
+        <span id="crumbCurrent">jp-blog 写作与发布手册：从新建文章到上线</span>
+    </nav>
+</div>
+
+<div class="shell">
+    <div class="grid grid--sidebar">
+
+        <!-- ============ 正文 ============ -->
+        <div class="stack">
+            <section class="article-head" id="articleHead">
+                
+                    <a class="chip chip--cat" href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                
+                <h1 class="article-title">jp-blog 写作与发布手册：从新建文章到上线</h1>
+                <div class="article-meta">
+                    <span>✍️ 博主</span>
+                    <span>📅 令和8年9月4日</span>
+                    <span>⏱ 阅读约 9 分钟</span>
+                    
+                    
+                </div>
+                <div class="tag-list" style="margin-top:14px">
+                    
+                        <a class="tag-chip" href="/Blog/tags/Hexo/">#Hexo</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E6%95%99%E7%A8%8B/">#教程</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/jp-blog/">#jp-blog</a>
+                    
+                </div>
+            </section>
+
+            <article class="card article-body" id="articleBody">
+                <p>上一篇《零成本拥有自己的博客》讲清楚了”怎么把站弄上线”，欢迎页介绍了主题的结构和配置。这篇是<strong>日常写作手册</strong>——覆盖你之后每次发文章的完整路径：新建 → 写正文 → 本地预览 → 发布 → 核验。</p>
+<p>先记住整条工作流，再逐个拆解：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">写文章                 预览                 发布                  核验</span><br><span class="line">npx hexo new post   →  hexo server        →  hexo generate     →  首页能看到新卡片</span><br><span class="line">source/_posts/新建     localhost:4000/Blog/    + 推送 gh-pages        归档/搜索/标签同步更新</span><br></pre></td></tr></table></div></div></div>
+
+<h2 id="一、新建一篇文章"><a href="#一、新建一篇文章" class="headerlink" title="一、新建一篇文章"></a>一、新建一篇文章</h2><p>两种方式任选：</p>
+<div class="code-block" data-lang="bash" data-file="bash"><div class="code-bar"><span class="code-lang">bash</span><span class="code-file">bash</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方式一：命令生成骨架（推荐，会自动创建带 front-matter 的文件）</span></span><br><span class="line"><span class="built_in">cd</span> my-blog</span><br><span class="line">npx hexo new post <span class="string">&quot;我的新文章&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式二：直接手写 —— 在 source/_posts/ 下新建 xxx.md 即可</span></span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--warn"><span class="note-title">⚠️ 文件名决定网址</span>Hexo 的文章地址取自**文件名**，不是 front-matter 里的 `title`。所以文件名就是永久的 URL，起名时想清楚：用英文小写短横线（`kebab-case`），别带日期前缀，也避免日后改名（改名 = 换链接，旧分享和搜索引擎都会断）。</div>
+
+<p>文件名的 slug 与最终地址的关系：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source/_posts/deploy-hexo-github-pages.md</span><br><span class="line">        ↓ 生成</span><br><span class="line">/Blog/2026/09/deploy-hexo-github-pages/</span><br></pre></td></tr></table></div></div></div>
+
+<p>文章在 <code>_posts</code> 目录下会按年&#x2F;月归档（<code>/Blog/2026/09/</code>），这是 Hexo 的默认行为，不用手动建目录。</p>
+<h2 id="二、front-matter：一篇文章的”档案卡”"><a href="#二、front-matter：一篇文章的”档案卡”" class="headerlink" title="二、front-matter：一篇文章的”档案卡”"></a>二、front-matter：一篇文章的”档案卡”</h2><p>文件开头的 <code>---</code> 之间的 YAML 就是 front-matter。一个完整示例：</p>
+<div class="code-block" data-lang="yaml" data-file="yaml"><div class="code-bar"><span class="code-lang">yaml</span><span class="code-file">yaml</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">jp-blog</span> <span class="string">写作与发布手册</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2026-09-04</span></span><br><span class="line"><span class="attr">slug:</span> <span class="string">writing-publishing-manual</span>        <span class="comment"># 可选：覆盖文件名生成的地址</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">使用指南</span>                            <span class="comment"># 多级分类用缩进列表</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">jp-blog</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Hexo</span></span><br><span class="line"><span class="attr">featured:</span> <span class="literal">true</span>                          <span class="comment"># 可选：首页卡片显示 🔥 精选</span></span><br><span class="line"><span class="attr">readTime:</span> <span class="number">9</span>                             <span class="comment"># 可选：估算阅读分钟数（不写会自动估算）</span></span><br><span class="line"><span class="attr">excerpt:</span> <span class="string">&quot;一句话摘要，用于卡片和分享。&quot;</span>   <span class="comment"># 可选：不写则取正文开头</span></span><br><span class="line"><span class="attr">toc:</span> <span class="literal">false</span>                              <span class="comment"># 可选：本页关闭目录（默认开）</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></div></div></div>
+
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>用途</th>
+<th>不写会怎样</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>文章标题（标题栏、列表卡片、正文 H1）</td>
+<td>必填</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>发布&#x2F;归档日期，决定文章出现在哪年哪月</td>
+<td>默认取文件创建时间，建议显式写</td>
+</tr>
+<tr>
+<td><code>slug</code></td>
+<td>覆盖文件名的地址别名</td>
+<td>用文件名</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td>分类（可多级），卡片上显示第一个</td>
+<td>显示”未分类”</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>标签，生成独立标签页</td>
+<td>无标签</td>
+</tr>
+<tr>
+<td><code>featured: true</code></td>
+<td>首页卡片加”🔥 精选”徽章</td>
+<td>普通卡片</td>
+</tr>
+<tr>
+<td><code>readTime</code></td>
+<td>手动指定阅读时长</td>
+<td>按字数自动估算</td>
+</tr>
+<tr>
+<td><code>excerpt</code></td>
+<td>列表卡片摘要</td>
+<td>自动截取正文开头</td>
+</tr>
+<tr>
+<td><code>toc</code></td>
+<td>控制文章页右侧&#x2F;顶部目录</td>
+<td>默认开启</td>
+</tr>
+</tbody></table></div>
+<div class="note note--tip"><span class="note-title">💡 技巧</span>分类建议**只用一个主分类**（本主题卡片在 meta 区只展示第一个分类的 chip）；标签则可以多打几个，方便聚合阅读。写完草稿想先不公开？把文件移出 `_posts`（比如放到 `source/_drafts/` 自己留档），或加 `published: false`。</div>
+
+<h2 id="三、正文写作：Markdown-主题特性"><a href="#三、正文写作：Markdown-主题特性" class="headerlink" title="三、正文写作：Markdown + 主题特性"></a>三、正文写作：Markdown + 主题特性</h2><p>正文用标准 Markdown。本主题在纯 Markdown 之上额外提供了几个”增强件”。</p>
+<h3 id="1-标题、列表、引用、表格"><a href="#1-标题、列表、引用、表格" class="headerlink" title="1. 标题、列表、引用、表格"></a>1. 标题、列表、引用、表格</h3><div class="code-block" data-lang="markdown" data-file="markdown"><div class="code-bar"><span class="code-lang">markdown</span><span class="code-file">markdown</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 二级标题（自动进文章目录）</span></span><br><span class="line"><span class="strong">**加粗**</span>、<span class="emphasis">*斜体*</span>、<span class="code">`行内代码`</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 无序列表</span><br><span class="line"><span class="bullet">1.</span> 有序列表</span><br><span class="line"></span><br><span class="line"><span class="quote">&gt; 引用块</span></span><br><span class="line"></span><br><span class="line">| 列1 | 列2 |</span><br><span class="line">| --- | --- |</span><br><span class="line">| A | B |</span><br></pre></td></tr></table></div></div></div>
+
+<p>普通 Markdown 表格会被主题自动套上滚动容器（<code>.table-scroll</code>），列数太多时在窄屏可以横向滑动，不会撑破页面。</p>
+<h3 id="2-代码块：语言标签、复制、长代码自动折叠"><a href="#2-代码块：语言标签、复制、长代码自动折叠" class="headerlink" title="2. 代码块：语言标签、复制、长代码自动折叠"></a>2. 代码块：语言标签、复制、长代码自动折叠</h3><p>代码块用围栏写法，<strong>务必标注语言</strong>——这决定了主题能否给它加语言徽标和语法着色：</p>
+<div class="code-block" data-lang="markdown" data-file="markdown"><div class="code-bar"><span class="code-lang">markdown</span><span class="code-file">markdown</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">```js</span></span><br><span class="line"><span class="code">console.log(&#x27;hi&#x27;);</span></span><br><span class="line"><span class="code">```</span></span><br><span class="line"></span><br><span class="line"><span class="code">```bash</span></span><br><span class="line"><span class="code">hexo generate</span></span><br><span class="line"><span class="code">```</span></span><br></pre></td></tr></table></div></div></div>
+
+<p>渲染后每个代码块自动具备：</p>
+<ul>
+<li>顶部语言徽标（如 <code>JS</code>、<code>BASH</code>）</li>
+<li>左侧行号、右上角「复制」按钮（一键拷全文）</li>
+<li><strong>超过约 190px 高的长代码会自动折叠</strong>，显示朱红「展开 ▼」按钮和底部渐隐遮罩——文章里的超长配置&#x2F;脚本不会再撑满整屏。想全量看就点开，看完了可以再收起。</li>
+</ul>
+<div class="note note--tip"><span class="note-title">💡 技巧</span>在 Markdown 里示范"代码块怎么写"时，最外层要用**四个反引号**包裹（```` ``` ````），否则内层三个反引号会提前闭合围栏。</div>
+
+<h3 id="3-提示框：三种颜色，顶格写-HTML"><a href="#3-提示框：三种颜色，顶格写-HTML" class="headerlink" title="3. 提示框：三种颜色，顶格写 HTML"></a>3. 提示框：三种颜色，顶格写 HTML</h3><p>需要”重点提示、经验技巧、警告”时，用主题的提示盒。<strong>它是原生 HTML，写的时候必须顶格</strong>（行首不能有空格）：</p>
+<div class="note note--info"><span class="note-title">※ 说明</span><b>蓝色</b> = 补充说明，交代背景或前提，如："这篇配置在主题 `_config.yml` 里。"</div>
+
+<div class="note note--tip"><span class="note-title">💡 技巧</span><b>金色</b> = 经验技巧，放踩坑后的心得，如："改主题样式不用重启服务，刷新即可。"</div>
+
+<div class="note note--warn"><span class="note-title">⚠️ 注意</span><b>红色</b> = 警告，提醒容易出错的地方，如："md 里的 HTML 一旦行首缩进 4 个空格，会被判成代码块而原样转义。"</div>
+
+<p>对应的源码长这样（注意：下面只是”代码示范”，所以包在围栏里；真正要显示提示框时，这行 HTML 要<strong>顶格</strong>直接写在文章里，不要用围栏）：</p>
+<div class="code-block" data-lang="html" data-file="html"><div class="code-bar"><span class="code-lang">html</span><span class="code-file">html</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;note note--warn&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;note-title&quot;</span>&gt;</span>⚠️ 注意<span class="tag">&lt;/<span class="name">span</span>&gt;</span>红色是警告，提醒读者这里容易出错。<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--warn"><span class="note-title">⚠️ 最常见的写作事故</span>如果你发现某段文字在页面里变成了"带等号转义的源码"而不是效果，十有八九是那行 HTML 开头不小心缩进了。规则很简单：**Markdown 文本随意缩进，但 HTML 标签必须顶格**。</div>
+
+<h3 id="4-插图"><a href="#4-插图" class="headerlink" title="4. 插图"></a>4. 插图</h3><p>图片推荐统一放进 <code>source/images/</code>（没有就自己建一个），正文里用相对站点根的路径引用：</p>
+<div class="code-block" data-lang="markdown" data-file="markdown"><div class="code-bar"><span class="code-lang">markdown</span><span class="code-file">markdown</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![<span class="string">替代文字说明，方便读屏</span>](<span class="link">images/xxx.png</span>)</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--info"><span class="note-title">※ 说明</span>正式上线后路径要带站点前缀（本站是 `/Blog/images/xxx.png`）。本地预览和线上都跑一遍确认图片能出来再发布。当前站点配置 `post_asset_folder: false`，所以**不支持**在 `_posts` 下建同名文件夹放图——统一走 `source/images/` 最省心。</div>
+
+<h2 id="四、本地预览"><a href="#四、本地预览" class="headerlink" title="四、本地预览"></a>四、本地预览</h2><div class="code-block" data-lang="bash" data-file="bash"><div class="code-bar"><span class="code-lang">bash</span><span class="code-file">bash</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 起本地服务（建议固定端口，方便记住预览地址）</span></span><br><span class="line">npx hexo server -p 4000</span><br><span class="line"><span class="comment"># 浏览器打开（注意带 /Blog/ 前缀，无前缀会 404）</span></span><br><span class="line"><span class="comment"># http://localhost:4000/Blog/</span></span><br></pre></td></tr></table></div></div></div>
+
+<p>预览时改 <code>source/_posts/</code> 下的 md、<code>source/css/style.css</code>，Hexo 会热更新，刷新页面即可看到；改<strong>站点根目录 <code>_config.yml</code></strong> 的配置则需要重启服务。</p>
+<div class="note note--warn"><span class="note-title">⚠️ 生成前先停服务</span>Hexo 的 server 会一直占用 `db.json`（数据库缓存）。如果不停服务直接 `hexo generate`，可能遇到文件锁导致生成失败，或更隐蔽地——生成用了旧的缓存，**新文章没进首页列表**。所以每次发布前：先停掉服务进程，再生成。核验方法见第六节。</div>
+
+<h2 id="五、发布上线"><a href="#五、发布上线" class="headerlink" title="五、发布上线"></a>五、发布上线</h2><div class="code-block" data-lang="bash" data-file="bash"><div class="code-bar"><span class="code-lang">bash</span><span class="code-file">bash</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 先停掉预览服务</span></span><br><span class="line"><span class="comment"># 2. 清理缓存并生成</span></span><br><span class="line"><span class="built_in">rm</span> -f db.json        <span class="comment"># 缓存文件删掉重建（比 hexo clean 更直接）</span></span><br><span class="line">npx hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 推送：装过 hexo-deployer-git 的用一条命令</span></span><br><span class="line">npx hexo deploy</span><br></pre></td></tr></table></div></div></div>
+
+<p>如果用不了 <code>hexo deploy</code>（比如网络&#x2F;权限受限），手动推送产物分支效果相同：</p>
+<div class="code-block" data-lang="bash" data-file="bash"><div class="code-bar"><span class="code-lang">bash</span><span class="code-file">bash</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">D=<span class="string">&quot;.dpl_<span class="subst">$(date +%s)</span>&quot;</span> &amp;&amp; <span class="built_in">mkdir</span> -p <span class="string">&quot;<span class="variable">$D</span>&quot;</span> &amp;&amp; <span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$D</span>&quot;</span></span><br><span class="line">git init -q &amp;&amp; git checkout -q --orphan gh-pages</span><br><span class="line"><span class="built_in">cp</span> -rf ../public/. .</span><br><span class="line">git add -A &amp;&amp; git -c user.name=<span class="string">&quot;&lt;用户名&gt;&quot;</span> -c user.email=<span class="string">&quot;&lt;邮箱&gt;&quot;</span> commit -q -m <span class="string">&quot;deploy&quot;</span></span><br><span class="line">git push -q -f git@github.com:&lt;用户名&gt;/&lt;仓库名&gt;.git gh-pages</span><br></pre></td></tr></table></div></div></div>
+
+<p>两种方式的原理与区别，上一篇部署教程里有详细解释。发布后 Pages 的 CDN 要 1~2 分钟刷新，强刷（Ctrl+F5）能看到最新。</p>
+<h2 id="六、发布后的核验清单（每次必做）"><a href="#六、发布后的核验清单（每次必做）" class="headerlink" title="六、发布后的核验清单（每次必做）"></a>六、发布后的核验清单（每次必做）</h2><p>生成完、推送前，花十秒确认这几件事，能省掉一半的”为什么没生效”：</p>
+<div class="code-block" data-lang="bash" data-file="bash"><div class="code-bar"><span class="code-lang">bash</span><span class="code-file">bash</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 首页真的出现新文章了吗（看生成时间 + 标题出现次数）</span></span><br><span class="line"><span class="built_in">ls</span> --time-style=+%H:%M:%S public/index.html</span><br><span class="line">grep -c <span class="string">&quot;文章标题关键词&quot;</span> public/index.html</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 归档页、search.json 同步更新</span></span><br><span class="line"><span class="built_in">ls</span> -d public/archives/*/*/            <span class="comment"># 应该有新文章的归档目录</span></span><br><span class="line"><span class="comment"># 3. 图片/资源引用是否带对前缀</span></span><br><span class="line">grep -o <span class="string">&#x27;src=&quot;[^&quot;]*&quot;&#x27;</span> public/2026/09/&lt;新文章&gt;/index.html | <span class="built_in">head</span></span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--warn"><span class="note-title">⚠️ "生成了但首页没新文章"</span>这是静态博客最常见的"幽灵问题"：详情页、搜索都更新了，唯独首页列表是旧的。原因几乎都是——残留的 server 进程把旧的 `db.json` 又写了回来，导致生成用了旧缓存。解法：确认 4000 端口没有进程监听 → `rm -f db.json` → 重新 `hexo generate` → 再核验 `index.html` 的修改时间确实刷新了。</div>
+
+<h2 id="七、日常高频问题速查"><a href="#七、日常高频问题速查" class="headerlink" title="七、日常高频问题速查"></a>七、日常高频问题速查</h2><div class="table-scroll"><table>
+<thead>
+<tr>
+<th>症状</th>
+<th>原因与解法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>新文章不在首页&#x2F;归档列表</td>
+<td>旧 db.json 缓存 → 停服务、<code>rm -f db.json</code>、重新 generate（见第六节）</td>
+</tr>
+<tr>
+<td>某段代码&#x2F;HTML 显示成转义源码</td>
+<td>那行 HTML 开头缩进了 → 顶格重写</td>
+</tr>
+<tr>
+<td>提示框没颜色&#x2F;没边框</td>
+<td><code>note</code> 写错（比如少 <code>--warn</code> 后缀），检查 class 拼写</td>
+</tr>
+<tr>
+<td>图片裂了</td>
+<td>路径没带 <code>/Blog/</code> 前缀，或文件不在 <code>source/images/</code></td>
+</tr>
+<tr>
+<td>改了标题但网址没变</td>
+<td>URL 由文件名决定，与 <code>title</code> 无关</td>
+</tr>
+<tr>
+<td>本地 <code>/Blog/</code> 无前缀 404</td>
+<td>root 子路径配置——用带前缀地址访问</td>
+</tr>
+<tr>
+<td>改文章后线上没变化</td>
+<td>重新走一遍 generate + 推送；Pages CDN 等 1~2 分钟再强刷</td>
+</tr>
+</tbody></table></div>
+<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><ul>
+<li>想知道”哪个配置去哪改”、侧边栏五种组件怎么增删 → 复习欢迎页</li>
+<li>想把发布过程自动化（推 GitHub 即自动上线）→ 看部署教程的 Actions 章节</li>
+<li>想给文章配图&#x2F;做封面 → 建 <code>source/images/</code>，风格统一比数量重要</li>
+</ul>
+<p>写博客最大的敌人不是技术，是”今天没写”。手册里的命令背不下来没关系——存个书签，用的时候回来翻，几篇之后就成肌肉记忆了。</p>
+
+            </article>
+
+            <div class="share-row" id="shareRow">
+                <span class="share-label">分享这篇文章：</span>
+            </div>
+
+            <nav class="post-nav" id="postNav" aria-label="上下篇导航">
+                
+                    <a class="post-nav-item" href="/Blog/2026/09/pc-repair-first-lesson/">
+                        <span class="k">← 上一篇</span><span class="t">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</span>
+                    </a>
+                
+                
+                    <a class="post-nav-item post-nav-item--next" href="/Blog/2026/09/deploy-hexo-github-pages/">
+                        <span class="k">下一篇 →</span><span class="t">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</span>
+                    </a>
+                
+            </nav>
+
+            <!-- ---- 评论（Giscus：数据存于 GitHub Discussions） ---- -->
+            
+            
+            
+            <section class="card comments" aria-labelledby="commentTitle">
+                <h2 class="card-title" id="commentTitle" style="text-align:left">
+                    💬 读者留言
+                </h2>
+                <p style="margin:0 0 18px;font-size:.76rem;color:var(--ink-3)">
+                    评论由 GitHub Discussions 托管，需登录 GitHub 后参与（评论区的 +1 即点赞）。
+                </p>
+                <script src="https://giscus.app/client.js"
+                        data-repo="molunanli/Blog"
+                        data-repo-id="R_kgDOUMGUlQ"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOUMGUlc4DEuis"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                </script>
+            </section>
+            
+            
+        </div>
+
+        <!-- ============ 侧边栏 ============ -->
+        <aside class="sidebar toc-sticky" aria-label="文章侧边信息">
+
+            
+            <button class="toc-toggle-mobile" id="tocToggle" type="button" aria-expanded="false" aria-controls="tocPanel">
+                📑 目录导航 <span class="arrow" aria-hidden="true">▼</span>
+            </button>
+
+            <nav class="card toc-card toc-panel" id="tocPanel" aria-label="文章目录">
+                <h2 class="card-title">📑 目录</h2>
+                <div class="toc-list" id="tocList">
+                    
+                        <a class="toc-link toc-link--h2" href="#一、新建一篇文章">一、新建一篇文章</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#二、front-matter：一篇文章的”档案卡”">二、front-matter：一篇文章的”档案卡”</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#三、正文写作：Markdown-主题特性">三、正文写作：Markdown + 主题特性</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#1-标题、列表、引用、表格">1. 标题、列表、引用、表格</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#2-代码块：语言标签、复制、长代码自动折叠">2. 代码块：语言标签、复制、长代码自动折叠</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#3-提示框：三种颜色，顶格写-HTML">3. 提示框：三种颜色，顶格写 HTML</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#4-插图">4. 插图</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#四、本地预览">四、本地预览</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#五、发布上线">五、发布上线</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#六、发布后的核验清单（每次必做）">六、发布后的核验清单（每次必做）</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#七、日常高频问题速查">七、日常高频问题速查</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#下一步">下一步</a>
+                    
+                </div>
+            </nav>
+            
+
+            
+            <section class="card" aria-labelledby="relTitle">
+                <h2 class="card-title" id="relTitle">📎 相关文章</h2>
+                <ul class="related-list" id="relatedList">
+                    
+                        <li><a href="/Blog/2026/09/deploy-hexo-github-pages/">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</a></li>
+                    
+                        <li><a href="/Blog/2026/09/welcome/">欢迎使用 jp-blog 主题</a></li>
+                    
+                        <li><a href="/Blog/2026/09/craft-heatmap/">手把手：给博客做一张漫画风「创作热力图」</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a></li>
+                    
+                </ul>
+            </section>
+            
+
+            <section class="card" aria-labelledby="authorTitle">
+                <h2 class="card-title" id="authorTitle">✍️ 关于作者</h2>
+                <div class="profile-avatar" style="width:76px;height:76px;font-size:2.3rem" aria-hidden="true">🐱</div>
+                <p class="profile-name" style="text-align:center">博主</p>
+                <p class="profile-role" style="text-align:center">BLOGGER</p>
+                <p class="profile-bio" style="text-align:center;font-size:.82rem">这里是作者简介。
+用一两句话介绍你自己，或者这个博客打算写些什么。
+</p>
+                <p style="text-align:center;margin-top:12px">
+                    <a class="link-more" href="/Blog/about">▶ 了解更多</a>
+                </p>
+            </section>
+
+        </aside>
+    </div>
+</div>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="shell">
+        <div class="footer-grid">
+            <div>
+                <span class="footer-h">关于本站</span>
+                <p style="font-size:.88rem;color:var(--ink-2);line-height:1.8">
+                    这里是页脚简介。用一两句话说明这个博客的内容方向，
+让读者一眼知道这里在写什么。
+
+                </p>
+                <p style="margin-top:12px">
+                    <span class="footer-seal" aria-hidden="true">我的<br>博客</span>
+                </p>
+            </div>
+            <div>
+                <span class="footer-h">快速导航</span>
+                <nav class="footer-list" aria-label="页脚导航">
+                    
+                        
+                        <a href="/Blog/">首页</a>
+                    
+                        
+                        <a href="/Blog/archives">归档</a>
+                    
+                        
+                        <a href="/Blog/tags">标签</a>
+                    
+                        
+                        <a href="/Blog/about">关于</a>
+                    
+                </nav>
+            </div>
+            <div>
+                <span class="footer-h">热门分类</span>
+                <nav class="footer-list" aria-label="分类导航">
+                    
+                        <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                    
+                        <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <span>&copy; 2026 我的博客 — 保持热爱，持续记录。</span>
+            <span>Made with Hexo</span>
+        </div>
+    </div>
+</footer>
+
+<div class="fabs">
+    <button class="fab fab--top" id="topBtn" type="button" data-tip="回到顶部" title="回到顶部" aria-label="回到顶部" aria-hidden="true">⬆</button>
+    <button class="fab" id="fabSearch" type="button" data-tip="搜索文章" title="搜索文章" aria-label="搜索文章">🔍</button>
+</div>
+
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="站内搜索" aria-hidden="true">
+    <div class="search-panel">
+        <div class="search-field">
+            <span aria-hidden="true" style="font-size:1.1rem">🔍</span>
+            <input class="search-input" id="searchInput" type="search" placeholder="搜索文章标题、标签或关键词…" aria-label="搜索关键词" autocomplete="off">
+            <button class="icon-btn" id="searchClose" type="button" aria-label="关闭搜索">✕</button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+        <div class="search-hint">
+            <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
+            <span><kbd>Enter</kbd> 打开</span>
+            <span><kbd>Esc</kbd> 关闭</span>
+            <span><kbd>Ctrl</kbd>+<kbd>K</kbd> 随时唤起</span>
+        </div>
+    </div>
+</div>
+
+
+<script src="/Blog/js/app.js" defer></script>
+</body>
+</html>

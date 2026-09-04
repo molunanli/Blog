@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>我的博客 · 日式漫画风 · Hexo 主题</title>
+<meta name="description" content="一个使用 jp-blog 主题搭建的 Hexo 博客。">
+<meta name="theme-color" content="#f7f1e3">
+
+<!-- 防主题闪烁：在任何渲染前确定主题 -->
+<script>
+(function () {
+    var k = 'manga-blog-theme';
+    var saved = null;
+    try { saved = localStorage.getItem(k); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/Blog/css/style.css">
+<link rel="alternate" href="/Blog/atom.xml" title="我的博客" type="application/atom+xml">
+<script>window.SEARCH_JSON_URL = '/Blog/search.json';</script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body data-root="/Blog/">
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="site-header">
+    <div class="shell">
+        <nav class="navbar" aria-label="主导航">
+            <a class="brand" href="/Blog/" aria-label="我的博客 首页">
+                <span class="brand-seal" aria-hidden="true">博客</span>
+                我的博客
+            </a>
+
+            <ul class="nav-links">
+                
+                    
+                    <li><a href="/Blog/" data-nav="/">首页</a></li>
+                
+                    
+                    <li><a href="/Blog/archives" data-nav="/archives">归档</a></li>
+                
+                    
+                    <li><a href="/Blog/tags" data-nav="/tags">标签</a></li>
+                
+                    
+                    <li><a href="/Blog/about" data-nav="/about">关于</a></li>
+                
+            </ul>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn" type="button" aria-label="搜索文章" title="搜索（Ctrl / ⌘ + K）">🔍</button>
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="切换至暗色模式" aria-pressed="false" title="切换至暗色模式">🌙</button>
+                <button class="icon-btn burger" id="burgerBtn" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="drawer">☰</button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<nav class="drawer" id="drawer" aria-label="移动端导航" aria-hidden="true">
+    <div class="drawer-head">
+        <span class="drawer-title">📖 目录导航</span>
+        <button class="icon-btn" id="drawerClose" type="button" aria-label="关闭菜单">✕</button>
+    </div>
+    
+        
+        <a href="/Blog/" data-nav="/">首页</a>
+    
+        
+        <a href="/Blog/archives" data-nav="/archives">归档</a>
+    
+        
+        <a href="/Blog/tags" data-nav="/tags">标签</a>
+    
+        
+        <a href="/Blog/about" data-nav="/about">关于</a>
+    
+    <p class="drawer-note">我的博客 — 日式漫画风 · Hexo 主题</p>
+</nav>
+
+
+
+<main class="site-main" id="main">
+
+    
+<div class="shell" style="margin-top:30px">
+
+    <div class="card" style="margin-bottom:28px">
+        <div class="section-head">
+            <h1 class="section-title">🏷 标签：教程</h1>
+            <span class="section-sub">共 <strong>2</strong> 篇</span>
+        </div>
+        <p style="font-size:.9rem;color:var(--ink-2);line-height:1.8;margin-top:8px">
+            <a href="/Blog/tags">▶ 返回标签云</a>
+            　·　<a href="/Blog/archives">📚 按时间浏览</a>
+        </p>
+    </div>
+
+    <div class="post-list">
+        
+            
+<article class="post-card reveal"
+         data-cat="使用指南"
+         data-tags="Hexo|教程|jp-blog">
+    <div class="post-meta">
+        
+            <a class="chip chip--cat" href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+        
+        
+        <span>📅 令和8年9月4日</span>
+        <span>⏱ 约 9 分钟</span>
+        
+    </div>
+    <h3 class="post-title"><a href="/Blog/2026/09/writing-publishing-manual/">jp-blog 写作与发布手册：从新建文章到上线</a></h3>
+    <p class="post-excerpt">欢迎页讲的是主题长什么样；这篇是你每天都要用的操作手册——怎么写一篇文章、front-matter 每个字段是干什么的、正文里有哪些主题特性、写完怎么本地预览、最后怎么发布上线，以及遇到「文章没出现在首页」这类问题时去哪找原因。</p>
+    <div class="post-foot">
+        <div class="tag-list">
+            
+                <a class="tag-chip" href="/Blog/tags/Hexo/">#Hexo</a>
+            
+                <a class="tag-chip" href="/Blog/tags/%E6%95%99%E7%A8%8B/">#教程</a>
+            
+                <a class="tag-chip" href="/Blog/tags/jp-blog/">#jp-blog</a>
+            
+        </div>
+        <a class="link-more" href="/Blog/2026/09/writing-publishing-manual/">▶ 继续阅读</a>
+    </div>
+</article>
+
+        
+            
+<article class="post-card reveal"
+         data-cat="使用指南"
+         data-tags="Hexo|GitHub|教程">
+    <div class="post-meta">
+        
+            <a class="chip chip--cat" href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+        
+        
+        <span>📅 令和8年9月3日</span>
+        <span>⏱ 约 10 分钟</span>
+        
+    </div>
+    <h3 class="post-title"><a href="/Blog/2026/09/deploy-hexo-github-pages/">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</a></h3>
+    <p class="post-excerpt">不想买服务器、不想备案，也想有一个真正属于自己的博客？GitHub Pages 免费托管静态站点、自带 HTTPS 和全球 CDN，和 Hexo 是天生一对。这篇教程用最少的弯路带你走完从本地博客到线上上线的全过程——包括那些文档不会告诉你的坑（子路径 root、分支选择、CDN 缓存）。</p>
+    <div class="post-foot">
+        <div class="tag-list">
+            
+                <a class="tag-chip" href="/Blog/tags/Hexo/">#Hexo</a>
+            
+                <a class="tag-chip" href="/Blog/tags/GitHub/">#GitHub</a>
+            
+                <a class="tag-chip" href="/Blog/tags/%E6%95%99%E7%A8%8B/">#教程</a>
+            
+        </div>
+        <a class="link-more" href="/Blog/2026/09/deploy-hexo-github-pages/">▶ 继续阅读</a>
+    </div>
+</article>
+
+        
+    </div>
+
+    
+
+</div>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="shell">
+        <div class="footer-grid">
+            <div>
+                <span class="footer-h">关于本站</span>
+                <p style="font-size:.88rem;color:var(--ink-2);line-height:1.8">
+                    这里是页脚简介。用一两句话说明这个博客的内容方向，
+让读者一眼知道这里在写什么。
+
+                </p>
+                <p style="margin-top:12px">
+                    <span class="footer-seal" aria-hidden="true">我的<br>博客</span>
+                </p>
+            </div>
+            <div>
+                <span class="footer-h">快速导航</span>
+                <nav class="footer-list" aria-label="页脚导航">
+                    
+                        
+                        <a href="/Blog/">首页</a>
+                    
+                        
+                        <a href="/Blog/archives">归档</a>
+                    
+                        
+                        <a href="/Blog/tags">标签</a>
+                    
+                        
+                        <a href="/Blog/about">关于</a>
+                    
+                </nav>
+            </div>
+            <div>
+                <span class="footer-h">热门分类</span>
+                <nav class="footer-list" aria-label="分类导航">
+                    
+                        <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                    
+                        <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <span>&copy; 2026 我的博客 — 保持热爱，持续记录。</span>
+            <span>Made with Hexo</span>
+        </div>
+    </div>
+</footer>
+
+<div class="fabs">
+    <button class="fab fab--top" id="topBtn" type="button" data-tip="回到顶部" title="回到顶部" aria-label="回到顶部" aria-hidden="true">⬆</button>
+    <button class="fab" id="fabSearch" type="button" data-tip="搜索文章" title="搜索文章" aria-label="搜索文章">🔍</button>
+</div>
+
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="站内搜索" aria-hidden="true">
+    <div class="search-panel">
+        <div class="search-field">
+            <span aria-hidden="true" style="font-size:1.1rem">🔍</span>
+            <input class="search-input" id="searchInput" type="search" placeholder="搜索文章标题、标签或关键词…" aria-label="搜索关键词" autocomplete="off">
+            <button class="icon-btn" id="searchClose" type="button" aria-label="关闭搜索">✕</button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+        <div class="search-hint">
+            <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
+            <span><kbd>Enter</kbd> 打开</span>
+            <span><kbd>Esc</kbd> 关闭</span>
+            <span><kbd>Ctrl</kbd>+<kbd>K</kbd> 随时唤起</span>
+        </div>
+    </div>
+</div>
+
+
+<script src="/Blog/js/app.js" defer></script>
+</body>
+</html>
