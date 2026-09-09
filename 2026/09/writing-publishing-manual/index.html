@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>jp-blog 写作与发布手册：从新建文章到上线 · 我的博客</title>
+<title>mangaka 写作与发布手册：从新建文章到上线 · 我的博客</title>
 <meta name="description" content="欢迎页讲的是主题长什么样；这篇是你每天都要用的操作手册——怎么写一篇文章、front-matter 每个字段是干什么的、正文里有哪些主题特性、写完怎么本地预览、最后怎么发布上线，以及遇到「文章没出现在首页」这类问题时去哪找原因。">
 <meta name="theme-color" content="#f7f1e3">
 
@@ -95,7 +95,7 @@
 
 <main class="site-main" id="articleRoot"
       data-post-id="writing-publishing-manual"
-      data-post-title="jp-blog 写作与发布手册：从新建文章到上线"
+      data-post-title="mangaka 写作与发布手册：从新建文章到上线"
       data-post-likes="0">
 
     
@@ -111,7 +111,7 @@
         
             <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a><span class="sep" aria-hidden="true">›</span>
         
-        <span id="crumbCurrent">jp-blog 写作与发布手册：从新建文章到上线</span>
+        <span id="crumbCurrent">mangaka 写作与发布手册：从新建文章到上线</span>
     </nav>
 </div>
 
@@ -124,7 +124,7 @@
                 
                     <a class="chip chip--cat" href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
                 
-                <h1 class="article-title">jp-blog 写作与发布手册：从新建文章到上线</h1>
+                <h1 class="article-title">mangaka 写作与发布手册：从新建文章到上线</h1>
                 <div class="article-meta">
                     <span>✍️ 博主</span>
                     <span>📅 令和8年9月4日</span>
@@ -136,9 +136,9 @@
                     
                         <a class="tag-chip" href="/Blog/tags/Hexo/">#Hexo</a>
                     
-                        <a class="tag-chip" href="/Blog/tags/jp-blog/">#jp-blog</a>
-                    
                         <a class="tag-chip" href="/Blog/tags/%E6%95%99%E7%A8%8B/">#教程</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/mangaka/">#mangaka</a>
                     
                 </div>
             </section>
@@ -158,7 +158,7 @@
 
 <p>文章在 <code>_posts</code> 目录下会按年&#x2F;月归档（<code>/Blog/2026/09/</code>），这是 Hexo 的默认行为，不用手动建目录。</p>
 <h2 id="二、front-matter：一篇文章的”档案卡”"><a href="#二、front-matter：一篇文章的”档案卡”" class="headerlink" title="二、front-matter：一篇文章的”档案卡”"></a>二、front-matter：一篇文章的”档案卡”</h2><p>文件开头的 <code>---</code> 之间的 YAML 就是 front-matter。一个完整示例：</p>
-<div class="code-block" data-lang="yaml" data-file="yaml"><div class="code-bar"><span class="code-lang">yaml</span><span class="code-file">yaml</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">jp-blog</span> <span class="string">写作与发布手册</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2026-09-04</span></span><br><span class="line"><span class="attr">slug:</span> <span class="string">writing-publishing-manual</span>        <span class="comment"># 可选：覆盖文件名生成的地址</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">使用指南</span>                            <span class="comment"># 多级分类用缩进列表</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">jp-blog</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Hexo</span></span><br><span class="line"><span class="attr">featured:</span> <span class="literal">true</span>                          <span class="comment"># 可选：首页卡片显示 🔥 精选</span></span><br><span class="line"><span class="attr">readTime:</span> <span class="number">9</span>                             <span class="comment"># 可选：估算阅读分钟数（不写会自动估算）</span></span><br><span class="line"><span class="attr">excerpt:</span> <span class="string">&quot;一句话摘要，用于卡片和分享。&quot;</span>   <span class="comment"># 可选：不写则取正文开头</span></span><br><span class="line"><span class="attr">toc:</span> <span class="literal">false</span>                              <span class="comment"># 可选：本页关闭目录（默认开）</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></div></div></div>
+<div class="code-block" data-lang="yaml" data-file="yaml"><div class="code-bar"><span class="code-lang">yaml</span><span class="code-file">yaml</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">mangaka</span> <span class="string">写作与发布手册</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2026-09-04</span></span><br><span class="line"><span class="attr">slug:</span> <span class="string">writing-publishing-manual</span>        <span class="comment"># 可选：覆盖文件名生成的地址</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">使用指南</span>                            <span class="comment"># 多级分类用缩进列表</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">mangaka</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Hexo</span></span><br><span class="line"><span class="attr">featured:</span> <span class="literal">true</span>                          <span class="comment"># 可选：首页卡片显示 🔥 精选</span></span><br><span class="line"><span class="attr">readTime:</span> <span class="number">9</span>                             <span class="comment"># 可选：估算阅读分钟数（不写会自动估算）</span></span><br><span class="line"><span class="attr">excerpt:</span> <span class="string">&quot;一句话摘要，用于卡片和分享。&quot;</span>   <span class="comment"># 可选：不写则取正文开头</span></span><br><span class="line"><span class="attr">toc:</span> <span class="literal">false</span>                              <span class="comment"># 可选：本页关闭目录（默认开）</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></div></div></div>
 
 <div class="table-scroll"><table>
 <thead>
@@ -320,8 +320,8 @@
                     </a>
                 
                 
-                    <a class="post-nav-item post-nav-item--next" href="/Blog/2026/09/deploy-hexo-github-pages/">
-                        <span class="k">下一篇 →</span><span class="t">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</span>
+                    <a class="post-nav-item post-nav-item--next" href="/Blog/2026/09/craft-heatmap/">
+                        <span class="k">下一篇 →</span><span class="t">手把手：给博客做一张漫画风「创作热力图」</span>
                     </a>
                 
             </nav>
@@ -405,9 +405,9 @@
                     
                         <li><a href="/Blog/2026/09/publish-hexo-theme/">把你的 Hexo 主题发布出去：GitHub + npm + 官方主题列表，小白完整指南</a></li>
                     
-                        <li><a href="/Blog/2026/09/welcome/">欢迎使用 jp-blog 主题</a></li>
-                    
                         <li><a href="/Blog/2026/09/deploy-hexo-github-pages/">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</a></li>
+                    
+                        <li><a href="/Blog/2026/09/welcome/">欢迎使用 mangaka 主题</a></li>
                     
                         <li><a href="/Blog/2026/09/craft-heatmap/">手把手：给博客做一张漫画风「创作热力图」</a></li>
                     

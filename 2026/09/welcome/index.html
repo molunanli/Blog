@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>欢迎使用 jp-blog 主题 · 我的博客</title>
-<meta name="description" content="jp-blog 是一套日式漫画风格的 Hexo 主题。这篇文章带你熟悉它的目录结构、常用配置与写作方式，并顺手演示一遍各种排版组件的效果。">
+<title>欢迎使用 mangaka 主题 · 我的博客</title>
+<meta name="description" content="mangaka 是一套日式漫画风格的 Hexo 主题。这篇文章带你熟悉它的目录结构、常用配置与写作方式，并顺手演示一遍各种排版组件的效果。">
 <meta name="theme-color" content="#f7f1e3">
 
 <!-- 防主题闪烁：在任何渲染前确定主题 -->
@@ -95,7 +95,7 @@
 
 <main class="site-main" id="articleRoot"
       data-post-id="welcome"
-      data-post-title="欢迎使用 jp-blog 主题"
+      data-post-title="欢迎使用 mangaka 主题"
       data-post-likes="0">
 
     
@@ -111,7 +111,7 @@
         
             <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a><span class="sep" aria-hidden="true">›</span>
         
-        <span id="crumbCurrent">欢迎使用 jp-blog 主题</span>
+        <span id="crumbCurrent">欢迎使用 mangaka 主题</span>
     </nav>
 </div>
 
@@ -124,7 +124,7 @@
                 
                     <a class="chip chip--cat" href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
                 
-                <h1 class="article-title">欢迎使用 jp-blog 主题</h1>
+                <h1 class="article-title">欢迎使用 mangaka 主题</h1>
                 <div class="article-meta">
                     <span>✍️ 博主</span>
                     <span>📅 令和8年9月1日</span>
@@ -136,7 +136,7 @@
                     
                         <a class="tag-chip" href="/Blog/tags/Hexo/">#Hexo</a>
                     
-                        <a class="tag-chip" href="/Blog/tags/jp-blog/">#jp-blog</a>
+                        <a class="tag-chip" href="/Blog/tags/mangaka/">#mangaka</a>
                     
                         <a class="tag-chip" href="/Blog/tags/%E4%B8%BB%E9%A2%98%E4%BB%8B%E7%BB%8D/">#主题介绍</a>
                     
@@ -144,9 +144,9 @@
             </section>
 
             <article class="card article-body" id="articleBody">
-                <p>欢迎使用 <strong>jp-blog</strong>——一套日式漫画风格的 Hexo 主题。集中线、网点纸、对话框与和历日期，都是为了让技术博客少一点冰冷、多一点手感。</p>
+                <p>欢迎使用 <strong>mangaka</strong>——一套日式漫画风格的 Hexo 主题。集中线、网点纸、对话框与和历日期，都是为了让技术博客少一点冰冷、多一点手感。</p>
 <p>这篇文章会带你熟悉主题的目录结构、常用配置和写作方式，顺便把各种排版组件演示一遍。读完就可以删掉它，开始写你自己的第一篇了。</p>
-<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p>主题文件都在 <code>themes/jp-blog/</code> 下，你最常打交道的就这几个：</p>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p>主题文件都在 <code>themes/mangaka/</code> 下，你最常打交道的就这几个：</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -177,7 +177,7 @@
 
 <h2 id="三步改成你的站"><a href="#三步改成你的站" class="headerlink" title="三步改成你的站"></a>三步改成你的站</h2><ol>
 <li><strong>改站点信息</strong>：根目录 <code>_config.yml</code> 的 Site 段，填站名、副标题、作者。</li>
-<li><strong>改主题外观</strong>：<code>themes/jp-blog/_config.yml</code>，导航、英雄区标语、作者卡、社交链接、页脚都在这里。</li>
+<li><strong>改主题外观</strong>：<code>themes/mangaka/_config.yml</code>，导航、英雄区标语、作者卡、社交链接、页脚都在这里。</li>
 <li><strong>换配色</strong>：<code>source/css/style.css</code> 顶部的 CSS 变量，改几个色值就能换一套皮。</li>
 </ol>
 <div class="note note--tip"><span class="note-title">💡 技巧</span>侧边栏组件可以按需增删，配置项是主题 `_config.yml` 里的 `widgets`，目前支持 `profile`、`latest`、`tags`、`archive`、`subscribe` 五种。</div>
@@ -194,7 +194,7 @@
 <div class="code-block" data-lang="yaml" data-file="yaml"><div class="code-bar"><span class="code-lang">yaml</span><span class="code-file">yaml</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hero:</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">欢迎来到我的博客！</span></span><br><span class="line">  <span class="attr">kicker:</span> <span class="string">日式漫画风</span> <span class="string">·</span> <span class="string">开箱即用</span></span><br><span class="line"><span class="attr">profile:</span></span><br><span class="line">  <span class="attr">avatar:</span> <span class="string">🐱</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">博主</span></span><br><span class="line">  <span class="attr">role:</span> <span class="string">BLOGGER</span></span><br></pre></td></tr></table></div></div></div>
 
 <p>超过一屏的长代码块会<strong>默认折叠</strong>——按钮变成实心红、底部带渐隐提示，点一下即可展开：</p>
-<div class="code-block" data-lang="yaml" data-file="yaml"><div class="code-bar"><span class="code-lang">yaml</span><span class="code-file">yaml</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># themes/jp-blog/_config.yml</span></span><br><span class="line"><span class="attr">brand:</span> <span class="string">我的博客</span></span><br><span class="line"><span class="attr">brand_seal:</span> <span class="string">博客</span></span><br><span class="line"><span class="attr">brand_note:</span> <span class="string">日式漫画风</span> <span class="string">·</span> <span class="string">Hexo</span> <span class="string">主题</span></span><br><span class="line"></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">首页:</span> <span class="string">/</span></span><br><span class="line">  <span class="string">归档:</span> <span class="string">/archives</span></span><br><span class="line">  <span class="string">标签:</span> <span class="string">/tags</span></span><br><span class="line">  <span class="string">关于:</span> <span class="string">/about</span></span><br><span class="line"></span><br><span class="line"><span class="attr">hero:</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">欢迎来到我的博客！</span></span><br><span class="line">  <span class="attr">kicker:</span> <span class="string">日式漫画风</span> <span class="string">·</span> <span class="string">开箱即用</span></span><br><span class="line">  <span class="attr">speech:</span> <span class="string">这里写一句想对读者说的话。</span></span><br><span class="line">  <span class="attr">speech_small:</span> <span class="string">—</span> <span class="string">开始你的第一篇</span> <span class="string">—</span></span><br><span class="line">  <span class="attr">update_freq:</span> <span class="string">不定期</span></span><br><span class="line"></span><br><span class="line"><span class="attr">profile:</span></span><br><span class="line">  <span class="attr">avatar:</span> <span class="string">🐱</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">博主</span></span><br><span class="line">  <span class="attr">role:</span> <span class="string">BLOGGER</span></span><br><span class="line"></span><br><span class="line"><span class="attr">widgets:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">profile</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">latest</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">tags</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">archive</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">subscribe</span></span><br></pre></td></tr></table></div></div></div>
+<div class="code-block" data-lang="yaml" data-file="yaml"><div class="code-bar"><span class="code-lang">yaml</span><span class="code-file">yaml</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># themes/mangaka/_config.yml</span></span><br><span class="line"><span class="attr">brand:</span> <span class="string">我的博客</span></span><br><span class="line"><span class="attr">brand_seal:</span> <span class="string">博客</span></span><br><span class="line"><span class="attr">brand_note:</span> <span class="string">日式漫画风</span> <span class="string">·</span> <span class="string">Hexo</span> <span class="string">主题</span></span><br><span class="line"></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">首页:</span> <span class="string">/</span></span><br><span class="line">  <span class="string">归档:</span> <span class="string">/archives</span></span><br><span class="line">  <span class="string">标签:</span> <span class="string">/tags</span></span><br><span class="line">  <span class="string">关于:</span> <span class="string">/about</span></span><br><span class="line"></span><br><span class="line"><span class="attr">hero:</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">欢迎来到我的博客！</span></span><br><span class="line">  <span class="attr">kicker:</span> <span class="string">日式漫画风</span> <span class="string">·</span> <span class="string">开箱即用</span></span><br><span class="line">  <span class="attr">speech:</span> <span class="string">这里写一句想对读者说的话。</span></span><br><span class="line">  <span class="attr">speech_small:</span> <span class="string">—</span> <span class="string">开始你的第一篇</span> <span class="string">—</span></span><br><span class="line">  <span class="attr">update_freq:</span> <span class="string">不定期</span></span><br><span class="line"></span><br><span class="line"><span class="attr">profile:</span></span><br><span class="line">  <span class="attr">avatar:</span> <span class="string">🐱</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">博主</span></span><br><span class="line">  <span class="attr">role:</span> <span class="string">BLOGGER</span></span><br><span class="line"></span><br><span class="line"><span class="attr">widgets:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">profile</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">latest</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">tags</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">archive</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">subscribe</span></span><br></pre></td></tr></table></div></div></div>
 
 <h3 id="列表与引用"><a href="#列表与引用" class="headerlink" title="列表与引用"></a>列表与引用</h3><p>无序列表用来罗列要点：</p>
 <ul>
@@ -218,8 +218,8 @@
 
             <nav class="post-nav" id="postNav" aria-label="上下篇导航">
                 
-                    <a class="post-nav-item" href="/Blog/2026/09/craft-heatmap/">
-                        <span class="k">← 上一篇</span><span class="t">手把手：给博客做一张漫画风「创作热力图」</span>
+                    <a class="post-nav-item" href="/Blog/2026/09/deploy-hexo-github-pages/">
+                        <span class="k">← 上一篇</span><span class="t">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</span>
                     </a>
                 
                 <span></span>
@@ -294,13 +294,13 @@
                 <h2 class="card-title" id="relTitle">📎 相关文章</h2>
                 <ul class="related-list" id="relatedList">
                     
+                        <li><a href="/Blog/2026/09/writing-publishing-manual/">mangaka 写作与发布手册：从新建文章到上线</a></li>
+                    
                         <li><a href="/Blog/2026/09/publish-hexo-theme/">把你的 Hexo 主题发布出去：GitHub + npm + 官方主题列表，小白完整指南</a></li>
                     
-                        <li><a href="/Blog/2026/09/writing-publishing-manual/">jp-blog 写作与发布手册：从新建文章到上线</a></li>
+                        <li><a href="/Blog/2026/09/craft-heatmap/">手把手：给博客做一张漫画风「创作热力图」</a></li>
                     
                         <li><a href="/Blog/2026/09/deploy-hexo-github-pages/">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</a></li>
-                    
-                        <li><a href="/Blog/2026/09/craft-heatmap/">手把手：给博客做一张漫画风「创作热力图」</a></li>
                     
                 </ul>
             </section>
