@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修 · 我的博客</title>
+<meta name="description" content="按下开机键，风扇转了、灯亮了，屏幕却一直黑着——这是维修里最让人心慌的一幕。其实黑屏只有两大分支：卡在硬件自检（连 BIOS 都进不去）和卡在系统引导（BIOS 能进但进不了 Windows）。这篇教你先用三个问题定位到层，再看懂主板 DEBUG 灯和报警音，然后用最小系统法一步步走查，从&#39;点不亮&#39;">
+<meta name="theme-color" content="#f7f1e3">
+
+<!-- 防主题闪烁：在任何渲染前确定主题 -->
+<script>
+(function () {
+    var k = 'manga-blog-theme';
+    var saved = null;
+    try { saved = localStorage.getItem(k); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/Blog/css/style.css">
+<link rel="alternate" href="/Blog/atom.xml" title="我的博客" type="application/atom+xml">
+<script>window.SEARCH_JSON_URL = '/Blog/search.json';</script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body data-root="/Blog/">
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="site-header">
+    <div class="shell">
+        <nav class="navbar" aria-label="主导航">
+            <a class="brand" href="/Blog/" aria-label="我的博客 首页">
+                <span class="brand-seal" aria-hidden="true">博客</span>
+                我的博客
+            </a>
+
+            <ul class="nav-links">
+                
+                    
+                    <li><a href="/Blog/" data-nav="/">首页</a></li>
+                
+                    
+                    <li><a href="/Blog/archives" data-nav="/archives">归档</a></li>
+                
+                    
+                    <li><a href="/Blog/tags" data-nav="/tags">标签</a></li>
+                
+                    
+                    <li><a href="/Blog/categories" data-nav="/categories">分类</a></li>
+                
+                    
+                    <li><a href="/Blog/about" data-nav="/about">关于</a></li>
+                
+            </ul>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn" type="button" aria-label="搜索文章" title="搜索（Ctrl / ⌘ + K）">🔍</button>
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="切换至暗色模式" aria-pressed="false" title="切换至暗色模式">🌙</button>
+                <button class="icon-btn burger" id="burgerBtn" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="drawer">☰</button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<nav class="drawer" id="drawer" aria-label="移动端导航" aria-hidden="true">
+    <div class="drawer-head">
+        <span class="drawer-title">📖 目录导航</span>
+        <button class="icon-btn" id="drawerClose" type="button" aria-label="关闭菜单">✕</button>
+    </div>
+    
+        
+        <a href="/Blog/" data-nav="/">首页</a>
+    
+        
+        <a href="/Blog/archives" data-nav="/archives">归档</a>
+    
+        
+        <a href="/Blog/tags" data-nav="/tags">标签</a>
+    
+        
+        <a href="/Blog/categories" data-nav="/categories">分类</a>
+    
+        
+        <a href="/Blog/about" data-nav="/about">关于</a>
+    
+    <p class="drawer-note">我的博客 — 日式漫画风 · Hexo 主题</p>
+</nav>
+
+
+
+<main class="site-main" id="articleRoot"
+      data-post-id="pc-black-screen"
+      data-post-title="开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修"
+      data-post-likes="0">
+
+    
+
+<script>
+    /* 供 app.js 的目录滚动高亮使用（headings 由模板计算） */
+    var headings = [{"level":"2","id":"一、先回答三个问题，立刻知道卡在哪层","text":"一、先回答三个问题，立刻知道卡在哪层"},{"level":"2","id":"二、一分钟快速自检（先排掉”假黑屏”）","text":"二、一分钟快速自检（先排掉”假黑屏”）"},{"level":"2","id":"三、关键工具：主板的”两个嘴”","text":"三、关键工具：主板的”两个嘴”"},{"level":"2","id":"四、路线-A：卡在-POST（连-BIOS-都进不去）——最小系统法实战","text":"四、路线 A：卡在 POST（连 BIOS 都进不去）——最小系统法实战"},{"level":"2","id":"五、路线-B：BIOS-能进，但进不了系统（引导层）","text":"五、路线 B：BIOS 能进，但进不了系统（引导层）"},{"level":"2","id":"六、路线-C：能进系统，就是没画面（显示输出问题）","text":"六、路线 C：能进系统，就是没画面（显示输出问题）"},{"level":"2","id":"七、整套动作的执行顺序","text":"七、整套动作的执行顺序"},{"level":"2","id":"八、验证与预防","text":"八、验证与预防"},{"level":"2","id":"九、避坑与经验","text":"九、避坑与经验"},{"level":"2","id":"十、两个真实维修案例（维修日志格式）","text":"十、两个真实维修案例（维修日志格式）"},{"level":"2","id":"相关阅读","text":"相关阅读"}];
+</script>
+
+<div class="shell">
+    <nav class="crumbs" aria-label="面包屑导航">
+        <a href="/Blog/">首页</a><span class="sep" aria-hidden="true">›</span>
+        
+            <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a><span class="sep" aria-hidden="true">›</span>
+        
+        <span id="crumbCurrent">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</span>
+    </nav>
+</div>
+
+<div class="shell">
+    <div class="grid grid--sidebar">
+
+        <!-- ============ 正文 ============ -->
+        <div class="stack">
+            <section class="article-head" id="articleHead">
+                
+                    <a class="chip chip--cat" href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                
+                <h1 class="article-title">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</h1>
+                <div class="article-meta">
+                    <span>✍️ 博主</span>
+                    <span>📅 令和8年9月11日</span>
+                    <span>⏱ 阅读约 15 分钟</span>
+                    
+                    
+                </div>
+                <div class="tag-list" style="margin-top:14px">
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">#电脑维修</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/Windows/">#Windows</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%A1%AC%E4%BB%B6/">#硬件</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%B3%BB%E7%BB%9F/">#系统</a>
+                    
+                </div>
+            </section>
+
+            <article class="card article-body" id="articleBody">
+                <p>这是「电脑维修」系列的第三篇。第一篇立了方法论（<strong>供电 → 硬件 → 系统 → 软件</strong> 四层由简到繁），第二篇拿”自动重启”实战练了一遍读日志。这篇要啃的是维修里最吓人的症状——<strong>开机黑屏</strong>。</p>
+<p>按下开机键，风扇呼啦啦转起来，机箱灯也亮了，耳机里有电流声——可屏幕就是一片漆黑，连主板 Logo 都不给。你开始怀疑：显卡烧了？主板坏了？要不要直接抱去维修店？</p>
+<p>先别急。<strong>黑屏是所有故障里”分支最清晰”的一种</strong>，因为它只有两个大方向：</p>
+<ul>
+<li><strong>进不了 BIOS</strong> → 问题在硬件层（主板自检 POST 就没过）</li>
+<li><strong>进不了系统</strong> → 问题在系统&#x2F;引导层（硬件没问题，是 Windows 起不来）</li>
+</ul>
+<p>这两条路的排查方法完全不同。所以本文不讲”黑屏怎么办”，而是教你<strong>先判断自己卡在哪一层</strong>，再对症下药。判断对了，一半的问题根本不用拆机。</p>
+<h2 id="一、先回答三个问题，立刻知道卡在哪层"><a href="#一、先回答三个问题，立刻知道卡在哪层" class="headerlink" title="一、先回答三个问题，立刻知道卡在哪层"></a>一、先回答三个问题，立刻知道卡在哪层</h2><p>开机后，按顺序问自己这三个问题——<strong>只要第一个问题答完，路线就定了</strong>：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">问题 1：主机通不通电？</span><br><span class="line">  → 电源灯不亮、风扇不转、按键毫无反应 = 供电层问题</span><br><span class="line">     （先回看第一篇「完全不开机」的决策树，本文不重复）</span><br><span class="line"></span><br><span class="line">问题 2：屏幕有没有任何输出？（显示器绿灯还是橙灯？有没有 No Signal？）</span><br><span class="line">  → 有信号但一闪而过/有 Logo 后黑 = 往下答问题 3</span><br><span class="line">  → 全程无信号、屏幕提示&quot;无信号&quot; = POST 卡住（路线 A）</span><br><span class="line">     ★ 快速验证：按一下键盘的 NumLock / CapsLock 灯</span><br><span class="line">        · 灯能亮 = 系统其实在跑，只是没显示 → 直接跳「路线 C」</span><br><span class="line">        · 灯不亮 = 系统根本没启动 → 路线 A（卡在硬件自检）</span><br><span class="line"></span><br><span class="line">问题 3：能不能进 BIOS？（开机连点 Del / F2 / F12，能不能看到蓝色/图形设置界面）</span><br><span class="line">  → 进得去 BIOS = 硬件自检通过，问题在系统 → 路线 B</span><br><span class="line">  → 进不去 BIOS = 还是路线 A</span><br></pre></td></tr></table></div></div></div>
+
+<p>把结论套进下面这张表，你 80% 的疑惑就有答案了：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>你看到的现象</th>
+<th>卡在哪一层</th>
+<th>走哪条路线</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>完全无反应：灯不亮、风扇不转</td>
+<td>供电层</td>
+<td>路线 0（见第一篇「完全不开机」）</td>
+</tr>
+<tr>
+<td>灯亮风扇转、屏幕始终无信号、键盘灯不亮</td>
+<td>硬件层（POST 卡住）</td>
+<td><strong>路线 A</strong>：DEBUG 灯 + 最小系统法</td>
+</tr>
+<tr>
+<td>能看到主板 Logo &#x2F; BIOS，但进系统转圈、黑屏、报错</td>
+<td>系统引导层</td>
+<td><strong>路线 B</strong>：引导修复</td>
+</tr>
+<tr>
+<td>能听到开机声 &#x2F; 键盘灯能亮，就是没画面</td>
+<td>显示输出层</td>
+<td><strong>路线 C</strong>：显卡 &#x2F; 线材 &#x2F; 显示器</td>
+</tr>
+</tbody></table></div>
+<div class="note note--info"><span class="note-title">※ 记住这个分水岭</span><b>能不能进 BIOS，是黑屏排查的第一分界线。</b>BIOS 界面是主板在"不依赖操作系统"的情况下自己画出来的——只要它能出现，就证明<b>主板、CPU、内存在物理层面基本是好的</b>，你可以省掉一大堆拆机动作，直奔系统层。反过来，如果连 BIOS 都进不去，那就是硬件没通过自检，跟 Windows 有没有坏一点关系都没有，重装系统也救不了。</div>
+
+<h2 id="二、一分钟快速自检（先排掉”假黑屏”）"><a href="#二、一分钟快速自检（先排掉”假黑屏”）" class="headerlink" title="二、一分钟快速自检（先排掉”假黑屏”）"></a>二、一分钟快速自检（先排掉”假黑屏”）</h2><p>在打开机箱之前，先过一遍这个清单。<strong>能解决大约三成的”黑屏”，且全部零成本</strong>：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">□ 显示器电源灯是什么颜色？        橙灯/黄灯 = 没收到信号；蓝灯/白灯 = 有信号</span><br><span class="line">□ 显示器输入源选对了吗？          HDMI1 / HDMI2 / DP / VGA —— 换一个试试</span><br><span class="line">□ 信号线两头插紧了吗？接口有没有松动、弯针？</span><br><span class="line">□ 台式机有独显吗？                ★ 有独显时，视频线必须插「显卡」，不能插主板</span><br><span class="line">□ 最近动过什么？                  拆过机？加了内存/显卡？更新了 BIOS？清了 CMOS？</span><br><span class="line">□ 笔记本：外接一台显示器试试       外接能显示 = 屏或屏线问题，主机是好的</span><br><span class="line">□ 笔记本：Fn + 屏幕切换键          Fn+F4/F5/F8（各品牌不同）可能误切到了外接输出</span><br><span class="line">□ 键盘灯大法：按 NumLock / CapsLock，灯亮吗？</span><br><span class="line">   · 灯亮 = 系统在运行，纯粹是&quot;没显示&quot; → 直接走路线 C，别再折腾硬件</span><br><span class="line">   · 灯不亮 = 真·卡住 → 走路线 A</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--tip"><span class="note-title">💡 键盘灯大法：判断黑屏只花 5 秒</span>这是老维修最爱的技巧：开机后等十几秒，按一下键盘的 <b>NumLock</b> 或 <b>CapsLock</b>。如果指示灯能亮/能灭，说明<b>操作系统已经启动到能响应键盘了</b>——你的主板、CPU、内存、硬盘全都没问题，黑屏只是"显示输出"这一环断了（线没插对、屏幕坏了、显卡驱动崩了）。反之灯不亮，才是真的卡在硬件自检。<b>这一个动作，能帮你立刻省掉拆机这一步。</b></div>
+
+<h2 id="三、关键工具：主板的”两个嘴”"><a href="#三、关键工具：主板的”两个嘴”" class="headerlink" title="三、关键工具：主板的”两个嘴”"></a>三、关键工具：主板的”两个嘴”</h2><p>卡在硬件层（进不了 BIOS）时，主板其实一直在”说话”，只是大多数人不会听。它有两种表达方式：</p>
+<p><strong>① 报警音（Beep Code）</strong>——需要机箱里接一个小喇叭（蜂鸣器）。老机箱常见，新机箱往往不带，主板说明书里能找到插针位置。</p>
+<p><strong>② DEBUG 灯</strong>——现在的主流主板几乎都有，分两种：</p>
+<ul>
+<li><strong>EZ Debug LED &#x2F; Q-LED</strong>：四颗小灯，分别标着 <code>CPU</code> <code>DRAM</code> <code>VGA</code> <code>BOOT</code>，<strong>开机时哪颗常亮不灭，就指向哪个部件</strong>。这是最实用、最好懂的定位工具。</li>
+<li><strong>DEBUG 数码管</strong>：显示两位数字&#x2F;字母代码，高端主板才有，需要查主板手册对照。</li>
+</ul>
+<div class="note note--tip"><span class="note-title">💡 怎么用 DEBUG 灯</span>开机时四颗灯通常会依次快速闪过（自检中），<b>最后停在亮着不灭的那颗，就是卡住的环节</b>。比如 DRAM 灯常亮 = 内存自检没过；VGA 灯常亮 = 显卡没被识别。先记下是哪颗，再看下表动手——顺序别跳，因为 CPU 是内存的前提、内存是显卡的前提。</div>
+
+<p><strong>EZ Debug LED 四灯对照表：</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>灯</th>
+<th>含义</th>
+<th>优先动作（按顺序试）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>CPU</strong></td>
+<td>CPU 未识别 &#x2F; 供电异常</td>
+<td>断电检查 CPU 8pin 供电线插到底 → 重装 CPU、检查针脚是否弯 → 清 CMOS → 主板故障可能性高</td>
+</tr>
+<tr>
+<td><strong>DRAM</strong></td>
+<td>内存自检失败</td>
+<td>内存重插 + 擦金手指 → 只插一根、换槽交叉测试 → 清 CMOS &#x2F; 关掉 XMP → 换内存</td>
+</tr>
+<tr>
+<td><strong>VGA</strong></td>
+<td>显卡未被识别</td>
+<td>重插显卡、确认 PCIe 供电到位 → 有核显就拔独显用主板视频口 → 换线换显示器 → 换到另一条 PCIe 槽</td>
+</tr>
+<tr>
+<td><strong>BOOT</strong></td>
+<td>找不到启动设备</td>
+<td>硬盘数据线&#x2F;供电线重插 → 进 BIOS 看是否识别硬盘 → 调启动顺序 → 怀疑硬盘或引导损坏（转路线 B）</td>
+</tr>
+</tbody></table></div>
+<p><strong>报警音常见参考</strong>（⚠️ 因主板厂商而异，务必结合型号查表）：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>声音</th>
+<th>通常含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一短”滴”</td>
+<td>正常自检通过（这是你想要的声音）</td>
+</tr>
+<tr>
+<td>一长一短</td>
+<td>内存问题</td>
+</tr>
+<tr>
+<td>一长两短</td>
+<td>显卡问题</td>
+</tr>
+<tr>
+<td>一长三短 &#x2F; 连续短鸣</td>
+<td>内存未插好或显卡异常</td>
+</tr>
+<tr>
+<td>不断长鸣</td>
+<td>内存条未插紧，或供电异常</td>
+</tr>
+</tbody></table></div>
+<div class="note note--warn"><span class="note-title">⚠️ 报警音千万别硬背</span>报警音的含义取决于主板的 BIOS 品牌（AMI / Award / Phoenix 各不相同），同一串"滴滴"在不同主板上可能指向完全不同的部件。正确做法是：<b>用手机录下声音或拍下亮着的 DEBUG 灯，然后按「主板品牌 + 型号 + beep code」去搜</b>，官方手册和论坛里有精确对照表。硬背通用表，很容易误判。</div>
+
+<h2 id="四、路线-A：卡在-POST（连-BIOS-都进不去）——最小系统法实战"><a href="#四、路线-A：卡在-POST（连-BIOS-都进不去）——最小系统法实战" class="headerlink" title="四、路线 A：卡在 POST（连 BIOS 都进不去）——最小系统法实战"></a>四、路线 A：卡在 POST（连 BIOS 都进不去）——最小系统法实战</h2><p>如果你走的是这条路，说明硬件没通过自检。<strong>核心思路是”做减法”<strong>：把系统缩到最小，逐个排除。下面按”从最可能、最省事”到”最麻烦”的顺序走查，</strong>每做完一步就开机测一次，别一次改好几个地方</strong>（第一篇铁律三）。</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">准备：关机 → 拔掉电源线 → 按住开机键 5 秒放余电 → 摸金属机箱放静电</span><br><span class="line">      （笔记本：能拆就拔电池排线；在保机器先确认别撕保修贴）</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>第 1 步：显示输出链路（最容易被忽略，先查它）</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">· 换一根视频线、换一个接口（HDMI ↔ DP ↔ DVI）</span><br><span class="line">· 台式机有独显？线必须插显卡的输出口，不要插主板的</span><br><span class="line">· 换一台显示器 / 接电视试试</span><br><span class="line">预期看到：换成某根线/某个接口就出画面 → 问题只是线材或接口接触不良，收工</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>第 2 步：内存（黑屏头号原因）</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">· 断电，拔出所有内存条</span><br><span class="line">· 用橡皮擦沿金手指（金色触点）来回轻擦 3~5 下，去掉氧化层</span><br><span class="line">· 只插一根内存，插在主板标注的第一优先槽（多数主板是离 CPU 第二近的 A2 槽）</span><br><span class="line">· 不行 → 换另一根内存 / 换另一个插槽，交叉测试</span><br><span class="line">· 确认两端的卡扣都&quot;咔嗒&quot;扣紧（DDR5 是单边卡扣，别插歪）</span><br><span class="line">预期看到：插某根/某槽能点亮 → 另一根内存或那个插槽有问题，换掉即可</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--warn"><span class="note-title">⚠️ 装内存最容易犯的两个错</span>① 内存没插到底——看着插进去了，其实一端悬空，接触不到位。装的时候<b>两头都要听到"咔嗒"</b>，插好后垂直轻轻晃一下，纹丝不动才算到位。② 装完新内存没清 CMOS——加了不同规格的内存（容量/频率/品牌不同）时，BIOS 里的旧参数可能不认，开不了机，清一次 CMOS 十有八九就好（见第 3 步）。</div>
+
+<p><strong>第 3 步：清 CMOS（重置 BIOS）</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">三选一：</span><br><span class="line">· 断电，取下主板纽扣电池（CR2032），等 30 秒再装回</span><br><span class="line">· 主板上找 Clear CMOS 跳线/按钮，按说明短接 5~10 秒</span><br><span class="line">· 若能进 BIOS，直接在里面 Load Defaults / 恢复默认设置</span><br><span class="line">预期看到：清完就能进 BIOS → 之前是超频/XMP/BIOS 设置异常导致的（换硬件、断电后设置错乱很常见）</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>第 4 步：显卡</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">· 断电，重插显卡，确认 PCIe 供电线插到底</span><br><span class="line">· CPU 有核显的话：拔掉独显，把显示器接到主板的视频口</span><br><span class="line">· 换到另一条 PCIe 插槽试试</span><br><span class="line">预期看到：核显能亮、独显不亮 → 独显或它的供电/插槽问题；两条槽都不亮 → 进一步怀疑独显</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>第 5 步：最小系统法（关键时刻，把范围砍到最小）</strong></p>
+<p>这一步是硬件排查的”杀手锏”。目标：只留下<strong>能点亮 BIOS 的最小组合</strong>，其余全部断开。</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">只保留：主板 + CPU + 单根内存 + 核显（无核显则用独显）</span><br><span class="line">        + 电源 + 显示器 + 键盘</span><br><span class="line">全部断开：所有硬盘、光驱、扩展卡、前置 USB/音频跳线、多余内存、机箱风扇、</span><br><span class="line">        以及机箱面板的电源键/重启键排线</span><br></pre></td></tr></table></div></div></div>
+
+<p>断开后怎么开机？用<strong>螺丝刀短接主板上的 PWR_SW（电源开关）针脚</strong>一到两秒——这一步能顺手排除”机箱开关卡死&#x2F;排线短路”这种隐形 reboot 元凶。</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">· 最小系统能点亮 → 故障在你刚断开的部件里</span><br><span class="line">  → 逐个装回（一次只装一个！），装到哪个点不亮，就是哪个</span><br><span class="line">· 最小系统仍然不亮 → 嫌疑锁定在 主板/CPU/内存/电源 四者</span><br><span class="line">  → 结合 DEBUG 灯继续缩小</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>第 6 步：供电与主板</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">· 断电，重插主板 24pin、CPU 8pin 供电，确认&quot;咔嗒&quot;到位</span><br><span class="line">· 有条件借一个电源交叉测试（⚠️ 模组电源的线材不通用，务必连原装线一起借）</span><br><span class="line">预期看到：换电源就好 → 电源问题；换完仍不亮 → 主板/CPU 故障，进入送修评估</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--warn"><span class="note-title">⚠️ CPU 针脚是"零容错"区</span>如果你把 CPU 拆下来过，务必检查针脚（Intel LGA 在插座上，AMD AM4/AM5 在 CPU 背面）。<b>一根针脚歪了，就可能表现为彻底黑屏且无论如何都点不亮。</b>装 CPU 时垂直放入、对准防呆角，别压、别晃。针脚已经弯了的话，要么用针脚矫正针小心拨正（有风险），要么送修——不建议新手硬来。</div>
+
+<h2 id="五、路线-B：BIOS-能进，但进不了系统（引导层）"><a href="#五、路线-B：BIOS-能进，但进不了系统（引导层）" class="headerlink" title="五、路线 B：BIOS 能进，但进不了系统（引导层）"></a>五、路线 B：BIOS 能进，但进不了系统（引导层）</h2><p>能进 BIOS 是个好消息：<strong>硬件自检全过了</strong>，问题在硬盘、引导记录或系统文件。按顺序查：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">第 1 步  进 BIOS 看硬盘列表：你的系统盘在不在？</span><br><span class="line">   · 看不到硬盘 → 硬盘数据线/供电没插好，或硬盘本身故障（见第八节）</span><br><span class="line">   · 看得到     → 往下走</span><br><span class="line"></span><br><span class="line">第 2 步  看启动顺序（Boot Order）：系统盘是不是第一启动项？</span><br><span class="line">   · 顺便看启动模式：UEFI / Legacy 是否和你的系统匹配</span><br><span class="line">     （老硬盘配新主板，常因模式不对而进不去系统）</span><br><span class="line"></span><br><span class="line">第 3 步  最近装过系统 / 动过分区吗？→ 引导记录可能损坏，做「引导修复」（下面）</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>Windows 引导修复（用安装 U 盘进恢复环境）：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1. 用另一台电脑做一个 Windows 安装 U 盘，插到故障机上，从 U 盘启动</span><br><span class="line">2. 进入安装界面后，别点&quot;现在安装&quot;，点左下角的「修复计算机」</span><br><span class="line">3. 疑难解答 → 高级选项 → 依次尝试：</span><br><span class="line">   ① 启动修复（让系统自动修，最省事，先试它）</span><br><span class="line">   ② 命令提示符里手工重建引导，依次输入：</span><br><span class="line">        bootrec /fixmbr</span><br><span class="line">        bootrec /fixboot</span><br><span class="line">        bootrec /scanos</span><br><span class="line">        bootrec /rebuildbcd</span><br><span class="line">   ③ 系统还原（如果你之前开着还原点）</span><br><span class="line">   ④ 卸载最近的更新 / 驱动（&quot;更新完就进不去系统&quot;的救星）</span><br><span class="line">预期看到：rebuildbcd 提示&quot;已找到 Windows 安装&quot;并能加入列表 → 重启后能正常进系统</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--tip"><span class="note-title">💡 没有 U 盘？连续三次强关也能进修复界面</span>Windows 有个隐藏入口：开机出现 Logo 时<b>长按电源键强制关机，重复三次</b>，第四次开机会自动进入"自动修复"界面。进去后同样是"疑难解答 → 高级选项"，能直接用启动修复或命令提示符，没有 U 盘也能救急。</div>
+
+<h2 id="六、路线-C：能进系统，就是没画面（显示输出问题）"><a href="#六、路线-C：能进系统，就是没画面（显示输出问题）" class="headerlink" title="六、路线 C：能进系统，就是没画面（显示输出问题）"></a>六、路线 C：能进系统，就是没画面（显示输出问题）</h2><p>先回顾第二节的<strong>键盘灯大法</strong>——灯能亮、能听到开机声，就说明系统已经在跑了。这类”黑屏”其实是<strong>显示链路</strong>断了，跟硬件没关系：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 显示器输入源选对了吗？    在显示器菜单里手动切到正确的 HDMI/DP 通道</span><br><span class="line">2. 线插对了吗？              有独显必须插显卡，插主板当然没画面</span><br><span class="line">3. 笔记本：外接显示器测试     外接正常 = 屏线/屏幕/背光问题（或 Fn 切换到了外接）</span><br><span class="line">4. 能听到 Windows 登录声？</span><br><span class="line">   → 重启进「安全模式」：如果能正常显示，说明是显卡驱动崩溃</span><br><span class="line">   → 用 DDU 彻底卸载显卡驱动后重装最新稳定版（见第一篇 5.3 节工具表）</span><br><span class="line">5. 换了新显示器才不亮？       分辨率/刷新率超出显示器支持范围，或线材带宽不够</span><br><span class="line">   （4K 高刷要走 DP1.4 / HDMI2.1，普通老线会黑屏或闪屏）</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>预期看到</strong>：安全模式下能显示 → 确认是驱动问题；换线&#x2F;换接口后正常 → 是连接问题。两条都排除后，基本就是屏幕或显卡硬件本身。</p>
+<h2 id="七、整套动作的执行顺序"><a href="#七、整套动作的执行顺序" class="headerlink" title="七、整套动作的执行顺序"></a>七、整套动作的执行顺序</h2><p>黑屏最忌讳的就是”上来就全拆”。按这个顺序走，每一步都先做零成本的：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">第 0 步  回答三个问题，判断卡在哪一层（1 分钟）</span><br><span class="line">第 1 步  显示器电源灯 / 输入源 / 视频线 + 键盘灯大法（免费，2 分钟）</span><br><span class="line">         —— 这一步就能排掉近三成&quot;假黑屏&quot;</span><br><span class="line">第 2 步  看 DEBUG 灯 / 听报警音，拿到硬件线索（3 分钟）</span><br><span class="line">第 3 步  卡 POST（进不了 BIOS）→ 内存 → 清 CMOS → 显卡 → 最小系统法</span><br><span class="line">第 4 步  能进 BIOS → 查硬盘与启动项 → 做引导修复</span><br><span class="line">第 5 步  仍不行 → 供电 / 主板交叉测试 → 评估送修</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>什么情况别自己耗、直接送修：</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>信号</th>
+<th>做法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>闻到焦糊味 &#x2F; 电容鼓包 &#x2F; 冒烟</td>
+<td>立即断电送修，别再通电试</td>
+</tr>
+<tr>
+<td>DEBUG 灯指向 CPU&#x2F;主板，且机器已过保</td>
+<td>评估维修价值，主板&#x2F;CPU 维修常不如换新划算</td>
+</tr>
+<tr>
+<td>笔记本拆开需要撕保修贴</td>
+<td>先确认是否在保，别自己拆丢保修</td>
+</tr>
+<tr>
+<td>疑似硬盘故障且数据重要</td>
+<td>停止通电（越通电流数据越危险），找专业数据恢复</td>
+</tr>
+<tr>
+<td>针脚已弯、自己不敢处理</td>
+<td>送修，别硬拨导致针脚断裂</td>
+</tr>
+</tbody></table></div>
+<h2 id="八、验证与预防"><a href="#八、验证与预防" class="headerlink" title="八、验证与预防"></a>八、验证与预防</h2><p><strong>怎么确认真的修好了：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 冷启动测试：彻底关机 → 再开机，能正常进系统并稳定运行</span><br><span class="line">2. 连续开关机 3 次，每次都顺利进 BIOS、进系统（排除偶发接触问题）</span><br><span class="line">3. 进系统后跑一轮基础压力测试（参考第二篇的方法），确认不是&quot;勉强点亮&quot;</span><br></pre></td></tr></table></div></div></div>
+
+<p>只是”这次点亮了”不算数——接触不良和内存问题都可能时好时坏，多开关几次才算稳。</p>
+<p><strong>预防清单：</strong></p>
+<ul>
+<li>装完任何硬件（内存&#x2F;显卡）后，<strong>先确认插到底、卡扣到位</strong>，再合机箱</li>
+<li>加装内存&#x2F;换硬件后如果开不了机，<strong>先清一次 CMOS</strong>，别急着判定硬件坏</li>
+<li>每半年清一次灰，尤其散热器和内存插槽（积灰会影响接触）</li>
+<li>BIOS 别乱刷、”清 CMOS”后记得按需重新开启 XMP&#x2F;EXPO</li>
+<li>系统盘留足空间，并定期创建系统还原点——“进不了系统”时，还原点能救命</li>
+<li>重要数据始终有备份（第一篇铁律二：先备份，再折腾）</li>
+</ul>
+<h2 id="九、避坑与经验"><a href="#九、避坑与经验" class="headerlink" title="九、避坑与经验"></a>九、避坑与经验</h2><div class="note note--warn"><span class="note-title">⚠️ 四个最常见的坑</span>① <b>有独显却把线插主板</b>——这是"以为黑屏、其实没插对"的头号原因，先看一眼屏幕后面那根线。② <b>一黑屏就换主板/电源</b>——先用键盘灯大法和 DEBUG 灯定位，很多"黑屏"只是线松了或内存没插紧。③ <b>同时拆一堆东西还不记录</b>——最小系统法做完要"逐个装回、一次一个"，否则装不回去也不知道是哪一步的功劳（铁律三）。④ <b>清完 CMOS 忘了重开 XMP</b>——会误以为内存"坏了"或"变慢了"，其实只是设置被重置。</div>
+
+<div class="note note--tip"><span class="note-title">💡 四条实战心得</span>① 键盘灯大法先用上，5 秒定性（灯亮=显示问题，灯不亮=硬件问题）。② 拍下 DEBUG 灯和报警音去查表，比凭记忆猜准得多。③ 排查优先"借"而不是"买"——借内存、借电源、借显示器做替换测试，不花冤枉钱。④ 笔记本黑屏先外接显示器，一测就知道是屏坏还是主机坏，省去盲目拆机。</div>
+
+<h2 id="十、两个真实维修案例（维修日志格式）"><a href="#十、两个真实维修案例（维修日志格式）" class="headerlink" title="十、两个真实维修案例（维修日志格式）"></a>十、两个真实维修案例（维修日志格式）</h2><p>按第一篇第八节的格式，从维修日志里挑两个最常见的模板：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">【案例 A · POST 卡住型】2026-06-20</span><br><span class="line">【现象】台式机加装一根内存后开不了机，风扇转、屏幕全程无信号，键盘灯不亮</span><br><span class="line">【排查】① 主板 DEBUG 灯 DRAM 常亮 → 内存自检没过</span><br><span class="line">       ② 检查发现新内存一端卡扣没扣上，且插在了非首选槽</span><br><span class="line">       ③ 断电重插到 A2 槽、两端扣紧 → 恢复正常</span><br><span class="line">【结论】内存未插到底 + 插槽选择不当导致的黑屏，零成本解决</span><br></pre></td></tr></table></div></div></div>
+
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">【案例 B · 引导损坏型】2026-07-05</span><br><span class="line">【现象】Windows 更新后开机黑屏，能看到主板 Logo 后卡在转圈，进不了系统</span><br><span class="line">【排查】① 能进 BIOS，硬盘也在列表里 → 排除硬件，锁定引导层</span><br><span class="line">       ② 强关三次进「自动修复」失败</span><br><span class="line">       ③ U 盘进恢复环境 → bootrec /rebuildbcd 重建引导成功</span><br><span class="line">【结论】系统更新损坏引导记录，重建后正常进系统——数据未丢失，无需重装</span><br></pre></td></tr></table></div></div></div>
+
+<p>两个案例的共同点：<strong>都是先定位到”层”，再动手</strong>。案例 A 如果上来就换电源换主板，会白花几百块；案例 B 如果直接重装系统，就会丢掉没备份的数据而绕远路。</p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a>》——三层模型、硬件三板斧（内存&#x2F;CMOS&#x2F;最小系统法）与蓝屏速查表，本篇所有操作都建立在那套框架上</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-random-restart/">电脑不定时自动重启？三步定位真凶</a>》——本篇的”姊妹篇”，都在讲”如何让故障留下证据、按层定位”</li>
+<li>下一篇（系列第 4 篇）：<strong>《蓝屏不再靠拍照：读内存转储文件》</strong>——黑屏修好了，蓝屏还会来，这次教你用转储文件精确到是哪个驱动干的。</li>
+</ul>
+<p>黑屏看起来最像”报废”，其实它的分支比任何症状都清晰——<strong>先分清是进不了 BIOS 还是进不了系统，你就已经赢了一半</strong>。收好这篇文章，下次它黑给你看，别慌：先按一下键盘灯，让机器自己告诉你，它到底卡在了哪一步。</p>
+
+            </article>
+
+            <div class="share-row" id="shareRow">
+                <span class="share-label">分享这篇文章：</span>
+            </div>
+
+            <nav class="post-nav" id="postNav" aria-label="上下篇导航">
+                <span></span>
+                
+                    <a class="post-nav-item post-nav-item--next" href="/Blog/2026/09/pc-random-restart/">
+                        <span class="k">下一篇 →</span><span class="t">电脑不定时自动重启/关机？三步定位真凶，别急着换电源</span>
+                    </a>
+                
+            </nav>
+
+            <!-- ---- 评论（Giscus：数据存于 GitHub Discussions） ---- -->
+            
+            
+            
+            <section class="card comments" aria-labelledby="commentTitle">
+                <h2 class="card-title" id="commentTitle" style="text-align:left">
+                    💬 读者留言
+                </h2>
+                <p style="margin:0 0 18px;font-size:.76rem;color:var(--ink-3)">
+                    评论由 GitHub Discussions 托管，需登录 GitHub 后参与（评论区的 +1 即点赞）。
+                </p>
+                <script src="https://giscus.app/client.js"
+                        data-repo="molunanli/Blog"
+                        data-repo-id="R_kgDOUMGUlQ"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOUMGUlc4DEuis"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                </script>
+            </section>
+            
+            
+        </div>
+
+        <!-- ============ 侧边栏 ============ -->
+        <aside class="sidebar toc-sticky" aria-label="文章侧边信息">
+
+            
+            <button class="toc-toggle-mobile" id="tocToggle" type="button" aria-expanded="false" aria-controls="tocPanel">
+                📑 目录导航 <span class="arrow" aria-hidden="true">▼</span>
+            </button>
+
+            <nav class="card toc-card toc-panel" id="tocPanel" aria-label="文章目录">
+                <h2 class="card-title">📑 目录</h2>
+                <div class="toc-list" id="tocList">
+                    
+                        <a class="toc-link toc-link--h2" href="#一、先回答三个问题，立刻知道卡在哪层">一、先回答三个问题，立刻知道卡在哪层</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#二、一分钟快速自检（先排掉”假黑屏”）">二、一分钟快速自检（先排掉”假黑屏”）</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#三、关键工具：主板的”两个嘴”">三、关键工具：主板的”两个嘴”</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#四、路线-A：卡在-POST（连-BIOS-都进不去）——最小系统法实战">四、路线 A：卡在 POST（连 BIOS 都进不去）——最小系统法实战</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#五、路线-B：BIOS-能进，但进不了系统（引导层）">五、路线 B：BIOS 能进，但进不了系统（引导层）</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#六、路线-C：能进系统，就是没画面（显示输出问题）">六、路线 C：能进系统，就是没画面（显示输出问题）</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#七、整套动作的执行顺序">七、整套动作的执行顺序</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#八、验证与预防">八、验证与预防</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#九、避坑与经验">九、避坑与经验</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#十、两个真实维修案例（维修日志格式）">十、两个真实维修案例（维修日志格式）</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#相关阅读">相关阅读</a>
+                    
+                </div>
+            </nav>
+            
+
+            
+            <section class="card" aria-labelledby="relTitle">
+                <h2 class="card-title" id="relTitle">📎 相关文章</h2>
+                <ul class="related-list" id="relatedList">
+                    
+                        <li><a href="/Blog/2026/09/pc-random-restart/">电脑不定时自动重启/关机？三步定位真凶，别急着换电源</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a></li>
+                    
+                        <li><a href="/Blog/2026/09/craft-heatmap/">手把手：给博客做一张漫画风「创作热力图」</a></li>
+                    
+                        <li><a href="/Blog/2026/09/deploy-hexo-github-pages/">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</a></li>
+                    
+                </ul>
+            </section>
+            
+
+            <section class="card" aria-labelledby="authorTitle">
+                <h2 class="card-title" id="authorTitle">✍️ 关于作者</h2>
+                <div class="profile-avatar" style="width:76px;height:76px;font-size:2.3rem" aria-hidden="true">🐱</div>
+                <p class="profile-name" style="text-align:center">博主</p>
+                <p class="profile-role" style="text-align:center">BLOGGER</p>
+                <p class="profile-bio" style="text-align:center;font-size:.82rem">这里是作者简介。
+用一两句话介绍你自己，或者这个博客打算写些什么。
+</p>
+                <p style="text-align:center;margin-top:12px">
+                    <a class="link-more" href="/Blog/about">▶ 了解更多</a>
+                </p>
+            </section>
+
+        </aside>
+    </div>
+</div>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="shell">
+        <div class="footer-grid">
+            <div>
+                <span class="footer-h">关于本站</span>
+                <p style="font-size:.88rem;color:var(--ink-2);line-height:1.8">
+                    这里是页脚简介。用一两句话说明这个博客的内容方向，
+让读者一眼知道这里在写什么。
+
+                </p>
+                <p style="margin-top:12px">
+                    <span class="footer-seal" aria-hidden="true">我的<br>博客</span>
+                </p>
+            </div>
+            <div>
+                <span class="footer-h">快速导航</span>
+                <nav class="footer-list" aria-label="页脚导航">
+                    
+                        
+                        <a href="/Blog/">首页</a>
+                    
+                        
+                        <a href="/Blog/archives">归档</a>
+                    
+                        
+                        <a href="/Blog/tags">标签</a>
+                    
+                        
+                        <a href="/Blog/categories">分类</a>
+                    
+                        
+                        <a href="/Blog/about">关于</a>
+                    
+                </nav>
+            </div>
+            <div>
+                <span class="footer-h">热门分类</span>
+                <nav class="footer-list" aria-label="分类导航">
+                    
+                        <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                    
+                        <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <span>&copy; 2026 我的博客 — 保持热爱，持续记录。</span>
+            <span>Made with Hexo</span>
+        </div>
+    </div>
+</footer>
+
+<div class="fabs">
+    <button class="fab fab--top" id="topBtn" type="button" data-tip="回到顶部" title="回到顶部" aria-label="回到顶部" aria-hidden="true">⬆</button>
+    <button class="fab" id="fabSearch" type="button" data-tip="搜索文章" title="搜索文章" aria-label="搜索文章">🔍</button>
+</div>
+
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="站内搜索" aria-hidden="true">
+    <div class="search-panel">
+        <div class="search-field">
+            <span aria-hidden="true" style="font-size:1.1rem">🔍</span>
+            <input class="search-input" id="searchInput" type="search" placeholder="搜索文章标题、标签或关键词…" aria-label="搜索关键词" autocomplete="off">
+            <button class="icon-btn" id="searchClose" type="button" aria-label="关闭搜索">✕</button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+        <div class="search-hint">
+            <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
+            <span><kbd>Enter</kbd> 打开</span>
+            <span><kbd>Esc</kbd> 关闭</span>
+            <span><kbd>Ctrl</kbd>+<kbd>K</kbd> 随时唤起</span>
+        </div>
+    </div>
+</div>
+
+
+<script src="/Blog/js/app.js" defer></script>
+</body>
+</html>

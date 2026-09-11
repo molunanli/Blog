@@ -239,7 +239,7 @@
 <h3 id="路线-A：蓝屏型——查最近改了什么"><a href="#路线-A：蓝屏型——查最近改了什么" class="headerlink" title="路线 A：蓝屏型——查最近改了什么"></a>路线 A：蓝屏型——查最近改了什么</h3><p>日志出现 BugCheck，说明系统是”体面”地蓝屏后重启的，问题基本锁定在驱动、系统或内存。按上一篇的方法来：</p>
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 回忆蓝屏前你改了什么：装的新驱动 / 新软件 / 新硬件？→ 先卸掉它</span><br><span class="line">2. 记下蓝屏错误代码 → 对照上一篇第六节的蓝屏速查表</span><br><span class="line">3. 进安全模式 → 管理员命令行跑 sfc /scannow，修不了再跑</span><br><span class="line">   DISM /Online /Cleanup-Image /RestoreHealth</span><br><span class="line">4. 怀疑显卡驱动 → 用 DDU 彻底卸载后重装最新稳定版</span><br></pre></td></tr></table></div></div></div>
 
-<p><strong>预期看到</strong>：卸载嫌疑驱动 &#x2F; 修复系统文件后，蓝屏不再出现。如果你愿意深挖，下一篇我们会专门讲怎么读蓝屏内存转储文件（dump），精确到是哪个驱动干的。</p>
+<p><strong>预期看到</strong>：卸载嫌疑驱动 &#x2F; 修复系统文件后，蓝屏不再出现。如果你愿意深挖，后面的系列文章会专门讲怎么读蓝屏内存转储文件（dump），精确到是哪个驱动干的。</p>
 <h3 id="路线-B：高温型——高负载必死，先查散热"><a href="#路线-B：高温型——高负载必死，先查散热" class="headerlink" title="路线 B：高温型——高负载必死，先查散热"></a>路线 B：高温型——高负载必死，先查散热</h3><p>规律是”一玩游戏 &#x2F; 一渲染就重启，浏览网页没事”，这类十有八九是<strong>温度撞墙</strong>：CPU 或显卡过热触发保护，瞬间断电重启。因为它也是瞬间断电，所以日志里同样只有 Kernel-Power 41——<strong>这就是为什么断电型排查要先排除温度</strong>。</p>
 <p>验证与定位：</p>
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 装 HWiNFO（免费），先看空闲温度：台式机 CPU 待机 40~60℃ 算正常</span><br><span class="line">2. 跑 AIDA64「系统稳定性测试」单拷 FPU，或干脆打一把会重启的游戏</span><br><span class="line">3. 看满载最高温：CPU 到 90℃+ 已经很危险，100℃ 左右就是撞墙关机；</span><br><span class="line">   GPU 90℃+ 也偏高</span><br><span class="line">4. 手摸机箱出风口 / 听风扇——是不是积灰堵死、风扇不转、转速异常？</span><br></pre></td></tr></table></div></div></div>
@@ -324,7 +324,11 @@
             </div>
 
             <nav class="post-nav" id="postNav" aria-label="上下篇导航">
-                <span></span>
+                
+                    <a class="post-nav-item" href="/Blog/2026/09/pc-black-screen/">
+                        <span class="k">← 上一篇</span><span class="t">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</span>
+                    </a>
+                
                 
                     <a class="post-nav-item post-nav-item--next" href="/Blog/2026/09/publish-hexo-theme/">
                         <span class="k">下一篇 →</span><span class="t">把你的 Hexo 主题发布出去：GitHub + npm + 官方主题列表，小白完整指南</span>
@@ -413,13 +417,13 @@
                 <h2 class="card-title" id="relTitle">📎 相关文章</h2>
                 <ul class="related-list" id="relatedList">
                     
+                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
+                    
                         <li><a href="/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a></li>
                     
                         <li><a href="/Blog/2026/09/craft-heatmap/">手把手：给博客做一张漫画风「创作热力图」</a></li>
                     
                         <li><a href="/Blog/2026/09/deploy-hexo-github-pages/">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</a></li>
-                    
-                        <li><a href="/Blog/2026/09/welcome/">欢迎使用 mangaka 主题</a></li>
                     
                 </ul>
             </section>
