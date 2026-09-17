@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>蓝屏不再靠拍照：读内存转储文件，精确到是哪个驱动干的 · 我的博客</title>
+<meta name="description" content="上一篇教你看蓝屏代码，但代码只是『死亡证明』——同一个 0x0000003B，可能是显卡驱动、可能是杀毒软件，光看代码永远猜不准。真正的凶手名字，Windows 每次都写进了内存转储文件（dump）里。这篇教你从零配好转储、用 BlueScreenView 三分钟看图定位，再用 WinDbg 看调用">
+<meta name="theme-color" content="#f7f1e3">
+
+<!-- 防主题闪烁：在任何渲染前确定主题 -->
+<script>
+(function () {
+    var k = 'manga-blog-theme';
+    var saved = null;
+    try { saved = localStorage.getItem(k); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/Blog/css/style.css">
+<link rel="alternate" href="/Blog/atom.xml" title="我的博客" type="application/atom+xml">
+<script>window.SEARCH_JSON_URL = '/Blog/search.json';</script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body data-root="/Blog/">
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="site-header">
+    <div class="shell">
+        <nav class="navbar" aria-label="主导航">
+            <a class="brand" href="/Blog/" aria-label="我的博客 首页">
+                <span class="brand-seal" aria-hidden="true">博客</span>
+                我的博客
+            </a>
+
+            <ul class="nav-links">
+                
+                    
+                    <li><a href="/Blog/" data-nav="/">首页</a></li>
+                
+                    
+                    <li><a href="/Blog/archives" data-nav="/archives">归档</a></li>
+                
+                    
+                    <li><a href="/Blog/tags" data-nav="/tags">标签</a></li>
+                
+                    
+                    <li><a href="/Blog/categories" data-nav="/categories">分类</a></li>
+                
+                    
+                    <li><a href="/Blog/about" data-nav="/about">关于</a></li>
+                
+            </ul>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn" type="button" aria-label="搜索文章" title="搜索（Ctrl / ⌘ + K）">🔍</button>
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="切换至暗色模式" aria-pressed="false" title="切换至暗色模式">🌙</button>
+                <button class="icon-btn burger" id="burgerBtn" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="drawer">☰</button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<nav class="drawer" id="drawer" aria-label="移动端导航" aria-hidden="true">
+    <div class="drawer-head">
+        <span class="drawer-title">📖 目录导航</span>
+        <button class="icon-btn" id="drawerClose" type="button" aria-label="关闭菜单">✕</button>
+    </div>
+    
+        
+        <a href="/Blog/" data-nav="/">首页</a>
+    
+        
+        <a href="/Blog/archives" data-nav="/archives">归档</a>
+    
+        
+        <a href="/Blog/tags" data-nav="/tags">标签</a>
+    
+        
+        <a href="/Blog/categories" data-nav="/categories">分类</a>
+    
+        
+        <a href="/Blog/about" data-nav="/about">关于</a>
+    
+    <p class="drawer-note">我的博客 — 日式漫画风 · Hexo 主题</p>
+</nav>
+
+
+
+<main class="site-main" id="articleRoot"
+      data-post-id="bsod-dump-guide"
+      data-post-title="蓝屏不再靠拍照：读内存转储文件，精确到是哪个驱动干的"
+      data-post-likes="0">
+
+    
+
+<script>
+    /* 供 app.js 的目录滚动高亮使用（headings 由模板计算） */
+    var headings = [{"level":"2","id":"一、先搞懂三件事：dump-是什么、有哪些、放哪","text":"一、先搞懂三件事：dump 是什么、有哪些、放哪"},{"level":"2","id":"二、第二步：确保下次蓝屏会留证","text":"二、第二步：确保下次蓝屏会留证"},{"level":"2","id":"三、傻瓜路线：BlueScreenView，三分钟读懂","text":"三、傻瓜路线：BlueScreenView，三分钟读懂"},{"level":"2","id":"四、进阶路线：WinDbg-看调用栈，抓到真凶","text":"四、进阶路线：WinDbg 看调用栈，抓到真凶"},{"level":"2","id":"五、最关键一步：把”驱动名”翻译成”哪台设备-哪个软件”","text":"五、最关键一步：把”驱动名”翻译成”哪台设备&#x2F;哪个软件”"},{"level":"2","id":"六、重要认知：Windows-自己的文件，常常是”背锅侠”","text":"六、重要认知：Windows 自己的文件，常常是”背锅侠”"},{"level":"2","id":"七、两个真实-dump-分析案例","text":"七、两个真实 dump 分析案例"},{"level":"2","id":"八、验证与预防","text":"八、验证与预防"},{"level":"2","id":"九、避坑与经验","text":"九、避坑与经验"},{"level":"2","id":"相关阅读","text":"相关阅读"}];
+</script>
+
+<div class="shell">
+    <nav class="crumbs" aria-label="面包屑导航">
+        <a href="/Blog/">首页</a><span class="sep" aria-hidden="true">›</span>
+        
+            <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a><span class="sep" aria-hidden="true">›</span>
+        
+        <span id="crumbCurrent">蓝屏不再靠拍照：读内存转储文件，精确到是哪个驱动干的</span>
+    </nav>
+</div>
+
+<div class="shell">
+    <div class="grid grid--sidebar">
+
+        <!-- ============ 正文 ============ -->
+        <div class="stack">
+            <section class="article-head" id="articleHead">
+                
+                    <a class="chip chip--cat" href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                
+                <h1 class="article-title">蓝屏不再靠拍照：读内存转储文件，精确到是哪个驱动干的</h1>
+                <div class="article-meta">
+                    <span>✍️ 博主</span>
+                    <span>📅 令和8年9月17日</span>
+                    <span>⏱ 阅读约 16 分钟</span>
+                    
+                    
+                </div>
+                <div class="tag-list" style="margin-top:14px">
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">#电脑维修</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/Windows/">#Windows</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%B3%BB%E7%BB%9F/">#系统</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E9%A9%B1%E5%8A%A8/">#驱动</a>
+                    
+                </div>
+            </section>
+
+            <article class="card article-body" id="articleBody">
+                <p>这是「电脑维修」系列的第四篇。第一篇给了你蓝屏代码速查表，第二篇让你关掉”蓝屏自动重启”、把画面拍下来。到这里，你手里已经有<strong>错误代码</strong>了——比如 <code>MEMORY_MANAGEMENT</code>、<code>0x0000003B</code>。</p>
+<p>但你可能已经发现一个问题：<strong>同一个代码，去搜结果五花八门</strong>。有人说内存坏了，有人说显卡驱动，有人说是杀毒软件。你按照代码去换内存，可能白花钱。</p>
+<p>原因很简单：蓝屏代码只说明<strong>死法</strong>，不说明<strong>凶手</strong>。就像”死于中毒”——毒是什么，得做尸检。而 Windows 每次蓝屏时，都悄悄把”现场”完整保存了下来，那就是<strong>内存转储文件（dump）</strong>。</p>
+<p>这篇就讲怎么打开这份尸检报告。读完你会发现：<strong>蓝屏其实是最”诚实”的故障</strong>，它会明确告诉你是谁干的。</p>
+<h2 id="一、先搞懂三件事：dump-是什么、有哪些、放哪"><a href="#一、先搞懂三件事：dump-是什么、有哪些、放哪" class="headerlink" title="一、先搞懂三件事：dump 是什么、有哪些、放哪"></a>一、先搞懂三件事：dump 是什么、有哪些、放哪</h2><p>蓝屏那一刻，系统会在崩溃前把内存里的关键内容”拍快照”存到硬盘上，这就是<strong>转储文件（memory dump）</strong>。转储类型决定了这份快照有多全：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>文件大小</th>
+<th>够用吗</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>小内存转储</strong>（256KB）</td>
+<td>几百 KB</td>
+<td>✅ <strong>日常排查首选</strong>，够看清是哪个驱动崩的</td>
+<td><code>C:\Windows\Minidump\</code></td>
+</tr>
+<tr>
+<td>内核内存转储</td>
+<td>内存的 1&#x2F;3 左右</td>
+<td>更全，但文件较大</td>
+<td><code>C:\Windows\MEMORY.DMP</code></td>
+</tr>
+<tr>
+<td>完整内存转储</td>
+<td>≈ 物理内存大小（16G 内存 &#x3D; 16G 文件）</td>
+<td>开发级调试才需要，别日常开</td>
+<td><code>C:\Windows\MEMORY.DMP</code></td>
+</tr>
+<tr>
+<td>自动内存转储</td>
+<td>由系统权衡</td>
+<td>Windows 11 的<strong>默认值</strong>，可用</td>
+<td><code>C:\Windows\MEMORY.DMP</code></td>
+</tr>
+</tbody></table></div>
+<div class="note note--tip"><span class="note-title">💡 你其实只需要看一个文件夹</span>不用管那么多类型，记住一个路径就够：<b><code>C:\Windows\Minidump\</code></b>。这里的小内存转储文件命名为 <code>MMDDYY-序号-第几份.dmp</code>（例如 <code>091726-12345-01.dmp</code>），每个通常只有几百 KB。<b>有几个文件 ≈ 蓝屏过几次</b>——顺手就能看出问题多频繁。</div>
+
+<p>**开工前先确认有没有”尸体”**：Win+R → 输入 <code>C:\Windows\Minidump</code> 回车。</p>
+<ul>
+<li>看到一堆 <code>.dmp</code> 文件 → 太好了，直接跳到第三节</li>
+<li>文件夹不存在或空空如也 → 说明系统没保留（可能被清理工具删了，或没配置转储），先看第二节</li>
+</ul>
+<div class="note note--warn"><span class="note-title">⚠️ 注意：很多"优化软件"会清掉 dump</span>各种"电脑加速/清理大师"常把 Minidump 当垃圾清空——一旦清了，下次蓝屏就没有证据了，只能干等重犯。<b>排查蓝屏期间，别让清理工具碰这个目录</b>；也可以把重要 dump 复制一份到桌面留档。</div>
+
+<h2 id="二、第二步：确保下次蓝屏会留证"><a href="#二、第二步：确保下次蓝屏会留证" class="headerlink" title="二、第二步：确保下次蓝屏会留证"></a>二、第二步：确保下次蓝屏会留证</h2><p>如果 Minidump 是空的，先做好这三件事，让下一次蓝屏能留下完整证据。</p>
+<p>**① 关掉”蓝屏自动重启”**（第二篇讲过，这里快速回顾）：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Win+R → sysdm.cpl → 「高级」→ 「启动和故障恢复」→ 设置</span><br><span class="line">→ 取消勾选「自动重新启动」→ 确定</span><br></pre></td></tr></table></div></div></div>
+
+<p>这样蓝屏会<strong>停在画面上</strong>，你有时间拍照记录代码。</p>
+<p><strong>② 确认转储类型</strong>（就在同一个窗口里）：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">同一个「启动和故障恢复」对话框 → 「写入调试信息」下拉框</span><br><span class="line">选：小内存转储(256KB)</span><br><span class="line">转储文件目录保持默认：%SystemRoot%\Minidump</span><br><span class="line">勾选「覆盖任何现有文件」→ 确定</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>③ 确认系统盘有空间</strong>：转储文件要写进系统盘，留出至少 1~2GB 余量，否则可能写入失败。</p>
+<div class="note note--info"><span class="note-title">※ 配置完不代表以前有</span>转储设置只对<b>之后</b>发生的蓝屏生效。如果你平时没配、历史 dump 又被清了，那就先这么设着，等下一次蓝屏——或者主动复现（跑原来必崩的操作）。别担心"等不来"，这类问题通常会再犯。</div>
+
+<h2 id="三、傻瓜路线：BlueScreenView，三分钟读懂"><a href="#三、傻瓜路线：BlueScreenView，三分钟读懂" class="headerlink" title="三、傻瓜路线：BlueScreenView，三分钟读懂"></a>三、傻瓜路线：BlueScreenView，三分钟读懂</h2><p>不想装复杂工具，就用 <strong>BlueScreenView</strong>——一个绿色小程序，打开就出结论。</p>
+<p><strong>安装：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 搜索 BlueScreenView，认准作者 NirSoft 的官网（nirsoft.net）</span><br><span class="line">   ⚠️ 别去第三方下载站，很多&quot;汉化版&quot;捆绑垃圾软件</span><br><span class="line">2. 下载解压（无需安装），双击 BlueScreenView.exe</span><br><span class="line">3. 首次打开可能会问是否允许，放行即可</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>使用：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. 程序会自动扫描 C:\Windows\Minidump 并列出所有蓝屏记录</span><br><span class="line">2. 如果没有自动加载：Options → Advanced Options → </span><br><span class="line">   指定「Load from the following MiniDump folder」→ 选 C:\Windows\Minidump</span><br><span class="line">3. 结果分上下两栏：</span><br><span class="line">   · 上半栏：每个 dump 一条，看「Crash Time」找最近一次</span><br><span class="line">   · 下半栏：那次崩溃时内存里加载的驱动，</span><br><span class="line">     会自动把「嫌疑驱动」高亮成粉红色</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>上半栏最该看的四列：</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>列名</th>
+<th>含义</th>
+<th>怎么用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Crash Time</td>
+<td>崩溃时间</td>
+<td>和你的”几点在干嘛”对上，确认是不是同一次故障</td>
+</tr>
+<tr>
+<td>Bug Check Code</td>
+<td>错误代码（如 <code>0x0000003B</code>）</td>
+<td>对应第一篇的蓝屏速查表，先看大方向</td>
+</tr>
+<tr>
+<td>Bug Check String</td>
+<td>代码的文字名（如 <code>SYSTEM_SERVICE_EXCEPTION</code>）</td>
+<td>比纯数字好记</td>
+</tr>
+<tr>
+<td><strong>Caused By Driver</strong></td>
+<td><strong>被判定为凶手的文件</strong>（如 <code>nvlddmkm.sys</code>）</td>
+<td>排查的起点，<strong>但它是”嫌疑”不是”判决”</strong></td>
+</tr>
+</tbody></table></div>
+<div class="note note--warn"><span class="note-title">⚠️ Caused By Driver 只是"启发式猜测"</span>BlueScreenView 会从崩溃时的调用栈里挑一个"最像凶手"的驱动标出来，<b>它经常猜对，但不保证</b>。尤其当它标的是 <code>ntoskrnl.exe</code>、<code>ntfs.sys</code>、<code>win32k.sys</code> 这类 Windows 自带核心文件时，多半是误报（第六节专门讲）。<b>要下判决，得看第四节 WinDbg 的调用栈。</b></div>
+
+<p><strong>接下来做什么</strong>：拿到那个 <code>.sys</code> 文件名，先别急着动，跳到<strong>第五节</strong>——那里教你把这个名字翻译成”到底是哪台设备&#x2F;哪个软件”。想确认判断无误，再走第四节的 WinDbg。</p>
+<h2 id="四、进阶路线：WinDbg-看调用栈，抓到真凶"><a href="#四、进阶路线：WinDbg-看调用栈，抓到真凶" class="headerlink" title="四、进阶路线：WinDbg 看调用栈，抓到真凶"></a>四、进阶路线：WinDbg 看调用栈，抓到真凶</h2><p>BlueScreenView 给你”嫌疑人”，**WinDbg 给你”证据链”**——它能还原崩溃发生时完整的函数调用顺序，从而区分”谁是真凶”和”谁只是被牵连”。</p>
+<p><strong>安装：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 打开 Microsoft Store，搜索「WinDbg」</span><br><span class="line">2. 安装微软官方那款（新版本已统一叫 WinDbg，旧名 WinDbg Preview）</span><br><span class="line">3. 首次启动会自动配置好符号服务器，无需手工设置</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>分析一个 dump：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. WinDbg → File → Open dump file → 选 C:\Windows\Minidump 里那个 .dmp</span><br><span class="line">2. 打开后它会自动开始分析，并在底部命令框自动执行 !analyze -v</span><br><span class="line">   · 如果没自动执行，手动在命令框输入：!analyze -v</span><br><span class="line">3. 等它跑完（首次需要联网下符号，可能等十几秒），</span><br><span class="line">   在输出里找下面这几个关键字段</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong><code>!analyze -v</code> 输出里重点看这几行：</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>BUGCHECK_CODE</code></td>
+<td>错误代码，如 <code>3b</code></td>
+</tr>
+<tr>
+<td><code>MODULE_NAME</code></td>
+<td><strong>崩溃模块名</strong>，如 <code>nvlddmkm</code></td>
+</tr>
+<tr>
+<td><code>IMAGE_NAME</code></td>
+<td>对应的驱动文件，如 <code>nvlddmkm.sys</code> ← <strong>这是凶手名字</strong></td>
+</tr>
+<tr>
+<td><code>FAILURE_BUCKET_ID</code></td>
+<td>微软内部的问题分类标签，搜它能找到同类案例</td>
+</tr>
+<tr>
+<td><code>PROCESS_NAME</code></td>
+<td>崩溃时正在跑的程序，如 <code>chrome.exe</code></td>
+</tr>
+<tr>
+<td><code>STACK_TEXT</code></td>
+<td><strong>函数调用栈</strong>——真凶通常出现在这里更靠上的位置</td>
+</tr>
+</tbody></table></div>
+<p><strong>看调用栈，是区分真凶与背锅侠的关键</strong>。<code>STACK_TEXT</code> 会列出崩溃瞬间一层层的调用关系，形如：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nt!KeBugCheckEx</span><br><span class="line">nt!KiBugCheckDispatch+0x69</span><br><span class="line">nt!KiSystemServiceHandler+0x7c</span><br><span class="line">nvlddmkm+0x1a2b3c        ← 第三方驱动出现在崩溃点附近</span><br><span class="line">nt!KiSystemServiceExit+0x9</span><br></pre></td></tr></table></div></div></div>
+
+<p>规律是：<strong>越靠近崩溃点（越靠上、越贴近 BugCheck）的第三方 <code>.sys</code>，嫌疑越大</strong>；排在下面的 <code>nt!xxx</code> 是 Windows 内核本身，往往是”被牵连的中间层”，不是元凶。</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">常用命令（在下方命令框输入）：</span><br><span class="line">!analyze -v          重新做一次完整分析</span><br><span class="line">lm                   列出崩溃时加载的模块</span><br><span class="line">lmvm nvlddmkm        查看某个模块的详细信息（版本、厂商、路径）</span><br><span class="line">kn                   显示当前调用栈</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--tip"><span class="note-title">💡 首次分析卡住别慌</span>WinDbg 第一次分析要联网从微软符号服务器下载对应版本的符号文件（symbol），慢是正常的，通常十几秒到一分钟。如果一直提示找不到符号，在命令框依次输入 <code>.symfix</code> 和 <code>.reload</code> 再跑 <code>!analyze -v</code>。符号只是"翻译表"，不下也能看，只是函数名会变成一串地址。</div>
+
+<h2 id="五、最关键一步：把”驱动名”翻译成”哪台设备-哪个软件”"><a href="#五、最关键一步：把”驱动名”翻译成”哪台设备-哪个软件”" class="headerlink" title="五、最关键一步：把”驱动名”翻译成”哪台设备&#x2F;哪个软件”"></a>五、最关键一步：把”驱动名”翻译成”哪台设备&#x2F;哪个软件”</h2><p><code>.sys</code> 文件名是给机器看的，不是给人看的。拿到 <code>nvlddmkm.sys</code> 这种名字，得先反查它属于谁。</p>
+<p><strong>三种反查方法（由易到难）：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">方法 1 · 直接搜文件名</span><br><span class="line">  把 nvlddmkm.sys 丢进搜索引擎 → 结果几乎都会告诉你它属于哪家产品</span><br><span class="line"></span><br><span class="line">方法 2 · 看文件属性</span><br><span class="line">  在 C:\Windows\System32\drivers\ 下找到该文件 → 右键 → 属性 → 详细信息</span><br><span class="line">  → 看「公司」「产品名称」两栏，一目了然</span><br><span class="line"></span><br><span class="line">方法 3 · 用 DriverView 扫一遍</span><br><span class="line">  NirSoft 的 DriverView 能列出所有已加载驱动及其厂商、路径，</span><br><span class="line">  适合确认可疑驱动是不是真装了、装在哪</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>常见驱动文件名速查（记住这几个高发户）：</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>驱动文件</th>
+<th>属于谁</th>
+<th>常见蓝屏代码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>nvlddmkm.sys</code></td>
+<td>NVIDIA 显卡驱动</td>
+<td><code>0x0000003B</code> <code>VIDEO_TDR_FAILURE</code></td>
+</tr>
+<tr>
+<td><code>amdkmdag.sys</code> &#x2F; <code>atikmdag.sys</code></td>
+<td>AMD 显卡驱动</td>
+<td><code>0x0000003B</code> <code>VIDEO_TDR_FAILURE</code></td>
+</tr>
+<tr>
+<td><code>igfx*.sys</code> &#x2F; <code>igdkmd*.sys</code></td>
+<td>Intel 核显驱动</td>
+<td><code>0x0000003B</code></td>
+</tr>
+<tr>
+<td><code>rt640x64.sys</code> &#x2F; <code>rtwlan*.sys</code></td>
+<td>Realtek 网卡&#x2F;无线网卡</td>
+<td><code>0x000000D1</code></td>
+</tr>
+<tr>
+<td><code>e1i*.sys</code> &#x2F; <code>netwtw*.sys</code></td>
+<td>Intel 网卡&#x2F;无线网卡</td>
+<td><code>0x000000D1</code></td>
+</tr>
+<tr>
+<td><code>klif.sys</code> &#x2F; <code>klbkfilt.sys</code></td>
+<td>卡巴斯基</td>
+<td><code>0x0000007E</code></td>
+</tr>
+<tr>
+<td><code>aswNetSec.sys</code> &#x2F; <code>aswSP.sys</code></td>
+<td>Avast 杀毒</td>
+<td><code>0x0000007E</code></td>
+</tr>
+<tr>
+<td><code>epfwwfp.sys</code> &#x2F; <code>ehdrv.sys</code></td>
+<td>ESET 安全软件</td>
+<td><code>0x0000007E</code></td>
+</tr>
+<tr>
+<td><code>mfe*.sys</code></td>
+<td>McAfee</td>
+<td><code>0x0000007E</code></td>
+</tr>
+<tr>
+<td><code>rtkvhd64.sys</code></td>
+<td>Realtek 声卡</td>
+<td>各类随机</td>
+</tr>
+<tr>
+<td><code>BthA2dp.sys</code> &#x2F; <code>btfilter.sys</code></td>
+<td>蓝牙驱动&#x2F;外设</td>
+<td>各类随机</td>
+</tr>
+</tbody></table></div>
+<p><strong>确定归属后，按这个顺序处理：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 显卡驱动 → 用 DDU 彻底卸载后重装「稳定版」（别追最新版，最新≠最稳）</span><br><span class="line">2. 网卡/音频/蓝牙等设备驱动 → 去设备厂商官网下对应型号的驱动，</span><br><span class="line">   或回滚到设备管理器里「属性 → 驱动程序 → 回退驱动程序」</span><br><span class="line">3. 杀毒/安全软件 → 更新到最新版；仍蓝屏就换一个，别装两个杀毒软件</span><br><span class="line">4. 外设驱动（打印机、加密狗、手写板等）→ 更新或临时拔掉设备验证</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--tip"><span class="note-title">💡 用完 DDU 重启一次再装</span>DDU（Display Driver Uninstaller）在<b>安全模式</b>下运行效果最好，卸载完<b>先重启一次</b>再装新驱动——不重启就装，残留文件可能没清干净，等于白卸。这也是第一篇 5.3 节工具表里提到的做法。</div>
+
+<h2 id="六、重要认知：Windows-自己的文件，常常是”背锅侠”"><a href="#六、重要认知：Windows-自己的文件，常常是”背锅侠”" class="headerlink" title="六、重要认知：Windows 自己的文件，常常是”背锅侠”"></a>六、重要认知：Windows 自己的文件，常常是”背锅侠”</h2><p>这是新手最容易走进的坑：打开 BlueScreenView，看到凶手写着 <code>ntoskrnl.exe</code>，心想”Windows 系统坏了，重装吧”——<strong>结果重装完照样蓝屏</strong>。</p>
+<p>因为 <code>ntoskrnl.exe</code>（内核）、<code>ntfs.sys</code>（文件系统）、<code>win32k.sys</code>（图形子系统）、<code>fltmgr.sys</code>（文件过滤）、<code>ndis.sys</code>（网络）这些<strong>都是 Windows 的核心组件</strong>，它们处在所有驱动调用的必经之路上。第三方驱动出错时，最后”倒在”这些核心组件里，报告就会把它们标成凶手。</p>
+<p><strong>判断是不是背锅的三个信号：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">信号 1：凶手是上面列的核心文件（ntoskrnl / ntfs.sys / win32k.sys / fltmgr.sys / ndis.sys …）</span><br><span class="line">信号 2：WinDbg 的 STACK_TEXT 里，崩溃点附近出现了第三方 .sys</span><br><span class="line">信号 3：同一台机器上，不同时间蓝屏，报告的&quot;凶手&quot;换来换去都是这些核心文件</span><br><span class="line"></span><br><span class="line">→ 三条中占两条，基本可以确定：真凶是调用栈里的第三方驱动，</span><br><span class="line">  核心文件只是替它&quot;接了最后一棒&quot;</span><br></pre></td></tr></table></div></div></div>
+
+<p>反过来，如果<strong>同一个第三方驱动在多次蓝屏里反复出现</strong>，那基本实锤——这就是为什么第一节要提醒你<strong>保留所有 dump、按时间排序看全貌</strong>，而不是只看最近一份。</p>
+<h2 id="七、两个真实-dump-分析案例"><a href="#七、两个真实-dump-分析案例" class="headerlink" title="七、两个真实 dump 分析案例"></a>七、两个真实 dump 分析案例</h2><p>按老规矩，从维修日志里挑两个最典型的过程，完整走一遍。</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">【案例 A · 显卡驱动型】2026-05-14</span><br><span class="line">【现象】组装机玩 3D 游戏 10 分钟内必蓝屏，代码 0x0000003B，</span><br><span class="line">       看视频、办公全天正常</span><br><span class="line">【排查】① C:\Windows\Minidump 下已有 6 个 dump —— 问题已经反复发生</span><br><span class="line">       ② BlueScreenView：最近一次 Caused By Driver 高亮 nvlddmkm.sys</span><br><span class="line">       ③ WinDbg !analyze -v：</span><br><span class="line">            BUGCHECK_CODE: 3b</span><br><span class="line">            MODULE_NAME:  nvlddmkm</span><br><span class="line">            IMAGE_NAME:   nvlddmkm.sys</span><br><span class="line">            PROCESS_NAME: game.exe</span><br><span class="line">          STACK_TEXT 里 nvlddmkm 紧贴崩溃点 → 确认是显卡驱动</span><br><span class="line">       ④ 用户回忆：一周前刚更新到最新版显卡驱动</span><br><span class="line">【结论】安全模式用 DDU 彻底卸载 → 重启 → 装回「此前稳定版」驱动</span><br><span class="line">       → 复现同一游戏 1 小时无蓝屏，观察两周无复发</span><br></pre></td></tr></table></div></div></div>
+
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">【案例 B · 误报型（重点看这个）】2026-08-30</span><br><span class="line">【现象】笔记本浏览网页时随机蓝屏，代码 0x0000007E，</span><br><span class="line">       一天能犯两三次，无规律</span><br><span class="line">【排查】① BlueScreenView 上半栏显示 Caused By Driver: ntoskrnl.exe</span><br><span class="line">       ② 差点误判成&quot;系统坏了要重装&quot; —— 但注意到：</span><br><span class="line">          这是「核心文件」，属于典型的背锅信号</span><br><span class="line">       ③ WinDbg 看 STACK_TEXT，发现崩溃点附近有第三方过滤驱动</span><br><span class="line">            klif.sys（某安全软件的网络过滤驱动）</span><br><span class="line">       ④ 进一步用 lmvm klif 确认厂商与版本：装的是很老的版本</span><br><span class="line">       ⑤ 回看全部 5 个 dump：有 4 个的栈里都出现 klif.sys</span><br><span class="line">【结论】更新该安全软件到最新版后观察一周，蓝屏消失</span><br><span class="line">       如果更新仍犯 → 卸载换用别的安全软件</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>两个案例对读</strong>：案例 A 一眼看穿，因为它报的就是第三方驱动；案例 B 差点被”自己人”带偏——<strong>这正是必须走 WinDbg 看调用栈的原因</strong>。只有 BlueScreenView，你可能会把一台好机器重装三遍。</p>
+<h2 id="八、验证与预防"><a href="#八、验证与预防" class="headerlink" title="八、验证与预防"></a>八、验证与预防</h2><p><strong>怎么确认真的修好了：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 复原环境：把引发蓝屏的场景完整复现（同一游戏/同一个操作）</span><br><span class="line">2. 加码验证：比原来更狠地跑——原来 10 分钟崩，就连续跑 1 小时</span><br><span class="line">3. 清空旧 dump，观察两周：C:\Windows\Minidump 不再新增文件</span><br><span class="line">   （⚠️ 清理前先把旧 dump 备份走，否则无法比对&quot;是不是同一个驱动&quot;）</span><br></pre></td></tr></table></div></div></div>
+
+<p>第三条最靠谱：**”最近没犯”不是证据，”一段时间内不再新增 dump”才是**。</p>
+<p><strong>预防清单：</strong></p>
+<ul>
+<li>保持”小内存转储”设置别关——下次出问题时，它就是你的证据</li>
+<li>显卡驱动认准<strong>稳定版</strong>，不追最新；更新前记一笔版本号，方便回滚</li>
+<li>少装常驻型安全软件，<strong>绝不装两个杀毒软件</strong>（这是 0x7E 类蓝屏的常见来源）</li>
+<li>每周去可靠性监视器（Win+R → <code>perfmon /rel</code>）扫一眼，异常早发现</li>
+<li>重要数据保持备份——蓝屏本身不毁数据，但反复强制断电会（第一篇铁律二）</li>
+</ul>
+<h2 id="九、避坑与经验"><a href="#九、避坑与经验" class="headerlink" title="九、避坑与经验"></a>九、避坑与经验</h2><div class="note note--warn"><span class="note-title">⚠️ 四个坑，一个比一个贵</span>① <b>只看错误代码就下结论</b>——同一代码多个死因，必须读 dump 才能定位。② <b>看到 ntoskrnl.exe 就重装系统</b>——它多半是背锅侠，重装白费一小时还可能丢数据，先看调用栈。③ <b>用"一键蓝屏修复工具"</b>——这类工具大多捆绑流氓软件、改注册表，比蓝屏还难收拾；蓝屏排查只需要本文这几个正规工具。④ <b>把 dump 随便上传到陌生网站分析</b>——dump 是内存快照，<b>可能包含你当时输入的密码、聊天内容等隐私</b>；只在自己电脑上用本地工具分析（BlueScreenView / WinDbg 都是纯本地运行）。</div>
+
+<div class="note note--tip"><span class="note-title">💡 四条实战心得</span>① 分析前先把所有 dump <b>按时间正序</b>排一遍，重点看"第一次蓝屏"那份——最早的现场往往最干净。② 判断真凶的标准是<b>"反复出现"</b>：同一个驱动在多个 dump 里都出现，才算实锤；只出现一次可能是偶然。③ 确认是驱动问题后，<b>优先"回滚"而不是"升级"</b>——能用的旧版本比不确定的新版本稳。④ 修完别删 dump，留档一个月；万一复发，能直接比对是不是同一个凶手。</div>
+
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a>》——蓝屏代码速查表与四层排查模型，本篇的起点</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-random-restart/">电脑不定时自动重启？三步定位真凶</a>》——路线 A「蓝屏型」的完整上游：事件日志里怎么发现 BugCheck</li>
+<li>下一篇（系列第 5 篇）：<strong>《电脑卡到怀疑人生：重装前的 7 步体检》</strong>——从”崩溃”切换到”变慢”，这次教你判断：哪些卡顿重装能救，哪些重装了也白搭。</li>
+</ul>
+<p>蓝屏不可怕，可怕的是<strong>拿着错误代码瞎猜</strong>。下次它再蓝给你看，别急着拍照发帖——先打开 <code>C:\Windows\Minidump</code>，让 Windows 自己把凶手名字念出来。</p>
+
+            </article>
+
+            <div class="share-row" id="shareRow">
+                <span class="share-label">分享这篇文章：</span>
+            </div>
+
+            <nav class="post-nav" id="postNav" aria-label="上下篇导航">
+                <span></span>
+                
+                    <a class="post-nav-item post-nav-item--next" href="/Blog/2026/09/pc-black-screen/">
+                        <span class="k">下一篇 →</span><span class="t">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</span>
+                    </a>
+                
+            </nav>
+
+            <!-- ---- 评论（Giscus：数据存于 GitHub Discussions） ---- -->
+            
+            
+            
+            <section class="card comments" aria-labelledby="commentTitle">
+                <h2 class="card-title" id="commentTitle" style="text-align:left">
+                    💬 读者留言
+                </h2>
+                <p style="margin:0 0 18px;font-size:.76rem;color:var(--ink-3)">
+                    评论由 GitHub Discussions 托管，需登录 GitHub 后参与（评论区的 +1 即点赞）。
+                </p>
+                <script src="https://giscus.app/client.js"
+                        data-repo="molunanli/Blog"
+                        data-repo-id="R_kgDOUMGUlQ"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOUMGUlc4DEuis"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                </script>
+            </section>
+            
+            
+        </div>
+
+        <!-- ============ 侧边栏 ============ -->
+        <aside class="sidebar toc-sticky" aria-label="文章侧边信息">
+
+            
+            <button class="toc-toggle-mobile" id="tocToggle" type="button" aria-expanded="false" aria-controls="tocPanel">
+                📑 目录导航 <span class="arrow" aria-hidden="true">▼</span>
+            </button>
+
+            <nav class="card toc-card toc-panel" id="tocPanel" aria-label="文章目录">
+                <h2 class="card-title">📑 目录</h2>
+                <div class="toc-list" id="tocList">
+                    
+                        <a class="toc-link toc-link--h2" href="#一、先搞懂三件事：dump-是什么、有哪些、放哪">一、先搞懂三件事：dump 是什么、有哪些、放哪</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#二、第二步：确保下次蓝屏会留证">二、第二步：确保下次蓝屏会留证</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#三、傻瓜路线：BlueScreenView，三分钟读懂">三、傻瓜路线：BlueScreenView，三分钟读懂</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#四、进阶路线：WinDbg-看调用栈，抓到真凶">四、进阶路线：WinDbg 看调用栈，抓到真凶</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#五、最关键一步：把”驱动名”翻译成”哪台设备-哪个软件”">五、最关键一步：把”驱动名”翻译成”哪台设备&amp;#x2F;哪个软件”</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#六、重要认知：Windows-自己的文件，常常是”背锅侠”">六、重要认知：Windows 自己的文件，常常是”背锅侠”</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#七、两个真实-dump-分析案例">七、两个真实 dump 分析案例</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#八、验证与预防">八、验证与预防</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#九、避坑与经验">九、避坑与经验</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#相关阅读">相关阅读</a>
+                    
+                </div>
+            </nav>
+            
+
+            
+            <section class="card" aria-labelledby="relTitle">
+                <h2 class="card-title" id="relTitle">📎 相关文章</h2>
+                <ul class="related-list" id="relatedList">
+                    
+                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-random-restart/">电脑不定时自动重启/关机？三步定位真凶，别急着换电源</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a></li>
+                    
+                        <li><a href="/Blog/2026/09/deploy-hexo-github-pages/">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</a></li>
+                    
+                </ul>
+            </section>
+            
+
+            <section class="card" aria-labelledby="authorTitle">
+                <h2 class="card-title" id="authorTitle">✍️ 关于作者</h2>
+                <div class="profile-avatar" style="width:76px;height:76px;font-size:2.3rem" aria-hidden="true">🐱</div>
+                <p class="profile-name" style="text-align:center">博主</p>
+                <p class="profile-role" style="text-align:center">BLOGGER</p>
+                <p class="profile-bio" style="text-align:center;font-size:.82rem">这里是作者简介。
+用一两句话介绍你自己，或者这个博客打算写些什么。
+</p>
+                <p style="text-align:center;margin-top:12px">
+                    <a class="link-more" href="/Blog/about">▶ 了解更多</a>
+                </p>
+            </section>
+
+        </aside>
+    </div>
+</div>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="shell">
+        <div class="footer-grid">
+            <div>
+                <span class="footer-h">关于本站</span>
+                <p style="font-size:.88rem;color:var(--ink-2);line-height:1.8">
+                    这里是页脚简介。用一两句话说明这个博客的内容方向，
+让读者一眼知道这里在写什么。
+
+                </p>
+                <p style="margin-top:12px">
+                    <span class="footer-seal" aria-hidden="true">我的<br>博客</span>
+                </p>
+            </div>
+            <div>
+                <span class="footer-h">快速导航</span>
+                <nav class="footer-list" aria-label="页脚导航">
+                    
+                        
+                        <a href="/Blog/">首页</a>
+                    
+                        
+                        <a href="/Blog/archives">归档</a>
+                    
+                        
+                        <a href="/Blog/tags">标签</a>
+                    
+                        
+                        <a href="/Blog/categories">分类</a>
+                    
+                        
+                        <a href="/Blog/about">关于</a>
+                    
+                </nav>
+            </div>
+            <div>
+                <span class="footer-h">热门分类</span>
+                <nav class="footer-list" aria-label="分类导航">
+                    
+                        <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                    
+                        <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <span>&copy; 2026 我的博客 — 保持热爱，持续记录。</span>
+            <span>Made with Hexo</span>
+        </div>
+    </div>
+</footer>
+
+<div class="fabs">
+    <button class="fab fab--top" id="topBtn" type="button" data-tip="回到顶部" title="回到顶部" aria-label="回到顶部" aria-hidden="true">⬆</button>
+    <button class="fab" id="fabSearch" type="button" data-tip="搜索文章" title="搜索文章" aria-label="搜索文章">🔍</button>
+</div>
+
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="站内搜索" aria-hidden="true">
+    <div class="search-panel">
+        <div class="search-field">
+            <span aria-hidden="true" style="font-size:1.1rem">🔍</span>
+            <input class="search-input" id="searchInput" type="search" placeholder="搜索文章标题、标签或关键词…" aria-label="搜索关键词" autocomplete="off">
+            <button class="icon-btn" id="searchClose" type="button" aria-label="关闭搜索">✕</button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+        <div class="search-hint">
+            <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
+            <span><kbd>Enter</kbd> 打开</span>
+            <span><kbd>Esc</kbd> 关闭</span>
+            <span><kbd>Ctrl</kbd>+<kbd>K</kbd> 随时唤起</span>
+        </div>
+    </div>
+</div>
+
+
+<script src="/Blog/js/app.js" defer></script>
+</body>
+</html>
