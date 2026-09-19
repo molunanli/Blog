@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>电脑卡到怀疑人生？重装前的 7 步体检，别急着清空 C 盘 · 我的博客</title>
+<meta name="description" content="电脑一卡，很多人第一反应是——重装吧。但重装是最贵的一招：花半天时间，丢一批数据，结果发现卡顿照旧。因为有一半的卡顿根本不在系统里：硬盘快满了、机械盘拖后腿、内存不够用、CPU 在降频、杀毒软件在打架。这篇给你一套重装前的 7 步体检流程，每步都有明确的判断标准和&#39;预期看到什么&#39;，最后告诉你：什么情">
+<meta name="theme-color" content="#f7f1e3">
+
+<!-- 防主题闪烁：在任何渲染前确定主题 -->
+<script>
+(function () {
+    var k = 'manga-blog-theme';
+    var saved = null;
+    try { saved = localStorage.getItem(k); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/Blog/css/style.css">
+<link rel="alternate" href="/Blog/atom.xml" title="我的博客" type="application/atom+xml">
+<script>window.SEARCH_JSON_URL = '/Blog/search.json';</script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body data-root="/Blog/">
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="site-header">
+    <div class="shell">
+        <nav class="navbar" aria-label="主导航">
+            <a class="brand" href="/Blog/" aria-label="我的博客 首页">
+                <span class="brand-seal" aria-hidden="true">博客</span>
+                我的博客
+            </a>
+
+            <ul class="nav-links">
+                
+                    
+                    <li><a href="/Blog/" data-nav="/">首页</a></li>
+                
+                    
+                    <li><a href="/Blog/archives" data-nav="/archives">归档</a></li>
+                
+                    
+                    <li><a href="/Blog/tags" data-nav="/tags">标签</a></li>
+                
+                    
+                    <li><a href="/Blog/categories" data-nav="/categories">分类</a></li>
+                
+                    
+                    <li><a href="/Blog/about" data-nav="/about">关于</a></li>
+                
+            </ul>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn" type="button" aria-label="搜索文章" title="搜索（Ctrl / ⌘ + K）">🔍</button>
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="切换至暗色模式" aria-pressed="false" title="切换至暗色模式">🌙</button>
+                <button class="icon-btn burger" id="burgerBtn" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="drawer">☰</button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<nav class="drawer" id="drawer" aria-label="移动端导航" aria-hidden="true">
+    <div class="drawer-head">
+        <span class="drawer-title">📖 目录导航</span>
+        <button class="icon-btn" id="drawerClose" type="button" aria-label="关闭菜单">✕</button>
+    </div>
+    
+        
+        <a href="/Blog/" data-nav="/">首页</a>
+    
+        
+        <a href="/Blog/archives" data-nav="/archives">归档</a>
+    
+        
+        <a href="/Blog/tags" data-nav="/tags">标签</a>
+    
+        
+        <a href="/Blog/categories" data-nav="/categories">分类</a>
+    
+        
+        <a href="/Blog/about" data-nav="/about">关于</a>
+    
+    <p class="drawer-note">我的博客 — 日式漫画风 · Hexo 主题</p>
+</nav>
+
+
+
+<main class="site-main" id="articleRoot"
+      data-post-id="pc-slow-checkup"
+      data-post-title="电脑卡到怀疑人生？重装前的 7 步体检，别急着清空 C 盘"
+      data-post-likes="0">
+
+    
+
+<script>
+    /* 供 app.js 的目录滚动高亮使用（headings 由模板计算） */
+    var headings = [{"level":"2","id":"一、先分清四种”卡”，方向立刻清晰","text":"一、先分清四种”卡”，方向立刻清晰"},{"level":"2","id":"二、体检前的-3-个准备动作","text":"二、体检前的 3 个准备动作"},{"level":"2","id":"三、7-步体检流程","text":"三、7 步体检流程"},{"level":"3","id":"第-1-步：磁盘空间——免费但最常被忽略","text":"第 1 步：磁盘空间——免费但最常被忽略"},{"level":"3","id":"第-2-步：启动项——决定”开机慢”的头号原因","text":"第 2 步：启动项——决定”开机慢”的头号原因"},{"level":"3","id":"第-3-步：硬盘健康与类型——“越用越卡”的隐形主因","text":"第 3 步：硬盘健康与类型——“越用越卡”的隐形主因"},{"level":"3","id":"第-4-步：内存——“特定程序卡”和”开着几个软件就卡”的元凶","text":"第 4 步：内存——“特定程序卡”和”开着几个软件就卡”的元凶"},{"level":"3","id":"第-5-步：散热与降频——“随机卡死”和”用久了变慢”的元凶","text":"第 5 步：散热与降频——“随机卡死”和”用久了变慢”的元凶"},{"level":"3","id":"第-6-步：病毒与流氓软件——“后台偷偷跑满-CPU”的元凶","text":"第 6 步：病毒与流氓软件——“后台偷偷跑满 CPU”的元凶"},{"level":"3","id":"第-7-步：供电——笔记本降频与台式机不稳","text":"第 7 步：供电——笔记本降频与台式机不稳"},{"level":"2","id":"四、体检结论：三类卡顿，三种命运","text":"四、体检结论：三类卡顿，三种命运"},{"level":"2","id":"五、那什么时候真的该重装？","text":"五、那什么时候真的该重装？"},{"level":"2","id":"六、验证与预防","text":"六、验证与预防"},{"level":"2","id":"七、避坑与经验","text":"七、避坑与经验"},{"level":"2","id":"八、两个真实维修案例（维修日志格式）","text":"八、两个真实维修案例（维修日志格式）"},{"level":"2","id":"相关阅读","text":"相关阅读"}];
+</script>
+
+<div class="shell">
+    <nav class="crumbs" aria-label="面包屑导航">
+        <a href="/Blog/">首页</a><span class="sep" aria-hidden="true">›</span>
+        
+            <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a><span class="sep" aria-hidden="true">›</span>
+        
+        <span id="crumbCurrent">电脑卡到怀疑人生？重装前的 7 步体检，别急着清空 C 盘</span>
+    </nav>
+</div>
+
+<div class="shell">
+    <div class="grid grid--sidebar">
+
+        <!-- ============ 正文 ============ -->
+        <div class="stack">
+            <section class="article-head" id="articleHead">
+                
+                    <a class="chip chip--cat" href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                
+                <h1 class="article-title">电脑卡到怀疑人生？重装前的 7 步体检，别急着清空 C 盘</h1>
+                <div class="article-meta">
+                    <span>✍️ 博主</span>
+                    <span>📅 令和8年9月19日</span>
+                    <span>⏱ 阅读约 15 分钟</span>
+                    
+                    
+                </div>
+                <div class="tag-list" style="margin-top:14px">
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">#电脑维修</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/Windows/">#Windows</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%B3%BB%E7%BB%9F/">#系统</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%A1%AC%E4%BB%B6/">#硬件</a>
+                    
+                </div>
+            </section>
+
+            <article class="card article-body" id="articleBody">
+                <p>这是「电脑维修」系列的第五篇。前四篇都在讲”坏得明显”的故障——不开机、黑屏、蓝屏、自动重启。这篇要处理一个更磨人的问题：<strong>电脑没坏，就是卡</strong>。</p>
+<p>卡顿是最模糊的症状。”卡”可能是开机要三分钟、可能是打开浏览器半天没反应、可能是打字都一顿一顿、也可能是一进游戏就掉帧。不同表现的成因完全不同，但因为”感觉系统该更新了”，大多数人的第一反应都是同一个——<strong>重装</strong>。</p>
+<p>先泼一盆冷水：<strong>重装是维修里”性价比最低”的一招</strong>。它要花你半天时间、要重装所有软件、有丢数据的风险——而且如果卡顿的根源在硬盘、内存或散热，重装完你会发现<strong>卡得一模一样</strong>。</p>
+<p>所以正确的顺序是：先体检，再决定。这篇给你一套 7 步体检流程，全部不拆机、不重装，跑完就能得出明确结论。</p>
+<h2 id="一、先分清四种”卡”，方向立刻清晰"><a href="#一、先分清四种”卡”，方向立刻清晰" class="headerlink" title="一、先分清四种”卡”，方向立刻清晰"></a>一、先分清四种”卡”，方向立刻清晰</h2><p>“卡”不是一个症状，是四种。先对照下表把自己归类——<strong>这决定了你后面重点看哪几步</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>你的表现</th>
+<th>优先怀疑</th>
+<th>重点体检步骤</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>用久了越来越卡</strong>：开机慢、点什么都转圈、越用越卡</td>
+<td>软件层（启动项&#x2F;垃圾&#x2F;病毒）+ 硬盘老化</td>
+<td>第 2、3、6 步</td>
+</tr>
+<tr>
+<td><strong>开机特别慢</strong>，进桌面后一两分钟才能用</td>
+<td>启动项过多 + 机械盘&#x2F;硬盘老化</td>
+<td>第 2、3 步</td>
+</tr>
+<tr>
+<td><strong>特定程序卡</strong>：只有浏览器&#x2F;游戏&#x2F;某个软件卡，别的正常</td>
+<td>那个软件本身 + 内存不足</td>
+<td>第 4 步 + 单程序排查</td>
+</tr>
+<tr>
+<td><strong>偶发卡死几秒</strong>：随机定住、风扇狂转、之后恢复</td>
+<td>散热降频 &#x2F; 内存 &#x2F; 供电</td>
+<td>第 5、4、7 步</td>
+</tr>
+</tbody></table></div>
+<p>一句话记法：**”越用越慢”先查软件和硬盘，”特定程序慢”先查内存和那个软件，”随机卡死”先查温度和供电。**</p>
+<h2 id="二、体检前的-3-个准备动作"><a href="#二、体检前的-3-个准备动作" class="headerlink" title="二、体检前的 3 个准备动作"></a>二、体检前的 3 个准备动作</h2><p>体检要有点”现场数据”，先做这三件事，5 分钟：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1. 记录三个基准数字（体检后对比用）：</span><br><span class="line">   · 开机时间：从按下电源到能正常操作，大约多少秒</span><br><span class="line">   · 系统盘可用空间：此电脑 → 右键 C 盘 → 属性，记下剩余 GB</span><br><span class="line">   · 一个&quot;卡&quot;的典型场景：比如&quot;打开 Excel 要等 20 秒&quot;</span><br><span class="line"></span><br><span class="line">2. 打开任务管理器，随时准备看：Ctrl + Shift + Esc</span><br><span class="line">   （这是整个体检最核心的工具，建议固定在任务栏）</span><br><span class="line"></span><br><span class="line">3. 关掉所有手动打开的软件，静置 2 分钟</span><br><span class="line">   → 让后台稳定下来，后面看占用才准</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--tip"><span class="note-title">💡 记录基准值比什么都重要</span>很多人修完卡顿后觉得"好像好一点了"——这是错觉。把开机秒数、C 盘剩余空间、某个固定操作的耗时记在手机备忘录里，<b>体检前后一对比，修没修好一目了然</b>。这也是首篇第八节"维修日志"习惯的延续。</div>
+
+<h2 id="三、7-步体检流程"><a href="#三、7-步体检流程" class="headerlink" title="三、7 步体检流程"></a>三、7 步体检流程</h2><p>按顺序走。每步都给出<strong>判断标准</strong>和<strong>预期看到什么</strong>——不达标才进入下一步的处理。</p>
+<h3 id="第-1-步：磁盘空间——免费但最常被忽略"><a href="#第-1-步：磁盘空间——免费但最常被忽略" class="headerlink" title="第 1 步：磁盘空间——免费但最常被忽略"></a>第 1 步：磁盘空间——免费但最常被忽略</h3><div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 此电脑 → 看 C 盘剩余空间</span><br><span class="line">2. 如果 C 盘剩余 &lt; 15%（比如 256G 盘剩不到 40G）</span><br><span class="line">   → 这就是卡顿元凶之一，系统需要空间做虚拟内存和临时文件</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>判断标准</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>C 盘剩余</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&gt; 25%</td>
+<td>正常，进第 2 步</td>
+</tr>
+<tr>
+<td>15% ~ 25%</td>
+<td>偏紧，先清理再继续</td>
+</tr>
+<tr>
+<td><strong>&lt; 15%</strong></td>
+<td><strong>显著致卡</strong>，优先处理</td>
+</tr>
+</tbody></table></div>
+<p><strong>清理方式</strong>（按安全度排序）：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 设置 → 系统 → 存储 → 存储感知 → 打开，让它自动清理临时文件</span><br><span class="line">2. Win+R → %temp% → 全选删除（删不掉的跳过，别强行删）</span><br><span class="line">3. 设置 → 应用 → 已安装的应用 → 按&quot;大小&quot;排序 → 卸载不认识的大块头</span><br><span class="line">4. 浏览器缓存：各浏览器设置里的&quot;清除浏览数据&quot;</span><br><span class="line">5. 别乱删 C:\Windows 下的文件，也别用&quot;一键清理&quot;工具乱扫</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>预期看到</strong>：清理后 C 盘剩余空间明显回升（目标是 &gt; 25%）。如果清理后卡顿依旧，说明主因不在这里。</p>
+<h3 id="第-2-步：启动项——决定”开机慢”的头号原因"><a href="#第-2-步：启动项——决定”开机慢”的头号原因" class="headerlink" title="第 2 步：启动项——决定”开机慢”的头号原因"></a>第 2 步：启动项——决定”开机慢”的头号原因</h3><div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + Shift + Esc → 任务管理器 → 「启动」选项卡</span><br><span class="line">→ 按「启动影响」列排序（高 / 中 / 低）</span><br><span class="line">→ 把不认识的、没必要的，右键 →「禁用」</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>判断标准</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>启动项数量</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt; 10 个</td>
+<td>正常</td>
+</tr>
+<tr>
+<td>10 ~ 20 个</td>
+<td>偏多，清理非必需的</td>
+</tr>
+<tr>
+<td><strong>&gt; 20 个</strong></td>
+<td><strong>开机必然慢</strong>，大刀阔斧禁</td>
+</tr>
+</tbody></table></div>
+<p><strong>该禁的</strong>：各种软件自带的”更新助手””快速启动”，网盘同步（需要时手动开），音乐&#x2F;视频播放器，游戏启动器，输入法的”云输入”组件。<br><strong>别禁的</strong>：安全软件（保留一个）、显卡驱动的控制面板、触摸板&#x2F;键盘驱动、输入法本体。</p>
+<div class="note note--warn"><span class="note-title">⚠️ 禁用 ≠ 卸载，放心操作</span>「启动」页的禁用<b>只是让它开机不自启，软件本身还在</b>，随时能改回来——这是零风险操作。真正要小心的是"卸载"：卸载前先确认它不是驱动或系统组件。拿不准的就先禁用，观察几天没影响再说。</div>
+
+<p><strong>预期看到</strong>：禁用后重启一次，开机明显变快，进桌面后不再有一堆程序在后台抢资源。</p>
+<h3 id="第-3-步：硬盘健康与类型——“越用越卡”的隐形主因"><a href="#第-3-步：硬盘健康与类型——“越用越卡”的隐形主因" class="headerlink" title="第 3 步：硬盘健康与类型——“越用越卡”的隐形主因"></a>第 3 步：硬盘健康与类型——“越用越卡”的隐形主因</h3><p>这一步是<strong>卡顿体检里最关键的一步</strong>，也是最容易被忽略的：很多人卡顿的根源是<strong>硬盘老化</strong>或<strong>系统装在机械盘上</strong>，重装一万次都没用。</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 先看硬盘类型：任务管理器 →「性能」→ 选中磁盘</span><br><span class="line">   · 看右上角：SSD = 固态，HDD = 机械</span><br><span class="line">2. 再看健康度（需要第三方工具，见下）</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>判断标准</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>情况</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>系统装在 <strong>HDD 机械盘</strong></td>
+<td><strong>这就是卡顿主因</strong>——换 SSD 提升最大（见第八节）</td>
+</tr>
+<tr>
+<td>SSD 但 C 盘满、且剩余 &lt; 15%</td>
+<td>固态盘写满会掉速，先清空间</td>
+</tr>
+<tr>
+<td>SSD 健康度提示”警告&#x2F;黄色”</td>
+<td>硬盘快坏了，<strong>立刻备份</strong>，准备好换盘</td>
+</tr>
+<tr>
+<td>SSD 老化（通电时间长、写入量巨大）</td>
+<td>可能掉速，考虑更换</td>
+</tr>
+</tbody></table></div>
+<p><strong>用 CrystalDiskInfo 看健康度</strong>：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 搜索 CrystalDiskInfo（免费、绿色），下载运行</span><br><span class="line">2. 每个硬盘一行，看「健康状态」栏：</span><br><span class="line">   · 蓝色「良好」= 健康</span><br><span class="line">   · 黄色「注意」= 有告警项（通常是重映射扇区/待处理扇区）</span><br><span class="line">   · 红色「不良」= 随时可能挂，马上备份</span><br><span class="line">3. 重点看「通电时间」和「通电次数」——机械盘用了几万小时就该警惕</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--warn"><span class="note-title">⚠️ 机械盘做系统盘，是"越用越卡"的经典元凶</span>如果你还在用机械硬盘装 Windows，那么"开机三分钟、点开程序转圈、越用越卡"是<b>必然结果</b>，不是系统坏了。这种情况下重装系统只能"快三天"，一周后照样卡——因为瓶颈是硬盘的机械寻道速度，不是系统。解决办法只有一个：<b>把系统装到 SSD 上</b>（第八节）。</div>
+
+<p><strong>预期看到</strong>：如果健康度良好、又是 SSD，那卡顿主因不在这里，继续往下；如果发现是机械盘或黄灯，恭喜你，你已经找到真凶了。</p>
+<h3 id="第-4-步：内存——“特定程序卡”和”开着几个软件就卡”的元凶"><a href="#第-4-步：内存——“特定程序卡”和”开着几个软件就卡”的元凶" class="headerlink" title="第 4 步：内存——“特定程序卡”和”开着几个软件就卡”的元凶"></a>第 4 步：内存——“特定程序卡”和”开着几个软件就卡”的元凶</h3><div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + Shift + Esc →「性能」→ 内存</span><br><span class="line">1. 看「已使用 xx GB / 共 xx GB」</span><br><span class="line">2. 看下方「已提交」数值——如果长期接近上限，就是内存不够</span><br><span class="line">3. 再看「进程」页，按内存排序，找出吃内存大户</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>判断标准</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>内存情况</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8GB，日常占用常年 &gt; 80%</td>
+<td>偏紧，开几个浏览器标签+办公就吃满</td>
+</tr>
+<tr>
+<td>16GB，占用常年 &gt; 85%</td>
+<td>有异常进程或确实不够用</td>
+</tr>
+<tr>
+<td>内存低于 8GB（4GB）</td>
+<td>Windows 11 本身就很吃紧，<strong>建议加内存</strong></td>
+</tr>
+</tbody></table></div>
+<p><strong>找元凶</strong>：进程页里，如果某个不认识的进程长期占几百 MB 到几 GB 内存，先搜一下它是什么——可能是流氓软件，也可能是正常后台（如浏览器预加载）。</p>
+<p><strong>预期看到</strong>：如果内存常年吃满，加一条内存（或换双通道）的体验提升会非常明显，且<strong>比重装系统有效得多</strong>。</p>
+<h3 id="第-5-步：散热与降频——“随机卡死”和”用久了变慢”的元凶"><a href="#第-5-步：散热与降频——“随机卡死”和”用久了变慢”的元凶" class="headerlink" title="第 5 步：散热与降频——“随机卡死”和”用久了变慢”的元凶"></a>第 5 步：散热与降频——“随机卡死”和”用久了变慢”的元凶</h3><div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 装 HWiNFO（免费）→ 看 CPU 温度</span><br><span class="line">   · 空闲：台式机 CPU 40~60℃ 正常；笔记本 45~70℃ 偏高铁正常</span><br><span class="line">2. 跑 AIDA64 稳定性测试或打开一个重负载程序，看满载温度</span><br><span class="line">   · 接近 95~100℃ = 撞温度墙，CPU 会主动降频 → 卡</span><br><span class="line">3. 手摸机箱出风口 / 听风扇：是不是很烫、很吵、或者转速异常</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>判断标准</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>满载温度 &gt; 95℃，之后明显变卡</td>
+<td><strong>热降频</strong>——清灰换硅脂（下一篇详讲）</td>
+</tr>
+<tr>
+<td>风扇一直狂转、声音很大</td>
+<td>散热受阻或风扇老化</td>
+</tr>
+<tr>
+<td>温度正常但仍随机卡顿</td>
+<td>回看第 4 步（内存）和第 7 步（供电）</td>
+</tr>
+</tbody></table></div>
+<div class="note note--tip"><span class="note-title">💡 "越用越卡"里最容易被忽视的一类</span>如果你发现电脑<b>刚开机很快、用半小时后越来越慢</b>，那大概率是<b>温度上来了开始降频</b>，而不是软件变慢了。这类卡顿重装系统毫无用处——该清灰就清灰。下一篇《风扇狂转与高温降频》会把清灰换硅脂拍成完整流程。</div>
+
+<h3 id="第-6-步：病毒与流氓软件——“后台偷偷跑满-CPU”的元凶"><a href="#第-6-步：病毒与流氓软件——“后台偷偷跑满-CPU”的元凶" class="headerlink" title="第 6 步：病毒与流氓软件——“后台偷偷跑满 CPU”的元凶"></a>第 6 步：病毒与流氓软件——“后台偷偷跑满 CPU”的元凶</h3><div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 任务管理器 →「进程」→ 按 CPU / 磁盘 排序</span><br><span class="line">   · 看有没有不认识的进程常年占 20%+ CPU 或满磁盘</span><br><span class="line">2. 用 Windows 自带的安全中心做一次全盘扫描：</span><br><span class="line">   设置 → 隐私和安全性 → Windows 安全中心 → 病毒和威胁防护 → 扫描选项 → 完全扫描</span><br><span class="line">3. 检查是否装了多个杀毒软件（互相打架，会拖慢系统）</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>判断标准</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>有陌生进程常驻高占用</td>
+<td>大概率流氓软件&#x2F;挖矿程序，先搜名字再处理</td>
+</tr>
+<tr>
+<td>装了 2 个以上杀毒软件</td>
+<td><strong>必卡</strong>——只留一个，其余卸载</td>
+</tr>
+<tr>
+<td>浏览器主页被改、弹窗不断</td>
+<td>中招了，参考后续的《弹窗广告与流氓软件清理》</td>
+</tr>
+</tbody></table></div>
+<p><strong>预期看到</strong>：清掉流氓进程&#x2F;卸载多余杀软后，CPU 和磁盘占用回落到正常水平，卡顿随之缓解。</p>
+<h3 id="第-7-步：供电——笔记本降频与台式机不稳"><a href="#第-7-步：供电——笔记本降频与台式机不稳" class="headerlink" title="第 7 步：供电——笔记本降频与台式机不稳"></a>第 7 步：供电——笔记本降频与台式机不稳</h3><div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">笔记本用户重点看：</span><br><span class="line">1. 是不是在用「省电模式」或电池快没电？</span><br><span class="line">   → 设置 → 系统 → 电源，切换成「最佳性能」，插上原装电源适配器</span><br><span class="line">2. 电源适配器功率够吗？（换了非原装低瓦数适配器会边充边掉电、强制降频）</span><br><span class="line">3. 电池老化严重时，拔掉电源就自动降频——插电使用</span><br><span class="line"></span><br><span class="line">台式机用户看：</span><br><span class="line">· 电源额定功率是否够（升级过显卡/CPU 后尤其要查）</span><br><span class="line">· 是否有供电接触不良（重插主板/显卡供电线）</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>判断标准</strong>：<strong>插电 vs 拔电，卡顿程度差异巨大</strong> → 就是供电&#x2F;省电策略问题，改电源模式立竿见影。</p>
+<p><strong>预期看到</strong>：切到高性能模式、插上原装适配器后，笔记本明显变流畅。</p>
+<h2 id="四、体检结论：三类卡顿，三种命运"><a href="#四、体检结论：三类卡顿，三种命运" class="headerlink" title="四、体检结论：三类卡顿，三种命运"></a>四、体检结论：三类卡顿，三种命运</h2><p>7 步走完，把结果套进下面这张表——<strong>这是本文最重要的一节</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>体检发现</th>
+<th>属于哪类</th>
+<th>该怎么办</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C 盘 &lt;15%、启动项 &gt;20 个、流氓进程、多余杀软</td>
+<td>✅ <strong>系统层问题</strong></td>
+<td><strong>重装能救</strong>（但先试清理，通常不用重装）</td>
+</tr>
+<tr>
+<td>硬盘黄灯&#x2F;机械盘做系统盘</td>
+<td>🔧 <strong>硬件瓶颈</strong></td>
+<td><strong>重装救不了</strong> → 换 SSD &#x2F; 换硬盘后迁移系统</td>
+</tr>
+<tr>
+<td>内存常年吃满、只有 8GB</td>
+<td>🔧 <strong>硬件瓶颈</strong></td>
+<td><strong>重装救不了</strong> → 加内存</td>
+</tr>
+<tr>
+<td>满载 95℃+ 热降频、风扇狂转</td>
+<td>🔧 <strong>硬件瓶颈</strong></td>
+<td><strong>重装救不了</strong> → 清灰换硅脂</td>
+</tr>
+<tr>
+<td>插电才快、省电模式降频</td>
+<td>⚙️ <strong>设置问题</strong></td>
+<td>改电源模式即可，跟重装无关</td>
+</tr>
+<tr>
+<td>上面全是正常的，但就是卡</td>
+<td>❓ <strong>疑难</strong></td>
+<td>才轮到重装作为”最后手段”（见第五节）</td>
+</tr>
+</tbody></table></div>
+<div class="note note--warn"><span class="note-title">⚠️ 记住这个判断：一半的卡顿重装救不了</span>机械盘、内存不足、过热降频、供电策略——<b>这四类卡顿全部发生在"系统之外"，重装系统一个都解决不了</b>。很多人重装完发现"又卡了"，不是重装没做对，而是修的压根不是病根。所以本文的顺序是：<b>先体检定位，再决定修法</b>——重装是最后的选项，不是第一反应。</div>
+
+<h2 id="五、那什么时候真的该重装？"><a href="#五、那什么时候真的该重装？" class="headerlink" title="五、那什么时候真的该重装？"></a>五、那什么时候真的该重装？</h2><p>排除掉硬件和设置问题后，符合下面任意两条，重装才是划算的：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">□ 系统用了 2~3 年以上，装过卸载过大量软件，注册表很乱</span><br><span class="line">□ 中过病毒/流氓软件，清理后仍有残留（弹窗、主页被改、进程异常）</span><br><span class="line">□ Windows 更新反复失败、系统文件损坏修不好（sfc/DISM 都无效）</span><br><span class="line">□ 换过好几个软件组合，卡顿依旧，且硬件全部体检正常</span><br><span class="line">□ 打算换 SSD / 加内存，顺便重装到一个干净的系统</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>重装前必做</strong>（这些是铁律，别省）：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. ★ 备份数据：桌面、文档、下载、图片、微信/QQ 聊天记录、浏览器书签密码</span><br><span class="line">   （首篇铁律二：先备份，再折腾）</span><br><span class="line">2. 备份驱动：尤其是网卡驱动！重装后没网会很被动</span><br><span class="line">   （用主板/品牌官网的驱动包，或提前下载好存到 U 盘）</span><br><span class="line">3. 记下软件清单和账号：常用软件有哪些、各自的登录状态</span><br><span class="line">4. 确认系统盘上的东西都备份了：别只备份 C 盘&quot;可见&quot;的文件，</span><br><span class="line">   有些软件数据藏在 AppData 里</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--tip"><span class="note-title">💡 换 SSD 是"升级 + 重装"合体，一箭双雕</span>如果体检发现是机械盘导致卡顿，最省事的路子是：<b>买一块 SSD，把系统装上去（旧盘留着当数据盘）</b>。这一步同时解决了"硬盘瓶颈"和"系统脏乱"两个问题，是旧电脑提速性价比最高的一招——比换 CPU、加显卡都明显。具体怎么选、怎么迁移，后面《旧电脑焕新：升级决策》会展开。</div>
+
+<h2 id="六、验证与预防"><a href="#六、验证与预防" class="headerlink" title="六、验证与预防"></a>六、验证与预防</h2><p><strong>怎么确认真的修好了：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 对比体检前的基准值：开机秒数、某个固定操作的耗时</span><br><span class="line">   （比如&quot;打开 Excel 从 20 秒 → 5 秒&quot;）</span><br><span class="line">2. 连续用两三天：不是&quot;刚清理完很快&quot;，而是稳定不卡</span><br><span class="line">3. 任务管理器复查：空闲时 CPU/内存/磁盘占用回到低位</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>预防清单（按月维护，成本极低）：</strong></p>
+<ul>
+<li>C 盘保持 25% 以上空闲，每季度清一次临时文件</li>
+<li>装软件时一律”自定义安装”，取消勾选”开机自启”和捆绑项</li>
+<li>启动项每半年过一遍，禁掉不再用的</li>
+<li>每半年给台式机清一次灰（散热是长期战）</li>
+<li>只留一个杀毒软件，别装”全家桶”</li>
+<li>用 CrystalDiskInfo 每季度看一眼硬盘健康度——早发现黄灯，早备份</li>
+</ul>
+<h2 id="七、避坑与经验"><a href="#七、避坑与经验" class="headerlink" title="七、避坑与经验"></a>七、避坑与经验</h2><div class="note note--warn"><span class="note-title">⚠️ 五个坑</span>① <b>一卡就重装</b>——最贵的操作，本文整篇都在反对它当第一反应。② <b>用"一键加速/清理大师"</b>——这类工具常年占后台、捆绑软件、改注册表，常常是卡顿的<b>制造者</b>而不是解决者；系统自带的"存储感知"足够。③ <b>C 盘塞到见红还不管</b>——固态盘写满会明显掉速，这是物理特性。④ <b>装了多个杀毒软件</b>——互相扫描对方，CPU 和磁盘直接打满。⑤ <b>拿机械盘当系统盘还嫌慢</b>——这是硬件限制，调优和重装都无效，只能换 SSD。</div>
+
+<div class="note note--tip"><span class="note-title">💡 四条实战心得</span>① 卡顿排查<b>永远先看任务管理器</b>——CPU/内存/磁盘谁在跑满，一眼就有方向。② <b>先记录基准值</b>再动手，否则"感觉快了"毫无意义。③ 排查软件层时<b>一次只改一项</b>（首篇铁律三），禁用一批启动项就重启测一次。④ 如果用户是笔记本且"插电快、拔电卡"，先别怀疑硬件，去看电源模式。</div>
+
+<h2 id="八、两个真实维修案例（维修日志格式）"><a href="#八、两个真实维修案例（维修日志格式）" class="headerlink" title="八、两个真实维修案例（维修日志格式）"></a>八、两个真实维修案例（维修日志格式）</h2><div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">【案例 A · 硬件瓶颈型（重装救不了）】2026-04-12</span><br><span class="line">【现象】老台式机&quot;越用越卡&quot;，开机 3 分钟，重装过两次系统，每次快三天又卡</span><br><span class="line">【排查】① 7 步体检：C 盘空间充足、启动项仅 8 个、内存 16G 占用正常</span><br><span class="line">       ② 任务管理器「性能」→ 磁盘显示为 HDD（机械盘）</span><br><span class="line">       ③ CrystalDiskInfo：健康状态&quot;良好&quot;，但通电时间 3 万+ 小时</span><br><span class="line">       ④ 关键发现：系统装在机械盘上——机械寻道速度是瓶颈</span><br><span class="line">【结论】加装 500G SSD + 迁移系统到 SSD，开机 3 分钟 → 15 秒</span><br><span class="line">       卡顿消失。重装两次无效的原因：病根在硬盘，不在系统</span><br></pre></td></tr></table></div></div></div>
+
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">【案例 B · 系统层问题型（重装能救，但其实不用）】2026-06-03</span><br><span class="line">【现象】笔记本用了 2 年，开机 2 分钟，桌面进得去但半天才能用</span><br><span class="line">【排查】① 启动项 27 个（含多个软件更新助手、两个&quot;加速球&quot;）</span><br><span class="line">       ② 进程页发现一个陌生进程常驻占 25% CPU，搜索确认是捆绑的推广组件</span><br><span class="line">       ③ 装了 2 个杀毒软件，互相扫描导致磁盘占用常年 100%</span><br><span class="line">       ④ 硬盘为 SSD、健康良好、内存 16G 正常 → 排除硬件</span><br><span class="line">【结论】禁用 20 个启动项 + 卸载捆绑组件 + 卸载多余杀软 →</span><br><span class="line">       开机 25 秒，卡顿消失。无需重装，半小时解决</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>两个案例对读</strong>：案例 A 的教训是”重装两次没用，因为病根在硬盘”；案例 B 的教训是”看起来该重装的问题，清理一下半小时就好了”。<strong>结论一致：先体检，再决定修法。</strong></p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a>》——四层模型与 3.3 节的卡顿速查，本篇是它的完整展开</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/bsod-dump-guide/">蓝屏不再靠拍照：读内存转储文件</a>》——上一篇讲”崩溃”，这篇讲”变慢”</li>
+<li>下一篇（系列第 6 篇）：<strong>《风扇狂转与高温降频》</strong>——体检第 5 步如果查出过热降频，下一次就教你清灰、换硅脂、用 HWiNFO 盯住温度。</li>
+</ul>
+<p>卡顿最坑人的地方，是它会诱使你做出最贵的决定。下次电脑一卡，先别格式 C 盘——<strong>按这 7 步跑一遍，二十分钟就能知道：到底是该清理，该加内存，该换硬盘，还是真的该重装。</strong></p>
+
+            </article>
+
+            <div class="share-row" id="shareRow">
+                <span class="share-label">分享这篇文章：</span>
+            </div>
+
+            <nav class="post-nav" id="postNav" aria-label="上下篇导航">
+                <span></span>
+                
+                    <a class="post-nav-item post-nav-item--next" href="/Blog/2026/09/bsod-dump-guide/">
+                        <span class="k">下一篇 →</span><span class="t">蓝屏不再靠拍照：读内存转储文件，精确到是哪个驱动干的</span>
+                    </a>
+                
+            </nav>
+
+            <!-- ---- 评论（Giscus：数据存于 GitHub Discussions） ---- -->
+            
+            
+            
+            <section class="card comments" aria-labelledby="commentTitle">
+                <h2 class="card-title" id="commentTitle" style="text-align:left">
+                    💬 读者留言
+                </h2>
+                <p style="margin:0 0 18px;font-size:.76rem;color:var(--ink-3)">
+                    评论由 GitHub Discussions 托管，需登录 GitHub 后参与（评论区的 +1 即点赞）。
+                </p>
+                <script src="https://giscus.app/client.js"
+                        data-repo="molunanli/Blog"
+                        data-repo-id="R_kgDOUMGUlQ"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOUMGUlc4DEuis"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                </script>
+            </section>
+            
+            
+        </div>
+
+        <!-- ============ 侧边栏 ============ -->
+        <aside class="sidebar toc-sticky" aria-label="文章侧边信息">
+
+            
+            <button class="toc-toggle-mobile" id="tocToggle" type="button" aria-expanded="false" aria-controls="tocPanel">
+                📑 目录导航 <span class="arrow" aria-hidden="true">▼</span>
+            </button>
+
+            <nav class="card toc-card toc-panel" id="tocPanel" aria-label="文章目录">
+                <h2 class="card-title">📑 目录</h2>
+                <div class="toc-list" id="tocList">
+                    
+                        <a class="toc-link toc-link--h2" href="#一、先分清四种”卡”，方向立刻清晰">一、先分清四种”卡”，方向立刻清晰</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#二、体检前的-3-个准备动作">二、体检前的 3 个准备动作</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#三、7-步体检流程">三、7 步体检流程</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#第-1-步：磁盘空间——免费但最常被忽略">第 1 步：磁盘空间——免费但最常被忽略</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#第-2-步：启动项——决定”开机慢”的头号原因">第 2 步：启动项——决定”开机慢”的头号原因</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#第-3-步：硬盘健康与类型——“越用越卡”的隐形主因">第 3 步：硬盘健康与类型——“越用越卡”的隐形主因</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#第-4-步：内存——“特定程序卡”和”开着几个软件就卡”的元凶">第 4 步：内存——“特定程序卡”和”开着几个软件就卡”的元凶</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#第-5-步：散热与降频——“随机卡死”和”用久了变慢”的元凶">第 5 步：散热与降频——“随机卡死”和”用久了变慢”的元凶</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#第-6-步：病毒与流氓软件——“后台偷偷跑满-CPU”的元凶">第 6 步：病毒与流氓软件——“后台偷偷跑满 CPU”的元凶</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#第-7-步：供电——笔记本降频与台式机不稳">第 7 步：供电——笔记本降频与台式机不稳</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#四、体检结论：三类卡顿，三种命运">四、体检结论：三类卡顿，三种命运</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#五、那什么时候真的该重装？">五、那什么时候真的该重装？</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#六、验证与预防">六、验证与预防</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#七、避坑与经验">七、避坑与经验</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#八、两个真实维修案例（维修日志格式）">八、两个真实维修案例（维修日志格式）</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#相关阅读">相关阅读</a>
+                    
+                </div>
+            </nav>
+            
+
+            
+            <section class="card" aria-labelledby="relTitle">
+                <h2 class="card-title" id="relTitle">📎 相关文章</h2>
+                <ul class="related-list" id="relatedList">
+                    
+                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-random-restart/">电脑不定时自动重启/关机？三步定位真凶，别急着换电源</a></li>
+                    
+                        <li><a href="/Blog/2026/09/bsod-dump-guide/">蓝屏不再靠拍照：读内存转储文件，精确到是哪个驱动干的</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a></li>
+                    
+                </ul>
+            </section>
+            
+
+            <section class="card" aria-labelledby="authorTitle">
+                <h2 class="card-title" id="authorTitle">✍️ 关于作者</h2>
+                <div class="profile-avatar" style="width:76px;height:76px;font-size:2.3rem" aria-hidden="true">🐱</div>
+                <p class="profile-name" style="text-align:center">博主</p>
+                <p class="profile-role" style="text-align:center">BLOGGER</p>
+                <p class="profile-bio" style="text-align:center;font-size:.82rem">这里是作者简介。
+用一两句话介绍你自己，或者这个博客打算写些什么。
+</p>
+                <p style="text-align:center;margin-top:12px">
+                    <a class="link-more" href="/Blog/about">▶ 了解更多</a>
+                </p>
+            </section>
+
+        </aside>
+    </div>
+</div>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="shell">
+        <div class="footer-grid">
+            <div>
+                <span class="footer-h">关于本站</span>
+                <p style="font-size:.88rem;color:var(--ink-2);line-height:1.8">
+                    这里是页脚简介。用一两句话说明这个博客的内容方向，
+让读者一眼知道这里在写什么。
+
+                </p>
+                <p style="margin-top:12px">
+                    <span class="footer-seal" aria-hidden="true">我的<br>博客</span>
+                </p>
+            </div>
+            <div>
+                <span class="footer-h">快速导航</span>
+                <nav class="footer-list" aria-label="页脚导航">
+                    
+                        
+                        <a href="/Blog/">首页</a>
+                    
+                        
+                        <a href="/Blog/archives">归档</a>
+                    
+                        
+                        <a href="/Blog/tags">标签</a>
+                    
+                        
+                        <a href="/Blog/categories">分类</a>
+                    
+                        
+                        <a href="/Blog/about">关于</a>
+                    
+                </nav>
+            </div>
+            <div>
+                <span class="footer-h">热门分类</span>
+                <nav class="footer-list" aria-label="分类导航">
+                    
+                        <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                    
+                        <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <span>&copy; 2026 我的博客 — 保持热爱，持续记录。</span>
+            <span>Made with Hexo</span>
+        </div>
+    </div>
+</footer>
+
+<div class="fabs">
+    <button class="fab fab--top" id="topBtn" type="button" data-tip="回到顶部" title="回到顶部" aria-label="回到顶部" aria-hidden="true">⬆</button>
+    <button class="fab" id="fabSearch" type="button" data-tip="搜索文章" title="搜索文章" aria-label="搜索文章">🔍</button>
+</div>
+
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="站内搜索" aria-hidden="true">
+    <div class="search-panel">
+        <div class="search-field">
+            <span aria-hidden="true" style="font-size:1.1rem">🔍</span>
+            <input class="search-input" id="searchInput" type="search" placeholder="搜索文章标题、标签或关键词…" aria-label="搜索关键词" autocomplete="off">
+            <button class="icon-btn" id="searchClose" type="button" aria-label="关闭搜索">✕</button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+        <div class="search-hint">
+            <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
+            <span><kbd>Enter</kbd> 打开</span>
+            <span><kbd>Esc</kbd> 关闭</span>
+            <span><kbd>Ctrl</kbd>+<kbd>K</kbd> 随时唤起</span>
+        </div>
+    </div>
+</div>
+
+
+<script src="/Blog/js/app.js" defer></script>
+</body>
+</html>
