@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" role="img" aria-label="台式机散热器螺丝拆卸顺序示意图：必须按对角线交替逐步松开，错误顺序会压裂主板或压弯针脚">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .tn { font-size: 14px; font-weight: 600; }
+    .tl { font-size: 12.5px; fill: #4c463e; }
+    .board { fill: #efe5d0; stroke: #1c1a17; stroke-width: 3; }
+    .hs { fill: #dcd2ba; stroke: #1c1a17; stroke-width: 3; }
+    .screw { fill: #fffdf6; stroke: #1c1a17; stroke-width: 3; }
+    .ok { fill: #e3f0e0; stroke: #4f7f47; stroke-width: 3; }
+    .bad { fill: #f5e2e2; stroke: #cc3b3b; stroke-width: 3; }
+    .flow { stroke: #4f7f47; stroke-width: 3; fill: none; }
+    .badline { stroke: #cc3b3b; stroke-width: 3; fill: none; stroke-dasharray: 6 5; }
+  </style>
+
+  <rect class="bg" width="680" height="430"/>
+
+  <text class="t th" x="34" y="38">拆散热器：螺丝必须"对角交替、逐步松开"</text>
+  <text class="t ts" x="34" y="60">顺序错了会压裂主板或压弯 CPU 针脚——这是不可逆的损伤</text>
+
+  <!-- 左：正确 -->
+  <text class="t tn" x="34" y="94" style="fill:#4f7f47">✓ 正确：1 → 2 → 3 → 4（对角交替，每次只松半圈）</text>
+  <rect class="board" x="34" y="112" width="250" height="250" rx="8"/>
+  <rect class="hs" x="94" y="172" width="130" height="130" rx="6"/>
+  <text class="t tl" x="159" y="240" text-anchor="middle">散热器</text>
+
+  <circle class="screw" cx="94" cy="172" r="21"/>
+  <text class="t tn" x="94" y="178" text-anchor="middle">1</text>
+  <circle class="screw" cx="224" cy="172" r="21"/>
+  <text class="t tn" x="224" y="178" text-anchor="middle">2</text>
+  <circle class="screw" cx="94" cy="302" r="21"/>
+  <text class="t tn" x="94" y="308" text-anchor="middle">3</text>
+  <circle class="screw" cx="224" cy="302" r="21"/>
+  <text class="t tn" x="224" y="308" text-anchor="middle">4</text>
+
+  <!-- 对角箭头 -->
+  <path class="flow" d="M118 172 L196 172" marker-end="url(#g1)"/>
+  <path class="flow" d="M224 196 L224 274" marker-end="url(#g1)"/>
+  <path class="flow" d="M200 302 L122 302" marker-end="url(#g1)"/>
+  <defs>
+    <marker id="g1" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <path d="M0 0 L7 3.5 L0 7 z" fill="#4f7f47"/>
+    </marker>
+    <marker id="r1" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <path d="M0 0 L7 3.5 L0 7 z" fill="#cc3b3b"/>
+    </marker>
+  </defs>
+
+  <text class="t tl" x="34" y="384">要点①每次只松半圈，轮流四遍</text>
+  <text class="t tl" x="34" y="404">要点②四个螺丝全部松到位后再抬起散热器</text>
+  <text class="t tl" x="34" y="424">要点③抬起时别用力拔，粘住就轻轻旋转</text>
+
+  <!-- 右：错误 -->
+  <text class="t tn" x="330" y="94" style="fill:#cc3b3b">✗ 错误：按 1→2→3→4 顺序依次拧完</text>
+  <rect class="board" x="330" y="112" width="250" height="250" rx="8"/>
+  <rect class="hs" x="390" y="172" width="130" height="130" rx="6"/>
+  <text class="t tl" x="455" y="240" text-anchor="middle">受力不均</text>
+
+  <circle class="bad" cx="390" cy="172" r="21"/>
+  <text class="t tn" x="390" y="178" text-anchor="middle">1</text>
+  <circle class="bad" cx="520" cy="172" r="21"/>
+  <text class="t tn" x="520" y="178" text-anchor="middle">2</text>
+  <circle class="bad" cx="390" cy="302" r="21"/>
+  <text class="t tn" x="390" y="308" text-anchor="middle">3</text>
+  <circle class="bad" cx="520" cy="302" r="21"/>
+  <text class="t tn" x="520" y="308" text-anchor="middle">4</text>
+
+  <path class="badline" d="M414 172 L496 172" marker-end="url(#r1)"/>
+  <path class="badline" d="M520 196 L520 278" marker-end="url(#r1)"/>
+  <path class="badline" d="M496 302 L414 302" marker-end="url(#r1)"/>
+
+  <text class="t tl" x="330" y="384" style="fill:#cc3b3b">一侧先失去压力 → 另一侧受力骤增</text>
+  <text class="t tl" x="330" y="404" style="fill:#cc3b3b">轻则散热器/底座变形，重则主板弯曲、</text>
+  <text class="t tl" x="330" y="424" style="fill:#cc3b3b">针脚压弯，出现黑屏或点不亮</text>
+</svg>

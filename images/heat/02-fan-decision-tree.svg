@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 470" role="img" aria-label="风扇狂转的排查决策树：从风扇是否正常转动出发，分三条路线定位到灰尘、硅脂或风扇本身">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .tn { font-size: 14px; font-weight: 600; }
+    .tl { font-size: 12.5px; fill: #4c463e; }
+    .box { fill: #fffdf6; stroke: #1c1a17; stroke-width: 3; }
+    .q { fill: #fffdf6; stroke: #1c1a17; stroke-width: 3; }
+    .a { fill: #f5e2e2; stroke: #cc3b3b; stroke-width: 2.5; }
+    .b { fill: #fbf0d4; stroke: #a87608; stroke-width: 2.5; }
+    .c { fill: #e6eef6; stroke: #2f5d8a; stroke-width: 2.5; }
+    .line { stroke: #1c1a17; stroke-width: 2.5; fill: none; }
+    .lbl { font-size: 12px; fill: #6b6459; }
+  </style>
+
+  <rect class="bg" width="680" height="470"/>
+
+  <text class="t th" x="34" y="38">风扇狂转：先问三个问题，再决定拆什么</text>
+  <text class="t ts" x="34" y="60">风扇转得快不是病，是它在努力压住温度。要查的是"为什么这么烫"</text>
+
+  <!-- Q1 -->
+  <rect class="q" x="220" y="82" width="240" height="52" rx="6"/>
+  <text class="t tn" x="340" y="104" text-anchor="middle">Q1 风扇是真的在"狂转"吗？</text>
+  <text class="t tl" x="340" y="124" text-anchor="middle">对比：刚开机噪音 vs 满载噪音</text>
+
+  <!-- Q1 右分支：不是 -->
+  <path class="line" d="M460 108 L540 108"/>
+  <text class="t lbl" x="470" y="100">不是</text>
+  <rect class="c" x="540" y="84" width="112" height="48" rx="6"/>
+  <text class="t tn" x="596" y="104" text-anchor="middle">转速正常</text>
+  <text class="t tl" x="596" y="122" text-anchor="middle">属健康表现</text>
+
+  <!-- Q1 下：是 -->
+  <path class="line" d="M340 134 L340 158"/>
+  <text class="t lbl" x="350" y="152">是</text>
+
+  <!-- Q2 -->
+  <rect class="q" x="200" y="158" width="280" height="52" rx="6"/>
+  <text class="t tn" x="340" y="180" text-anchor="middle">Q2 温度真的高吗？（HWiNFO 看）</text>
+  <text class="t tl" x="340" y="200" text-anchor="middle">满载 CPU &gt; 90℃ / 空闲 &gt; 70℃</text>
+
+  <!-- Q2 右分支：温度正常 -->
+  <path class="line" d="M480 184 L556 184"/>
+  <text class="t lbl" x="490" y="176">不高</text>
+  <rect class="c" x="556" y="160" width="96" height="48" rx="6"/>
+  <text class="t tn" x="604" y="180" text-anchor="middle">只是吵</text>
+  <text class="t tl" x="604" y="198" text-anchor="middle">调风扇曲线</text>
+
+  <!-- Q2 下 -->
+  <path class="line" d="M340 210 L340 240"/>
+  <text class="t lbl" x="350" y="232">偏高</text>
+
+  <!-- Q3 -->
+  <rect class="q" x="186" y="240" width="308" height="52" rx="6"/>
+  <text class="t tn" x="340" y="262" text-anchor="middle">Q3 高负载才热，还是开机就热？</text>
+  <text class="t tl" x="340" y="282" text-anchor="middle">决定是"堵了"还是"坏了"</text>
+
+  <!-- 三条路线 -->
+  <path class="line" d="M240 292 L150 330"/>
+  <path class="line" d="M340 292 L340 330"/>
+  <path class="line" d="M440 292 L530 330"/>
+
+  <text class="t lbl" x="150" y="316" text-anchor="middle">高负载才热</text>
+  <text class="t lbl" x="340" y="322" text-anchor="middle">开机就热 / 升温极快</text>
+  <text class="t lbl" x="536" y="316" text-anchor="middle">忽冷忽热 + 异响</text>
+
+  <rect class="a" x="52" y="330" width="196" height="106" rx="6"/>
+  <text class="t tn" x="150" y="354" text-anchor="middle">路线 A · 灰尘堵塞</text>
+  <text class="t tl" x="150" y="376" text-anchor="middle">鳍片糊死 / 出风口被灰堵</text>
+  <text class="t tl" x="150" y="396" text-anchor="middle">→ 清灰（本篇第四节）</text>
+  <text class="t tl" x="150" y="420" text-anchor="middle">最常见，零成本</text>
+
+  <rect class="b" x="242" y="330" width="196" height="106" rx="6"/>
+  <text class="t tn" x="340" y="354" text-anchor="middle">路线 B · 硅脂干化</text>
+  <text class="t tl" x="340" y="376" text-anchor="middle">用 2~3 年以上，硅脂变干裂</text>
+  <text class="t tl" x="340" y="396" text-anchor="middle">→ 换硅脂（本篇第五节）</text>
+  <text class="t tl" x="340" y="420" text-anchor="middle">温差骤升是典型信号</text>
+
+  <rect class="c" x="432" y="330" width="196" height="106" rx="6"/>
+  <text class="t tn" x="530" y="354" text-anchor="middle">路线 C · 风扇故障</text>
+  <text class="t tl" x="530" y="376" text-anchor="middle">不转 / 转速异常 / 轴承异响</text>
+  <text class="t tl" x="530" y="396" text-anchor="middle">→ 换风扇（本篇第六节）</text>
+  <text class="t tl" x="530" y="420" text-anchor="middle">摸机箱震动可初判</text>
+
+  <text class="t tl" x="34" y="460" style="fill:#6b6459">提示：三条路线可能同时存在，优先做零成本的清灰，再评估硅脂与风扇</text>
+</svg>

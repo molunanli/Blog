@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>风扇狂转与高温降频：清灰、换硅脂全流程，把温度压回去 · 我的博客</title>
+<meta name="description" content="风扇转得像要起飞，键盘烫手，游戏越玩越卡——很多人以为这是『性能不行了』，其实多半是散热出了问题：灰尘把鳍片糊死、硅脂年久干化、风扇轴承老化。这些都不是玄学，用 HWiNFO 一测温度、拆开一看灰尘就见分晓。这篇给你完整的判断流程，以及清灰、换硅脂的每一步操作（含螺丝拆卸顺序与硅脂用量图示），把温度">
+<meta name="theme-color" content="#f7f1e3">
+
+<!-- 防主题闪烁：在任何渲染前确定主题 -->
+<script>
+(function () {
+    var k = 'manga-blog-theme';
+    var saved = null;
+    try { saved = localStorage.getItem(k); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/Blog/css/style.css">
+<link rel="alternate" href="/Blog/atom.xml" title="我的博客" type="application/atom+xml">
+<script>window.SEARCH_JSON_URL = '/Blog/search.json';</script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body data-root="/Blog/">
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="site-header">
+    <div class="shell">
+        <nav class="navbar" aria-label="主导航">
+            <a class="brand" href="/Blog/" aria-label="我的博客 首页">
+                <span class="brand-seal" aria-hidden="true">博客</span>
+                我的博客
+            </a>
+
+            <ul class="nav-links">
+                
+                    
+                    <li><a href="/Blog/" data-nav="/">首页</a></li>
+                
+                    
+                    <li><a href="/Blog/archives" data-nav="/archives">归档</a></li>
+                
+                    
+                    <li><a href="/Blog/tags" data-nav="/tags">标签</a></li>
+                
+                    
+                    <li><a href="/Blog/categories" data-nav="/categories">分类</a></li>
+                
+                    
+                    <li><a href="/Blog/about" data-nav="/about">关于</a></li>
+                
+            </ul>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn" type="button" aria-label="搜索文章" title="搜索（Ctrl / ⌘ + K）">🔍</button>
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="切换至暗色模式" aria-pressed="false" title="切换至暗色模式">🌙</button>
+                <button class="icon-btn burger" id="burgerBtn" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="drawer">☰</button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<nav class="drawer" id="drawer" aria-label="移动端导航" aria-hidden="true">
+    <div class="drawer-head">
+        <span class="drawer-title">📖 目录导航</span>
+        <button class="icon-btn" id="drawerClose" type="button" aria-label="关闭菜单">✕</button>
+    </div>
+    
+        
+        <a href="/Blog/" data-nav="/">首页</a>
+    
+        
+        <a href="/Blog/archives" data-nav="/archives">归档</a>
+    
+        
+        <a href="/Blog/tags" data-nav="/tags">标签</a>
+    
+        
+        <a href="/Blog/categories" data-nav="/categories">分类</a>
+    
+        
+        <a href="/Blog/about" data-nav="/about">关于</a>
+    
+    <p class="drawer-note">我的博客 — 日式漫画风 · Hexo 主题</p>
+</nav>
+
+
+
+<main class="site-main" id="articleRoot"
+      data-post-id="pc-overheat-fan"
+      data-post-title="风扇狂转与高温降频：清灰、换硅脂全流程，把温度压回去"
+      data-post-likes="0">
+
+    
+
+<script>
+    /* 供 app.js 的目录滚动高亮使用（headings 由模板计算） */
+    var headings = [{"level":"2","id":"一、先分清”正常转”与”异常转”","text":"一、先分清”正常转”与”异常转”"},{"level":"2","id":"二、三步判断：到底堵在哪一环","text":"二、三步判断：到底堵在哪一环"},{"level":"2","id":"三、动手前的准备（安全第一）","text":"三、动手前的准备（安全第一）"},{"level":"2","id":"四、路线-A：清灰全流程（零成本，优先做）","text":"四、路线 A：清灰全流程（零成本，优先做）"},{"level":"2","id":"五、路线-B：换硅脂全流程（有一定风险，谨慎操作）","text":"五、路线 B：换硅脂全流程（有一定风险，谨慎操作）"},{"level":"2","id":"六、路线-C：风扇故障的判断与更换","text":"六、路线 C：风扇故障的判断与更换"},{"level":"2","id":"七、别忘了环境与摆放：最容易被忽略的一环","text":"七、别忘了环境与摆放：最容易被忽略的一环"},{"level":"2","id":"八、验证与预防","text":"八、验证与预防"},{"level":"2","id":"九、避坑与经验","text":"九、避坑与经验"},{"level":"2","id":"十、两个真实维修案例（维修日志格式）","text":"十、两个真实维修案例（维修日志格式）"},{"level":"2","id":"相关阅读","text":"相关阅读"}];
+</script>
+
+<div class="shell">
+    <nav class="crumbs" aria-label="面包屑导航">
+        <a href="/Blog/">首页</a><span class="sep" aria-hidden="true">›</span>
+        
+            <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a><span class="sep" aria-hidden="true">›</span>
+        
+        <span id="crumbCurrent">风扇狂转与高温降频：清灰、换硅脂全流程，把温度压回去</span>
+    </nav>
+</div>
+
+<div class="shell">
+    <div class="grid grid--sidebar">
+
+        <!-- ============ 正文 ============ -->
+        <div class="stack">
+            <section class="article-head" id="articleHead">
+                
+                    <a class="chip chip--cat" href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                
+                <h1 class="article-title">风扇狂转与高温降频：清灰、换硅脂全流程，把温度压回去</h1>
+                <div class="article-meta">
+                    <span>✍️ 博主</span>
+                    <span>📅 令和8年9月20日</span>
+                    <span>⏱ 阅读约 17 分钟</span>
+                    
+                    
+                </div>
+                <div class="tag-list" style="margin-top:14px">
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">#电脑维修</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%B3%BB%E7%BB%9F/">#系统</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%A1%AC%E4%BB%B6/">#硬件</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E6%95%A3%E7%83%AD/">#散热</a>
+                    
+                </div>
+            </section>
+
+            <article class="card article-body" id="articleBody">
+                <p>这是「电脑维修」系列的第六篇。上一篇体检到第 5 步时，我给过热降频留了一个”详见后续”，现在来兑现——这篇专讲<strong>风扇狂转与高温降频</strong>。</p>
+<p>先厘清一个关键认知：<strong>风扇转得快不是故障，是它在拼命救火</strong>。真正的问题永远是”为什么这么烫”。所以看到风扇狂转，别急着换风扇，先问那句老话：<strong>热量是从哪儿来的、又卡在哪一环散不出去</strong>。</p>
+<p>散热是一条四段链路：<strong>芯片发热 → 硅脂导热 → 散热器吸热 → 风扇+风道带走</strong>。这篇文章就按这条链路，带你定位到底哪一环出了问题。</p>
+<p><img src="/Blog/images/heat/01-heat-path.svg" alt="CPU 散热的热传导路径示意图：芯片发热 → 硅脂导热 → 散热器吸热 → 风扇与风道带走，温度梯度越大散热越快"></p>
+<p><em>图 1：四道关卡，任何一道堵住，热量都会在芯片里堆积，表现为温度升高、风扇狂转、最终降频变卡。</em></p>
+<h2 id="一、先分清”正常转”与”异常转”"><a href="#一、先分清”正常转”与”异常转”" class="headerlink" title="一、先分清”正常转”与”异常转”"></a>一、先分清”正常转”与”异常转”</h2><p>风扇噪声是相对的。判断异常有个简单办法——<strong>对比两个时刻的噪音</strong>：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 刚开机、什么都不做时的风扇声（基准）</span><br><span class="line">2. 打开一个较重的程序（游戏/渲染/多开网页）时的风扇声</span><br><span class="line"></span><br><span class="line">正常：安静 → 明显变响，但属可接受的&quot;工作声&quot;</span><br><span class="line">异常：一开机就狂转 / 满载时像吹风机 / 转速忽高忽低</span><br></pre></td></tr></table></div></div></div>
+
+<p>还有个更客观的判据：<strong>温度</strong>。这就要请出本篇的核心工具。</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">下载 HWiNFO（免费，官网搜 HWiNFO 即可）→ 运行，选择「Sensors only」</span><br><span class="line">重点看这几项：</span><br><span class="line">· CPU Package / CPU (Tctl/Tdie) —— CPU 整体温度</span><br><span class="line">· GPU Temperature —— 显卡温度（有独显时）</span><br><span class="line">· CPU Fan / 各风扇 RPM —— 转速</span><br><span class="line">· 以及 CPU 各项的「Core Clocks」—— 频率</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--tip"><span class="note-title">💡 怎么用 HWiNFO 判断"降温"</span>看两个场景：<b>空闲温度</b>（开机静置 5 分钟）和<b>满载温度</b>（打开重负载程序跑 10 分钟）。<br>• CPU 空闲 40~60℃、满载 70~85℃：健康<br>• 空闲就 70℃+：散热链路明显有问题（通常是硅脂或灰尘）<br>• 满载冲到 95~100℃：撞温度墙，CPU 主动降频——<b>这就是"越玩越卡"的真凶</b><br>HWiNFO 还能勾选「CPU Core Clock」，降频发生时你会看到频率从 4.x GHz 掉到 2.x GHz，一目了然。</div>
+
+<h2 id="二、三步判断：到底堵在哪一环"><a href="#二、三步判断：到底堵在哪一环" class="headerlink" title="二、三步判断：到底堵在哪一环"></a>二、三步判断：到底堵在哪一环</h2><p>拿到温度数据后，按下面三问定位。这张图就是完整的决策树：</p>
+<p><img src="/Blog/images/heat/02-fan-decision-tree.svg" alt="风扇狂转排查决策树：先确认是否真狂转，再确认温度是否真高，最后按&quot;高负载才热/开机就热/忽冷忽热&quot;分三条路线定位"></p>
+<p><em>图 2：三个问题定方向——温度不高只是吵，调风扇曲线即可；温度高再按热的时间点分流到灰尘、硅脂或风扇。</em></p>
+<p><strong>Q1：风扇是真狂转，还是你太敏感？</strong><br>对比噪声基准，或看 HWiNFO 的 RPM 是否长期顶在高位。如果转速正常、温度也正常，那只是”敏感”，可以在 BIOS 或厂商控制软件里调一个更安静的<strong>风扇曲线</strong>，不用拆机。</p>
+<p><strong>Q2：温度是真的高吗？</strong><br>用 HWiNFO 读数验证。温度不高就只是”吵”（同上）；温度高才进入 Q3。</p>
+<p><strong>Q3：什么时候热？这决定了修哪里。</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>指向</th>
+<th>走哪条路线</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>高负载才热，闲着没事</td>
+<td>散热效率被拖累</td>
+<td><strong>路线 A：灰尘堵塞</strong>（最常见，先做）</td>
+</tr>
+<tr>
+<td>开机就热、温度爬升极快，2~3 年没换过硅脂</td>
+<td>硅脂干化失效</td>
+<td><strong>路线 B：换硅脂</strong></td>
+</tr>
+<tr>
+<td>转速忽高忽低、有咔咔异响、风扇时转时停</td>
+<td>风扇本体故障</td>
+<td><strong>路线 C：换风扇</strong></td>
+</tr>
+<tr>
+<td>温度正常但偶尔卡死</td>
+<td>不是散热问题</td>
+<td>回看上一篇（内存 &#x2F; 供电）</td>
+</tr>
+</tbody></table></div>
+<div class="note note--warn"><span class="note-title">⚠️ 先清灰，再考虑换硅脂</span>三条路线可能同时存在，但<b>顺序不能乱</b>：清灰零成本、十分钟搞定，先做；换硅脂要拆散热器、有风险，做完清灰如果温度还高再考虑。上来就换硅脂，很可能白拆一趟——灰才是最常见的原因。</div>
+
+<h2 id="三、动手前的准备（安全第一）"><a href="#三、动手前的准备（安全第一）" class="headerlink" title="三、动手前的准备（安全第一）"></a>三、动手前的准备（安全第一）</h2><div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. ★ 完全断电：关机 → 拔电源线 → 按住开机键 5 秒放掉余电</span><br><span class="line">2. ★ 防静电：摸一下机箱金属框架/水龙头，或戴防静电手环</span><br><span class="line">3. 工具：十字螺丝刀（磁性最好）、软毛刷（旧牙刷也行）、</span><br><span class="line">       皮老虎/吹风机（冷风档）、无水酒精 + 无尘布/棉签、新硅脂</span><br><span class="line">4. 拍照：拆之前先拍一张全景，螺丝位置和线材走向都拍下来</span><br><span class="line">5. 容器：找个小盒子放螺丝，别让它滚进机箱</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--warn"><span class="note-title">⚠️ 三条红线</span>① <b>拆机前拔掉电源插头</b>，不是只按关机——有些主板关机后仍有待机供电。② <b>绝对不要用吸尘器</b>清机箱内部：吸尘器会摩擦产生静电，足以击穿主板元件，用皮老虎或吹风机冷风档。③ <b>笔记本在保就别自己拆</b>——很多机型后盖螺丝上贴了保修贴，拆了就失保，先确认保修状态。</div>
+
+<h2 id="四、路线-A：清灰全流程（零成本，优先做）"><a href="#四、路线-A：清灰全流程（零成本，优先做）" class="headerlink" title="四、路线 A：清灰全流程（零成本，优先做）"></a>四、路线 A：清灰全流程（零成本，优先做）</h2><p>灰尘是散热的头号杀手，也是最容易解决的一个。关键是<strong>找准该清的位置</strong>——很多人只擦了风扇叶片，结果温度毫无改善，因为真正堵死的是鳍片缝隙和出风口：</p>
+<p><img src="/Blog/images/heat/05-airflow.svg" alt="台式机与笔记本风道对比图：台式机前进后出，笔记本侧面进风转轴处出风，重点清理出风口与鳍片缝隙"></p>
+<p><em>图 3：进风要通，出风更要通。清灰的三个必清位置按重要性排序：出风口与鳍片缝隙 &gt; 风扇叶片 &gt; 进风防尘网。</em></p>
+<p><strong>台式机清灰步骤：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1. 断电开侧板（通常后部两颗螺丝，向后抽拉）</span><br><span class="line">2. 拆下 CPU 散热器的风扇（一般侧边卡扣或小螺丝固定）</span><br><span class="line">   注意：先记住方向，别拔断风扇电源线</span><br><span class="line">3. 清散热器鳍片：用软毛刷顺缝隙刷，配合皮老虎/冷风吹</span><br><span class="line">   ★ 这一步最关键——鳍片被灰糊住，散热面积直接归零</span><br><span class="line">4. 清风扇叶片：刷掉叶片正反面与根部的积灰</span><br><span class="line">5. 清机箱防尘网、电源风扇（电源能吹到就吹，别拆电源）</span><br><span class="line">6. 清机箱进出风口：后部排风扇、前部进风口的滤网</span><br><span class="line">7. 装回风扇，插好电源线，合盖前检查没有螺丝遗留在机箱内</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>笔记本清灰</strong>（难度更高）：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 确认过保、且能拆后盖再动手</span><br><span class="line">2. 拆后盖后，找到散热模组（一根或多根热管连着风扇）</span><br><span class="line">3. 重点清：风扇出风口与鳍片连接处（灰尘常在这里结成&quot;毛毡&quot;）</span><br><span class="line">4. 风扇叶片用软毛刷 + 冷风吹，别用嘴吹（口腔湿气会加速积灰）</span><br><span class="line">5. 装回时确认所有排线接好（尤其风扇插头）</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>预期看到</strong>：清灰后满载温度下降 5~15℃（如果之前糊得很严重，下降会更明显）。<strong>如果几乎没变化，说明主因是硅脂或风扇，进入路线 B &#x2F; C。</strong></p>
+<h2 id="五、路线-B：换硅脂全流程（有一定风险，谨慎操作）"><a href="#五、路线-B：换硅脂全流程（有一定风险，谨慎操作）" class="headerlink" title="五、路线 B：换硅脂全流程（有一定风险，谨慎操作）"></a>五、路线 B：换硅脂全流程（有一定风险，谨慎操作）</h2><p>硅脂的作用是<strong>填补 CPU 顶盖与散热器底座之间的微观缝隙</strong>——金属表面再平整，显微镜下也是坑坑洼洼，空气是热的不良导体，硅脂就是来替补的。它用久了会<strong>干化、硬化、甚至开裂</strong>，导热能力大幅下降，于是”同样的负载，温度比以前高十几度”。</p>
+<p><strong>什么时候该换：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">· 机器用了 2~3 年以上，从未换过散热硅脂</span><br><span class="line">· 清灰后温度仍偏高（满载 90℃+）</span><br><span class="line">· 出现&quot;开机就热、升温极快&quot;（图 2 里路线 B 的典型特征）</span><br><span class="line">· 刚做过超频，或原本温度就吃紧</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>拆散热器——这一步最容易出事，务必按顺序：</strong></p>
+<p><img src="/Blog/images/heat/03-screw-order.svg" alt="散热器螺丝拆卸顺序对比图：正确做法是对角交替每次半圈逐步松开，错误做法是按顺序依次拧完导致受力不均"></p>
+<p><em>图 4：螺丝必须”对角交替、逐步松开”。顺序错了会让散热器一侧先失去压力，另一侧受力骤增，轻则变形，重则主板弯曲、针脚压弯，导致黑屏点不亮——不可逆损失。</em></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1. 断电、放余电（重复第三节的准备动作）</span><br><span class="line">2. 拆下散热器风扇（先拆风扇，再拆散热器本体，减少重量）</span><br><span class="line">3. 按图 4 的顺序：对角交替，每次每颗螺丝只松半圈，</span><br><span class="line">   轮流四遍，直到全部松动</span><br><span class="line">4. 轻轻左右旋转散热器试探，如果粘住了（硅脂固化），</span><br><span class="line">   先小幅度转动再抬起，不要垂直硬拔</span><br><span class="line">5. ★ 抬起瞬间注意：AMD 平台（AM4/AM5）有时会把 CPU 连根拔起</span><br><span class="line">   （俗称&quot;拔萝卜&quot;），原因是硅脂粘性太强</span><br><span class="line">   → 防护：先让机器跑一会儿热一热再拆，或提前用酒精软化边缘</span><br><span class="line">   → 一旦连根拔起，检查 CPU 针脚是否变形，别硬装</span><br><span class="line">6. 分开后，用无水酒精 + 无尘布/棉签，把 CPU 顶盖和散热器底座上的</span><br><span class="line">   旧硅脂彻底擦净，直到露出金属本色</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>涂新硅脂——量是关键：</strong></p>
+<p><img src="/Blog/images/heat/04-thermal-paste.svg" alt="硅脂涂抹量对比图：正确是中间一颗绿豆大小靠散热器自然压开，错误是涂满整个顶盖或抹成厚层"></p>
+<p><em>图 5：硅脂只是”填补微观缝隙”，不是越厚越好。涂满整面会让多余硅脂被挤到主板与插槽上，厚层本身导热更差。</em></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 在 CPU 顶盖正中央挤一颗「绿豆大小」的硅脂</span><br><span class="line">   （散热器底座较大的，可点&quot;五点法&quot;：中心一滴 + 四角各一小点）</span><br><span class="line">2. 不要手动抹平！散热器压下去时会自然铺开</span><br><span class="line">3. 装回散热器：同样按对角线交替顺序上螺丝，</span><br><span class="line">   每次半圈轮流拧紧，保证受力均匀</span><br><span class="line">4. 插回风扇电源线，先别合盖</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>首次开机验证：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 通电开机，进 BIOS 看一眼 CPU 温度（比进系统更直接）</span><br><span class="line">2. 正常的话温度应明显低于换之前；进系统后用 HWiNFO 再测一轮</span><br><span class="line">3. 跑 10 分钟重负载，确认温度比换硅脂前低 15~25℃</span><br><span class="line">4. 温度正常 → 关机合盖；温度不降反升 → 关机重查（多半是没压紧）</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>预期看到</strong>：温度下降 15<del>25℃ 为正常。**只降了 2</del>3℃ 说明没涂好、没压紧，或旧硅脂没擦净（新旧混用效果打折）。**</p>
+<h2 id="六、路线-C：风扇故障的判断与更换"><a href="#六、路线-C：风扇故障的判断与更换" class="headerlink" title="六、路线 C：风扇故障的判断与更换"></a>六、路线 C：风扇故障的判断与更换</h2><p>风扇是耗材，轴承磨损后转速会下降、抖动、发出异响，最终停转。</p>
+<p><strong>判断方法：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. HWiNFO 看 RPM：风扇装好后转速应随温度上升而提高；</span><br><span class="line">   如果温度升了转速不动，或读数忽有忽无 → 风扇/接口有问题</span><br><span class="line">2. 断电后手动拨动扇叶：应该顺滑无阻力；</span><br><span class="line">   如果发涩、卡顿、有颗粒感 → 轴承坏了</span><br><span class="line">3. 摸机箱感受震动、听异响（咔咔声、摩擦声）</span><br><span class="line">4. 观察叶片是否变形、断裂，或积了硬化的灰块</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>更换要点：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 记下原风扇的规格：尺寸（120mm / 92mm 等）、接口（3pin / 4pin）</span><br><span class="line">   → 笔记本风扇通常是专用的整套模组，需按机型购买</span><br><span class="line">2. 台式机机箱风扇可以直接换同规格的；CPU 风扇要匹配散热器型号</span><br><span class="line">3. 注意出风方向：叶片上有箭头标示气流方向，别装反（装反等于没装）</span><br><span class="line">4. 笔记本风扇模组更换需要一定动手能力，拆解步骤跟清灰类似，</span><br><span class="line">   但要额外处理热管与散热片的连接</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>预期看到</strong>：新风扇转速正常、噪音消失，温度回到健康区间。</p>
+<div class="note note--tip"><span class="note-title">💡 风扇的"轴承类型"决定寿命</span>普通含油轴承（Sleeve）寿命短、易漏油，1~2 年就可能异响；<b>液压轴承（Hydraulic）/ 双滚珠轴承（Ball Bearing）</b>寿命长得多。换风扇时如果价格差得不多，优先选后者——省得两年后再拆一次。这也是"便宜的风扇为什么一年就响"的答案。</div>
+
+<h2 id="七、别忘了环境与摆放：最容易被忽略的一环"><a href="#七、别忘了环境与摆放：最容易被忽略的一环" class="headerlink" title="七、别忘了环境与摆放：最容易被忽略的一环"></a>七、别忘了环境与摆放：最容易被忽略的一环</h2><p>温度高有时候不在机器里，而在机器外：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">□ 机箱后部离墙 ≥ 10cm 了吗？（贴墙 = 热气排不走）</span><br><span class="line">□ 是不是塞在封闭的电脑桌柜里？（最致命的摆放）</span><br><span class="line">□ 笔记本是不是放在床上、抱枕上？（堵住底部进风口）</span><br><span class="line">□ 环境温度是不是太高？（夏天没空调的房间，整体温度高 10℃）</span><br><span class="line">□ 是不是灰尘特别大的环境？（那就缩短清灰周期到 3 个月）</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--tip"><span class="note-title">💡 笔记本散热支架有用吗？</span>有用，但作用是<b>改善底部进风</b>而不是"吹冷风降温"。带风扇的散热底座对进风口被挡住的机型提升明显（2~5℃），对本身就是侧进风的机型作用有限。相比之下，<b>把它架高 2~3cm 让底部进气通畅</b>，性价比最高——垫两个瓶盖都比闷在桌面上强。</div>
+
+<h2 id="八、验证与预防"><a href="#八、验证与预防" class="headerlink" title="八、验证与预防"></a>八、验证与预防</h2><p><strong>怎么确认真的修好了：</strong></p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 对比修前修后的 HWiNFO 温度读数（空闲 + 满载两组）</span><br><span class="line">2. 满载温度应低于 85℃（CPU），且不再触发降频</span><br><span class="line">3. 连续玩 1 小时原来会卡的游戏，帧数稳定、风扇声平稳</span><br><span class="line">4. 观察几天：不再出现&quot;用半小时后变慢&quot;</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>预防清单：</strong></p>
+<ul>
+<li>台式机每半年清一次灰，灰尘大的环境（临街、有宠物）缩到 3 个月</li>
+<li>笔记本每年清一次出风口，尤其是经常高负载使用的</li>
+<li>硅脂 3~5 年换一次（超频机器 2 年）</li>
+<li>机箱保持通风，后部留出排风空间，别放封闭柜里</li>
+<li>用 HWiNFO 每季度看一眼温度，发现基线抬升就及时清灰</li>
+<li>别长期把笔记本放在床上用——这不只是散热问题，长期高温还会加速电池老化</li>
+</ul>
+<h2 id="九、避坑与经验"><a href="#九、避坑与经验" class="headerlink" title="九、避坑与经验"></a>九、避坑与经验</h2><div class="note note--warn"><span class="note-title">⚠️ 六个坑，代价从几十到几千</span>① <b>用吸尘器清机箱</b>——静电可能击穿主板，这是最容易造成大损失的操作。② <b>按顺序依次拧螺丝</b>——正确做法是对角交替逐步松开（图 4），否则主板/针脚可能受损。③ <b>硅脂涂太厚</b>——以为"多涂点更好"，其实厚层导热更差，多余的还会溢出到插槽。④ <b>只擦风扇不擦鳍片</b>——鳍片才是散热主战场，只擦叶片等于没清。⑤ <b>AMD 平台垂直硬拔散热器</b>——可能连 CPU 一起拔起并弄弯针脚，要先旋转再抬。⑥ <b>风扇装反</b>——叶片上有方向箭头，装反等于白装。</div>
+
+<div class="note note--tip"><span class="note-title">💡 四条实战心得</span>① 判断顺序永远是"<b>先清灰 → 再看硅脂 → 最后换风扇</b>"，成本从零到几十到上百，别跳步。② 拆机<b>先拍照</b>，螺丝按位置分开放——装回去时会感谢自己。③ 换硅脂后<b>先开盖试机再合盖</b>，万一温度没降下来，可以马上重来。④ 记下"健康基线温度"，以后每季度对比一次，温度抬升就是该清灰的信号，比等到发烫再处理主动得多。</div>
+
+<h2 id="十、两个真实维修案例（维修日志格式）"><a href="#十、两个真实维修案例（维修日志格式）" class="headerlink" title="十、两个真实维修案例（维修日志格式）"></a>十、两个真实维修案例（维修日志格式）</h2><div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">【案例 A · 灰尘堵塞型】2026-07-08</span><br><span class="line">【现象】笔记本用 3 年，近半年风扇狂转、键盘左上方烫手，</span><br><span class="line">       玩 20 分钟游戏就掉帧</span><br><span class="line">【排查】① HWiNFO：空闲 68℃，满载 98℃ 且 CPU 频率从 3.8GHz 掉到 2.1GHz</span><br><span class="line">       ② 确认是&quot;降频&quot;而非&quot;配置不够&quot;——频率掉了整整 45%</span><br><span class="line">       ③ 拆机发现：出风口与鳍片之间糊了一层厚灰，几乎不透风</span><br><span class="line">       ④ 硅脂状态尚可（未干裂）→ 判定主因是灰尘</span><br><span class="line">【结论】只做清灰，未换硅脂。满载温度 98℃ → 79℃，</span><br><span class="line">       频率不再掉，游戏帧数恢复。零配件成本</span><br></pre></td></tr></table></div></div></div>
+
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">【案例 B · 硅脂干化型】2026-08-21</span><br><span class="line">【现象】台式机用了 4 年，最近开机 5 分钟 CPU 就冲到 90℃，</span><br><span class="line">       风扇一秒不停，办公都觉得卡</span><br><span class="line">【排查】① 先清灰 → 温度只降了 3℃，说明主因不在此</span><br><span class="line">       ② 继续查：拆下散热器，发现硅脂已完全硬化成粉状、一碰就掉渣</span><br><span class="line">       ③ 底座与顶盖上残留的旧硅脂形成了一层&quot;干壳&quot;，严重阻碍导热</span><br><span class="line">【结论】无水酒精擦净旧硅脂 + 重涂（绿豆大小）+ 对角交替上紧</span><br><span class="line">       → 满载温度 92℃ → 71℃。硅脂成本几块钱，效果立竿见影</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>两个案例对读</strong>：案例 A 是”灰”的问题，清灰就好，不必动硅脂；案例 B 是”硅脂”的问题，清灰没用，必须拆换。<strong>判断依据就是图 2 那个决策树——先清灰看效果，没改善再升级到换硅脂。</strong></p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-slow-checkup/">电脑卡到怀疑人生？重装前的 7 步体检</a>》——上一篇第 5 步查出”过热降频”，本篇是它的完整解决方案</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a>》——四层模型与硬件三板斧，本篇断电&#x2F;防静电等铁律均沿用</li>
+<li>下一篇（系列第 7 篇）：<strong>《硬盘告急：坏道、掉盘、SMART 黄了》</strong>——散热讲完了，P0 现象排障线的最后一站：当硬盘开始报警，怎么读数、怎么判断该不该继续用、怎么把数据安全迁移走。</li>
+</ul>
+<p>温度这件事，最怕的是”忍”。忍到蓝屏、忍到降频、忍到硬盘在高温里加速老化——而清理它其实只需要一把刷子和十分钟。<strong>下次风扇一响，别关掉 AIDA64 装作没听见，拆开看一眼那层灰，你就知道钱花在哪儿最值。</strong></p>
+
+            </article>
+
+            <div class="share-row" id="shareRow">
+                <span class="share-label">分享这篇文章：</span>
+            </div>
+
+            <nav class="post-nav" id="postNav" aria-label="上下篇导航">
+                <span></span>
+                
+                    <a class="post-nav-item post-nav-item--next" href="/Blog/2026/09/pc-slow-checkup/">
+                        <span class="k">下一篇 →</span><span class="t">电脑卡到怀疑人生？重装前的 7 步体检，别急着清空 C 盘</span>
+                    </a>
+                
+            </nav>
+
+            <!-- ---- 评论（Giscus：数据存于 GitHub Discussions） ---- -->
+            
+            
+            
+            <section class="card comments" aria-labelledby="commentTitle">
+                <h2 class="card-title" id="commentTitle" style="text-align:left">
+                    💬 读者留言
+                </h2>
+                <p style="margin:0 0 18px;font-size:.76rem;color:var(--ink-3)">
+                    评论由 GitHub Discussions 托管，需登录 GitHub 后参与（评论区的 +1 即点赞）。
+                </p>
+                <script src="https://giscus.app/client.js"
+                        data-repo="molunanli/Blog"
+                        data-repo-id="R_kgDOUMGUlQ"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOUMGUlc4DEuis"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                </script>
+            </section>
+            
+            
+        </div>
+
+        <!-- ============ 侧边栏 ============ -->
+        <aside class="sidebar toc-sticky" aria-label="文章侧边信息">
+
+            
+            <button class="toc-toggle-mobile" id="tocToggle" type="button" aria-expanded="false" aria-controls="tocPanel">
+                📑 目录导航 <span class="arrow" aria-hidden="true">▼</span>
+            </button>
+
+            <nav class="card toc-card toc-panel" id="tocPanel" aria-label="文章目录">
+                <h2 class="card-title">📑 目录</h2>
+                <div class="toc-list" id="tocList">
+                    
+                        <a class="toc-link toc-link--h2" href="#一、先分清”正常转”与”异常转”">一、先分清”正常转”与”异常转”</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#二、三步判断：到底堵在哪一环">二、三步判断：到底堵在哪一环</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#三、动手前的准备（安全第一）">三、动手前的准备（安全第一）</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#四、路线-A：清灰全流程（零成本，优先做）">四、路线 A：清灰全流程（零成本，优先做）</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#五、路线-B：换硅脂全流程（有一定风险，谨慎操作）">五、路线 B：换硅脂全流程（有一定风险，谨慎操作）</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#六、路线-C：风扇故障的判断与更换">六、路线 C：风扇故障的判断与更换</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#七、别忘了环境与摆放：最容易被忽略的一环">七、别忘了环境与摆放：最容易被忽略的一环</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#八、验证与预防">八、验证与预防</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#九、避坑与经验">九、避坑与经验</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#十、两个真实维修案例（维修日志格式）">十、两个真实维修案例（维修日志格式）</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#相关阅读">相关阅读</a>
+                    
+                </div>
+            </nav>
+            
+
+            
+            <section class="card" aria-labelledby="relTitle">
+                <h2 class="card-title" id="relTitle">📎 相关文章</h2>
+                <ul class="related-list" id="relatedList">
+                    
+                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-random-restart/">电脑不定时自动重启/关机？三步定位真凶，别急着换电源</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-slow-checkup/">电脑卡到怀疑人生？重装前的 7 步体检，别急着清空 C 盘</a></li>
+                    
+                        <li><a href="/Blog/2026/09/bsod-dump-guide/">蓝屏不再靠拍照：读内存转储文件，精确到是哪个驱动干的</a></li>
+                    
+                </ul>
+            </section>
+            
+
+            <section class="card" aria-labelledby="authorTitle">
+                <h2 class="card-title" id="authorTitle">✍️ 关于作者</h2>
+                <div class="profile-avatar" style="width:76px;height:76px;font-size:2.3rem" aria-hidden="true">🐱</div>
+                <p class="profile-name" style="text-align:center">博主</p>
+                <p class="profile-role" style="text-align:center">BLOGGER</p>
+                <p class="profile-bio" style="text-align:center;font-size:.82rem">这里是作者简介。
+用一两句话介绍你自己，或者这个博客打算写些什么。
+</p>
+                <p style="text-align:center;margin-top:12px">
+                    <a class="link-more" href="/Blog/about">▶ 了解更多</a>
+                </p>
+            </section>
+
+        </aside>
+    </div>
+</div>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="shell">
+        <div class="footer-grid">
+            <div>
+                <span class="footer-h">关于本站</span>
+                <p style="font-size:.88rem;color:var(--ink-2);line-height:1.8">
+                    这里是页脚简介。用一两句话说明这个博客的内容方向，
+让读者一眼知道这里在写什么。
+
+                </p>
+                <p style="margin-top:12px">
+                    <span class="footer-seal" aria-hidden="true">我的<br>博客</span>
+                </p>
+            </div>
+            <div>
+                <span class="footer-h">快速导航</span>
+                <nav class="footer-list" aria-label="页脚导航">
+                    
+                        
+                        <a href="/Blog/">首页</a>
+                    
+                        
+                        <a href="/Blog/archives">归档</a>
+                    
+                        
+                        <a href="/Blog/tags">标签</a>
+                    
+                        
+                        <a href="/Blog/categories">分类</a>
+                    
+                        
+                        <a href="/Blog/about">关于</a>
+                    
+                </nav>
+            </div>
+            <div>
+                <span class="footer-h">热门分类</span>
+                <nav class="footer-list" aria-label="分类导航">
+                    
+                        <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                    
+                        <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <span>&copy; 2026 我的博客 — 保持热爱，持续记录。</span>
+            <span>Made with Hexo</span>
+        </div>
+    </div>
+</footer>
+
+<div class="fabs">
+    <button class="fab fab--top" id="topBtn" type="button" data-tip="回到顶部" title="回到顶部" aria-label="回到顶部" aria-hidden="true">⬆</button>
+    <button class="fab" id="fabSearch" type="button" data-tip="搜索文章" title="搜索文章" aria-label="搜索文章">🔍</button>
+</div>
+
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="站内搜索" aria-hidden="true">
+    <div class="search-panel">
+        <div class="search-field">
+            <span aria-hidden="true" style="font-size:1.1rem">🔍</span>
+            <input class="search-input" id="searchInput" type="search" placeholder="搜索文章标题、标签或关键词…" aria-label="搜索关键词" autocomplete="off">
+            <button class="icon-btn" id="searchClose" type="button" aria-label="关闭搜索">✕</button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+        <div class="search-hint">
+            <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
+            <span><kbd>Enter</kbd> 打开</span>
+            <span><kbd>Esc</kbd> 关闭</span>
+            <span><kbd>Ctrl</kbd>+<kbd>K</kbd> 随时唤起</span>
+        </div>
+    </div>
+</div>
+
+
+<script src="/Blog/js/app.js" defer></script>
+</body>
+</html>

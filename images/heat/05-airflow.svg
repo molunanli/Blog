@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" role="img" aria-label="台式机与笔记本风道对比图：台式机为前进后出，笔记本为侧进后出，出风口被灰堵是笔记本高温通病">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .tn { font-size: 14px; font-weight: 600; }
+    .tl { font-size: 12.5px; fill: #4c463e; }
+    .case { fill: #efe5d0; stroke: #1c1a17; stroke-width: 3; }
+    .lap { fill: #efe5d0; stroke: #1c1a17; stroke-width: 3; }
+    .in { stroke: #2f5d8a; stroke-width: 3.5; fill: none; }
+    .out { stroke: #cc3b3b; stroke-width: 3.5; fill: none; }
+    .dust { fill: #8a8072; }
+  </style>
+
+  <rect class="bg" width="680" height="420"/>
+
+  <defs>
+    <marker id="b1" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <path d="M0 0 L7 3.5 L0 7 z" fill="#2f5d8a"/>
+    </marker>
+    <marker id="r2" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <path d="M0 0 L7 3.5 L0 7 z" fill="#cc3b3b"/>
+    </marker>
+  </defs>
+
+  <text class="t th" x="34" y="38">风道的两条铁律：进风要通，出风更要通</text>
+  <text class="t ts" x="34" y="60">清灰只擦风扇叶片是不够的——真正堵死散热的是"出风口"和"鳍片之间"</text>
+
+  <!-- 台式机 -->
+  <text class="t tn" x="34" y="94">台式机：前进后出（部分机型下进上出）</text>
+  <rect class="case" x="34" y="108" width="290" height="170" rx="8"/>
+
+  <!-- 前进风 -->
+  <path class="in" d="M12 178 L30 178" marker-end="url(#b1)"/>
+  <path class="in" d="M12 208 L30 208" marker-end="url(#b1)"/>
+  <text class="t tl" x="34" y="150">前部进风</text>
+
+  <!-- 内部箭头 -->
+  <path class="in" d="M46 193 L200 193" marker-end="url(#b1)" stroke-dasharray="7 5"/>
+
+  <!-- CPU 散热器 -->
+  <rect x="150" y="160" width="52" height="66" rx="5" fill="#dcd2ba" stroke="#1c1a17" stroke-width="2.5"/>
+  <text class="t tl" x="176" y="246" text-anchor="middle">CPU 散热器</text>
+
+  <!-- 后出风 -->
+  <path class="out" d="M324 193 L348 193" marker-end="url(#r2)"/>
+  <text class="t tl" x="250" y="150" style="fill:#cc3b3b">后部出风</text>
+
+  <!-- 灰尘标记 -->
+  <circle class="dust" cx="150" cy="200" r="5"/>
+  <circle class="dust" cx="160" cy="212" r="4"/>
+  <circle class="dust" cx="142" cy="216" r="3.5"/>
+  <text class="t tl" x="34" y="262" style="fill:#6b6459">重点：散热器鳍片缝隙、机箱防尘网、后部排风扇</text>
+  <text class="t tl" x="34" y="280" style="fill:#6b6459">机箱摆放：后部离墙 ≥ 10cm，别塞进封闭柜子</text>
+
+  <!-- 笔记本 -->
+  <text class="t tn" x="356" y="94">笔记本：侧/底进风 → 转轴处出风</text>
+  <rect class="lap" x="356" y="140" width="290" height="106" rx="8"/>
+  <!-- 屏幕部分 -->
+  <rect class="lap" x="356" y="112" width="290" height="34" rx="6"/>
+
+  <!-- 侧进风 -->
+  <path class="in" d="M334 178 L352 178" marker-end="url(#b1)"/>
+  <path class="in" d="M334 202 L352 202" marker-end="url(#b1)"/>
+  <text class="t tl" x="356" y="258">底部/侧面进风（常被床单、抱枕挡住）</text>
+
+  <!-- 出风 -->
+  <path class="out" d="M500 140 L500 120" marker-end="url(#r2)"/>
+  <path class="out" d="M566 140 L566 120" marker-end="url(#r2)"/>
+  <text class="t tl" x="514" y="200" style="fill:#cc3b3b">转轴/侧面出风</text>
+
+  <!-- 灰尘 -->
+  <circle class="dust" cx="520" cy="132" r="6"/>
+  <circle class="dust" cx="534" cy="128" r="4.5"/>
+  <circle class="dust" cx="548" cy="134" r="5"/>
+  <text class="t tl" x="356" y="278" style="fill:#cc3b3b">通病：出风口糊灰后温度骤升，风扇狂转不停</text>
+
+  <!-- 底部结论 -->
+  <rect x="34" y="300" width="612" height="102" rx="6" fill="#fffdf6" stroke="#1c1a17" stroke-width="3"/>
+  <text class="t tn" x="52" y="324">清灰三个必清位置（按重要性排序）</text>
+  <text class="t tl" x="52" y="348">① 出风口与散热鳍片缝隙 —— 堵这里等于把散热器变成"保温被"</text>
+  <text class="t tl" x="52" y="370">② 风扇叶片（尤其叶片根部与轴心积灰）—— 影响转速与动平衡</text>
+  <text class="t tl" x="52" y="392">③ 进风防尘网 / 机箱内部整体浮尘 —— 每半年一次，用软毛刷 + 冷风档吹</text>
+</svg>

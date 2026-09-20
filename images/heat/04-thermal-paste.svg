@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" role="img" aria-label="CPU 硅脂涂抹量对比图：正确是中间一颗绿豆大小自然压开，错误是涂满整个芯片表面">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .tn { font-size: 14px; font-weight: 600; }
+    .tl { font-size: 12.5px; fill: #4c463e; }
+    .chip { fill: #e6d9bf; stroke: #1c1a17; stroke-width: 3; }
+    .good { fill: #f2b829; stroke: #a87608; stroke-width: 2; }
+    .over { fill: #f2b829; stroke: #b02f2f; stroke-width: 3; }
+    .frame { fill: none; stroke-width: 3; }
+  </style>
+
+  <rect class="bg" width="680" height="400"/>
+
+  <text class="t th" x="34" y="38">硅脂该涂多少：一颗绿豆，别抹满</text>
+  <text class="t ts" x="34" y="60">硅脂只是"填补金属之间的微小缝隙"，不是越厚越好——涂多了反而隔热</text>
+
+  <!-- 左：正确 -->
+  <text class="t tn" x="44" y="94" style="fill:#4f7f47">✓ 正确：中间一颗，靠自己压开</text>
+  <rect class="chip" x="44" y="110" width="240" height="200" rx="8"/>
+  <text class="t tl" x="164" y="146" text-anchor="middle">CPU 顶盖</text>
+  <ellipse class="good" cx="164" cy="210" rx="26" ry="20"/>
+  <text class="t tl" x="164" y="215" text-anchor="middle" style="font-size:11px">绿豆大</text>
+  <text class="t tl" x="164" y="282" text-anchor="middle">散热器压下去后自然铺开</text>
+  <text class="t tl" x="164" y="300" text-anchor="middle">覆盖核心区域即可</text>
+
+  <!-- 右：错误 -->
+  <text class="t tn" x="356" y="94" style="fill:#cc3b3b">✗ 错误：涂满整面 / 抹成厚层</text>
+  <rect class="chip" x="356" y="110" width="240" height="200" rx="8"/>
+  <text class="t tl" x="476" y="146" text-anchor="middle">CPU 顶盖</text>
+  <rect class="over" x="372" y="162" width="208" height="130" rx="6"/>
+  <text class="t tl" x="476" y="232" text-anchor="middle" style="fill:#7a1f1f">涂满 + 刮平 + 很厚</text>
+  <path class="frame" d="M372 162 L580 162 L580 292 L372 292 Z" stroke="#b02f2f"/>
+  <text class="t tl" x="476" y="282" text-anchor="middle" style="fill:#cc3b3b">多余硅脂会被挤到主板/插槽</text>
+  <text class="t tl" x="476" y="300" text-anchor="middle" style="fill:#cc3b3b">厚层本身导热更差</text>
+
+  <!-- 底部结论条 -->
+  <rect x="34" y="332" width="612" height="52" rx="6" fill="#fffdf6" stroke="#1c1a17" stroke-width="3"/>
+  <text class="t tn" x="52" y="354">判断标准：装好后温度下降 15~25℃ 为正常；只降 2~3℃ 说明没涂好或没压紧</text>
+  <text class="t tl" x="52" y="374">注意：拆下散热器后，必须用无水酒精/棉签擦净旧硅脂，再涂新的——新旧混用效果打折</text>
+</svg>

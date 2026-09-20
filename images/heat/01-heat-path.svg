@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" role="img" aria-label="CPU 散热热传导路径示意图：热量从芯片经硅脂传到散热器，再由风扇带走，最后靠机箱风道排出">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .card { fill: #fffdf6; stroke: #1c1a17; stroke-width: 3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .tn { font-size: 14px; font-weight: 600; }
+    .tl { font-size: 12px; fill: #6b6459; }
+    .chip { fill: #e6d9bf; stroke: #1c1a17; stroke-width: 3; }
+    .paste { fill: #f2b829; stroke: #a87608; stroke-width: 2; }
+    .fin { fill: #efe5d0; stroke: #1c1a17; stroke-width: 2.5; }
+    .heat { stroke: #cc3b3b; stroke-width: 3; fill: none; }
+    .cool { stroke: #2f5d8a; stroke-width: 3; fill: none; }
+    .dash { stroke-dasharray: 7 5; }
+  </style>
+
+  <rect class="bg" width="680" height="420"/>
+
+  <text class="t th" x="34" y="40">CPU 的热量是怎么被"搬走"的</text>
+  <text class="t ts" x="34" y="64">四道关卡，任何一道堵了，热量都会在芯片里堆积 → 温度升高 → 降频变卡</text>
+
+  <!-- 芯片 -->
+  <rect class="chip" x="60" y="212" width="132" height="86" rx="6"/>
+  <text class="t tn" x="126" y="248" text-anchor="middle">CPU 芯片</text>
+  <text class="t tl" x="126" y="272" text-anchor="middle">热源本体</text>
+  <text class="t tl" x="126" y="316" text-anchor="middle">① 发热</text>
+
+  <!-- 硅脂 -->
+  <rect class="paste" x="196" y="240" width="46" height="30" rx="4"/>
+  <text class="t tl" x="219" y="316" text-anchor="middle">② 硅脂</text>
+  <text class="t tl" x="219" y="334" text-anchor="middle">导热</text>
+
+  <!-- 散热器底座 -->
+  <rect class="fin" x="246" y="200" width="86" height="110" rx="6"/>
+  <text class="t tn" x="289" y="248" text-anchor="middle">散热器</text>
+  <text class="t tl" x="289" y="270" text-anchor="middle">底座</text>
+  <text class="t tl" x="289" y="332" text-anchor="middle">③ 吸热</text>
+
+  <!-- 鳍片 -->
+  <g>
+    <rect class="fin" x="336" y="196" width="16" height="118" rx="3"/>
+    <rect class="fin" x="360" y="196" width="16" height="118" rx="3"/>
+    <rect class="fin" x="384" y="196" width="16" height="118" rx="3"/>
+    <rect class="fin" x="408" y="196" width="16" height="118" rx="3"/>
+    <rect class="fin" x="432" y="196" width="16" height="118" rx="3"/>
+  </g>
+  <text class="t tl" x="392" y="336" text-anchor="middle">鳍片（散热面积）</text>
+
+  <!-- 风扇 -->
+  <circle cx="512" cy="255" r="52" fill="#fffdf6" stroke="#1c1a17" stroke-width="3"/>
+  <g class="cool" stroke-width="3.5">
+    <path d="M512 213 C536 219 542 243 526 255 C540 268 532 291 512 297"/>
+    <path d="M512 297 C488 291 482 267 498 255 C484 242 492 219 512 213"/>
+  </g>
+  <circle cx="512" cy="255" r="8" fill="#1c1a17"/>
+  <text class="t" x="512" y="336" text-anchor="middle" style="font-size:13px; fill:#4c463e">④ 风吹走</text>
+  <text class="t tl" x="512" y="352" text-anchor="middle">风扇 + 机箱风道</text>
+
+  <!-- 热流箭头 -->
+  <g class="heat">
+    <path d="M192 255 L196 255" marker-end="url(#ar)"/>
+    <path d="M242 255 L246 255" marker-end="url(#ar)"/>
+    <path d="M332 255 L336 255" marker-end="url(#ar)"/>
+    <path d="M452 255 L458 255" marker-end="url(#ar)"/>
+  </g>
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0 0 L6 3 L0 6 z" fill="#cc3b3b"/>
+    </marker>
+  </defs>
+
+  <!-- 温度梯度说明 -->
+  <rect class="card" x="34" y="360" width="612" height="40" rx="5"/>
+  <text class="t tl" x="52" y="385">温度梯度：芯片内部 90℃+ → 硅脂 → 散热器底座 → 鳍片 → 空气 → 排出机箱</text>
+  <text class="t tl" x="470" y="385" style="fill:#cc3b3b; font-weight:600">温差越大，散热越快</text>
+</svg>
