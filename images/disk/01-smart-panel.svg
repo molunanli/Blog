@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 500" role="img" aria-label="CrystalDiskInfo 界面速读：标注健康状态、温度、通电时间与 SMART 关键项">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .tn { font-size: 14px; font-weight: 600; }
+    .tl { font-size: 12.5px; fill: #4c463e; }
+    .tm { font-size: 12px; font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; fill: #2b2721; }
+    .card { fill: #fffdf6; stroke: #1c1a17; stroke-width: 2.5; }
+    .bar { fill: #efe7d5; }
+    .warn { fill: #fbf0d4; stroke: #a87608; stroke-width: 2; }
+    .safe { fill: #e6eef6; stroke: #2f5d8a; stroke-width: 2; }
+    .hr { stroke: #cdc4b0; stroke-width: 1.5; }
+    .dot-w { fill: #f2b829; stroke: #a87608; stroke-width: 1.5; }
+    .num { fill: #cc3b3b; }
+    .numt { font-size: 12.5px; font-weight: 700; fill: #fffdf6; }
+    .kv { font-size: 12.5px; fill: #2b2721; }
+  </style>
+
+  <rect class="bg" width="680" height="500"/>
+
+  <text class="t th" x="34" y="38">读懂 CrystalDiskInfo：别只看"良好"两个字</text>
+  <text class="t ts" x="34" y="60">健康状态只是结论，真正要盯的是下面那几行 SMART 数值——尤其看它有没有在"变"</text>
+
+  <!-- 界面卡片 -->
+  <rect class="card" x="30" y="84" width="620" height="252" rx="8"/>
+  <rect class="bar" x="30" y="84" width="620" height="36" rx="8"/>
+  <rect class="bar" x="30" y="106" width="620" height="14"/>
+  <text class="t tn" x="48" y="108">CrystalDiskInfo · 目标盘：WDC WD10EZEX（1TB 机械硬盘）</text>
+  <line class="hr" x1="30" y1="120" x2="650" y2="120"/>
+  <line class="hr" x1="338" y1="120" x2="338" y2="336"/>
+
+  <!-- 左半：盘概况 -->
+  <text class="t tl" x="50" y="146">① 健康状态（最先看这个）</text>
+  <circle class="dot-w" cx="60" cy="172" r="9"/>
+  <text class="t tn" x="78" y="177" style="fill:#a87608">注意 · 黄色</text>
+
+  <text class="t tl" x="50" y="206">② 温度</text>
+  <text class="t kv" x="50" y="226">34 ℃　（机械盘 &gt; 50℃ 就要留意）</text>
+
+  <text class="t tl" x="50" y="254">③ 通电时间 / 次数</text>
+  <text class="t kv" x="50" y="274">12840 小时　·　通电 2100 次</text>
+
+  <text class="t tl" x="50" y="302">④ SMART 明细表（右侧 →）</text>
+  <text class="t tl" x="50" y="322" style="fill:#6b6459">数值本身不可怕，持续增长才可怕</text>
+
+  <!-- 右半：SMART 明细 -->
+  <text class="t tn" x="356" y="146">SMART 关键项（原始值）</text>
+
+  <text class="tm" x="356" y="172">05 重映射扇区计数</text>
+  <text class="tm" x="640" y="172" text-anchor="end" style="fill:#cc3b3b;font-weight:700">8  ▲</text>
+
+  <text class="tm" x="356" y="196">C5 当前待映射扇区</text>
+  <text class="tm" x="640" y="196" text-anchor="end" style="fill:#cc3b3b;font-weight:700">16 ▲</text>
+
+  <text class="tm" x="356" y="220">C6 无法修正的扇区</text>
+  <text class="tm" x="640" y="220" text-anchor="end" style="fill:#2f5d8a;font-weight:700">0</text>
+
+  <text class="tm" x="356" y="244">C7 SATA 传输错误</text>
+  <text class="tm" x="640" y="244" text-anchor="end" style="fill:#2f5d8a;font-weight:700">0</text>
+
+  <text class="tm" x="356" y="268">0E 介质与数据完整性错误</text>
+  <text class="tm" x="640" y="268" text-anchor="end" style="fill:#6b6459">—（SSD 看此项）</text>
+
+  <text class="tm" x="356" y="292">03 可用备用块</text>
+  <text class="tm" x="640" y="292" text-anchor="end" style="fill:#6b6459">—（SSD 看此项）</text>
+
+  <text class="t tl" x="356" y="320" style="fill:#cc3b3b">▲ 一项有值、且在增长 = 盘正在坏</text>
+
+  <!-- 底部两条对照 -->
+  <rect class="safe" x="30" y="352" width="304" height="120" rx="6"/>
+  <text class="t tn" x="48" y="378">机械硬盘：盯这 4 项</text>
+  <text class="t tl" x="48" y="402">· 05 重映射扇区计数</text>
+  <text class="t tl" x="48" y="424">· C5 当前待映射扇区</text>
+  <text class="t tl" x="48" y="446">· C6 无法修正的扇区</text>
+  <text class="t tl" x="48" y="464">· C7 SATA 传输错误（0 才正常）</text>
+
+  <rect class="warn" x="346" y="352" width="304" height="120" rx="6"/>
+  <text class="t tn" x="364" y="378">固态硬盘（SSD）：盯这 3 项</text>
+  <text class="t tl" x="364" y="402">· 0E 介质与数据完整性错误</text>
+  <text class="t tl" x="364" y="424" style="fill:#a87608">　 ↑ 只要不是 0，马上备份</text>
+  <text class="t tl" x="364" y="446">· 03 可用备用块（寿命余量）</text>
+  <text class="t tl" x="364" y="464">· 05 / C5 同样要看</text>
+</svg>

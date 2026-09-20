@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" role="img" aria-label="CrystalDiskInfo 健康状态三色分级：良好、注意、警告分别对应的处置动作">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .tn { font-size: 14px; font-weight: 600; }
+    .tl { font-size: 12.5px; fill: #4c463e; }
+    .big { font-size: 15px; font-weight: 700; }
+    .blue { fill: #e6eef6; stroke: #2f5d8a; stroke-width: 2.5; }
+    .yellow { fill: #fbf0d4; stroke: #a87608; stroke-width: 2.5; }
+    .red { fill: #f5e2e2; stroke: #cc3b3b; stroke-width: 2.5; }
+    .chipb { fill: #2f5d8a; }
+    .chipy { fill: #a87608; }
+    .chipr { fill: #cc3b3b; }
+    .chipt { font-size: 12px; font-weight: 700; fill: #fffdf6; }
+  </style>
+
+  <rect class="bg" width="680" height="400"/>
+
+  <text class="t th" x="34" y="38">健康状态三色分级：同样的"黄灯"，动作完全不同</text>
+  <text class="t ts" x="34" y="60">判据不是"亮没亮灯"，而是"数值有没有在涨"——趋势比单次读数重要得多</text>
+
+  <!-- 蓝 -->
+  <rect class="blue" x="30" y="84" width="200" height="238" rx="8"/>
+  <rect class="chipb" x="30" y="84" width="200" height="34" rx="8"/>
+  <rect class="chipb" x="30" y="102" width="200" height="16"/>
+  <text class="t chipt" x="130" y="107" text-anchor="middle">良好 · 蓝色</text>
+  <text class="t big" x="130" y="152" text-anchor="middle" style="fill:#2f5d8a">放心用</text>
+  <text class="t tl" x="46" y="182">· 该干嘛干嘛，不必折腾</text>
+  <text class="t tl" x="46" y="204">· 保持备份习惯（见下）</text>
+  <text class="t tl" x="46" y="226">· 每季度看一眼即可</text>
+  <text class="t tl" x="46" y="248">· 别忽视 C7 &gt; 0</text>
+  <text class="t tl" x="46" y="286" style="fill:#6b6459">新增盘也是这类</text>
+  <text class="t tl" x="46" y="306" style="fill:#6b6459">零操作，最省心</text>
+
+  <!-- 黄 -->
+  <rect class="yellow" x="240" y="84" width="200" height="238" rx="8"/>
+  <rect class="chipy" x="240" y="84" width="200" height="34" rx="8"/>
+  <rect class="chipy" x="240" y="102" width="200" height="16"/>
+  <text class="t chipt" x="340" y="107" text-anchor="middle">注意 · 黄色</text>
+  <text class="t big" x="340" y="152" text-anchor="middle" style="fill:#a87608">立刻备份，准备换盘</text>
+  <text class="t tl" x="256" y="182">· 今天就把重要数据拷走</text>
+  <text class="t tl" x="256" y="204">· 停止全盘扫描 / 碎片整理</text>
+  <text class="t tl" x="256" y="226">· 一周后再看数值涨没涨</text>
+  <text class="t tl" x="256" y="248" style="fill:#a87608">· 还在涨 → 换盘别拖</text>
+  <text class="t tl" x="256" y="286" style="fill:#6b6459">多数"黄灯"都属这类</text>
+  <text class="t tl" x="256" y="306" style="fill:#6b6459">来得及救，全看动作快慢</text>
+
+  <!-- 红 -->
+  <rect class="red" x="450" y="84" width="200" height="238" rx="8"/>
+  <rect class="chipr" x="450" y="84" width="200" height="34" rx="8"/>
+  <rect class="chipr" x="450" y="102" width="200" height="16"/>
+  <text class="t chipt" x="550" y="107" text-anchor="middle">警告 / 危险 · 红色</text>
+  <text class="t big" x="550" y="152" text-anchor="middle" style="fill:#cc3b3b">停用，抢救数据</text>
+  <text class="t tl" x="466" y="182">· 立刻断电，别再反复开机</text>
+  <text class="t tl" x="466" y="204">· 别再"修复"——越修越糟</text>
+  <text class="t tl" x="466" y="226">· 一次拷贝成功就收手</text>
+  <text class="t tl" x="466" y="248" style="fill:#cc3b3b">· 有异响 / 咔哒声 → 送专业</text>
+  <text class="t tl" x="466" y="286" style="fill:#6b6459">通电每一分钟都在赌</text>
+  <text class="t tl" x="466" y="306" style="fill:#6b6459">数据比盘贵得多</text>
+
+  <text class="t tl" x="34" y="350" style="fill:#6b6459">补充：界面不一定是标准三色。有的固件在临界时仍显示"良好"，所以"看数值 + 看趋势"永远比看结论可靠。</text>
+  <text class="t tl" x="34" y="374" style="fill:#6b6459">温度也是独立信号：机械盘 &gt; 50℃、SSD &gt; 70℃ 长期运行，都会显著加速老化，先解决散热再谈其他。</text>
+</svg>
