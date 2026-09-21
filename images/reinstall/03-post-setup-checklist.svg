@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 460" role="img" aria-label="Windows 装完之后的设置清单：必做项、可选优化项与应当避免的操作">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .tn { font-size: 14px; font-weight: 600; }
+    .tl { font-size: 12.5px; fill: #4c463e; }
+    .tk { font-size: 12px; fill: #6b6459; }
+    .green { fill: #e8f0e4; stroke: #4f7f47; stroke-width: 2.5; }
+    .blue { fill: #e6eef6; stroke: #2f5d8a; stroke-width: 2.5; }
+    .red { fill: #f5e2e2; stroke: #cc3b3b; stroke-width: 2.5; }
+    .chipg { fill: #4f7f47; }
+    .chipb { fill: #2f5d8a; }
+    .chipr { fill: #cc3b3b; }
+    .chipt { font-size: 12.5px; font-weight: 700; fill: #fffdf6; }
+    .li { font-size: 12.5px; fill: #2b2721; }
+    .star { font-size: 12px; font-weight: 700; fill: #4f7f47; }
+  </style>
+
+  <rect class="bg" width="680" height="460"/>
+
+  <text class="t th" x="34" y="38">装完之后的 10 分钟：按这张清单走</text>
+  <text class="t ts" x="34" y="60">顺序有讲究——先保证联网，否则后面的更新和驱动都下不来</text>
+
+  <!-- 必做 -->
+  <rect class="green" x="30" y="84" width="200" height="316" rx="8"/>
+  <rect class="chipg" x="30" y="84" width="200" height="34" rx="8"/>
+  <rect class="chipg" x="30" y="102" width="200" height="16"/>
+  <text class="t chipt" x="130" y="106" text-anchor="middle">① 必做（按顺序）</text>
+
+  <text class="t li" x="46" y="142">1. 确认能上网</text>
+  <text class="t tk" x="46" y="160">　 上不去 → 手机 USB 共享</text>
+
+  <text class="t li" x="46" y="186">2. 装芯片组 + 网卡驱动</text>
+  <text class="t li" x="46" y="212">3. 跑完 Windows 更新</text>
+  <text class="t li" x="46" y="238">4. 装显卡驱动（官网）</text>
+  <text class="t li" x="46" y="264">5. 确认系统已激活</text>
+  <text class="t li" x="46" y="290">6. 从备份恢复数据</text>
+  <text class="t li" x="46" y="316">7. 建一个还原点</text>
+
+  <text class="t tk" x="46" y="352">前 4 项决定机器能不能正常用</text>
+  <text class="t tk" x="46" y="372">后 3 项决定数据安不安全</text>
+
+  <!-- 可选 -->
+  <rect class="blue" x="240" y="84" width="200" height="316" rx="8"/>
+  <rect class="chipb" x="240" y="84" width="200" height="34" rx="8"/>
+  <rect class="chipb" x="240" y="102" width="200" height="16"/>
+  <text class="t chipt" x="340" y="106" text-anchor="middle">② 可选优化</text>
+
+  <text class="t li" x="256" y="142">· 改成本地账号登录</text>
+  <text class="t li" x="256" y="168">· 关掉推荐内容/小组件</text>
+  <text class="t li" x="256" y="194">· 调整电源与休眠</text>
+  <text class="t li" x="256" y="220">· 装回常用软件</text>
+  <text class="t li" x="256" y="246">· 设默认浏览器/输入法</text>
+  <text class="t li" x="256" y="272">· 桌面图标、任务栏归位</text>
+  <text class="t li" x="256" y="298">· 关开机自启的无用项</text>
+
+  <text class="t tk" x="256" y="352">这些都不影响使用</text>
+  <text class="t tk" x="256" y="372">按自己习惯慢慢调即可</text>
+
+  <!-- 别做 -->
+  <rect class="red" x="450" y="84" width="200" height="316" rx="8"/>
+  <rect class="chipr" x="450" y="84" width="200" height="34" rx="8"/>
+  <rect class="chipr" x="450" y="102" width="200" height="16"/>
+  <text class="t chipt" x="550" y="106" text-anchor="middle">③ 别做（会出问题）</text>
+
+  <text class="t li" x="466" y="142">✕ 装"一键驱动/优化"工具</text>
+  <text class="t tk" x="466" y="160">　 捆绑软件的重灾区</text>
+
+  <text class="t li" x="466" y="186">✕ 同时装多个杀毒软件</text>
+  <text class="t li" x="466" y="212">✕ 用盗版激活工具</text>
+  <text class="t li" x="466" y="238">✕ 长期关闭系统更新</text>
+  <text class="t li" x="466" y="264">✕ 装"精简版/Ghost 镜像"</text>
+  <text class="t li" x="466" y="290">✕ 装完立刻装一堆全家桶</text>
+
+  <text class="t tk" x="466" y="352">这些问题通常不会马上暴露</text>
+  <text class="t tk" x="466" y="372">往往在几周后才变成卡顿</text>
+
+  <!-- 底部 -->
+  <rect class="blue" x="30" y="412" width="620" height="36" rx="6"/>
+  <text class="t tk" x="46" y="435" style="fill:#2f5d8a">★ 最大的坑：装完发现上不了网。原因是没预装网卡驱动——手机用数据线连电脑开「USB 网络共享」即可临时上网下载。</text>
+</svg>

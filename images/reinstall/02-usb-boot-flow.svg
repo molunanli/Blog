@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 480" role="img" aria-label="Windows 全新安装的五个阶段：准备 U 盘、写入镜像、设为 U 盘启动、安装与分区、首次开机设置">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .st { font-size: 14px; font-weight: 600; }
+    .sd { font-size: 12.5px; fill: #4c463e; }
+    .tk { font-size: 12px; fill: #6b6459; }
+    .step { fill: #fffdf6; stroke: #2f5d8a; stroke-width: 2; }
+    .stepw { fill: #fffdf6; stroke: #cc3b3b; stroke-width: 2; }
+    .circle { fill: #2f5d8a; }
+    .circlew { fill: #cc3b3b; }
+    .ct { font-size: 13px; font-weight: 700; fill: #fffdf6; }
+    .line { stroke: #b9b1a0; stroke-width: 2; stroke-dasharray: 4 4; }
+    .tag { font-size: 11.5px; fill: #2f5d8a; font-weight: 600; }
+  </style>
+
+  <rect class="bg" width="680" height="480"/>
+
+  <text class="t th" x="34" y="38">全新安装全流程：五个阶段，一条线走完</text>
+  <text class="t ts" x="34" y="60">照着走就行；真正容易出错的只有第 3 步（按不到启动键）和第 4 步（删分区）</text>
+
+  <!-- 竖线 -->
+  <line class="line" x1="56" y1="96" x2="56" y2="418"/>
+
+  <!-- ① -->
+  <circle class="circle" cx="56" cy="100" r="15"/>
+  <text class="t ct" x="56" y="105" text-anchor="middle">1</text>
+  <rect class="step" x="88" y="72" width="562" height="58" rx="6"/>
+  <text class="t st" x="104" y="96">准备一个 U 盘（8GB 以上）</text>
+  <text class="t sd" x="104" y="116">U 盘会被完整格式化，先把里面的东西腾走；建议用品牌 U 盘，杂牌易写入失败</text>
+
+  <!-- ② -->
+  <circle class="circle" cx="56" cy="180" r="15"/>
+  <text class="t ct" x="56" y="185" text-anchor="middle">2</text>
+  <rect class="step" x="88" y="152" width="562" height="58" rx="6"/>
+  <text class="t st" x="104" y="176">写入 Windows 镜像</text>
+  <text class="t sd" x="104" y="196">微软官方「媒体创建工具」最省事（自动下载+写入）；Rufus 更灵活（可选分区格式、体积小）</text>
+
+  <!-- ③ -->
+  <circle class="circle" cx="56" cy="260" r="15"/>
+  <text class="t ct" x="56" y="265" text-anchor="middle">3</text>
+  <rect class="step" x="88" y="232" width="562" height="58" rx="6"/>
+  <text class="t st" x="104" y="256">让电脑从 U 盘启动</text>
+  <text class="t sd" x="104" y="276">开机屏幕一亮就连续按启动键：常见 F12 / F11 / Esc / Del（笔记本多为 F12 或 F2），进菜单选 U 盘</text>
+
+  <!-- ④ -->
+  <circle class="circlew" cx="56" cy="340" r="15"/>
+  <text class="t ct" x="56" y="345" text-anchor="middle">4</text>
+  <rect class="stepw" x="88" y="312" width="562" height="58" rx="6"/>
+  <text class="t st" x="104" y="336">安装与分区（最危险的一步）</text>
+  <text class="t sd" x="104" y="356">选「自定义安装」→ 删除全部旧分区 → 选中"未分配空间"直接下一步，Windows 会自动建好分区</text>
+
+  <!-- ⑤ -->
+  <circle class="circle" cx="56" cy="420" r="15"/>
+  <text class="t ct" x="56" y="425" text-anchor="middle">5</text>
+  <rect class="step" x="88" y="392" width="562" height="58" rx="6"/>
+  <text class="t st" x="104" y="416">首次开机设置</text>
+  <text class="t sd" x="104" y="436">联网 → 登录微软账号 → 自动激活 → 进桌面后按"装完 10 分钟清单"逐项处理</text>
+
+  <text class="t tk" x="34" y="470">提示：第 2 步写入完成后，U 盘里原有的文件就没了；第 4 步一旦删分区，旧数据无法找回——两件事做之前都要确认。</text>
+</svg>

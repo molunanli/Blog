@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 450" role="img" aria-label="Windows 重装的三条路径对比：重置此电脑、覆盖安装、U 盘全新安装的适用场景与代价">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .tn { font-size: 14px; font-weight: 600; }
+    .tl { font-size: 12.5px; fill: #4c463e; }
+    .tk { font-size: 12px; fill: #6b6459; }
+    .blue { fill: #e6eef6; stroke: #2f5d8a; stroke-width: 2.5; }
+    .green { fill: #e8f0e4; stroke: #4f7f47; stroke-width: 2.5; }
+    .red { fill: #f5e2e2; stroke: #cc3b3b; stroke-width: 2.5; }
+    .chipb { fill: #2f5d8a; }
+    .chipg { fill: #4f7f47; }
+    .chipr { fill: #cc3b3b; }
+    .chipt { font-size: 12.5px; font-weight: 700; fill: #fffdf6; }
+    .sep { stroke: #d8cfba; stroke-width: 1.5; }
+  </style>
+
+  <rect class="bg" width="680" height="450"/>
+
+  <text class="t th" x="34" y="38">重装不是只有一种：先选对路径，再动手</text>
+  <text class="t ts" x="34" y="60">三条路"保留的东西"完全不同——选错要么白费功夫，要么数据一起清掉</text>
+
+  <!-- A 重置此电脑 -->
+  <rect class="blue" x="30" y="84" width="200" height="300" rx="8"/>
+  <rect class="chipb" x="30" y="84" width="200" height="36" rx="8"/>
+  <rect class="chipb" x="30" y="104" width="200" height="16"/>
+  <text class="t chipt" x="130" y="108" text-anchor="middle">路径 A · 重置此电脑</text>
+
+  <text class="t tl" x="46" y="146" style="fill:#2f5d8a;font-weight:600">适合：系统能正常进</text>
+  <text class="t tl" x="46" y="170">只是想清干净、不想拆机</text>
+  <line class="sep" x1="46" y1="184" x2="214" y2="184"/>
+  <text class="t tk" x="46" y="204">怎么做</text>
+  <text class="t tl" x="46" y="224">设置 → 系统 → 恢复</text>
+  <text class="t tl" x="46" y="244">→ 重置此电脑</text>
+  <text class="t tk" x="46" y="272">可选保留个人文件</text>
+  <line class="sep" x1="46" y1="288" x2="214" y2="288"/>
+  <text class="t tk" x="46" y="308">耗时</text>
+  <text class="t tl" x="46" y="328">30 ~ 60 分钟</text>
+  <text class="t tk" x="46" y="356">风险</text>
+  <text class="t tl" x="46" y="376" style="fill:#2f5d8a">低（软件会全丢）</text>
+
+  <!-- B 覆盖安装 -->
+  <rect class="green" x="240" y="84" width="200" height="300" rx="8"/>
+  <rect class="chipg" x="240" y="84" width="200" height="36" rx="8"/>
+  <rect class="chipg" x="240" y="104" width="200" height="16"/>
+  <text class="t chipt" x="340" y="108" text-anchor="middle">路径 B · 覆盖安装</text>
+
+  <text class="t tl" x="256" y="146" style="fill:#4f7f47;font-weight:600">适合：系统能进但有毛病</text>
+  <text class="t tl" x="256" y="170">想保住已装的软件和设置</text>
+  <line class="sep" x1="256" y1="184" x2="424" y2="184"/>
+  <text class="t tk" x="256" y="204">怎么做</text>
+  <text class="t tl" x="256" y="224">挂载 ISO，运行 setup.exe</text>
+  <text class="t tl" x="256" y="244">选"保留个人文件和应用"</text>
+  <text class="t tk" x="256" y="272">最"无痛"的修系统方式</text>
+  <line class="sep" x1="256" y1="288" x2="424" y2="288"/>
+  <text class="t tk" x="256" y="308">耗时</text>
+  <text class="t tl" x="256" y="328">40 ~ 90 分钟</text>
+  <text class="t tk" x="256" y="356">风险</text>
+  <text class="t tl" x="256" y="376" style="fill:#4f7f47">低（数据软件都留）</text>
+
+  <!-- C U盘全新 -->
+  <rect class="red" x="450" y="84" width="200" height="300" rx="8"/>
+  <rect class="chipr" x="450" y="84" width="200" height="36" rx="8"/>
+  <rect class="chipr" x="450" y="104" width="200" height="16"/>
+  <text class="t chipt" x="550" y="108" text-anchor="middle">路径 C · U 盘全新安装</text>
+
+  <text class="t tl" x="466" y="146" style="fill:#cc3b3b;font-weight:600">适合：进不去系统 / 换盘</text>
+  <text class="t tl" x="466" y="170">或要彻底清空、从头来过</text>
+  <line class="sep" x1="466" y1="184" x2="634" y2="184"/>
+  <text class="t tk" x="466" y="204">怎么做</text>
+  <text class="t tl" x="466" y="224">U 盘启动 → 自定义安装</text>
+  <text class="t tl" x="466" y="244">→ 删除旧分区 → 装</text>
+  <text class="t tk" x="466" y="272">最彻底，也最不可逆</text>
+  <line class="sep" x1="466" y1="288" x2="634" y2="288"/>
+  <text class="t tk" x="466" y="308">耗时</text>
+  <text class="t tl" x="466" y="328">1 ~ 2 小时（含驱动软件）</text>
+  <text class="t tk" x="466" y="356">风险</text>
+  <text class="t tl" x="466" y="376" style="fill:#cc3b3b">高（删分区 = 清空）</text>
+
+  <text class="t tl" x="34" y="412" style="fill:#6b6459">共同前提：重装解决的是"系统层"问题。硬件瓶颈（机械盘、内存不足、过热）重装多少次都没用——</text>
+  <text class="t tl" x="34" y="434" style="fill:#6b6459">先按《重装前的 7 步体检》跑一遍，确认该重装再动手。</text>
+</svg>

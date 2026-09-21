@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Windows 重装完全指南：从做启动盘到装完设置，一篇讲透 · 我的博客</title>
+<meta name="description" content="前面六篇讲的都是&#39;不用重装也能修好&#39;：蓝屏能查、过热能压、卡顿能治、硬盘能救。但确实有些情况非重装不可——系统文件烂到修不动、中了顽固病毒、换了新硬盘、或者你想把攒了五年的垃圾彻底清干净。这篇就是&#39;确认要重装之后&#39;的完整操作手册：三条重装路径怎么选、装前必须准备的清单、U 盘启动盘怎么做、分区那一步">
+<meta name="theme-color" content="#f7f1e3">
+
+<!-- 防主题闪烁：在任何渲染前确定主题 -->
+<script>
+(function () {
+    var k = 'manga-blog-theme';
+    var saved = null;
+    try { saved = localStorage.getItem(k); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/Blog/css/style.css">
+<link rel="alternate" href="/Blog/atom.xml" title="我的博客" type="application/atom+xml">
+<script>window.SEARCH_JSON_URL = '/Blog/search.json';</script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body data-root="/Blog/">
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="site-header">
+    <div class="shell">
+        <nav class="navbar" aria-label="主导航">
+            <a class="brand" href="/Blog/" aria-label="我的博客 首页">
+                <span class="brand-seal" aria-hidden="true">博客</span>
+                我的博客
+            </a>
+
+            <ul class="nav-links">
+                
+                    
+                    <li><a href="/Blog/" data-nav="/">首页</a></li>
+                
+                    
+                    <li><a href="/Blog/archives" data-nav="/archives">归档</a></li>
+                
+                    
+                    <li><a href="/Blog/tags" data-nav="/tags">标签</a></li>
+                
+                    
+                    <li><a href="/Blog/categories" data-nav="/categories">分类</a></li>
+                
+                    
+                    <li><a href="/Blog/about" data-nav="/about">关于</a></li>
+                
+            </ul>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn" type="button" aria-label="搜索文章" title="搜索（Ctrl / ⌘ + K）">🔍</button>
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="切换至暗色模式" aria-pressed="false" title="切换至暗色模式">🌙</button>
+                <button class="icon-btn burger" id="burgerBtn" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="drawer">☰</button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<nav class="drawer" id="drawer" aria-label="移动端导航" aria-hidden="true">
+    <div class="drawer-head">
+        <span class="drawer-title">📖 目录导航</span>
+        <button class="icon-btn" id="drawerClose" type="button" aria-label="关闭菜单">✕</button>
+    </div>
+    
+        
+        <a href="/Blog/" data-nav="/">首页</a>
+    
+        
+        <a href="/Blog/archives" data-nav="/archives">归档</a>
+    
+        
+        <a href="/Blog/tags" data-nav="/tags">标签</a>
+    
+        
+        <a href="/Blog/categories" data-nav="/categories">分类</a>
+    
+        
+        <a href="/Blog/about" data-nav="/about">关于</a>
+    
+    <p class="drawer-note">我的博客 — 日式漫画风 · Hexo 主题</p>
+</nav>
+
+
+
+<main class="site-main" id="articleRoot"
+      data-post-id="windows-reinstall-guide"
+      data-post-title="Windows 重装完全指南：从做启动盘到装完设置，一篇讲透"
+      data-post-likes="0">
+
+    
+
+<script>
+    /* 供 app.js 的目录滚动高亮使用（headings 由模板计算） */
+    var headings = [{"level":"2","id":"一、先确认：你真的需要重装吗","text":"一、先确认：你真的需要重装吗"},{"level":"2","id":"二、三条路径，先选对再动手","text":"二、三条路径，先选对再动手"},{"level":"3","id":"路径-A：重置此电脑（最省事）","text":"路径 A：重置此电脑（最省事）"},{"level":"3","id":"路径-B：覆盖安装（最无痛）","text":"路径 B：覆盖安装（最无痛）"},{"level":"3","id":"路径-C：U-盘全新安装（最彻底）","text":"路径 C：U 盘全新安装（最彻底）"},{"level":"2","id":"三、装前的准备清单（这一步决定你是一小时搞定还是折腾三天）","text":"三、装前的准备清单（这一步决定你是一小时搞定还是折腾三天）"},{"level":"3","id":"3-1-数据备份（第一优先级）","text":"3.1 数据备份（第一优先级）"},{"level":"3","id":"3-2-账号与密钥","text":"3.2 账号与密钥"},{"level":"3","id":"3-3-驱动（尤其是网卡驱动）","text":"3.3 驱动（尤其是网卡驱动）"},{"level":"3","id":"3-4-工具","text":"3.4 工具"},{"level":"2","id":"四、制作-U-盘启动盘","text":"四、制作 U 盘启动盘"},{"level":"3","id":"4-1-微软官方「媒体创建工具」（推荐，最省事）","text":"4.1 微软官方「媒体创建工具」（推荐，最省事）"},{"level":"3","id":"4-2-Rufus（更灵活）","text":"4.2 Rufus（更灵活）"},{"level":"2","id":"五、让电脑从-U-盘启动","text":"五、让电脑从 U 盘启动"},{"level":"2","id":"六、安装与分区：全文最危险的一步","text":"六、安装与分区：全文最危险的一步"},{"level":"3","id":"6-1-分区怎么处理","text":"6.1 分区怎么处理"},{"level":"3","id":"6-2-装完后第一次重启","text":"6.2 装完后第一次重启"},{"level":"2","id":"七、装完之后的-10-分钟清单","text":"七、装完之后的 10 分钟清单"},{"level":"3","id":"7-1-必做，按顺序","text":"7.1 必做，按顺序"},{"level":"3","id":"7-2-可选优化","text":"7.2 可选优化"},{"level":"3","id":"7-3-别做","text":"7.3 别做"},{"level":"2","id":"八、验证与预防","text":"八、验证与预防"},{"level":"2","id":"九、避坑与经验","text":"九、避坑与经验"},{"level":"2","id":"十、两个真实案例","text":"十、两个真实案例"},{"level":"2","id":"相关阅读","text":"相关阅读"}];
+</script>
+
+<div class="shell">
+    <nav class="crumbs" aria-label="面包屑导航">
+        <a href="/Blog/">首页</a><span class="sep" aria-hidden="true">›</span>
+        
+            <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a><span class="sep" aria-hidden="true">›</span>
+        
+        <span id="crumbCurrent">Windows 重装完全指南：从做启动盘到装完设置，一篇讲透</span>
+    </nav>
+</div>
+
+<div class="shell">
+    <div class="grid grid--sidebar">
+
+        <!-- ============ 正文 ============ -->
+        <div class="stack">
+            <section class="article-head" id="articleHead">
+                
+                    <a class="chip chip--cat" href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                
+                <h1 class="article-title">Windows 重装完全指南：从做启动盘到装完设置，一篇讲透</h1>
+                <div class="article-meta">
+                    <span>✍️ 博主</span>
+                    <span>📅 令和8年9月21日</span>
+                    <span>⏱ 阅读约 24 分钟</span>
+                    
+                    
+                </div>
+                <div class="tag-list" style="margin-top:14px">
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">#电脑维修</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/Windows/">#Windows</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%B3%BB%E7%BB%9F/">#系统</a>
+                    
+                </div>
+            </section>
+
+            <article class="card article-body" id="articleBody">
+                <p>前面六篇（P0 现象排障线）讲的都是同一件事：<strong>让电脑不用重装也能修好</strong>。蓝屏能查、过热能压、卡顿能治、硬盘能救。</p>
+<p>但确实有些情况非重装不可——系统文件烂到修不动、中了删不干净的顽固病毒、换了新硬盘、或者你就想把攒了五年的垃圾彻底清空，从头来过。</p>
+<p>这篇就是”<strong>确认要重装之后</strong>“的完整操作手册。它可能是本栏目最实用的一篇，因为它讲的不是判断，而是操作——每一步都要动手，每一步都有踩坑的可能。</p>
+<p>先把话说在前面：<strong>重装这件事，有准备的人花一小时，没准备的人折腾三天。</strong> 下面所有内容，核心都在”准备”两个字上。</p>
+<h2 id="一、先确认：你真的需要重装吗"><a href="#一、先确认：你真的需要重装吗" class="headerlink" title="一、先确认：你真的需要重装吗"></a>一、先确认：你真的需要重装吗</h2><p>别跳过这一节。<strong>重装是维修里最贵的一招</strong>，能不用就不用。</p>
+<p>这几类情况，是”该重装”的：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>情况</th>
+<th>为什么该重装</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>系统文件损坏，<code>sfc</code> &#x2F; <code>DISM</code> 修复无效</td>
+<td>系统核心组件坏了，修不动</td>
+</tr>
+<tr>
+<td>中了顽固病毒 &#x2F; 流氓软件，杀毒和卸载都清不干净</td>
+<td>系统已被改得千疮百孔，重装最省事</td>
+</tr>
+<tr>
+<td>换了新硬盘（系统要迁到新盘）</td>
+<td>必须在新盘上装系统</td>
+</tr>
+<tr>
+<td>系统盘分区表错乱、引导修不好</td>
+<td>结构性问题，重建比修快</td>
+</tr>
+<tr>
+<td>攒了多年的软件残留、注册表垃圾，慢到无法忍受</td>
+<td>清理成本 &gt; 重装成本</td>
+</tr>
+</tbody></table></div>
+<p>这几类情况，<strong>重装没用</strong>，别白费功夫：</p>
+<ul>
+<li>卡顿的根源是<strong>机械硬盘做系统盘</strong>、内存不足、CPU 降频（换硬件才有用，见《重装前的 7 步体检》）</li>
+<li>硬盘已经有坏道或 SMART 报警（<strong>先救数据、先换盘</strong>，见《硬盘告急》）</li>
+<li>蓝屏是因为内存条&#x2F;显卡硬件故障</li>
+<li>开机黑屏是主板&#x2F;供电问题</li>
+</ul>
+<div class="note note--warn"><span class="note-title">⚠️ 重装解决的是"系统层"问题，不是"硬件层"</span>这是最容易被误解的一点：很多人把重装当成万能药，结果重装完发现"还是一样的毛病"。<b>硬件瓶颈（硬盘老化、内存不足、散热不良）重装一万次都不会改善。</b>动手之前，请先按《重装前的 7 步体检》跑一遍。</div>
+
+<h2 id="二、三条路径，先选对再动手"><a href="#二、三条路径，先选对再动手" class="headerlink" title="二、三条路径，先选对再动手"></a>二、三条路径，先选对再动手</h2><p>“重装”不是一个动作，而是三条完全不同的路。<strong>它们保留的东西差别巨大</strong>，选错了要么白折腾，要么数据一起没：</p>
+<p><img src="/Blog/images/reinstall/01-reinstall-paths.svg" alt="Windows 重装的三条路径对比：重置此电脑、覆盖安装、U 盘全新安装"></p>
+<p><em>图 1：三条重装路径的适用场景、做法与代价对比。</em></p>
+<h3 id="路径-A：重置此电脑（最省事）"><a href="#路径-A：重置此电脑（最省事）" class="headerlink" title="路径 A：重置此电脑（最省事）"></a>路径 A：重置此电脑（最省事）</h3><p>系统<strong>还能正常进桌面</strong>时，这是最简单的做法：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">设置 → 系统 → 恢复 → 重置此电脑</span><br><span class="line">   ├─ 保留我的文件     （删应用和设置，留个人文件）</span><br><span class="line">   └─ 删除所有内容     （彻底清空，接近全新安装）</span><br></pre></td></tr></table></div></div></div>
+
+<ul>
+<li><strong>优点</strong>：不用做启动盘、不用进 BIOS，图形界面一路点下去</li>
+<li><strong>缺点</strong>：装过的软件会全部丢失（”保留我的文件”只留文档图片这类个人文件）</li>
+<li><strong>适合</strong>：想清干净但懒得拆腾、系统还能进的情况</li>
+</ul>
+<h3 id="路径-B：覆盖安装（最无痛）"><a href="#路径-B：覆盖安装（最无痛）" class="headerlink" title="路径 B：覆盖安装（最无痛）"></a>路径 B：覆盖安装（最无痛）</h3><p>如果你的痛点是”<strong>系统有毛病，但我不想丢掉装好的几十个软件</strong>“，这条是最优解：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 下载 Windows 11 ISO 镜像文件</span><br><span class="line">2. 双击 ISO → 系统会把它挂载成一个虚拟光驱</span><br><span class="line">3. 运行里面的 setup.exe</span><br><span class="line">4. 关键一步：选择&quot;保留个人文件和应用&quot;</span><br><span class="line">5. 等待 40~90 分钟，系统重装完毕，软件和文件都在</span><br></pre></td></tr></table></div></div></div>
+
+<ul>
+<li><strong>优点</strong>：<strong>软件、文档、设置全部保留</strong>，只把系统文件换成全新的——相当于”换了个系统内核”</li>
+<li><strong>缺点</strong>：要求系统能正常进桌面；如果系统烂到进不去，这招用不了</li>
+<li><strong>适合</strong>：系统各种怪毛病（开始菜单打不开、设置闪退、更新报错）但还能开机</li>
+</ul>
+<div class="note note--tip"><span class="note-title">💡 覆盖安装被严重低估了</span>很多人一遇到系统问题就想"格盘重装"，其实<b>覆盖安装能解决八成"系统损坏"类问题，而且你的软件、文档、浏览器书签、软件配置全都保得住</b>。先试试这条，不行再考虑路径 C。</div>
+
+<h3 id="路径-C：U-盘全新安装（最彻底）"><a href="#路径-C：U-盘全新安装（最彻底）" class="headerlink" title="路径 C：U 盘全新安装（最彻底）"></a>路径 C：U 盘全新安装（最彻底）</h3><p>这是真正的”重装”，也是最不可逆的一条：</p>
+<ul>
+<li><strong>适合</strong>：系统已经进不去 &#x2F; 换了新硬盘 &#x2F; 中了顽固病毒 &#x2F; 就是要清空重来</li>
+<li><strong>代价</strong>：C 盘所有数据清空，软件需要全部重装</li>
+<li><strong>耗时</strong>：1~2 小时（含装驱动和常用软件）</li>
+</ul>
+<p>后面第四到第七节，讲的就是这条路的完整流程。</p>
+<h2 id="三、装前的准备清单（这一步决定你是一小时搞定还是折腾三天）"><a href="#三、装前的准备清单（这一步决定你是一小时搞定还是折腾三天）" class="headerlink" title="三、装前的准备清单（这一步决定你是一小时搞定还是折腾三天）"></a>三、装前的准备清单（这一步决定你是一小时搞定还是折腾三天）</h2><p><strong>重装翻车，九成翻在这一节。</strong> 动手前，逐项勾掉：</p>
+<h3 id="3-1-数据备份（第一优先级）"><a href="#3-1-数据备份（第一优先级）" class="headerlink" title="3.1 数据备份（第一优先级）"></a>3.1 数据备份（第一优先级）</h3><div class="note note--warn"><span class="note-title">⚠️ 全新安装会清空 C 盘，没有任何例外</span>重装前把 C 盘（桌面、文档、下载、图片，以及各种软件的存档目录）里所有你要的东西，<b>复制到另一块硬盘、移动硬盘或云盘</b>。桌面和"文档"文件夹是最多人忘记的地方。<br><br>恢复数据的正确顺序与抢救细节，见《<a href="https://molunanli.github.io/Blog/2026/09/disk-health-guide/">硬盘告急：坏道、掉盘、SMART 黄了</a>》。</div>
+
+<h3 id="3-2-账号与密钥"><a href="#3-2-账号与密钥" class="headerlink" title="3.2 账号与密钥"></a>3.2 账号与密钥</h3><div class="table-scroll"><table>
+<thead>
+<tr>
+<th>要记下的</th>
+<th>为什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>微软账号 + 密码</td>
+<td>重装后登录同一账号，系统会自动激活</td>
+</tr>
+<tr>
+<td>Wi-Fi 密码</td>
+<td>装完要联网，别到时候想不起来</td>
+</tr>
+<tr>
+<td>Office &#x2F; 软件授权信息</td>
+<td>绑定账号的可以重新登录找回；纯序列号的要记下来</td>
+</tr>
+<tr>
+<td>浏览器书签、密码</td>
+<td>登录账号同步即可，但前提是你记得账号</td>
+</tr>
+</tbody></table></div>
+<h3 id="3-3-驱动（尤其是网卡驱动）"><a href="#3-3-驱动（尤其是网卡驱动）" class="headerlink" title="3.3 驱动（尤其是网卡驱动）"></a>3.3 驱动（尤其是网卡驱动）</h3><div class="note note--warn"><span class="note-title">⚠️ 最大的坑：装完发现上不了网</span>全新安装的系统**通常不带你主板的网卡驱动**——结果就是：装完系统 → 没有网络 → 下载不了驱动 → 陷入死循环。<br><br><b>提前做一件事：</b>找一台能上网的电脑，下载好你这台机器<b>主板（或整机品牌）的网卡驱动</b>，存到 U 盘里。台式机认准主板型号官网，笔记本认准品牌官网。</div>
+
+<p>如果忘了提前准备，也不是没救——<strong>用手机救急</strong>（第六节有详细做法）。</p>
+<h3 id="3-4-工具"><a href="#3-4-工具" class="headerlink" title="3.4 工具"></a>3.4 工具</h3><ul>
+<li><strong>一个 8GB 以上的 U 盘</strong>（写入镜像后里面原有数据会全部消失，先腾空）</li>
+<li>一台能上网的电脑（用来下载镜像和制作启动盘）</li>
+<li>确认机器满足 Windows 11 的硬件要求（4GB 内存、64GB 存储、UEFI + 安全启动、<strong>TPM 2.0</strong>、CPU 在支持列表内）</li>
+</ul>
+<div class="note note--info"><span class="note-title">※ 不确定能不能装 Windows 11？用官方工具查</span>微软官方的「电脑健康状况检查」可以一键判断你的机器是否满足 Win11 要求，比对着参数表逐条查快得多。<br><br>另外提醒一句：<b>Windows 10 已于 2025 年 10 月 14 日结束支持</b>，不再收到安全更新。如果你还在用 Win10，现在正是考虑升级或重装到 Win11 的时间点。</div>
+
+<h2 id="四、制作-U-盘启动盘"><a href="#四、制作-U-盘启动盘" class="headerlink" title="四、制作 U 盘启动盘"></a>四、制作 U 盘启动盘</h2><p>两条路，按需选：</p>
+<h3 id="4-1-微软官方「媒体创建工具」（推荐，最省事）"><a href="#4-1-微软官方「媒体创建工具」（推荐，最省事）" class="headerlink" title="4.1 微软官方「媒体创建工具」（推荐，最省事）"></a>4.1 微软官方「媒体创建工具」（推荐，最省事）</h3><div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 打开微软官网的 Windows 11 下载页</span><br><span class="line">2. 下载「媒体创建工具」（Media Creation Tool）</span><br><span class="line">3. 插入 U 盘（8GB 以上，里面东西会被清空）</span><br><span class="line">4. 运行工具 → 接受条款</span><br><span class="line">5. 选择「为另一台电脑创建安装介质」</span><br><span class="line">6. 语言/版本/架构保持默认（一般无需改动）</span><br><span class="line">7. 选择「U 盘」，选中你的那个 U 盘</span><br><span class="line">8. 等待下载 + 写入（视网速，20~60 分钟）</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>预期看到</strong>：进度条走完，提示”你的 U 盘已准备就绪”。此时打开 U 盘，应该能看到 <code>setup.exe</code>、<code>sources</code> 等文件。</p>
+<ul>
+<li><strong>优点</strong>：官方工具，镜像干净、不会被塞私货，全自动</li>
+<li><strong>缺点</strong>：必须联网下载（约 5GB），过程不算快</li>
+</ul>
+<h3 id="4-2-Rufus（更灵活）"><a href="#4-2-Rufus（更灵活）" class="headerlink" title="4.2 Rufus（更灵活）"></a>4.2 Rufus（更灵活）</h3><p>Rufus 是一个只有几 MB 的小工具，优势是<strong>灵活</strong>：</p>
+<ul>
+<li>可以自己指定下载好的 ISO 文件</li>
+<li><strong>可选分区方案</strong>：UEFI（GPT）&#x2F; BIOS（MBR）——老机器需要用 MBR</li>
+<li>写入速度快</li>
+<li>有”绕过 TPM &#x2F; CPU 检查”选项（用于不满足 Win11 硬件要求的老机器）</li>
+</ul>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 下载 Rufus（官网 rufus.ie，别从第三方下载站拿）</span><br><span class="line">2. 插入 U 盘 → Rufus 会自动识别</span><br><span class="line">3. 「选择」按钮 → 选中你下载好的 Win11 ISO</span><br><span class="line">4. 分区类型：新机器选 GPT + UEFI；老机器选 MBR + BIOS</span><br><span class="line">5. 点击「开始」→ 确认清空 U 盘 → 等待完成</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--warn"><span class="note-title">⚠️ 关于"绕过 TPM 检查"</span>Rufus 提供的绕过选项可以让不满足要求的机器装上 Win11，但代价是：<b>微软明确不为这类配置提供保证，可能收不到功能更新，部分安全功能也无法启用</b>。老机器如果只是想继续用，留在 Win10 或用轻量系统可能更合适——这不是技术做不到，而是值不值得的问题。</div>
+
+<h2 id="五、让电脑从-U-盘启动"><a href="#五、让电脑从-U-盘启动" class="headerlink" title="五、让电脑从 U 盘启动"></a>五、让电脑从 U 盘启动</h2><p>启动盘做好后，插到要重装的电脑上，开机那一刻就要<strong>连续按启动键</strong>（不是按住，是连点）：</p>
+<p><img src="/Blog/images/reinstall/02-usb-boot-flow.svg" alt="Windows 全新安装的五个阶段流程"></p>
+<p><em>图 2：全新安装的五个阶段——真正容易出错的只有第 3 步（按不到启动键）和第 4 步（删分区）。</em></p>
+<p>常见按键（不同品牌不同，开机画面通常有提示）：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>按键</th>
+<th>常见于</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>F12</strong></td>
+<td>联想、戴尔、宏碁等笔记本&#x2F;整机</td>
+</tr>
+<tr>
+<td><strong>F11</strong></td>
+<td>部分华硕、惠普机型</td>
+</tr>
+<tr>
+<td><strong>F2</strong></td>
+<td>多数笔记本进入 BIOS 设置</td>
+</tr>
+<tr>
+<td><strong>Del</strong></td>
+<td>台式机主板（华硕、微星、技嘉等）</td>
+</tr>
+<tr>
+<td><strong>Esc</strong></td>
+<td>惠普部分机型</td>
+</tr>
+</tbody></table></div>
+<p><strong>两种方式</strong>：</p>
+<ol>
+<li><strong>一次性启动菜单</strong>（推荐）：开机连按 F12&#x2F;F11&#x2F;Esc → 出现设备列表 → 选中你的 U 盘 → 回车</li>
+<li><strong>进 BIOS 改启动顺序</strong>：开机连按 Del&#x2F;F2 → 找到 Boot 菜单 → 把 USB 设备调到第一位 → 保存退出（F10）</li>
+</ol>
+<p><strong>已经能进系统也可以用</strong>：如果系统还能进，懒得按按键，可以走「设置 → 系统 → 恢复 → 高级启动 → 立即重新启动 → 使用设备 → 选 U 盘」。</p>
+<p><strong>预期看到</strong>：屏幕出现 Windows 安装界面（蓝色背景 + “Windows 安装程序”）。如果还是进了原来的系统，说明启动键按晚了或者按错了，重启重来。</p>
+<h2 id="六、安装与分区：全文最危险的一步"><a href="#六、安装与分区：全文最危险的一步" class="headerlink" title="六、安装与分区：全文最危险的一步"></a>六、安装与分区：全文最危险的一步</h2><p>进入安装界面后，一路往下：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 语言、时间格式、键盘 → 下一步 → 现在安装</span><br><span class="line">2. 输入产品密钥 → 可以直接点「我没有产品密钥」</span><br><span class="line">   （有数字许可证的话，装完登录微软账号会自动激活）</span><br><span class="line">3. 选择版本：家庭版 / 专业版</span><br><span class="line">   ★ 必须和你原有的授权一致，选错可能要重新激活</span><br><span class="line">4. 接受许可条款</span><br><span class="line">5. 选择安装类型 → 选「自定义：仅安装 Windows」</span><br><span class="line">6. 进入分区界面 ← 危险区</span><br></pre></td></tr></table></div></div></div>
+
+<h3 id="6-1-分区怎么处理"><a href="#6-1-分区怎么处理" class="headerlink" title="6.1 分区怎么处理"></a>6.1 分区怎么处理</h3><p>分区界面会列出硬盘上现有的分区。做法是：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 选中系统盘上的每一个分区 → 逐个「删除」</span><br><span class="line">   （删完会合并成一大块「未分配空间」）</span><br><span class="line">2. 选中那块「未分配空间」</span><br><span class="line">3. 直接点「下一步」——不要自己新建分区</span><br><span class="line">   Windows 会自动创建 EFI、MSR、恢复分区和主分区</span><br></pre></td></tr></table></div></div></div>
+
+<div class="note note--warn"><span class="note-title">⚠️ 删分区 = 该分区数据立刻消失，无法撤销</span>这是全文唯一一个"点错就回不去"的操作。<b>动手之前，请再确认一次：要保留的数据都备份出去了吗？</b><br><br>另外注意分区表格式：<b>U 盘以 UEFI 模式启动时，硬盘必须是 GPT 分区表</b>，否则会提示"Windows 无法安装到这个磁盘"。遇到这个提示，可以在分区界面按 <code>Shift + F10</code> 调出命令行用 <code>diskpart</code> 转换，或者用 Rufus 以 MBR 模式重做启动盘走 Legacy 模式（老机器的做法）。</div>
+
+<h3 id="6-2-装完后第一次重启"><a href="#6-2-装完后第一次重启" class="headerlink" title="6.2 装完后第一次重启"></a>6.2 装完后第一次重启</h3><ul>
+<li>系统复制完文件会<strong>自动重启若干次</strong>，这期间屏幕可能黑很久，<strong>别以为死机了，等它</strong></li>
+<li><strong>重启时把 U 盘拔掉</strong>——否则可能又从 U 盘启动，回到安装程序开头</li>
+<li>之后进入 OOBE（开箱设置）：区域 → 键盘 → 联网 → 登录账号 → 隐私选项</li>
+</ul>
+<div class="note note--info"><span class="note-title">※ 关于"必须联网登录微软账号"</span>较新版本的 Windows 11 家庭版要求联网并登录微软账号才能完成设置。社区流传过若干绕过方法，但微软一直在封堵，实际可用性随版本变化——<b>不建议当作常规操作依赖</b>。<br><br>顺带一提：登录微软账号对你是<b>有利</b>的——数字许可证会绑定账号，以后重装登录同一账号就能自动激活。</div>
+
+<h2 id="七、装完之后的-10-分钟清单"><a href="#七、装完之后的-10-分钟清单" class="headerlink" title="七、装完之后的 10 分钟清单"></a>七、装完之后的 10 分钟清单</h2><p>系统装好了，但事情还没完。**这一步做不做，决定了新系统是”用着舒服”还是”三天后开始卡”**：</p>
+<p><img src="/Blog/images/reinstall/03-post-setup-checklist.svg" alt="Windows 装完之后的设置清单：必做、可选与别做"></p>
+<p><em>图 3：装完之后的设置清单——先保证联网，再谈其他。</em></p>
+<h3 id="7-1-必做，按顺序"><a href="#7-1-必做，按顺序" class="headerlink" title="7.1 必做，按顺序"></a>7.1 必做，按顺序</h3><p><strong>① 确认能上网</strong></p>
+<p>如果任务栏没有网络图标、或连网卡都看不到：</p>
+<div class="note note--tip"><span class="note-title">💡 没网卡驱动时的救急办法：手机 USB 网络共享</span>用数据线把手机连到电脑 → 手机设置里找到「个人热点」→ 打开「<b>USB 网络共享</b>」→ 电脑会通过手机上网。<br><br>这时赶紧去下载你这台机器（主板或整机品牌）的网卡驱动装上，网络就恢复正常了。这是没提前准备驱动时最实用的补救手段。</div>
+
+<p><strong>② 装芯片组 + 网卡驱动</strong></p>
+<p>顺序很重要：<strong>芯片组 → 网卡</strong>（保证联网）→ 其他。驱动去<strong>主板&#x2F;整机厂商官网</strong>按型号下载，别用第三方”驱动大师”。</p>
+<p><strong>③ 跑完 Windows 更新</strong></p>
+<p>设置 → Windows 更新 → 检查更新，跑到”最新”。可能会重启几次，是正常的。</p>
+<p><strong>④ 装显卡驱动</strong></p>
+<p>到 NVIDIA &#x2F; AMD &#x2F; Intel 官网下最新版。<strong>这一步明显影响游戏和视频性能</strong>，别用系统自带的通用驱动凑合。</p>
+<p><strong>⑤ 确认系统已激活</strong></p>
+<p>设置 → 系统 → 激活。有数字许可证且登录了微软账号的，一般自动激活。没激活会有限制（个性化设置、部分功能）。</p>
+<p><strong>⑥ 从备份恢复数据</strong></p>
+<p>把之前备份的文件拷回对应位置。</p>
+<p><strong>⑦ 建一个还原点</strong></p>
+<p>这次装干净了，<strong>赶紧存一个”干净状态”的还原点</strong>，以后出问题能一键回到这个状态。</p>
+<h3 id="7-2-可选优化"><a href="#7-2-可选优化" class="headerlink" title="7.2 可选优化"></a>7.2 可选优化</h3><p>改成本地账号登录、关掉推荐内容与小组件、调整电源与休眠策略、装回常用软件、设置默认浏览器和输入法——这些都不影响使用，按习惯慢慢调。</p>
+<h3 id="7-3-别做"><a href="#7-3-别做" class="headerlink" title="7.3 别做"></a>7.3 别做</h3><ul>
+<li><strong>别装”一键驱动 &#x2F; 一键优化”类工具</strong>：捆绑软件的重灾区，装完比不装还乱</li>
+<li><strong>别同时装多个杀毒软件</strong>：互相打架，反而拖慢系统</li>
+<li><strong>别用盗版激活工具</strong>：这是恶意软件的常见载体</li>
+<li><strong>别长期关闭系统更新</strong>：安全补丁是刚需</li>
+<li>**别装”精简版 &#x2F; Ghost 镜像”**：被删减过的系统往往无法正常更新，还可能被植入后门</li>
+</ul>
+<h2 id="八、验证与预防"><a href="#八、验证与预防" class="headerlink" title="八、验证与预防"></a>八、验证与预防</h2><p><strong>验证（装完确认这几项）：</strong></p>
+<ul>
+<li>设备管理器里<strong>没有黄色感叹号</strong>（有就说明还有驱动没装）</li>
+<li>能正常上网、能播放声音、能调屏幕亮度（笔记本）</li>
+<li>系统已激活</li>
+<li>硬盘容量识别正确，C 盘剩余空间充足（<strong>建议系统盘留 100GB 以上</strong>）</li>
+<li>笔记本额外检查：触控板手势、Fn 功能键、电源管理是否正常</li>
+</ul>
+<p><strong>预防（让下次重装不再痛苦）：</strong></p>
+<ol>
+<li><strong>重要数据别只放 C 盘</strong>——放 D 盘或移动硬盘，重装时不受影响（但记得 D 盘也可能出问题，仍需备份）</li>
+<li><strong>定期建还原点</strong>，出小毛病先还原，不必动大手术</li>
+<li><strong>把驱动和系统镜像存一份</strong>在移动硬盘里，下次重装不用重新下载</li>
+<li><strong>把装完必装的软件列一个清单</strong>存着，重装后照着装，不会漏</li>
+</ol>
+<h2 id="九、避坑与经验"><a href="#九、避坑与经验" class="headerlink" title="九、避坑与经验"></a>九、避坑与经验</h2><div class="note note--warn"><span class="note-title">⚠️ 坑一：装完上不了网（本文出现两次，因为真的最常见）</span>原因就是没预装网卡驱动。两个解法：① 提前把网卡驱动下好放 U 盘；② 用手机 USB 网络共享临时上网。<b>别在这里卡住，一卡就是一晚上。</b></div>
+
+<div class="note note--warn"><span class="note-title">⚠️ 坑二：激活问题</span>数字许可证绑定微软账号后，重装登录同一账号自动激活。<b>但如果你换了主板，可能因为硬件指纹变化而需要重新激活</b>——这种情况可以通过微软账号的"激活疑难解答"或联系客服处理，不必急着买新密钥。</div>
+
+<div class="note note--tip"><span class="note-title">💡 经验一：先试覆盖安装，再考虑格盘</span>路径 B（覆盖安装）能保住所有软件和数据，能解决大部分"系统损坏"。<b>它应该是你的第一选择，而不是最后的选择。</b>很多人一上来就格盘，白白损失半天重装软件的时间。</div>
+
+<div class="note note--tip"><span class="note-title">💡 经验二：重装前先记下"装了什么"</span>打开控制面板的"程序和功能"，把装过的软件列一个清单拍下来。重装后照着装，能避免"用的时候才发现某个软件忘了装"的尴尬。</div>
+
+<div class="note note--info"><span class="note-title">※ 补一句：笔记本别忽略厂商驱动</span>笔记本重装后，除了常规驱动，还建议装<b>厂商提供的驱动工具</b>（联想的 Lenovo Vantage、戴尔的 SupportAssist 等），它们负责 Fn 功能键、电池养护模式、触控板手势这些"系统自带驱动管不到"的部分。</div>
+
+<h2 id="十、两个真实案例"><a href="#十、两个真实案例" class="headerlink" title="十、两个真实案例"></a>十、两个真实案例</h2><div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">【案例 A · 覆盖安装修复型】2026-07-15</span><br><span class="line">【现象】系统各种怪毛病：开始菜单点不开、设置窗口闪退、更新反复报错</span><br><span class="line">       用户装了几十个软件，坚决不想重装</span><br><span class="line">【排查】① 硬盘 SMART 正常、内存检测正常 → 不是硬件问题</span><br><span class="line">      ② 跑 sfc /scannow 和 DISM 修复 → 无效</span><br><span class="line">      ③ 判断：系统组件损坏，但硬件健康、系统还能进桌面</span><br><span class="line">【结论】选路径 B：下载 Win11 ISO，挂载后运行 setup.exe，选&quot;保留个人文件和应用&quot;</span><br><span class="line">       → 50 分钟后系统恢复正常，几十个软件、桌面文件、浏览器书签全都在</span><br><span class="line">       → 如果当时直接格盘，用户至少要花一整天重装软件</span><br></pre></td></tr></table></div></div></div>
+
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">【案例 B · 全新安装后的&quot;上不了网&quot;】2026-08-22</span><br><span class="line">【现象】U 盘全新装完 Win11，进桌面右下角没有网络图标，连 Wi-Fi 都搜不到</span><br><span class="line">【排查】① 设备管理器 → 网络适配器 → 黄色感叹号，连型号都认不出</span><br><span class="line">      ② 判断：新系统不带这块主板的网卡驱动</span><br><span class="line">      ③ 手边没有其他电脑，也没有提前下驱动</span><br><span class="line">【结论】用数据线连手机开「USB 网络共享」→ 电脑临时上网</span><br><span class="line">       → 下载主板官网的网卡驱动装上 → 网络恢复</span><br><span class="line">       → 教训：如果装系统前先把网卡驱动放进 U 盘，这件事根本不会发生</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>两个案例对读</strong>：案例 A 说明**”系统坏了”不等于”要格盘”<strong>——先试覆盖安装，可能省掉一整天；案例 B 说明</strong>重装的坑往往不在系统本身，而在那些”你没想到要准备”的东西上**。装前多花十分钟做准备，装后少折腾三小时。</p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-slow-checkup/">电脑卡到怀疑人生？重装前的 7 步体检</a>》——<strong>决定要不要重装之前必读</strong>，避免白忙一场</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/disk-health-guide/">硬盘告急：坏道、掉盘、SMART 黄了</a>》——重装前先看硬盘健康，坏盘重装是浪费时间；数据抢救流程也在那篇</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a>》——三条铁律，”先备份再折腾”在本文是主线</li>
+<li>下一篇（系列第 9 篇）：<strong>《弹窗广告与流氓软件清理》</strong>——系统干净了，怎么让它一直干净：安全模式清场、Autoruns 揪出顽固自启项、卸载不干净的兜底方案。</li>
+</ul>
+<p>重装不是技术活，是<strong>准备活</strong>。做启动盘、点下一步、装驱动，这些步骤随便查个视频都会。真正区分”一小时搞定”和”折腾三天”的，是你动手之前有没有把网卡驱动放进 U 盘、有没有把桌面的文件拷出来、有没有记下那个 Wi-Fi 密码。</p>
+<p><strong>系统可以重来，数据不能。</strong> 先把准备清单勾完，再开始动手。</p>
+
+            </article>
+
+            <div class="share-row" id="shareRow">
+                <span class="share-label">分享这篇文章：</span>
+            </div>
+
+            <nav class="post-nav" id="postNav" aria-label="上下篇导航">
+                <span></span>
+                
+                    <a class="post-nav-item post-nav-item--next" href="/Blog/2026/09/disk-health-guide/">
+                        <span class="k">下一篇 →</span><span class="t">硬盘告急：坏道、掉盘、SMART 黄了，怎么判断还能不能用</span>
+                    </a>
+                
+            </nav>
+
+            <!-- ---- 评论（Giscus：数据存于 GitHub Discussions） ---- -->
+            
+            
+            
+            <section class="card comments" aria-labelledby="commentTitle">
+                <h2 class="card-title" id="commentTitle" style="text-align:left">
+                    💬 读者留言
+                </h2>
+                <p style="margin:0 0 18px;font-size:.76rem;color:var(--ink-3)">
+                    评论由 GitHub Discussions 托管，需登录 GitHub 后参与（评论区的 +1 即点赞）。
+                </p>
+                <script src="https://giscus.app/client.js"
+                        data-repo="molunanli/Blog"
+                        data-repo-id="R_kgDOUMGUlQ"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOUMGUlc4DEuis"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                </script>
+            </section>
+            
+            
+        </div>
+
+        <!-- ============ 侧边栏 ============ -->
+        <aside class="sidebar toc-sticky" aria-label="文章侧边信息">
+
+            
+            <button class="toc-toggle-mobile" id="tocToggle" type="button" aria-expanded="false" aria-controls="tocPanel">
+                📑 目录导航 <span class="arrow" aria-hidden="true">▼</span>
+            </button>
+
+            <nav class="card toc-card toc-panel" id="tocPanel" aria-label="文章目录">
+                <h2 class="card-title">📑 目录</h2>
+                <div class="toc-list" id="tocList">
+                    
+                        <a class="toc-link toc-link--h2" href="#一、先确认：你真的需要重装吗">一、先确认：你真的需要重装吗</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#二、三条路径，先选对再动手">二、三条路径，先选对再动手</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#路径-A：重置此电脑（最省事）">路径 A：重置此电脑（最省事）</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#路径-B：覆盖安装（最无痛）">路径 B：覆盖安装（最无痛）</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#路径-C：U-盘全新安装（最彻底）">路径 C：U 盘全新安装（最彻底）</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#三、装前的准备清单（这一步决定你是一小时搞定还是折腾三天）">三、装前的准备清单（这一步决定你是一小时搞定还是折腾三天）</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#3-1-数据备份（第一优先级）">3.1 数据备份（第一优先级）</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#3-2-账号与密钥">3.2 账号与密钥</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#3-3-驱动（尤其是网卡驱动）">3.3 驱动（尤其是网卡驱动）</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#3-4-工具">3.4 工具</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#四、制作-U-盘启动盘">四、制作 U 盘启动盘</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#4-1-微软官方「媒体创建工具」（推荐，最省事）">4.1 微软官方「媒体创建工具」（推荐，最省事）</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#4-2-Rufus（更灵活）">4.2 Rufus（更灵活）</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#五、让电脑从-U-盘启动">五、让电脑从 U 盘启动</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#六、安装与分区：全文最危险的一步">六、安装与分区：全文最危险的一步</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#6-1-分区怎么处理">6.1 分区怎么处理</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#6-2-装完后第一次重启">6.2 装完后第一次重启</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#七、装完之后的-10-分钟清单">七、装完之后的 10 分钟清单</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#7-1-必做，按顺序">7.1 必做，按顺序</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#7-2-可选优化">7.2 可选优化</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#7-3-别做">7.3 别做</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#八、验证与预防">八、验证与预防</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#九、避坑与经验">九、避坑与经验</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#十、两个真实案例">十、两个真实案例</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#相关阅读">相关阅读</a>
+                    
+                </div>
+            </nav>
+            
+
+            
+            <section class="card" aria-labelledby="relTitle">
+                <h2 class="card-title" id="relTitle">📎 相关文章</h2>
+                <ul class="related-list" id="relatedList">
+                    
+                        <li><a href="/Blog/2026/09/bsod-dump-guide/">蓝屏不再靠拍照：读内存转储文件，精确到是哪个驱动干的</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-random-restart/">电脑不定时自动重启/关机？三步定位真凶，别急着换电源</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-slow-checkup/">电脑卡到怀疑人生？重装前的 7 步体检，别急着清空 C 盘</a></li>
+                    
+                </ul>
+            </section>
+            
+
+            <section class="card" aria-labelledby="authorTitle">
+                <h2 class="card-title" id="authorTitle">✍️ 关于作者</h2>
+                <div class="profile-avatar" style="width:76px;height:76px;font-size:2.3rem" aria-hidden="true">🐱</div>
+                <p class="profile-name" style="text-align:center">博主</p>
+                <p class="profile-role" style="text-align:center">BLOGGER</p>
+                <p class="profile-bio" style="text-align:center;font-size:.82rem">这里是作者简介。
+用一两句话介绍你自己，或者这个博客打算写些什么。
+</p>
+                <p style="text-align:center;margin-top:12px">
+                    <a class="link-more" href="/Blog/about">▶ 了解更多</a>
+                </p>
+            </section>
+
+        </aside>
+    </div>
+</div>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="shell">
+        <div class="footer-grid">
+            <div>
+                <span class="footer-h">关于本站</span>
+                <p style="font-size:.88rem;color:var(--ink-2);line-height:1.8">
+                    这里是页脚简介。用一两句话说明这个博客的内容方向，
+让读者一眼知道这里在写什么。
+
+                </p>
+                <p style="margin-top:12px">
+                    <span class="footer-seal" aria-hidden="true">我的<br>博客</span>
+                </p>
+            </div>
+            <div>
+                <span class="footer-h">快速导航</span>
+                <nav class="footer-list" aria-label="页脚导航">
+                    
+                        
+                        <a href="/Blog/">首页</a>
+                    
+                        
+                        <a href="/Blog/archives">归档</a>
+                    
+                        
+                        <a href="/Blog/tags">标签</a>
+                    
+                        
+                        <a href="/Blog/categories">分类</a>
+                    
+                        
+                        <a href="/Blog/about">关于</a>
+                    
+                </nav>
+            </div>
+            <div>
+                <span class="footer-h">热门分类</span>
+                <nav class="footer-list" aria-label="分类导航">
+                    
+                        <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                    
+                        <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <span>&copy; 2026 我的博客 — 保持热爱，持续记录。</span>
+            <span>Made with Hexo</span>
+        </div>
+    </div>
+</footer>
+
+<div class="fabs">
+    <button class="fab fab--top" id="topBtn" type="button" data-tip="回到顶部" title="回到顶部" aria-label="回到顶部" aria-hidden="true">⬆</button>
+    <button class="fab" id="fabSearch" type="button" data-tip="搜索文章" title="搜索文章" aria-label="搜索文章">🔍</button>
+</div>
+
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="站内搜索" aria-hidden="true">
+    <div class="search-panel">
+        <div class="search-field">
+            <span aria-hidden="true" style="font-size:1.1rem">🔍</span>
+            <input class="search-input" id="searchInput" type="search" placeholder="搜索文章标题、标签或关键词…" aria-label="搜索关键词" autocomplete="off">
+            <button class="icon-btn" id="searchClose" type="button" aria-label="关闭搜索">✕</button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+        <div class="search-hint">
+            <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
+            <span><kbd>Enter</kbd> 打开</span>
+            <span><kbd>Esc</kbd> 关闭</span>
+            <span><kbd>Ctrl</kbd>+<kbd>K</kbd> 随时唤起</span>
+        </div>
+    </div>
+</div>
+
+
+<script src="/Blog/js/app.js" defer></script>
+</body>
+</html>
