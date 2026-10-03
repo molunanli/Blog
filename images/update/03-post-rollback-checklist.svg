@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" role="img" aria-label="卸载更新之后必须立刻做的三件事：暂停更新、拦住它重装、建还原点">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .hd { font-size: 13.5px; font-weight: 700; fill: #fffdf6; }
+    .tl { font-size: 12px; fill: #4c463e; }
+    .em { font-size: 12px; font-weight: 700; }
+    .bar1 { font-size: 12.5px; font-weight: 700; }
+    .bar2 { font-size: 11.5px; fill: #6b6459; }
+    .card { fill: #fffdf6; stroke-width: 2.5; }
+    .cr { stroke: #cc3b3b; }
+    .cb { stroke: #2f5d8a; }
+    .cg { stroke: #4f7f47; }
+    .fr { fill: #cc3b3b; }
+    .fb { fill: #2f5d8a; }
+    .fg { fill: #4f7f47; }
+    .rule { stroke: #e5dcc9; stroke-width: 1.5; }
+    .warnbar { fill: #f5e2e2; stroke: #cc3b3b; stroke-width: 2.5; }
+  </style>
+
+  <rect class="bg" width="680" height="430"/>
+
+  <text class="t th" x="34" y="38">卸载完还没结束：三件事必须连着做</text>
+  <text class="t ts" x="34" y="60">省掉这一步，前面所有回滚操作都会白费——Windows 当晚就会把更新装回来</text>
+
+  <!-- ① 暂停更新 -->
+  <rect class="card cr" x="30" y="84" width="196" height="250" rx="8"/>
+  <path class="fr" d="M30,92 a8,8 0 0 1 8,-8 h180 a8,8 0 0 1 8,8 v24 h-196 z"/>
+  <text class="t hd" x="46" y="106">① 暂停更新</text>
+  <text class="t tl" x="46" y="152">设置 → Windows 更新</text>
+  <text class="t tl" x="46" y="178">→ 暂停更新 → 选最长档</text>
+  <text class="t tl" x="46" y="204">（Windows 11 最多 5 周）</text>
+  <line class="rule" x1="46" y1="228" x2="210" y2="228"/>
+  <text class="t em" x="46" y="256" style="fill:#cc3b3b">最紧急，必须先做</text>
+  <text class="t tl" x="46" y="284">这是拦住它的唯一开关</text>
+
+  <!-- ② 拦住重装 -->
+  <rect class="card cb" x="242" y="84" width="196" height="250" rx="8"/>
+  <path class="fb" d="M242,92 a8,8 0 0 1 8,-8 h180 a8,8 0 0 1 8,8 v24 h-196 z"/>
+  <text class="t hd" x="258" y="106">② 拦住它重装</text>
+  <text class="t tl" x="258" y="152">把常用网络设为</text>
+  <text class="t tl" x="258" y="178">「按流量计费的连接」</text>
+  <text class="t tl" x="258" y="204">并关掉「立即获取最新更新」</text>
+  <line class="rule" x1="258" y1="228" x2="422" y2="228"/>
+  <text class="t em" x="258" y="256" style="fill:#2f5d8a">防止它当夜单独装回</text>
+  <text class="t tl" x="258" y="284">暂停是粗挡，这是细挡</text>
+
+  <!-- ③ 建还原点 -->
+  <rect class="card cg" x="454" y="84" width="196" height="250" rx="8"/>
+  <path class="fg" d="M454,92 a8,8 0 0 1 8,-8 h180 a8,8 0 0 1 8,8 v24 h-196 z"/>
+  <text class="t hd" x="470" y="106">③ 建还原点</text>
+  <text class="t tl" x="470" y="152">现在系统是好的</text>
+  <text class="t tl" x="470" y="178">赶紧把它存成一个还原点</text>
+  <text class="t tl" x="470" y="204">（系统属性 → 系统保护）</text>
+  <line class="rule" x1="470" y1="228" x2="634" y2="228"/>
+  <text class="t em" x="470" y="256" style="fill:#4f7f47">下一次出事的保险</text>
+  <text class="t tl" x="470" y="284">有它就不用再走一遍流程</text>
+
+  <rect class="warnbar" x="30" y="352" width="620" height="52" rx="8"/>
+  <text class="t bar1" x="340" y="376" text-anchor="middle" style="fill:#cc3b3b">跳过第 ① 步 → 今晚它就会把这个更新原样装回来</text>
+  <text class="t bar2" x="340" y="396" text-anchor="middle">这正是"明明卸载了却没用"的唯一原因</text>
+</svg>

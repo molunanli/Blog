@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 486" role="img" aria-label="进不去系统时的高级启动导航路径：疑难解答 → 高级选项 → 卸载更新，再选择卸载质量更新或功能更新">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .hd { font-size: 12.5px; font-weight: 700; fill: #fffdf6; }
+    .l0 { font-size: 13.5px; font-weight: 600; }
+    .l1 { font-size: 13px; }
+    .l2 { font-size: 12.5px; }
+    .l3 { font-size: 12.5px; font-weight: 600; }
+    .nt { font-size: 11px; }
+    .scr { font-size: 11px; font-weight: 700; }
+    .lg { font-size: 11.5px; fill: #8a8175; }
+    .card { fill: #fffdf6; stroke: #d8cfba; stroke-width: 1.5; }
+    .hdbar { fill: #4c463e; }
+    .guide { stroke: #c9bfa8; stroke-width: 1.5; }
+    .stub { stroke: #c9bfa8; stroke-width: 1.5; }
+    .rule { stroke: #e5dcc9; stroke-width: 1.5; }
+    .cb { fill: #e6eef6; stroke: #2f5d8a; stroke-width: 1.5; }
+    .cr { fill: #f5e2e2; stroke: #cc3b3b; stroke-width: 2; }
+    .cg { fill: #e8f0e4; stroke: #4f7f47; stroke-width: 1.5; }
+    .ca { fill: #fdf3d9; stroke: #c9962a; stroke-width: 1.5; }
+  </style>
+
+  <rect class="bg" width="680" height="486"/>
+
+  <text class="t th" x="34" y="38">进不去桌面时：三级菜单，照着点</text>
+  <text class="t ts" x="34" y="60">开机连续强制关机 3 次会自动进入这个界面，不需要能进系统</text>
+
+  <rect class="card" x="30" y="86" width="620" height="376" rx="10"/>
+  <path class="hdbar" d="M30,96 a10,10 0 0 1 10,-10 h600 a10,10 0 0 1 10,10 v22 h-620 z"/>
+  <text class="t hd" x="48" y="108">自动修复 · 选择一个选项</text>
+
+  <!-- 竖向导轨 -->
+  <line class="guide" x1="82" y1="142" x2="82" y2="428"/>
+  <line class="guide" x1="172" y1="168" x2="172" y2="220"/>
+  <line class="guide" x1="262" y1="220" x2="262" y2="402"/>
+  <line class="guide" x1="360" y1="272" x2="360" y2="324"/>
+  <!-- 父项接入子项 -->
+  <line class="stub" x1="164" y1="172" x2="172" y2="172"/>
+  <line class="stub" x1="258" y1="220" x2="262" y2="220"/>
+  <line class="stub" x1="344" y1="272" x2="360" y2="272"/>
+  <!-- 同级横线 -->
+  <line class="stub" x1="82" y1="142" x2="88" y2="142"/>
+  <line class="stub" x1="82" y1="428" x2="88" y2="428"/>
+  <line class="stub" x1="172" y1="194" x2="178" y2="194"/>
+  <line class="stub" x1="172" y1="220" x2="178" y2="220"/>
+  <line class="stub" x1="262" y1="246" x2="268" y2="246"/>
+  <line class="stub" x1="262" y1="272" x2="268" y2="272"/>
+  <line class="stub" x1="262" y1="350" x2="268" y2="350"/>
+  <line class="stub" x1="262" y1="376" x2="268" y2="376"/>
+  <line class="stub" x1="262" y1="402" x2="268" y2="402"/>
+  <line class="stub" x1="360" y1="298" x2="366" y2="298"/>
+  <line class="stub" x1="360" y1="324" x2="366" y2="324"/>
+
+  <text class="t l0" x="100" y="146">继续</text>
+  <text class="t lg" x="176" y="146">（直接回系统，问题没解决）</text>
+
+  <rect class="cb" x="88" y="154" width="76" height="26" rx="13"/>
+  <text class="t l0" x="100" y="172" style="fill:#2f5d8a">疑难解答</text>
+  <text class="t scr" x="632" y="172" text-anchor="end" style="fill:#2f5d8a">选它 · 第 1 屏</text>
+
+  <text class="t l1" x="190" y="198">重置此电脑</text>
+  <text class="t lg" x="290" y="198">（最后手段，会丢软件）</text>
+
+  <rect class="cb" x="178" y="206" width="80" height="26" rx="13"/>
+  <text class="t l1" x="190" y="224" style="fill:#2f5d8a">高级选项</text>
+  <text class="t scr" x="632" y="224" text-anchor="end" style="fill:#2f5d8a">选它 · 第 2 屏</text>
+
+  <text class="t l2" x="280" y="250">启动修复</text>
+  <text class="t lg" x="376" y="250">（可先跳过）</text>
+
+  <rect class="cr" x="268" y="258" width="76" height="26" rx="13"/>
+  <text class="t l2" x="280" y="276" style="fill:#cc3b3b;font-weight:700">卸载更新</text>
+  <text class="t scr" x="632" y="276" text-anchor="end" style="fill:#cc3b3b">就是它 · 第 3 屏</text>
+
+  <rect class="cg" x="366" y="284" width="138" height="26" rx="13"/>
+  <text class="t l3" x="378" y="302" style="fill:#3d6338">卸载最新的质量更新</text>
+  <text class="t nt" x="516" y="302" style="fill:#4f7f47">← 先试这个</text>
+
+  <rect class="ca" x="366" y="310" width="138" height="26" rx="13"/>
+  <text class="t l3" x="378" y="328" style="fill:#a8791f">卸载最新的功能更新</text>
+  <text class="t nt" x="516" y="328" style="fill:#a8791f">← 不行再试</text>
+
+  <text class="t l2" x="280" y="354">系统还原</text>
+  <text class="t lg" x="376" y="354">（本文的"招二"）</text>
+
+  <text class="t l2" x="280" y="380">命令提示符</text>
+  <text class="t lg" x="396" y="380">（最硬核的兜底）</text>
+
+  <text class="t l2" x="280" y="406">启动设置</text>
+  <text class="t lg" x="376" y="406">（进安全模式）</text>
+
+  <text class="t l0" x="100" y="432">关闭电脑</text>
+
+  <line class="rule" x1="48" y1="438" x2="632" y2="438"/>
+  <text class="t lg" x="48" y="454">先点「卸载最新的质量更新」；还是进不去，再回来点「卸载最新的功能更新」。这一步不会删除个人文件。</text>
+</svg>

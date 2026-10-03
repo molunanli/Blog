@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 500" role="img" aria-label="Windows 更新翻车后的三条回滚路径：能进桌面走设置，进不去桌面走高级启动，回滚后立刻暂停更新">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .tn { font-size: 14px; font-weight: 700; }
+    .thd { font-size: 13px; font-weight: 700; fill: #fffdf6; }
+    .tw { font-size: 13.5px; font-weight: 700; fill: #fffdf6; }
+    .tb { font-size: 13px; font-weight: 700; }
+    .tl { font-size: 11.5px; fill: #4c463e; }
+    .tk { font-size: 11px; fill: #6b6459; }
+    .card { fill: #fffdf6; }
+    .bA { stroke: #2f5d8a; stroke-width: 2.5; }
+    .bB { stroke: #cc3b3b; stroke-width: 2.5; }
+    .fillA { fill: #2f5d8a; }
+    .fillB { fill: #cc3b3b; }
+    .start { fill: #1c1a17; }
+    .dec { fill: #fdf3d9; stroke: #c9962a; stroke-width: 2.5; }
+    .bar { fill: #e8f0e4; stroke: #4f7f47; stroke-width: 2.5; }
+    .ln { stroke: #6b6459; stroke-width: 2; fill: none; }
+  </style>
+
+  <defs>
+    <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b6459"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="680" height="500"/>
+
+  <text class="t th" x="34" y="38">更新翻车后走哪条路？只看一件事</text>
+  <text class="t ts" x="34" y="60">判断标准只有一个——能不能进到桌面。能进走"设置"，进不去走"高级启动"</text>
+
+  <!-- 起点 -->
+  <rect class="start" x="250" y="78" width="180" height="46" rx="23"/>
+  <text class="t tw" x="340" y="106" text-anchor="middle">更新后出问题了</text>
+  <line class="ln" x1="340" y1="124" x2="340" y2="148" marker-end="url(#arw)"/>
+
+  <!-- 判断 -->
+  <rect class="dec" x="240" y="152" width="200" height="48" rx="8"/>
+  <text class="t tn" x="340" y="181" text-anchor="middle">能进到桌面吗？</text>
+
+  <polyline class="ln" points="240,176 150,176 150,212" marker-end="url(#arw)"/>
+  <polyline class="ln" points="440,176 530,176 530,212" marker-end="url(#arw)"/>
+
+  <!-- 路线 A -->
+  <rect class="card bA" x="30" y="216" width="260" height="176" rx="8"/>
+  <path class="fillA" d="M30,224 a8,8 0 0 1 8,-8 h244 a8,8 0 0 1 8,8 v24 h-260 z"/>
+  <text class="t thd" x="46" y="238">路线 A · 能进桌面</text>
+
+  <text class="t tb" x="46" y="274" style="fill:#2f5d8a">招一 · 卸载这次更新</text>
+  <text class="t tl" x="46" y="294">设置 → Windows 更新 → 更新历史记录</text>
+  <text class="t tl" x="46" y="310">→ 卸载更新 → 选中最近那条</text>
+
+  <text class="t tb" x="46" y="338" style="fill:#2f5d8a">招二 · 系统还原</text>
+  <text class="t tl" x="46" y="358">Win + R → rstrui.exe</text>
+  <text class="t tl" x="46" y="374">挑一个症状出现之前的还原点</text>
+
+  <!-- 路线 B -->
+  <rect class="card bB" x="390" y="216" width="260" height="176" rx="8"/>
+  <path class="fillB" d="M390,224 a8,8 0 0 1 8,-8 h244 a8,8 0 0 1 8,8 v24 h-260 z"/>
+  <text class="t thd" x="406" y="238">路线 B · 进不去桌面</text>
+
+  <text class="t tb" x="406" y="274" style="fill:#cc3b3b">招三 · 高级启动里卸载更新</text>
+  <text class="t tl" x="406" y="294">开机连续强制关机 3 次</text>
+  <text class="t tl" x="406" y="310">→ 进入「自动修复」</text>
+  <text class="t tl" x="406" y="330">疑难解答 → 高级选项 → 卸载更新</text>
+  <text class="t tk" x="406" y="352" style="fill:#cc3b3b">这是专为"开不了机"准备的退路</text>
+  <text class="t tk" x="406" y="372">不需要进桌面，也不会删个人文件</text>
+
+  <line class="ln" x1="160" y1="392" x2="160" y2="420" marker-end="url(#arw)"/>
+  <line class="ln" x1="520" y1="392" x2="520" y2="420" marker-end="url(#arw)"/>
+
+  <!-- 收口 -->
+  <rect class="bar" x="60" y="424" width="560" height="54" rx="8"/>
+  <text class="t tb" x="340" y="448" text-anchor="middle" style="fill:#3d6338">回滚成功后，立刻做三件事：暂停更新 + 拦住重装 + 建还原点</text>
+  <text class="t tk" x="340" y="467" text-anchor="middle">跳过这一步，今晚它就会把这个更新原样装回来</text>
+</svg>
