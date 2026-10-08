@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 512" role="img" aria-label="DDU 彻底重装显卡驱动的六步流程：下好驱动、断网、进安全模式、清理、重启保持断网、装新驱动再联网">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .st { font-size: 13px; font-weight: 700; }
+    .sd { font-size: 11.5px; fill: #4c463e; }
+    .bt { font-size: 13px; font-weight: 700; fill: #fffdf6; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .axis { stroke: #c9bfa8; stroke-width: 2; }
+    .card { fill: #fffdf6; stroke: #d8cfba; stroke-width: 1.5; }
+    .hot { fill: #fffdf6; stroke: #cc3b3b; stroke-width: 2.5; }
+    .n { fill: #6b6459; }
+    .n2 { fill: #cc3b3b; }
+  </style>
+
+  <rect class="bg" width="680" height="512"/>
+
+  <text class="t th" x="34" y="38">DDU 重装显卡驱动：六步，顺序不能乱</text>
+  <text class="t ts" x="34" y="60">第 ② ③ 步是红框那两步——跳过它们，整件事就白做了</text>
+
+  <line class="axis" x1="70" y1="112" x2="70" y2="440"/>
+
+  <!-- ① -->
+  <circle class="n" cx="70" cy="124" r="17"/>
+  <text class="t bt" x="70" y="129" text-anchor="middle">①</text>
+  <rect class="card" x="100" y="98" width="550" height="52" rx="8"/>
+  <text class="t st" x="118" y="122">先下好新驱动</text>
+  <text class="t sd" x="118" y="141">去官网下最新版，放桌面——但先不要运行它</text>
+
+  <!-- ② -->
+  <circle class="n2" cx="70" cy="186" r="17"/>
+  <text class="t bt" x="70" y="191" text-anchor="middle">②</text>
+  <rect class="hot" x="100" y="160" width="550" height="52" rx="8"/>
+  <text class="t st" x="118" y="184" style="fill:#cc3b3b">断开网络（关键）</text>
+  <text class="t sd" x="118" y="203">拔网线 / 关 Wi-Fi：防止 Windows Update 中途塞进通用驱动</text>
+
+  <!-- ③ -->
+  <circle class="n2" cx="70" cy="248" r="17"/>
+  <text class="t bt" x="70" y="253" text-anchor="middle">③</text>
+  <rect class="hot" x="100" y="222" width="550" height="52" rx="8"/>
+  <text class="t st" x="118" y="246" style="fill:#cc3b3b">进入安全模式（关键）</text>
+  <text class="t sd" x="118" y="265">高级启动 → 疑难解答 → 高级选项 → 启动设置 → 重启 → 按 4</text>
+
+  <!-- ④ -->
+  <circle class="n" cx="70" cy="310" r="17"/>
+  <text class="t bt" x="70" y="315" text-anchor="middle">④</text>
+  <rect class="card" x="100" y="284" width="550" height="52" rx="8"/>
+  <text class="t st" x="118" y="308">用 DDU 清理</text>
+  <text class="t sd" x="118" y="327">选 GPU + 品牌 → 点「Clean and restart」；屏幕闪黑是正常的</text>
+
+  <!-- ⑤ -->
+  <circle class="n" cx="70" cy="372" r="17"/>
+  <text class="t bt" x="70" y="377" text-anchor="middle">⑤</text>
+  <rect class="card" x="100" y="346" width="550" height="52" rx="8"/>
+  <text class="t st" x="118" y="370">重启后保持断网</text>
+  <text class="t sd" x="118" y="389">此时显卡处于"无驱动"状态，绝不能联网</text>
+
+  <!-- ⑥ -->
+  <circle class="n" cx="70" cy="434" r="17"/>
+  <text class="t bt" x="70" y="439" text-anchor="middle">⑥</text>
+  <rect class="card" x="100" y="408" width="550" height="52" rx="8"/>
+  <text class="t st" x="118" y="432">装新驱动，再联网</text>
+  <text class="t sd" x="118" y="451">NVIDIA 安装时勾「执行清洁安装」→ 装完再恢复网络</text>
+
+  <text class="t ft" x="34" y="490">核心就是这一句：先断网 → 再清理 → 装好驱动 → 最后才联网。顺序反了，等于做了一次"半干净"安装。</text>
+</svg>

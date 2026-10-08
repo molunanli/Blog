@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 500" role="img" aria-label="驱动的四个来源对比：整机主板厂商官网首选、芯片厂商官网推荐、Windows Update 兜底、第三方驱动工具不要用">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .nm { font-size: 14px; font-weight: 700; }
+    .dl { font-size: 11.5px; fill: #4c463e; }
+    .bt { font-size: 12px; font-weight: 700; fill: #fffdf6; }
+    .tag { font-size: 12px; font-weight: 700; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .card { fill: #fffdf6; }
+    .s1 { stroke: #4f7f47; stroke-width: 2.5; }
+    .s2 { stroke: #2f5d8a; stroke-width: 2.5; }
+    .s3 { stroke: #c9962a; stroke-width: 2.5; }
+    .s4 { stroke: #cc3b3b; stroke-width: 2.5; }
+    .f1 { fill: #4f7f47; }
+    .f2 { fill: #2f5d8a; }
+    .f3 { fill: #c9962a; }
+    .f4 { fill: #cc3b3b; }
+    .t1 { fill: #e8f0e4; stroke: #4f7f47; stroke-width: 1.5; }
+    .t2 { fill: #e6eef6; stroke: #2f5d8a; stroke-width: 1.5; }
+    .t3 { fill: #fdf3d9; stroke: #c9962a; stroke-width: 1.5; }
+    .t4 { fill: #f5e2e2; stroke: #cc3b3b; stroke-width: 1.5; }
+  </style>
+
+  <rect class="bg" width="680" height="500"/>
+
+  <text class="t th" x="34" y="38">驱动的四个来源：按这个优先级找</text>
+  <text class="t ts" x="34" y="60">从上往下依次是可靠性的高低——前三个可以用，第四个不要用</text>
+
+  <!-- ① 厂商官网 -->
+  <rect class="card s1" x="30" y="84" width="620" height="86" rx="8"/>
+  <circle class="f1" cx="62" cy="127" r="18"/>
+  <text class="t bt" x="62" y="132" text-anchor="middle">①</text>
+  <text class="t nm" x="96" y="114" style="fill:#3d6338">整机 / 主板厂商官网</text>
+  <text class="t dl" x="96" y="136">台式机按主板型号；笔记本按整机品牌 + 精确型号</text>
+  <text class="t dl" x="96" y="156">独有 Fn 功能键、电池养护、触控板手势等厂商定制项</text>
+  <rect class="t1" x="530" y="113" width="104" height="28" rx="14"/>
+  <text class="t tag" x="582" y="132" text-anchor="middle" style="fill:#3d6338">首选</text>
+
+  <!-- ② 芯片厂商 -->
+  <rect class="card s2" x="30" y="178" width="620" height="86" rx="8"/>
+  <circle class="f2" cx="62" cy="221" r="18"/>
+  <text class="t bt" x="62" y="226" text-anchor="middle">②</text>
+  <text class="t nm" x="96" y="208" style="fill:#2f5d8a">芯片厂商官网</text>
+  <text class="t dl" x="96" y="230">NVIDIA / AMD / Intel / Realtek，认硬件 ID 下载</text>
+  <text class="t dl" x="96" y="250">显卡、独立网卡、声卡走这条，版本通常最新</text>
+  <rect class="t2" x="530" y="207" width="104" height="28" rx="14"/>
+  <text class="t tag" x="582" y="226" text-anchor="middle" style="fill:#2f5d8a">推荐</text>
+
+  <!-- ③ Windows Update -->
+  <rect class="card s3" x="30" y="272" width="620" height="86" rx="8"/>
+  <circle class="f3" cx="62" cy="315" r="18"/>
+  <text class="t bt" x="62" y="320" text-anchor="middle">③</text>
+  <text class="t nm" x="96" y="302" style="fill:#a8791f">Windows Update</text>
+  <text class="t dl" x="96" y="324">系统自带驱动库，覆盖广、装得省事</text>
+  <text class="t dl" x="96" y="344">但版本滞后，可能用通用驱动替换掉专用驱动</text>
+  <rect class="t3" x="530" y="301" width="104" height="28" rx="14"/>
+  <text class="t tag" x="582" y="320" text-anchor="middle" style="fill:#a8791f">兜底</text>
+
+  <!-- ④ 第三方工具 -->
+  <rect class="card s4" x="30" y="366" width="620" height="86" rx="8"/>
+  <circle class="f4" cx="62" cy="409" r="18"/>
+  <text class="t bt" x="62" y="414" text-anchor="middle">④</text>
+  <text class="t nm" x="96" y="396" style="fill:#cc3b3b">第三方"驱动大师 / 驱动人生"类工具</text>
+  <text class="t dl" x="96" y="418">捆绑软件重灾区、容易匹配错型号、会擅自改系统设置</text>
+  <text class="t dl" x="96" y="438">卸起来还很难（要动用上一篇那套卸载兜底流程）</text>
+  <rect class="t4" x="530" y="395" width="104" height="28" rx="14"/>
+  <text class="t tag" x="582" y="414" text-anchor="middle" style="fill:#cc3b3b">不要用</text>
+
+  <text class="t ft" x="34" y="478">例外：整机厂商的官方驱动工具（Lenovo Vantage / SupportAssist 等）可以用——判断标准是"它只服务自家硬件"。</text>
+</svg>
