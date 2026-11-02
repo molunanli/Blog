@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" role="img" aria-label="换固态硬盘的两条迁移路径对比：系统克隆与全新安装，各自的适合场景、需要什么、限制与代价">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .hd { font-size: 13.5px; font-weight: 700; fill: #fffdf6; }
+    .lb { font-size: 10.5px; font-weight: 700; fill: #8a8175; }
+    .tx { font-size: 11.5px; fill: #4c463e; }
+    .em { font-size: 11.5px; font-weight: 700; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .cardA { fill: #fffdf6; stroke: #2f5d8a; stroke-width: 2.5; }
+    .cardB { fill: #fffdf6; stroke: #4f7f47; stroke-width: 2.5; }
+    .hA { fill: #2f5d8a; }
+    .hB { fill: #4f7f47; }
+    .sep { stroke: #e5dcc9; stroke-width: 1.2; }
+  </style>
+
+  <rect class="bg" width="680" height="440"/>
+
+  <text class="t th" x="34" y="38">换固态之后，系统怎么过去？</text>
+  <text class="t ts" x="34" y="60">两条路都能到终点，区别是"省事"还是"干净"</text>
+
+  <!-- 路径 A -->
+  <rect class="cardA" x="30" y="84" width="300" height="300" rx="8"/>
+  <path class="hA" d="M30,92 a8,8 0 0 1 8,-8 h284 a8,8 0 0 1 8,8 v24 h-300 z"/>
+  <text class="t hd" x="46" y="106">路径 A · 系统克隆</text>
+
+  <text class="t lb" x="46" y="142">适合谁</text>
+  <text class="t tx" x="46" y="162">系统本来就干净</text>
+  <text class="t tx" x="46" y="180">软件多、配置复杂</text>
+
+  <text class="t lb" x="46" y="206">需要什么</text>
+  <text class="t tx" x="46" y="226">USB 转接线或硬盘盒</text>
+  <text class="t tx" x="46" y="244">+ 克隆软件（品牌常附赠）</text>
+
+  <text class="t lb" x="46" y="270">最大限制</text>
+  <text class="t em" x="46" y="290" style="fill:#cc3b3b">★ 新盘容量必须 ≥</text>
+  <text class="t em" x="46" y="308" style="fill:#cc3b3b">旧盘的「已用空间」</text>
+
+  <line class="sep" x1="46" y1="322" x2="314" y2="322"/>
+  <text class="t lb" x="46" y="342">代价</text>
+  <text class="t tx" x="46" y="362">旧系统的问题会一起搬过去</text>
+
+  <!-- 路径 B -->
+  <rect class="cardB" x="350" y="84" width="300" height="300" rx="8"/>
+  <path class="hB" d="M350,92 a8,8 0 0 1 8,-8 h284 a8,8 0 0 1 8,8 v24 h-300 z"/>
+  <text class="t hd" x="366" y="106">路径 B · 全新安装</text>
+
+  <text class="t lb" x="366" y="142">适合谁</text>
+  <text class="t tx" x="366" y="162">系统已经脏了</text>
+  <text class="t tx" x="366" y="180">三四年没重装过</text>
+
+  <text class="t lb" x="366" y="206">需要什么</text>
+  <text class="t tx" x="366" y="226">U 盘启动盘 + 数据备份</text>
+  <text class="t tx" x="366" y="244">（流程见"重装"那篇）</text>
+
+  <text class="t lb" x="366" y="270">最大代价</text>
+  <text class="t em" x="366" y="290" style="fill:#a8791f">要重装软件</text>
+  <text class="t em" x="366" y="308" style="fill:#a8791f">约 1~2 小时</text>
+
+  <line class="sep" x1="366" y1="322" x2="634" y2="322"/>
+  <text class="t lb" x="366" y="342">好处</text>
+  <text class="t tx" x="366" y="362">顺便把攒了几年的垃圾清空</text>
+
+  <text class="t ft" x="34" y="412">判断标准：旧系统脏不脏。干净就克隆（省两小时），脏就重装（反正都拆机了，一次做干净）。</text>
+</svg>

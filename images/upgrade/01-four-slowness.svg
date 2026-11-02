@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 372" role="img" aria-label="四种慢对应的瓶颈与升级方向：开机慢和开软件慢是硬盘，多任务卡是内存，游戏渲染慢是显卡或CPU">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .hd { font-size: 11.5px; font-weight: 700; fill: #6b6459; }
+    .s1 { font-size: 13.5px; font-weight: 700; }
+    .d1 { font-size: 11.5px; fill: #4c463e; }
+    .bn { font-size: 12.5px; font-weight: 700; }
+    .ac { font-size: 12px; font-weight: 700; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .panel { fill: #fffdf6; stroke: #d8cfba; stroke-width: 1.5; }
+    .sep { stroke: #e5dcc9; stroke-width: 1.2; }
+    .f1 { fill: #2f5d8a; }
+    .f3 { fill: #4f7f47; }
+    .f4 { fill: #c9962a; }
+  </style>
+
+  <rect class="bg" width="680" height="372"/>
+
+  <text class="t th" x="34" y="38">先分清你说的是哪一种"慢"</text>
+  <text class="t ts" x="34" y="60">四种"卡"对应四个不同的瓶颈——升错了地方，钱就白花了</text>
+
+  <text class="t hd" x="52" y="92">你说的"慢"</text>
+  <text class="t hd" x="194" y="92">典型表现</text>
+  <text class="t hd" x="390" y="92">瓶颈在哪</text>
+  <text class="t hd" x="505" y="92">该升什么</text>
+
+  <rect class="panel" x="30" y="100" width="620" height="192" rx="8"/>
+
+  <rect class="f1" x="30" y="110" width="6" height="28" rx="3"/>
+  <text class="t s1" x="52" y="130">开机慢</text>
+  <text class="t d1" x="194" y="130">按电源到能用要一两分钟</text>
+  <text class="t bn" x="390" y="130" style="fill:#2f5d8a">硬盘</text>
+  <text class="t ac" x="505" y="130" style="fill:#2f5d8a">换固态</text>
+
+  <line class="sep" x1="46" y1="148" x2="634" y2="148"/>
+
+  <rect class="f1" x="30" y="158" width="6" height="28" rx="3"/>
+  <text class="t s1" x="52" y="178">开软件慢</text>
+  <text class="t d1" x="194" y="178">点图标要转半天圈才出来</text>
+  <text class="t bn" x="390" y="178" style="fill:#2f5d8a">硬盘</text>
+  <text class="t ac" x="505" y="178" style="fill:#2f5d8a">换固态</text>
+
+  <line class="sep" x1="46" y1="196" x2="634" y2="196"/>
+
+  <rect class="f3" x="30" y="206" width="6" height="28" rx="3"/>
+  <text class="t s1" x="52" y="226">多任务卡</text>
+  <text class="t d1" x="194" y="226">开十几个网页，切一下就顿</text>
+  <text class="t bn" x="390" y="226" style="fill:#4f7f47">内存</text>
+  <text class="t ac" x="505" y="226" style="fill:#4f7f47">加内存</text>
+
+  <line class="sep" x1="46" y1="244" x2="634" y2="244"/>
+
+  <rect class="f4" x="30" y="254" width="6" height="28" rx="3"/>
+  <text class="t s1" x="52" y="274">游戏/渲染慢</text>
+  <text class="t d1" x="194" y="274">帧数低、导出视频很久</text>
+  <text class="t bn" x="390" y="274" style="fill:#a8791f">显卡或 CPU</text>
+  <text class="t ac" x="505" y="274" style="fill:#a8791f">显卡（CPU 不建议）</text>
+
+  <text class="t ft" x="34" y="322">怎么测：把你最卡的那个操作重复做 1~2 分钟，看任务管理器里哪个资源长期贴在 100%。</text>
+  <text class="t ft" x="34" y="344">如果哪个都没满却还是卡 → 不是资源瓶颈，先查驱动、系统和散热，升级硬件不会有帮助。</text>
+</svg>

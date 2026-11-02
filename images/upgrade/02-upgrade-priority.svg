@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 480" role="img" aria-label="四项常见升级的性价比排序：换固态最划算，其次加内存，换显卡看需求，换CPU最不划算">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .nm { font-size: 14px; font-weight: 700; }
+    .dl { font-size: 11.5px; fill: #4c463e; }
+    .mk { font-size: 10.5px; fill: #8a8175; }
+    .bt { font-size: 13px; font-weight: 700; fill: #fffdf6; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .card { fill: #fffdf6; }
+    .s1 { stroke: #4f7f47; stroke-width: 2.5; }
+    .s2 { stroke: #2f5d8a; stroke-width: 2.5; }
+    .s3 { stroke: #c9962a; stroke-width: 2.5; }
+    .s4 { stroke: #cc3b3b; stroke-width: 2.5; }
+    .f1 { fill: #4f7f47; }
+    .f2 { fill: #2f5d8a; }
+    .f3 { fill: #c9962a; }
+    .f4 { fill: #cc3b3b; }
+    .off { fill: #e5dcc9; }
+  </style>
+
+  <rect class="bg" width="680" height="480"/>
+
+  <text class="t th" x="34" y="38">四项升级的性价比：越靠上越值得先做</text>
+  <text class="t ts" x="34" y="60">同样的预算，花在不同部件上，体验提升能差出一个数量级</text>
+
+  <!-- ① 固态 -->
+  <rect class="card s1" x="30" y="84" width="620" height="78" rx="8"/>
+  <circle class="f1" cx="62" cy="123" r="19"/>
+  <text class="t bt" x="62" y="128" text-anchor="middle">1</text>
+  <text class="t nm" x="96" y="111" style="fill:#3d6338">换固态硬盘</text>
+  <text class="t dl" x="96" y="133">200~500 元 ｜ 开机从 1 分钟缩到 15 秒</text>
+  <text class="t dl" x="96" y="152">几乎所有机械盘老机器都值得换</text>
+  <text class="t mk" x="462" y="110">见效程度</text>
+  <circle class="f1" cx="520" cy="132" r="7"/><circle class="f1" cx="542" cy="132" r="7"/><circle class="f1" cx="564" cy="132" r="7"/><circle class="f1" cx="586" cy="132" r="7"/><circle class="f1" cx="608" cy="132" r="7"/>
+
+  <!-- ② 内存 -->
+  <rect class="card s2" x="30" y="172" width="620" height="78" rx="8"/>
+  <circle class="f2" cx="62" cy="211" r="19"/>
+  <text class="t bt" x="62" y="216" text-anchor="middle">2</text>
+  <text class="t nm" x="96" y="199" style="fill:#2f5d8a">加内存</text>
+  <text class="t dl" x="96" y="221">150~400 元 ｜ 多任务明显顺畅</text>
+  <text class="t dl" x="96" y="240">内存 ≤8G、常开多标签的用户</text>
+  <text class="t mk" x="460" y="198">见效程度</text>
+  <circle class="f2" cx="520" cy="220" r="7"/><circle class="f2" cx="542" cy="220" r="7"/><circle class="f2" cx="564" cy="220" r="7"/><circle class="f2" cx="586" cy="220" r="7"/><circle class="off" cx="608" cy="220" r="7"/>
+
+  <!-- ③ 显卡 -->
+  <rect class="card s3" x="30" y="260" width="620" height="78" rx="8"/>
+  <circle class="f3" cx="62" cy="299" r="19"/>
+  <text class="t bt" x="62" y="304" text-anchor="middle">3</text>
+  <text class="t nm" x="96" y="287" style="fill:#a8791f">换显卡</text>
+  <text class="t dl" x="96" y="309">1000~4000 元 ｜ 只对游戏 / 渲染有效</text>
+  <text class="t dl" x="96" y="328">游戏玩家、视频创作者；先确认电源够</text>
+  <text class="t mk" x="460" y="286">见效程度</text>
+  <circle class="f3" cx="520" cy="308" r="7"/><circle class="f3" cx="542" cy="308" r="7"/><circle class="f3" cx="564" cy="308" r="7"/><circle class="off" cx="586" cy="308" r="7"/><circle class="off" cx="608" cy="308" r="7"/>
+
+  <!-- ④ CPU -->
+  <rect class="card s4" x="30" y="348" width="620" height="78" rx="8"/>
+  <circle class="f4" cx="62" cy="387" r="19"/>
+  <text class="t bt" x="62" y="392" text-anchor="middle">4</text>
+  <text class="t nm" x="96" y="375" style="fill:#cc3b3b">换 CPU</text>
+  <text class="t dl" x="96" y="397">500~2000 元 ｜ 常要连着换主板</text>
+  <text class="t dl" x="96" y="416">极少建议：跨代升级等于换平台</text>
+  <text class="t mk" x="460" y="374">见效程度</text>
+  <circle class="f4" cx="520" cy="396" r="7"/><circle class="f4" cx="542" cy="396" r="7"/><circle class="off" cx="564" cy="396" r="7"/><circle class="off" cx="586" cy="396" r="7"/><circle class="off" cx="608" cy="396" r="7"/>
+
+  <text class="t ft" x="34" y="456">排序依据：花钱少 + 见效快 + 风险低。先做上面两项，往往就不需要下面两项了。</text>
+</svg>
