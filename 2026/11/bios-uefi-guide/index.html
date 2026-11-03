@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BIOS/UEFI 入门：怎么进、改什么、哪一步会变砖 · 我的博客</title>
+<meta name="description" content="主板设置界面是很多人装系统路上的第一道墙：按了半天 Del 进不去、进去全是看不懂的英文、改完启动顺序还是从 U 盘启动、想开个 XMP 结果开不了机。这篇把这块「不敢碰的黑箱」拆开：BIOS 与 UEFI 到底差在哪、三条进入路径各自什么时候用、启动顺序和一次性启动菜单的区别、XMP/EXPO 会">
+<meta name="theme-color" content="#f7f1e3">
+
+<!-- 防主题闪烁：在任何渲染前确定主题 -->
+<script>
+(function () {
+    var k = 'manga-blog-theme';
+    var saved = null;
+    try { saved = localStorage.getItem(k); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/Blog/css/style.css">
+<link rel="alternate" href="/Blog/atom.xml" title="我的博客" type="application/atom+xml">
+<script>window.SEARCH_JSON_URL = '/Blog/search.json';</script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body data-root="/Blog/">
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="site-header">
+    <div class="shell">
+        <nav class="navbar" aria-label="主导航">
+            <a class="brand" href="/Blog/" aria-label="我的博客 首页">
+                <span class="brand-seal" aria-hidden="true">博客</span>
+                我的博客
+            </a>
+
+            <ul class="nav-links">
+                
+                    
+                    <li><a href="/Blog/" data-nav="/">首页</a></li>
+                
+                    
+                    <li><a href="/Blog/archives" data-nav="/archives">归档</a></li>
+                
+                    
+                    <li><a href="/Blog/tags" data-nav="/tags">标签</a></li>
+                
+                    
+                    <li><a href="/Blog/categories" data-nav="/categories">分类</a></li>
+                
+                    
+                    <li><a href="/Blog/about" data-nav="/about">关于</a></li>
+                
+            </ul>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn" type="button" aria-label="搜索文章" title="搜索（Ctrl / ⌘ + K）">🔍</button>
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="切换至暗色模式" aria-pressed="false" title="切换至暗色模式">🌙</button>
+                <button class="icon-btn burger" id="burgerBtn" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="drawer">☰</button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<nav class="drawer" id="drawer" aria-label="移动端导航" aria-hidden="true">
+    <div class="drawer-head">
+        <span class="drawer-title">📖 目录导航</span>
+        <button class="icon-btn" id="drawerClose" type="button" aria-label="关闭菜单">✕</button>
+    </div>
+    
+        
+        <a href="/Blog/" data-nav="/">首页</a>
+    
+        
+        <a href="/Blog/archives" data-nav="/archives">归档</a>
+    
+        
+        <a href="/Blog/tags" data-nav="/tags">标签</a>
+    
+        
+        <a href="/Blog/categories" data-nav="/categories">分类</a>
+    
+        
+        <a href="/Blog/about" data-nav="/about">关于</a>
+    
+    <p class="drawer-note">我的博客 — 日式漫画风 · Hexo 主题</p>
+</nav>
+
+
+
+<main class="site-main" id="articleRoot"
+      data-post-id="bios-uefi-guide"
+      data-post-title="BIOS/UEFI 入门：怎么进、改什么、哪一步会变砖"
+      data-post-likes="0">
+
+    
+
+<script>
+    /* 供 app.js 的目录滚动高亮使用（headings 由模板计算） */
+    var headings = [{"level":"2","id":"一、什么时候你会需要它","text":"一、什么时候你会需要它"},{"level":"2","id":"二、先分清：BIOS-和-UEFI-不是一个东西","text":"二、先分清：BIOS 和 UEFI 不是一个东西"},{"level":"2","id":"三、怎么进：三条路，按不上就换下一条","text":"三、怎么进：三条路，按不上就换下一条"},{"level":"3","id":"3-1-路径一：开机连按按键","text":"3.1 路径一：开机连按按键"},{"level":"3","id":"3-2-路径二：Windows-高级启动（最稳）","text":"3.2 路径二：Windows 高级启动（最稳）"},{"level":"3","id":"3-3-路径三：一行命令","text":"3.3 路径三：一行命令"},{"level":"2","id":"四、进去先别动：认清路再动手","text":"四、进去先别动：认清路再动手"},{"level":"2","id":"五、启动顺序：改得最多的一项","text":"五、启动顺序：改得最多的一项"},{"level":"3","id":"5-1-两种”启动顺序”，别搞混","text":"5.1 两种”启动顺序”，别搞混"},{"level":"3","id":"5-2-改完还是从-U-盘启动？四个原因","text":"5.2 改完还是从 U 盘启动？四个原因"},{"level":"2","id":"六、XMP-EXPO：内存”标称频率”的真相","text":"六、XMP &#x2F; EXPO：内存”标称频率”的真相"},{"level":"3","id":"6-1-开了会不会伤机器","text":"6.1 开了会不会伤机器"},{"level":"3","id":"6-2-开了开不了机怎么办","text":"6.2 开了开不了机怎么办"},{"level":"2","id":"七、安全启动与-TPM：Win11-的门槛，也是-BitLocker-的雷","text":"七、安全启动与 TPM：Win11 的门槛，也是 BitLocker 的雷"},{"level":"3","id":"7-1-Secure-Boot（安全启动）","text":"7.1 Secure Boot（安全启动）"},{"level":"3","id":"7-2-TPM-2-0","text":"7.2 TPM 2.0"},{"level":"2","id":"八、风险分级：哪些能改，哪些改了会出事","text":"八、风险分级：哪些能改，哪些改了会出事"},{"level":"2","id":"九、改坏了怎么退：清-CMOS","text":"九、改坏了怎么退：清 CMOS"},{"level":"3","id":"9-1-先试最轻的：设置界面里恢复默认","text":"9.1 先试最轻的：设置界面里恢复默认"},{"level":"3","id":"9-2-进不去界面：清-CMOS-三种办法","text":"9.2 进不去界面：清 CMOS 三种办法"},{"level":"2","id":"十、刷-BIOS：三条红线","text":"十、刷 BIOS：三条红线"},{"level":"3","id":"10-1-什么情况下真该刷","text":"10.1 什么情况下真该刷"},{"level":"3","id":"10-2-三条红线","text":"10.2 三条红线"},{"level":"3","id":"10-3-万一变砖了","text":"10.3 万一变砖了"},{"level":"2","id":"十一、避坑-3-条-经验-3-条","text":"十一、避坑 3 条 + 经验 3 条"},{"level":"2","id":"十二、两个真实案例","text":"十二、两个真实案例"},{"level":"2","id":"十三、验证清单","text":"十三、验证清单"},{"level":"2","id":"相关阅读","text":"相关阅读"}];
+</script>
+
+<div class="shell">
+    <nav class="crumbs" aria-label="面包屑导航">
+        <a href="/Blog/">首页</a><span class="sep" aria-hidden="true">›</span>
+        
+            <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a><span class="sep" aria-hidden="true">›</span>
+        
+        <span id="crumbCurrent">BIOS/UEFI 入门：怎么进、改什么、哪一步会变砖</span>
+    </nav>
+</div>
+
+<div class="shell">
+    <div class="grid grid--sidebar">
+
+        <!-- ============ 正文 ============ -->
+        <div class="stack">
+            <section class="article-head" id="articleHead">
+                
+                    <a class="chip chip--cat" href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                
+                <h1 class="article-title">BIOS/UEFI 入门：怎么进、改什么、哪一步会变砖</h1>
+                <div class="article-meta">
+                    <span>✍️ 博主</span>
+                    <span>📅 令和8年11月3日</span>
+                    <span>⏱ 阅读约 22 分钟</span>
+                    
+                    
+                </div>
+                <div class="tag-list" style="margin-top:14px">
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">#电脑维修</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%A1%AC%E4%BB%B6/">#硬件</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/Windows/">#Windows</a>
+                    
+                </div>
+            </section>
+
+            <article class="card article-body" id="articleBody">
+                <p>装系统卡在第一步的人，多半卡在这儿：<strong>重启、猛按 Del、屏幕一闪而过进了 Windows。</strong></p>
+<p>或者进去了，面对一屏英文和一堆电压数字，不知道该碰哪个，索性全部 ESC 退出。</p>
+<p>主板设置界面（BIOS &#x2F; UEFI）是整台机器最底层的一层，也是最容易被神化的一层。有人说”别乱动，会烧主板”，也有人说”随便改，大不了清 CMOS”。<strong>两种说法都对一半。</strong></p>
+<p>这篇的目标很具体：让你知道<strong>该在什么时候进去、进去要改什么、以及哪一步真的会出事</strong>。至于超频调压那种事，本文不涉及——那属于另一个话题，而且不该在入门篇里教。</p>
+<h2 id="一、什么时候你会需要它"><a href="#一、什么时候你会需要它" class="headerlink" title="一、什么时候你会需要它"></a>一、什么时候你会需要它</h2><p>不是”了解知识”，是真会遇到。四种场景：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>你要做的事</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>装系统 &#x2F; 重装系统</strong></td>
+<td>把 U 盘排到启动第一位（或用一次性启动菜单）</td>
+</tr>
+<tr>
+<td><strong>换了硬件不认</strong>（新硬盘、新显卡、新内存）</td>
+<td>确认设备被识别、必要时改 CSM &#x2F; Above 4G</td>
+</tr>
+<tr>
+<td><strong>内存跑不到标称频率</strong></td>
+<td>开 XMP &#x2F; EXPO</td>
+</tr>
+<tr>
+<td><strong>系统进不去、蓝屏循环</strong></td>
+<td>改启动模式、关安全启动、恢复默认设置</td>
+</tr>
+</tbody></table></div>
+<p>外加一种”被动进入”：开机报错，比如 “Reboot and Select proper Boot device”、”CPU Fan Error”、CMOS 校验失败要你按 F1——这些都在把你往这个界面推。</p>
+<div class="note note--info"><span class="note-title">※ 一句话定位</span>主板设置界面管的是**"开机之后、操作系统之前"那几秒钟**的事：先找谁、按什么模式找、硬件按什么参数跑。Windows 里改不了的东西，基本都在这儿。</div>
+
+<h2 id="二、先分清：BIOS-和-UEFI-不是一个东西"><a href="#二、先分清：BIOS-和-UEFI-不是一个东西" class="headerlink" title="二、先分清：BIOS 和 UEFI 不是一个东西"></a>二、先分清：BIOS 和 UEFI 不是一个东西</h2><p>日常说话混着用没关系，但你要动启动设置时，这个区别很关键。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th>传统 BIOS</th>
+<th>UEFI</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>年代</td>
+<td>1981 年起，用了三十多年</td>
+<td>2012 年后逐渐普及，现在全是它</td>
+</tr>
+<tr>
+<td>分区表</td>
+<td>MBR（最大 2TB、最多 4 个主分区）</td>
+<td>GPT（支持超大容量、128 个分区）</td>
+</tr>
+<tr>
+<td>引导方式</td>
+<td>读硬盘第一个扇区，找”活动分区”</td>
+<td>直接读 EFI 分区里的 <code>.efi</code> 程序</td>
+</tr>
+<tr>
+<td>界面</td>
+<td>蓝底白字、只能用键盘</td>
+<td>图形界面，支持鼠标</td>
+</tr>
+<tr>
+<td>启动速度</td>
+<td>慢（要逐个初始化硬件）</td>
+<td>快（并行初始化）</td>
+</tr>
+<tr>
+<td>安全启动</td>
+<td>没有</td>
+<td>有（Secure Boot）</td>
+</tr>
+<tr>
+<td>现在叫什么</td>
+<td>主板里的 <strong>CSM &#x2F; Legacy 兼容模式</strong></td>
+<td>默认模式</td>
+</tr>
+</tbody></table></div>
+<p>关键的一句：<strong>现在的”BIOS 设置界面”其实已经是 UEFI 界面了</strong>，只是大家习惯还叫 BIOS。你在里面看到的 <code>CSM</code>、<code>Legacy</code>、<code>Legacy+UEFI</code> 选项，就是它模拟老 BIOS 的那部分。</p>
+<p><img src="/Blog/images/bios/01-uefi-vs-legacy.svg" alt="UEFI 与 Legacy 两套启动链路对照"></p>
+<p><em>图 1：两条链路各自完整、互不相通。混着用就是”找不到启动设备”。</em></p>
+<div class="note note--warn"><span class="note-title">⚠️ 这条最容易踩</span>用 UEFI 模式装的系统，把启动模式改成 Legacy/CSM 之后，主板就**看不见它了**——不是系统坏了，是找的方法变了。反过来也一样。所以在改 `Boot Mode` 之前，先确认系统盘是 GPT 还是 MBR：磁盘管理 → 右键那块盘 → 属性 → 卷 → 看"分区样式"。</div>
+
+<h2 id="三、怎么进：三条路，按不上就换下一条"><a href="#三、怎么进：三条路，按不上就换下一条" class="headerlink" title="三、怎么进：三条路，按不上就换下一条"></a>三、怎么进：三条路，按不上就换下一条</h2><p><img src="/Blog/images/bios/02-enter-uefi.svg" alt="进入主板设置界面的三条路径"></p>
+<p><em>图 2：第一条最快但吃时机，第二条最稳但绕路，第三条最省事但有前提。</em></p>
+<h3 id="3-1-路径一：开机连按按键"><a href="#3-1-路径一：开机连按按键" class="headerlink" title="3.1 路径一：开机连按按键"></a>3.1 路径一：开机连按按键</h3><p>通电后<strong>立刻</strong>开始连按，一秒两下，别等厂商 Logo 出来才开始——那时候自检可能已经过了。</p>
+<p>各品牌进设置界面的键（同一品牌不同机型也可能不同，两个都试）：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>品牌</th>
+<th>进设置</th>
+<th>一次性启动菜单</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>华硕 &#x2F; 华擎</td>
+<td><code>Del</code> 或 <code>F2</code></td>
+<td><code>F8</code></td>
+</tr>
+<tr>
+<td>微星</td>
+<td><code>Del</code></td>
+<td><code>F11</code></td>
+</tr>
+<tr>
+<td>技嘉</td>
+<td><code>Del</code></td>
+<td><code>F12</code></td>
+</tr>
+<tr>
+<td>联想</td>
+<td><code>F2</code> 或 <code>Fn+F2</code>（部分机型侧面有 Novo 小孔）</td>
+<td><code>F12</code></td>
+</tr>
+<tr>
+<td>戴尔</td>
+<td><code>F2</code></td>
+<td><code>F12</code></td>
+</tr>
+<tr>
+<td>惠普</td>
+<td><code>F10</code>（部分机型要先按 <code>Esc</code> 调出菜单）</td>
+<td><code>F9</code></td>
+</tr>
+<tr>
+<td>宏碁</td>
+<td><code>F2</code></td>
+<td><code>F12</code></td>
+</tr>
+<tr>
+<td>神舟 &#x2F; 机械革命</td>
+<td><code>Del</code> 或 <code>F2</code></td>
+<td><code>F7</code> 或 <code>F12</code></td>
+</tr>
+</tbody></table></div>
+<p>按不上，通常是这三个原因：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. Win11 / Win10 的「快速启动」没关 —— 它不是完整关机，</span><br><span class="line">   开机时跳过了固件自检阶段，你按再快也没用</span><br><span class="line">2. 键盘没被识别 —— 无线键盘、蓝牙键盘在自检阶段常常不工作，</span><br><span class="line">   换一把有线键盘，插机箱后面的 USB 2.0 口</span><br><span class="line">3. 按晚了 —— 从按电源键到 Logo 出现只有一两秒，要提前连按</span><br></pre></td></tr></table></div></div></div>
+
+<h3 id="3-2-路径二：Windows-高级启动（最稳）"><a href="#3-2-路径二：Windows-高级启动（最稳）" class="headerlink" title="3.2 路径二：Windows 高级启动（最稳）"></a>3.2 路径二：Windows 高级启动（最稳）</h3><p>只要系统还能进桌面，这条一定进得去：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">设置 → 系统 → 恢复 → 高级启动 → 点「立即重新启动」</span><br><span class="line">重启后依次选：疑难解答 → 高级选项 → UEFI 固件设置 → 重启</span><br></pre></td></tr></table></div></div></div>
+
+<p>Win10 的路径是：设置 → 更新和安全 → 恢复 → 高级启动。</p>
+<div class="note note--tip"><span class="note-title">💡 装机时特别好用</span>如果你要把系统盘全删了重装，装到一半发现启动模式不对、想回去改设置——这时候系统已经没了，路径一又按不上，就只剩"清 CMOS"一条路。**所以装系统之前，先用这条路径进去把该改的改好。**</div>
+
+<h3 id="3-3-路径三：一行命令"><a href="#3-3-路径三：一行命令" class="headerlink" title="3.3 路径三：一行命令"></a>3.3 路径三：一行命令</h3><p>管理员权限的命令行（或 Win+X → 终端(管理员)）：</p>
+<div class="code-block" data-lang="bat" data-file="bat"><div class="code-bar"><span class="code-lang">bat</span><span class="code-file">bat</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutdown /r /fw /t <span class="number">0</span></span><br></pre></td></tr></table></div></div></div>
+
+<p><code>/fw</code> 表示”重启后直接进固件设置界面”。前提是机器以 UEFI 模式启动，老 BIOS 机器会当成普通重启。</p>
+<h2 id="四、进去先别动：认清路再动手"><a href="#四、进去先别动：认清路再动手" class="headerlink" title="四、进去先别动：认清路再动手"></a>四、进去先别动：认清路再动手</h2><p>不同厂商的界面差别很大，但结构是相似的：一个”简易模式”首页，加一个”高级模式”（通常按 <code>F7</code> 切换）。</p>
+<p>你要找的东西，基本都在这几个位置：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>想改什么</th>
+<th>华硕</th>
+<th>微星</th>
+<th>技嘉</th>
+<th>联想</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>启动顺序</td>
+<td>Boot → Boot Option</td>
+<td>Settings → Boot</td>
+<td>BIOS → Boot</td>
+<td>Startup → Boot</td>
+</tr>
+<tr>
+<td>XMP &#x2F; EXPO</td>
+<td>Extreme Tweaker → XMP</td>
+<td>OC → A-XMP &#x2F; XMP</td>
+<td>Tweaker → XMP</td>
+<td>部分机型没有</td>
+</tr>
+<tr>
+<td>安全启动</td>
+<td>Boot → Secure Boot</td>
+<td>Settings → Security</td>
+<td>BIOS → Secure Boot</td>
+<td>Security → Secure Boot</td>
+</tr>
+<tr>
+<td>虚拟化</td>
+<td>Advanced → CPU → SVM&#x2F;VT-x</td>
+<td>OC → CPU Features</td>
+<td>Advanced → SVM</td>
+<td>Security → Virtualization</td>
+</tr>
+<tr>
+<td>恢复默认</td>
+<td><code>F5</code></td>
+<td><code>F6</code></td>
+<td><code>F7</code></td>
+<td><code>F9</code></td>
+</tr>
+<tr>
+<td>保存退出</td>
+<td><code>F10</code></td>
+<td><code>F10</code></td>
+<td><code>F10</code></td>
+<td><code>F10</code></td>
+</tr>
+</tbody></table></div>
+<div class="note note--warn"><span class="note-title">⚠️ 动手前的十秒钟</span>进任何一项之前，**先用手机把当前界面拍下来**。改坏了两件事：一是不知道自己改了什么，二是不知道原来是什么值。这一张照片能省你半小时。</div>
+
+<h2 id="五、启动顺序：改得最多的一项"><a href="#五、启动顺序：改得最多的一项" class="headerlink" title="五、启动顺序：改得最多的一项"></a>五、启动顺序：改得最多的一项</h2><p>装系统、U 盘救援、双系统，都要改它。但这里有个几乎人人都踩过的坑：</p>
+<h3 id="5-1-两种”启动顺序”，别搞混"><a href="#5-1-两种”启动顺序”，别搞混" class="headerlink" title="5.1 两种”启动顺序”，别搞混"></a>5.1 两种”启动顺序”，别搞混</h3><div class="table-scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th>启动顺序（Boot Order）</th>
+<th>一次性启动菜单（Boot Menu）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>在哪</td>
+<td>设置界面里的列表</td>
+<td>开机按 <code>F8/F11/F12/F9</code></td>
+</tr>
+<tr>
+<td>效果</td>
+<td><strong>永久</strong>生效，以后都按这个顺序</td>
+<td><strong>只这一次</strong>，重启后恢复原样</td>
+</tr>
+<tr>
+<td>适合</td>
+<td>装完系统、长期固定</td>
+<td>临时插个 U 盘救援，不想改设置</td>
+</tr>
+<tr>
+<td>风险</td>
+<td>改错了要再进来改回去</td>
+<td>没有风险</td>
+</tr>
+</tbody></table></div>
+<p><strong>日常推荐用一次性启动菜单</strong>——插上 U 盘、开机按 F12、选 U 盘、装完拔掉，什么都不用改回去。</p>
+<h3 id="5-2-改完还是从-U-盘启动？四个原因"><a href="#5-2-改完还是从-U-盘启动？四个原因" class="headerlink" title="5.2 改完还是从 U 盘启动？四个原因"></a>5.2 改完还是从 U 盘启动？四个原因</h3><div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">① 你改的是 Boot Menu（一次性），不是 Boot Order —— 但它本来就只生效一次</span><br><span class="line">② U 盘插着没拔 —— 有些主板即使排了硬盘第一，也会优先尝试可引导的 U 盘</span><br><span class="line">③ 保存没生效 —— 改完必须按 F10 保存并退出，直接点右上角 × 是不保存的</span><br><span class="line">④ 列表里有两个条目 —— UEFI 模式下常见「Windows Boot Manager」和</span><br><span class="line">   「硬盘型号」两个，前者才是真正的系统入口，别排错了</span><br></pre></td></tr></table></div></div></div>
+
+<p>第 ④ 条特别值得说：UEFI 下 <code>Windows Boot Manager</code> 是写在 EFI 分区里的一条引导记录，而硬盘型号那条是直接按物理设备启动。<strong>正常进系统靠前者</strong>，你把后者排到第一位，可能得到一个”没有可启动设备”的黑屏。</p>
+<h2 id="六、XMP-EXPO：内存”标称频率”的真相"><a href="#六、XMP-EXPO：内存”标称频率”的真相" class="headerlink" title="六、XMP &#x2F; EXPO：内存”标称频率”的真相"></a>六、XMP &#x2F; EXPO：内存”标称频率”的真相</h2><p>这是最容易被误解的一项。</p>
+<p>你买了一条标着 DDR4-3200 的内存，插上去，任务管理器里显示 2133 或 2666。<strong>不是买到了假货，是它默认就跑这么慢。</strong></p>
+<p>原因是 JEDEC 标准规定了保守的默认频率（DDR4 常见 2133 &#x2F; 2400 &#x2F; 2666，DDR5 是 4800），保证任何平台插上都能亮。而 3200 这个数字，写在内存条里的一段<strong>预设配置</strong>中，需要你在主板设置里主动开启才会生效。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>这个功能叫什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Intel</td>
+<td><strong>XMP</strong>（Extreme Memory Profile）</td>
+</tr>
+<tr>
+<td>AMD</td>
+<td><strong>EXPO</strong>（EXtended Profiles for Overclocking）</td>
+</tr>
+<tr>
+<td>华硕 AMD 平台</td>
+<td>有时叫 <strong>DOCP</strong>，是同一件事的自家叫法</td>
+</tr>
+</tbody></table></div>
+<p>开的方法基本一样：找到 <code>XMP</code> &#x2F; <code>EXPO</code> &#x2F; <code>DOCP</code>，从 <code>Disabled</code> 改成 <code>Profile 1</code>，<code>F10</code> 保存。</p>
+<h3 id="6-1-开了会不会伤机器"><a href="#6-1-开了会不会伤机器" class="headerlink" title="6.1 开了会不会伤机器"></a>6.1 开了会不会伤机器</h3><p>说准确一点：</p>
+<ul>
+<li>这是<strong>内存厂商自己写好并验证过的配置</strong>，不是让你手动填时序电压，所以风险很低</li>
+<li>但它确实<strong>超出了 JEDEC 标准频率</strong>，严格意义上属于厂商背书的超频</li>
+<li>稳定性取决于 CPU 内存控制器的体质和插槽组合，<strong>同一个型号的内存，在 A 机器上稳，B 机器上可能不稳</strong></li>
+<li>所以：开完先跑一遍压力测试（MemTest86 或 Windows 内存诊断），稳定再长期用</li>
+</ul>
+<h3 id="6-2-开了开不了机怎么办"><a href="#6-2-开了开不了机怎么办" class="headerlink" title="6.2 开了开不了机怎么办"></a>6.2 开了开不了机怎么办</h3><p>多数主板有保护机制：连续几次自检失败会自动回退到默认频率。但也有不回退的，那就清 CMOS（第九节）。</p>
+<div class="note note--tip"><span class="note-title">💡 先想清楚要不要开</span>日常办公、看视频、写代码，2133 和 3200 的差别你基本感觉不到。**真正吃内存带宽的是游戏核显、视频渲染、大批量数据处理。** 如果你的机器本来就稳，为了一个看不见的数字去冒"开不了机"的险，不划算。</div>
+
+<h2 id="七、安全启动与-TPM：Win11-的门槛，也是-BitLocker-的雷"><a href="#七、安全启动与-TPM：Win11-的门槛，也是-BitLocker-的雷" class="headerlink" title="七、安全启动与 TPM：Win11 的门槛，也是 BitLocker 的雷"></a>七、安全启动与 TPM：Win11 的门槛，也是 BitLocker 的雷</h2><p>这两个概念经常被绑在一起说，其实管的是两件事。</p>
+<h3 id="7-1-Secure-Boot（安全启动）"><a href="#7-1-Secure-Boot（安全启动）" class="headerlink" title="7.1 Secure Boot（安全启动）"></a>7.1 Secure Boot（安全启动）</h3><p>它做的事很单纯：<strong>只允许”签名过”的引导程序运行</strong>。</p>
+<ul>
+<li>好处：拦住那些改写引导区的恶意程序（rootkit &#x2F; bootkit）</li>
+<li>代价：没签名的系统装不上。装 Linux 双系统时如果撞上它，要么关掉，要么把发行版的密钥导入</li>
+<li>前提：必须是 UEFI 模式 + GPT 分区</li>
+</ul>
+<h3 id="7-2-TPM-2-0"><a href="#7-2-TPM-2-0" class="headerlink" title="7.2 TPM 2.0"></a>7.2 TPM 2.0</h3><p>一个专门存密钥的小芯片（或 CPU 里的固件实现：Intel 叫 PTT，AMD 叫 fTPM）。Windows 用它做磁盘加密、Windows Hello、凭据保护。</p>
+<p>Win11 把它设成了<strong>硬性门槛</strong>——没有 TPM 2.0，官方渠道装不了。这也是为什么一堆老机器”明明还能用”却被挡在门外。</p>
+<div class="note note--warn"><span class="note-title">⚠️ 动这两个之前，先导出 BitLocker 恢复密钥</span>如果系统盘开了 BitLocker（很多品牌机默认开），**改 Secure Boot、清 TPM、刷 BIOS 都可能触发"恢复模式"**，要求你输入一长串 48 位恢复密钥。找不到密钥 = 数据全丢，没有例外。<br><br>先查状态：管理员命令行跑 `manage-bde -status`。如果是"已开启"，立刻去导出：控制面板 → BitLocker 驱动器加密 → 备份恢复密钥（存到微软账户，同时截图/打印一份）。<br><br>这一步只要两分钟，但它是本文里**唯一一个"不做就可能永久丢数据"的操作**。</div>
+
+<h2 id="八、风险分级：哪些能改，哪些改了会出事"><a href="#八、风险分级：哪些能改，哪些改了会出事" class="headerlink" title="八、风险分级：哪些能改，哪些改了会出事"></a>八、风险分级：哪些能改，哪些改了会出事</h2><p><img src="/Blog/images/bios/03-bios-risk.svg" alt="主板设置选项按风险分三档：放心改、先备份再改、别碰"></p>
+<p><em>图 3：判断标准只有一条——改完开不了机，你能靠清 CMOS 救回来吗？</em></p>
+<p><strong>放心改（绿色）</strong>：启动顺序、XMP&#x2F;EXPO、风扇曲线、虚拟化开关。这四项覆盖了普通人九成的需求，改错了最多恢复默认。</p>
+<p><strong>先备份再改（黄色）</strong>：Secure Boot、CSM&#x2F;Legacy 模式、Above 4G Decoding、内存时序手调。这些改完<strong>可能直接开不了机</strong>，需要你会清 CMOS；而且 CSM 和 Secure Boot 还牵着已装好的系统能不能启动。</p>
+<p><strong>别碰（红色）</strong>：CPU 核心电压、内存电压、看不懂的 Advanced 子菜单、笔记本的隐藏菜单。这些不是”难”，是<strong>错了没有后悔药</strong>——电压给高了会烧供电，笔记本的隐藏菜单改错可能连清 CMOS 都救不回来（电池在主板背面）。</p>
+<div class="note note--info"><span class="note-title">※ 一句话原则</span>看不懂的选项，**默认值就是最优解**。厂商把默认值调到"能开机、能稳定跑"，不是为了坑你；你改它的收益，通常小于改坏它的风险。</div>
+
+<h2 id="九、改坏了怎么退：清-CMOS"><a href="#九、改坏了怎么退：清-CMOS" class="headerlink" title="九、改坏了怎么退：清 CMOS"></a>九、改坏了怎么退：清 CMOS</h2><p>这是所有”进不去系统”的兜底手段，也是你在第八节里敢动黄色档的底气。</p>
+<h3 id="9-1-先试最轻的：设置界面里恢复默认"><a href="#9-1-先试最轻的：设置界面里恢复默认" class="headerlink" title="9.1 先试最轻的：设置界面里恢复默认"></a>9.1 先试最轻的：设置界面里恢复默认</h3><p>还能进设置界面的话，直接 <code>Load Optimized Defaults</code>（华硕 F5 &#x2F; 微星 F6 &#x2F; 技嘉 F7 &#x2F; 联想 F9），然后 F10 保存。</p>
+<h3 id="9-2-进不去界面：清-CMOS-三种办法"><a href="#9-2-进不去界面：清-CMOS-三种办法" class="headerlink" title="9.2 进不去界面：清 CMOS 三种办法"></a>9.2 进不去界面：清 CMOS 三种办法</h3><div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">方法一（最通用）：断电 → 打开机箱 → 抠下主板上的纽扣电池（CR2032）</span><br><span class="line">                 → 等 30 秒 → 装回 → 接电开机</span><br><span class="line">方法二（更快）：主板上找 Clear CMOS 跳线（常标 CLR_CMOS / JBAT1）</span><br><span class="line">              或机箱后置的 Clear CMOS 按钮，短接/按住 5~10 秒</span><br><span class="line">方法三（笔记本）：断开电源和电池排线，长按电源键 30 秒放余电</span><br><span class="line">                仍无效再考虑拆后盖找电池（注意保修）</span><br></pre></td></tr></table></div></div></div>
+
+<p>清完之后有三件事会变，别慌：</p>
+<ol>
+<li><strong>时间和日期会回到出厂值</strong>——联网后自动校准</li>
+<li><strong>启动顺序回到默认</strong>——如果你之前改过，要重新设</li>
+<li><strong>XMP&#x2F;EXPO 关闭</strong>——内存回到 2133&#x2F;4800，需要重新开</li>
+</ol>
+<div class="note note--warn"><span class="note-title">⚠️ 清 CMOS 不是万能的</span>它只重置"设置"，不修复"硬件"。如果改的是电压并且已经伤到供电，或者刷 BIOS 刷到一半断电，清 CMOS 是救不回来的——那是第十节的事。</div>
+
+<h2 id="十、刷-BIOS：三条红线"><a href="#十、刷-BIOS：三条红线" class="headerlink" title="十、刷 BIOS：三条红线"></a>十、刷 BIOS：三条红线</h2><p>先说结论：<strong>绝大多数人一辈子不需要刷 BIOS。</strong> 它不是”更新一下更好”，而是”有明确理由才做”的手术。</p>
+<h3 id="10-1-什么情况下真该刷"><a href="#10-1-什么情况下真该刷" class="headerlink" title="10.1 什么情况下真该刷"></a>10.1 什么情况下真该刷</h3><ul>
+<li>换上了<strong>新一代 CPU</strong>，老 BIOS 认不出来（这是最常见的正当理由）</li>
+<li>厂商明确说明修复了你正在遇到的 bug</li>
+<li>有公开的<strong>安全漏洞</strong>通告，且厂商发了补丁</li>
+<li>支持了新的硬件特性（比如更大容量的内存、新的接口）</li>
+</ul>
+<p><strong>“想试试新版本”不是理由。</strong></p>
+<h3 id="10-2-三条红线"><a href="#10-2-三条红线" class="headerlink" title="10.2 三条红线"></a>10.2 三条红线</h3><div class="note note--warn"><span class="note-title">⚠️ 红线一：全程不能断电</span>刷写过程中断电 = 大概率变砖。笔记本**必须插着电源**（电量 50% 以上），台式机最好接 UPS。别在雷雨天、别在电压不稳的老房子里刷。</div>
+
+<div class="note note--warn"><span class="note-title">⚠️ 红线二：型号必须完全一致</span>不是"同系列"，不是"同芯片组"，是**主板型号一字不差**。华硕 B760M-K 和 B760M-A 是两个东西，刷错了轻则不认硬件，重则直接不亮。下载页面一定要从官网按型号进，别从论坛拿"通用版"。</div>
+
+<div class="note note--info"><span class="note-title">※ 红线三：别跨大版本跳刷</span>很多厂商要求逐版本升级（比如 1.0 → 1.2 → 1.5），中间不能跳。刷之前把官网的版本说明读一遍，它会写清楚"升级前需先刷到某版本"。</div>
+
+<h3 id="10-3-万一变砖了"><a href="#10-3-万一变砖了" class="headerlink" title="10.3 万一变砖了"></a>10.3 万一变砖了</h3><p>还有三条路，按代价从低到高：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>手段</th>
+<th>适用</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>BIOS Flashback</strong></td>
+<td>华硕、微星等部分型号</td>
+<td>不用 CPU 和内存，把 BIOS 文件放 U 盘根目录、插指定 USB 口、按住按钮几秒</td>
+</tr>
+<tr>
+<td><strong>双 BIOS 切换</strong></td>
+<td>技嘉等部分型号</td>
+<td>主 BIOS 坏了自动&#x2F;手动切到备份 BIOS</td>
+</tr>
+<tr>
+<td><strong>编程器重刷 &#x2F; 送修</strong></td>
+<td>都没有的情况</td>
+<td>CH341A 类编程器夹 BIOS 芯片重写，或送售后</td>
+</tr>
+</tbody></table></div>
+<p>买主板时如果在意这个，Flashback 是个值得看一眼的功能——它把”刷 BIOS”从高风险动作降成了中风险。</p>
+<h2 id="十一、避坑-3-条-经验-3-条"><a href="#十一、避坑-3-条-经验-3-条" class="headerlink" title="十一、避坑 3 条 + 经验 3 条"></a>十一、避坑 3 条 + 经验 3 条</h2><div class="note note--warn"><span class="note-title">⚠️ 避坑一：别在系统还能用时改启动模式</span>觉得"UEFI 是不是比 Legacy 快"，就把 `Boot Mode` 从 UEFI 改成 Legacy——结果系统直接进不去。启动模式和已装系统的分区表是绑定的，**要改就得重装**，不能只改设置。</div>
+
+<div class="note note--warn"><span class="note-title">⚠️ 避坑二：改完一定要按 F10 保存</span>不少人改完启动顺序，直接点右上角的 × 或按 Esc，界面关了，设置没存。下次开机一看全白干。**F10 → 确认 Yes**，这是唯一可靠的保存方式。</div>
+
+<div class="note note--warn"><span class="note-title">⚠️ 避坑三：别信"优化 BIOS 设置"的教程</span>网上大量"关闭 C-State 提升性能""关掉节能让电脑更快"的帖子，多数是十年前的硬件语境，对现在的平台要么无效要么有害。**没有具体问题，就不要做没有具体收益的改动。**</div>
+
+<div class="note note--tip"><span class="note-title">💡 经验一：先拍照，再动手</span>每一项改动前拍一张当前界面。改坏之后你至少有据可查，不用凭记忆猜"原来是 Auto 还是 Enabled"。</div>
+
+<div class="note note--tip"><span class="note-title">💡 经验二：一次只改一项</span>和维修第一课的铁律一样。同时改了启动模式又关了安全启动又动了 XMP，结果开不了机——你不知道是哪一项干的。</div>
+
+<div class="note note--tip"><span class="note-title">💡 经验三：装系统前先把设置弄对</span>装完系统再想改启动模式，等于要重装第二遍。装之前一次进去把：启动模式、安全启动、启动顺序都定好，能省一个晚上。</div>
+
+<h2 id="十二、两个真实案例"><a href="#十二、两个真实案例" class="headerlink" title="十二、两个真实案例"></a>十二、两个真实案例</h2><div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">【案例 A · 开 XMP 开不了机型】2026-09-14</span><br><span class="line">【现象】用户给新装的机器开 XMP，保存重启后黑屏，风扇转但无画面，</span><br><span class="line">       键盘灯不亮，反复重启依旧</span><br><span class="line">【排查】① 断电，拔电源线，抠下 CR2032 等 30 秒装回</span><br><span class="line">      ② 开机 → 恢复正常，内存回到 2133</span><br><span class="line">      ③ 判断：这套内存的 XMP 配置在这块板 + 这颗 CPU 上跑不稳</span><br><span class="line">      ④ 换到 Profile 2（较低频率的那档）→ 稳定运行</span><br><span class="line">【结论】XMP 不是&quot;开了就一定行&quot;，它是一组预设，能不能跑取决于</span><br><span class="line">       平台体质。开不了机不可怕，清 CMOS 就回来了；可怕的是</span><br><span class="line">       不知道有这个兜底，以为主板坏了直接送修</span><br></pre></td></tr></table></div></div></div>
+
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">【案例 B · 装完系统重启又回安装界面型】2026-09-28</span><br><span class="line">【现象】用户用 U 盘重装 Win11，安装过程一切正常，但第一次重启后</span><br><span class="line">       又回到了安装程序首页，反复循环</span><br><span class="line">【排查】① 拔掉 U 盘重启 → 提示 &quot;Reboot and Select proper Boot device&quot;</span><br><span class="line">      ② 进设置看启动模式：Legacy/CSM</span><br><span class="line">      ③ 查磁盘分区样式：GPT</span><br><span class="line">      ④ 判断：系统按 UEFI 装的（所以盘是 GPT），但主板启动模式是</span><br><span class="line">         Legacy，两边对不上，主板找不到 EFI 分区</span><br><span class="line">【结论】把 Boot Mode 改成 UEFI，保存重启 → 正常进入系统。</span><br><span class="line">       → 教训：装系统前先确认启动模式，比装完再来救省事得多</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>两个案例对读</strong>：案例 A 说明<strong>大多数”改坏了”都能靠清 CMOS 救回来</strong>，所以不必谈 BIOS 色变；案例 B 说明<strong>设置和系统是配套的</strong>，装之前定好参数，比装完再调省一整晚。</p>
+<h2 id="十三、验证清单"><a href="#十三、验证清单" class="headerlink" title="十三、验证清单"></a>十三、验证清单</h2><p>改完别急着关界面，一条条过：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">□ 保存了吗：F10 → Yes，机器自动重启（不是点 × 关掉）</span><br><span class="line">□ 能进系统吗：正常进桌面，没有&quot;找不到启动设备&quot;</span><br><span class="line">□ 改的那项生效了吗：</span><br><span class="line">   - 启动顺序 → 重启后从预期的设备启动</span><br><span class="line">   - XMP → 任务管理器 → 性能 → 内存 → 速度显示标称值</span><br><span class="line">   - 虚拟化 → 任务管理器 → 性能 → CPU → 虚拟化：已启用</span><br><span class="line">□ 稳定性：开 XMP 后跑一轮内存诊断或 MemTest86，无报错</span><br><span class="line">□ 时间和日期对得上（清过 CMOS 的话）</span><br><span class="line">□ 如果开了 BitLocker：确认系统能正常解锁，没进恢复模式</span><br></pre></td></tr></table></div></div></div>
+
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课</a>》——清 CMOS、最小系统法这些基本功都在这篇，本文第九节直接沿用</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略</a>》——进不去系统、黑屏无画面，先用那篇的三问定位分层，再回来看这篇</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/11/pc-upgrade-decision/">旧电脑焕新：先换哪个、加多少、什么时候该停手</a>》——<strong>上一篇</strong>；换完内存要开 XMP、换完显卡可能要在设置里改 Above 4G，都指向本文</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/disk-health-guide/">硬盘告急：坏道、掉盘、SMART 黄了</a>》——BIOS 里看不到新硬盘时，先确认是没识别还是盘本身有问题</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/windows-reinstall-guide/">Windows 重装完全指南</a>》——装系统前要改的启动模式、启动顺序，本文第五节讲透了再看那篇</li>
+<li>下一篇（系列第 14 篇）：<strong>《数据备份 3-2-1 落地》</strong>。装系统、刷 BIOS、换硬盘之前都该先备份——这篇讲原则，那篇讲怎么落地</li>
+</ul>
+<p>这一篇讲的东西，本质上只有一句话：<strong>主板设置界面不是禁区，是一个”改了能退”的开关面板。</strong></p>
+<p>真正的分界线不在”敢不敢动”，而在<strong>知不知道退路在哪</strong>。知道清 CMOS 怎么清、知道改之前拍照、知道一次只改一项——那你可以放心去动绿色档和黄色档。反过来，如果你连 CMOS 电池在哪儿都不知道，那红色档对你来说就是雷区，绕开它。</p>
+<p>下一篇我们换个方向，讲<strong>数据</strong>。因为前面这些操作——装系统、刷 BIOS、换硬盘——有一个共同的前提：<strong>万一出事，你的东西还在。</strong></p>
+
+            </article>
+
+            <div class="share-row" id="shareRow">
+                <span class="share-label">分享这篇文章：</span>
+            </div>
+
+            <nav class="post-nav" id="postNav" aria-label="上下篇导航">
+                <span></span>
+                
+                    <a class="post-nav-item post-nav-item--next" href="/Blog/2026/11/toc-overflow-fix/">
+                        <span class="k">下一篇 →</span><span class="t">一条目录项被压扁了：flex 收缩、省略号与悬浮提示</span>
+                    </a>
+                
+            </nav>
+
+            <!-- ---- 评论（Giscus：数据存于 GitHub Discussions） ---- -->
+            
+            
+            
+            <section class="card comments" aria-labelledby="commentTitle">
+                <h2 class="card-title" id="commentTitle" style="text-align:left">
+                    💬 读者留言
+                </h2>
+                <p style="margin:0 0 18px;font-size:.76rem;color:var(--ink-3)">
+                    评论由 GitHub Discussions 托管，需登录 GitHub 后参与（评论区的 +1 即点赞）。
+                </p>
+                <script src="https://giscus.app/client.js"
+                        data-repo="molunanli/Blog"
+                        data-repo-id="R_kgDOUMGUlQ"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOUMGUlc4DEuis"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                </script>
+            </section>
+            
+            
+        </div>
+
+        <!-- ============ 侧边栏 ============ -->
+        <aside class="sidebar toc-sticky" aria-label="文章侧边信息">
+
+            
+            <button class="toc-toggle-mobile" id="tocToggle" type="button" aria-expanded="false" aria-controls="tocPanel">
+                📑 目录导航 <span class="arrow" aria-hidden="true">▼</span>
+            </button>
+
+            <nav class="card toc-card toc-panel" id="tocPanel" aria-label="文章目录">
+                <h2 class="card-title">📑 目录</h2>
+                <div class="toc-list" id="tocList">
+                    
+                        <a class="toc-link toc-link--h2" href="#一、什么时候你会需要它" title="一、什么时候你会需要它" data-toc-text="一、什么时候你会需要它">一、什么时候你会需要它</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#二、先分清：BIOS-和-UEFI-不是一个东西" title="二、先分清：BIOS 和 UEFI 不是一个东西" data-toc-text="二、先分清：BIOS 和 UEFI 不是一个东西">二、先分清：BIOS 和 UEFI 不是一个东西</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#三、怎么进：三条路，按不上就换下一条" title="三、怎么进：三条路，按不上就换下一条" data-toc-text="三、怎么进：三条路，按不上就换下一条">三、怎么进：三条路，按不上就换下一条</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#3-1-路径一：开机连按按键" title="3.1 路径一：开机连按按键" data-toc-text="3.1 路径一：开机连按按键">3.1 路径一：开机连按按键</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#3-2-路径二：Windows-高级启动（最稳）" title="3.2 路径二：Windows 高级启动（最稳）" data-toc-text="3.2 路径二：Windows 高级启动（最稳）">3.2 路径二：Windows 高级启动（最稳）</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#3-3-路径三：一行命令" title="3.3 路径三：一行命令" data-toc-text="3.3 路径三：一行命令">3.3 路径三：一行命令</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#四、进去先别动：认清路再动手" title="四、进去先别动：认清路再动手" data-toc-text="四、进去先别动：认清路再动手">四、进去先别动：认清路再动手</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#五、启动顺序：改得最多的一项" title="五、启动顺序：改得最多的一项" data-toc-text="五、启动顺序：改得最多的一项">五、启动顺序：改得最多的一项</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#5-1-两种”启动顺序”，别搞混" title="5.1 两种”启动顺序”，别搞混" data-toc-text="5.1 两种”启动顺序”，别搞混">5.1 两种”启动顺序”，别搞混</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#5-2-改完还是从-U-盘启动？四个原因" title="5.2 改完还是从 U 盘启动？四个原因" data-toc-text="5.2 改完还是从 U 盘启动？四个原因">5.2 改完还是从 U 盘启动？四个原因</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#六、XMP-EXPO：内存”标称频率”的真相" title="六、XMP &amp;#x2F; EXPO：内存”标称频率”的真相" data-toc-text="六、XMP &amp;#x2F; EXPO：内存”标称频率”的真相">六、XMP &amp;#x2F; EXPO：内存”标称频率”的真相</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#6-1-开了会不会伤机器" title="6.1 开了会不会伤机器" data-toc-text="6.1 开了会不会伤机器">6.1 开了会不会伤机器</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#6-2-开了开不了机怎么办" title="6.2 开了开不了机怎么办" data-toc-text="6.2 开了开不了机怎么办">6.2 开了开不了机怎么办</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#七、安全启动与-TPM：Win11-的门槛，也是-BitLocker-的雷" title="七、安全启动与 TPM：Win11 的门槛，也是 BitLocker 的雷" data-toc-text="七、安全启动与 TPM：Win11 的门槛，也是 BitLocker 的雷">七、安全启动与 TPM：Win11 的门槛，也是 BitLocker 的雷</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#7-1-Secure-Boot（安全启动）" title="7.1 Secure Boot（安全启动）" data-toc-text="7.1 Secure Boot（安全启动）">7.1 Secure Boot（安全启动）</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#7-2-TPM-2-0" title="7.2 TPM 2.0" data-toc-text="7.2 TPM 2.0">7.2 TPM 2.0</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#八、风险分级：哪些能改，哪些改了会出事" title="八、风险分级：哪些能改，哪些改了会出事" data-toc-text="八、风险分级：哪些能改，哪些改了会出事">八、风险分级：哪些能改，哪些改了会出事</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#九、改坏了怎么退：清-CMOS" title="九、改坏了怎么退：清 CMOS" data-toc-text="九、改坏了怎么退：清 CMOS">九、改坏了怎么退：清 CMOS</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#9-1-先试最轻的：设置界面里恢复默认" title="9.1 先试最轻的：设置界面里恢复默认" data-toc-text="9.1 先试最轻的：设置界面里恢复默认">9.1 先试最轻的：设置界面里恢复默认</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#9-2-进不去界面：清-CMOS-三种办法" title="9.2 进不去界面：清 CMOS 三种办法" data-toc-text="9.2 进不去界面：清 CMOS 三种办法">9.2 进不去界面：清 CMOS 三种办法</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#十、刷-BIOS：三条红线" title="十、刷 BIOS：三条红线" data-toc-text="十、刷 BIOS：三条红线">十、刷 BIOS：三条红线</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#10-1-什么情况下真该刷" title="10.1 什么情况下真该刷" data-toc-text="10.1 什么情况下真该刷">10.1 什么情况下真该刷</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#10-2-三条红线" title="10.2 三条红线" data-toc-text="10.2 三条红线">10.2 三条红线</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#10-3-万一变砖了" title="10.3 万一变砖了" data-toc-text="10.3 万一变砖了">10.3 万一变砖了</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#十一、避坑-3-条-经验-3-条" title="十一、避坑 3 条 + 经验 3 条" data-toc-text="十一、避坑 3 条 + 经验 3 条">十一、避坑 3 条 + 经验 3 条</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#十二、两个真实案例" title="十二、两个真实案例" data-toc-text="十二、两个真实案例">十二、两个真实案例</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#十三、验证清单" title="十三、验证清单" data-toc-text="十三、验证清单">十三、验证清单</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#相关阅读" title="相关阅读" data-toc-text="相关阅读">相关阅读</a>
+                    
+                </div>
+            </nav>
+            
+
+            
+            <section class="card" aria-labelledby="relTitle">
+                <h2 class="card-title" id="relTitle">📎 相关文章</h2>
+                <ul class="related-list" id="relatedList">
+                    
+                        <li><a href="/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-random-restart/">电脑不定时自动重启/关机？三步定位真凶，别急着换电源</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-slow-checkup/">电脑卡到怀疑人生？重装前的 7 步体检，别急着清空 C 盘</a></li>
+                    
+                </ul>
+            </section>
+            
+
+            <section class="card" aria-labelledby="authorTitle">
+                <h2 class="card-title" id="authorTitle">✍️ 关于作者</h2>
+                <div class="profile-avatar" style="width:76px;height:76px;font-size:2.3rem" aria-hidden="true">🐱</div>
+                <p class="profile-name" style="text-align:center">博主</p>
+                <p class="profile-role" style="text-align:center">BLOGGER</p>
+                <p class="profile-bio" style="text-align:center;font-size:.82rem">这里是作者简介。
+用一两句话介绍你自己，或者这个博客打算写些什么。
+</p>
+                <p style="text-align:center;margin-top:12px">
+                    <a class="link-more" href="/Blog/about">▶ 了解更多</a>
+                </p>
+            </section>
+
+        </aside>
+    </div>
+</div>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="shell">
+        <div class="footer-grid">
+            <div>
+                <span class="footer-h">关于本站</span>
+                <p style="font-size:.88rem;color:var(--ink-2);line-height:1.8">
+                    这里是页脚简介。用一两句话说明这个博客的内容方向，
+让读者一眼知道这里在写什么。
+
+                </p>
+                <p style="margin-top:12px">
+                    <span class="footer-seal" aria-hidden="true">我的<br>博客</span>
+                </p>
+            </div>
+            <div>
+                <span class="footer-h">快速导航</span>
+                <nav class="footer-list" aria-label="页脚导航">
+                    
+                        
+                        <a href="/Blog/">首页</a>
+                    
+                        
+                        <a href="/Blog/archives">归档</a>
+                    
+                        
+                        <a href="/Blog/tags">标签</a>
+                    
+                        
+                        <a href="/Blog/categories">分类</a>
+                    
+                        
+                        <a href="/Blog/about">关于</a>
+                    
+                </nav>
+            </div>
+            <div>
+                <span class="footer-h">热门分类</span>
+                <nav class="footer-list" aria-label="分类导航">
+                    
+                        <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                    
+                        <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <span>&copy; 2026 我的博客 — 保持热爱，持续记录。</span>
+            <span>Made with Hexo</span>
+        </div>
+    </div>
+</footer>
+
+<div class="fabs">
+    <button class="fab fab--top" id="topBtn" type="button" data-tip="回到顶部" title="回到顶部" aria-label="回到顶部" aria-hidden="true">⬆</button>
+    <button class="fab" id="fabSearch" type="button" data-tip="搜索文章" title="搜索文章" aria-label="搜索文章">🔍</button>
+</div>
+
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="站内搜索" aria-hidden="true">
+    <div class="search-panel">
+        <div class="search-field">
+            <span aria-hidden="true" style="font-size:1.1rem">🔍</span>
+            <input class="search-input" id="searchInput" type="search" placeholder="搜索文章标题、标签或关键词…" aria-label="搜索关键词" autocomplete="off">
+            <button class="icon-btn" id="searchClose" type="button" aria-label="关闭搜索">✕</button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+        <div class="search-hint">
+            <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
+            <span><kbd>Enter</kbd> 打开</span>
+            <span><kbd>Esc</kbd> 关闭</span>
+            <span><kbd>Ctrl</kbd>+<kbd>K</kbd> 随时唤起</span>
+        </div>
+    </div>
+</div>
+
+
+<script src="/Blog/js/app.js" defer></script>
+</body>
+</html>

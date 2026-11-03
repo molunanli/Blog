@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" role="img" aria-label="UEFI 与 Legacy 两套启动链路对照：UEFI 配 GPT 走 EFI 分区，Legacy 配 MBR 走活动分区，两者不能混用">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .hd { font-size: 13px; font-weight: 700; }
+    .bx { font-size: 11.5px; fill: #1c1a17; }
+    .sub { font-size: 10.5px; fill: #6b6459; }
+    .note { font-size: 11px; fill: #4c463e; }
+    .warnt { font-size: 11.5px; font-weight: 700; fill: #cc3b3b; }
+    .card { fill: #fffdf6; stroke: #e0d6c0; stroke-width: 1.5; }
+    .blk1 { fill: #fffdf6; stroke: #2f5d8a; stroke-width: 2; }
+    .blk2 { fill: #fffdf6; stroke: #8a8175; stroke-width: 2; }
+    .ar { stroke: #b9ae98; stroke-width: 1.5; }
+    .ah { fill: #b9ae98; }
+    .b1 { fill: #2f5d8a; }
+    .b2 { fill: #8a8175; }
+  </style>
+
+  <rect class="bg" width="680" height="430"/>
+
+  <text class="t th" x="34" y="38">两套启动链路，认错就"找不到启动设备"</text>
+  <text class="t ts" x="34" y="60">2012 年后的机器基本走左边；右边的 CSM / Legacy 是给老系统留的兼容层</text>
+
+  <!-- 左：UEFI -->
+  <text class="t hd b1" x="40" y="92">UEFI + GPT（新）</text>
+  <rect class="blk1" x="40" y="104" width="250" height="46" rx="6"/>
+  <text class="t bx" x="54" y="124">UEFI 固件</text>
+  <text class="t sub" x="54" y="141">按顺序找 .efi 引导程序</text>
+
+  <line class="ar" x1="165" y1="150" x2="165" y2="166"/>
+  <polygon class="ah" points="165,178 160,168 170,168"/>
+
+  <rect class="blk1" x="40" y="178" width="250" height="46" rx="6"/>
+  <text class="t bx" x="54" y="198">EFI 系统分区里的 Boot Manager</text>
+  <text class="t sub" x="54" y="215">\EFI\Microsoft\Boot\bootmgfw.efi</text>
+
+  <line class="ar" x1="165" y1="224" x2="165" y2="240"/>
+  <polygon class="ah" points="165,252 160,242 170,242"/>
+
+  <rect class="blk1" x="40" y="252" width="250" height="46" rx="6"/>
+  <text class="t bx" x="54" y="272">加载 Windows</text>
+  <text class="t sub" x="54" y="289">需要 GPT 分区表配合</text>
+
+  <!-- 右：Legacy -->
+  <text class="t hd b2" x="390" y="92">Legacy / CSM + MBR（老）</text>
+  <rect class="blk2" x="390" y="104" width="250" height="46" rx="6"/>
+  <text class="t bx" x="404" y="124">传统 BIOS</text>
+  <text class="t sub" x="404" y="141">读硬盘第一个扇区</text>
+
+  <line class="ar" x1="515" y1="150" x2="515" y2="166"/>
+  <polygon class="ah" points="515,178 510,168 520,168"/>
+
+  <rect class="blk2" x="390" y="178" width="250" height="46" rx="6"/>
+  <text class="t bx" x="404" y="198">MBR 里的活动分区引导记录</text>
+  <text class="t sub" x="404" y="215">再跳到 bootmgr</text>
+
+  <line class="ar" x1="515" y1="224" x2="515" y2="240"/>
+  <polygon class="ah" points="515,252 510,242 520,242"/>
+
+  <rect class="blk2" x="390" y="252" width="250" height="46" rx="6"/>
+  <text class="t bx" x="404" y="272">加载 Windows</text>
+  <text class="t sub" x="404" y="289">需要 MBR 分区表配合</text>
+
+  <!-- 说明 -->
+  <rect class="card" x="30" y="316" width="620" height="94" rx="8"/>
+  <text class="t warnt" x="46" y="340">不能混用</text>
+  <text class="t note" x="46" y="362">UEFI 装的系统，切到 Legacy 就"看不见"它；反过来也一样。</text>
+  <text class="t note" x="46" y="382">典型症状：装完系统重启，又回到安装界面，或者直接提示找不到启动设备。</text>
+  <text class="t note" x="46" y="402">改启动模式前先确认：系统盘是 GPT 还是 MBR（磁盘管理 → 右键磁盘 → 属性 → 卷）。</text>
+</svg>

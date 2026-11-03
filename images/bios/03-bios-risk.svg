@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 330" role="img" aria-label="主板设置里的选项按风险分三档：放心改、先备份再改、别碰">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .nm { font-size: 14.5px; font-weight: 700; }
+    .it { font-size: 11px; fill: #4c463e; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .tg { font-size: 10px; font-weight: 700; fill: #fffdf6; }
+    .ca { fill: #fffdf6; stroke: #4f7f47; stroke-width: 2; }
+    .cb { fill: #fffdf6; stroke: #c9962a; stroke-width: 2; }
+    .cc { fill: #fffdf6; stroke: #cc3b3b; stroke-width: 2; }
+    .g { fill: #4f7f47; }
+    .y { fill: #c9962a; }
+    .r { fill: #cc3b3b; }
+    .tg1 { fill: #3d6338; }
+    .tg2 { fill: #a8791f; }
+    .tg3 { fill: #b02f2f; }
+    .dot1 { fill: #4f7f47; }
+    .dot2 { fill: #c9962a; }
+    .dot3 { fill: #cc3b3b; }
+  </style>
+
+  <rect class="bg" width="680" height="330"/>
+
+  <text class="t th" x="34" y="38">进去之后：哪些能改，哪些改了会出事</text>
+  <text class="t ts" x="34" y="60">先认清自己站在哪一档，再动手</text>
+
+  <!-- 放心改 -->
+  <rect class="ca" x="30" y="84" width="196" height="212" rx="10"/>
+  <rect class="g" x="30" y="84" width="196" height="6" rx="3"/>
+  <text class="t nm tg1" x="48" y="118">放心改</text>
+  <text class="t it" x="48" y="138">改错也能开机，最多恢复默认</text>
+  <circle class="dot1" cx="52" cy="162" r="3"/>
+  <text class="t it" x="62" y="166">启动顺序 / 启动项</text>
+  <circle class="dot1" cx="52" cy="186" r="3"/>
+  <text class="t it" x="62" y="190">XMP / EXPO</text>
+  <circle class="dot1" cx="52" cy="210" r="3"/>
+  <text class="t it" x="62" y="214">风扇曲线</text>
+  <circle class="dot1" cx="52" cy="234" r="3"/>
+  <text class="t it" x="62" y="238">虚拟化 VT-x / SVM</text>
+  <text class="t it" x="48" y="272">这四项占了日常需求的九成</text>
+
+  <!-- 先备份再改 -->
+  <rect class="cb" x="242" y="84" width="196" height="212" rx="10"/>
+  <rect class="y" x="242" y="84" width="196" height="6" rx="3"/>
+  <text class="t nm tg2" x="260" y="118">先备份再改</text>
+  <text class="t it" x="260" y="138">可能开不了机，需会清 CMOS</text>
+  <circle class="dot2" cx="264" cy="162" r="3"/>
+  <text class="t it" x="274" y="166">Secure Boot</text>
+  <circle class="dot2" cx="264" cy="186" r="3"/>
+  <text class="t it" x="274" y="190">CSM / Legacy 模式</text>
+  <circle class="dot2" cx="264" cy="210" r="3"/>
+  <text class="t it" x="274" y="214">Above 4G Decoding</text>
+  <circle class="dot2" cx="264" cy="234" r="3"/>
+  <text class="t it" x="274" y="238">内存时序 / 频率手调</text>
+  <text class="t it" x="260" y="272">改前先抄下原值，或拍照</text>
+
+  <!-- 别碰 -->
+  <rect class="cc" x="454" y="84" width="196" height="212" rx="10"/>
+  <rect class="r" x="454" y="84" width="196" height="6" rx="3"/>
+  <text class="t nm tg3" x="472" y="118">别碰</text>
+  <text class="t it" x="472" y="138">真会烧硬件，或直接变砖</text>
+  <circle class="dot3" cx="476" cy="162" r="3"/>
+  <text class="t it" x="486" y="166">CPU 核心电压</text>
+  <circle class="dot3" cx="476" cy="186" r="3"/>
+  <text class="t it" x="486" y="190">内存电压</text>
+  <circle class="dot3" cx="476" cy="210" r="3"/>
+  <text class="t it" x="486" y="214">看不懂的 Advanced</text>
+  <circle class="dot3" cx="476" cy="234" r="3"/>
+  <text class="t it" x="486" y="238">笔记本隐藏菜单</text>
+  <text class="t it" x="472" y="272">不知道该干嘛 → 退出去</text>
+
+  <text class="t ft" x="34" y="318">判断标准很简单：改完开不了机，你能靠"清 CMOS"救回来吗？能，就属于前两档。</text>
+</svg>
