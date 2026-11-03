@@ -1854,6 +1854,11 @@ button.chip {
     margin-bottom: 4px;
 }
 
+/* 提示框内的加粗沿用提示框自身的字色（warn 是深红，不应该被拉回黑） */
+.note strong {
+    color: inherit;
+}
+
 /* 代码块 */
 .code-block {
     margin: 22px 0;

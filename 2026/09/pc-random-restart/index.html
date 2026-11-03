@@ -199,7 +199,7 @@
 <h2 id="四、看日志：给故障做一次”尸检”"><a href="#四、看日志：给故障做一次”尸检”" class="headerlink" title="四、看日志：给故障做一次”尸检”"></a>四、看日志：给故障做一次”尸检”</h2><p>Windows 把所有崩溃记录都放在事件查看器里：</p>
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. Win+R → 输入 eventvwr.msc 回车 → 打开「事件查看器」</span><br><span class="line">2. 左侧展开：Windows 日志 → 系统</span><br><span class="line">3. 点「日期和时间」列排序，从最新的 Kernel-Power 41 开始往下看</span><br><span class="line">4. 找到它「前面」相邻的错误记录——真正的死因就藏在这里</span><br></pre></td></tr></table></div></div></div>
 
-<div class="note note--warn"><span class="note-title">⚠️ Kernel-Power 41 是"结果"，不是"原因"</span>事件 ID 41（来源 Kernel-Power）的意思是"系统在未先正常关机的情况下重新启动了"——它只是告诉你**死得不够体面**。断电、蓝屏、过热保护、电源故障都会留下它，所以它几乎每次意外重启都会出现。真正决定排查方向的是 41 事件**之前那一条**记录。看到 41 就断定电源坏了去换电源，是这篇故障里最常见的白花钱操作。</div>
+<div class="note note--warn"><span class="note-title">⚠️ Kernel-Power 41 是"结果"，不是"原因"</span>事件 ID 41（来源 Kernel-Power）的意思是"系统在未先正常关机的情况下重新启动了"——它只是告诉你<strong>死得不够体面</strong>。断电、蓝屏、过热保护、电源故障都会留下它，所以它几乎每次意外重启都会出现。真正决定排查方向的是 41 事件<strong>之前那一条</strong>记录。看到 41 就断定电源坏了去换电源，是这篇故障里最常见的白花钱操作。</div>
 
 <p>每次意外重启后开机，都会新记一条 Kernel-Power 41，所以<strong>41 出现的次数 ≈ 意外重启的次数</strong>，可以用来数数问题有多频繁。但方向要看它前面的邻居：</p>
 <div class="table-scroll"><table>

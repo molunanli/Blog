@@ -150,7 +150,7 @@
 <p>这一篇就按”<strong>能不能进桌面</strong>“分三条路，把”怎么退回去”讲透。先把结论放这里：</p>
 <ul>
 <li>能进桌面 → 优先<strong>卸载这次更新</strong>，其次<strong>系统还原</strong></li>
-<li>进不去桌面 → 走**高级启动里的”卸载更新”**，这是专为这种情况准备的</li>
+<li>进不去桌面 → 走<strong>高级启动里的”卸载更新”</strong>，这是专为这种情况准备的</li>
 <li>退回去之后 → <strong>立刻做三件事</strong>，否则今晚它又自己装回来</li>
 </ul>
 <h2 id="一、现象：更新”翻车”的三种典型样子"><a href="#一、现象：更新”翻车”的三种典型样子" class="headerlink" title="一、现象：更新”翻车”的三种典型样子"></a>一、现象：更新”翻车”的三种典型样子</h2><p>同样是更新后出事，表现差别很大，处理路径也不同：</p>
@@ -180,7 +180,7 @@
 </tbody></table></div>
 <div class="note note--info"><span class="note-title">※ 先分清两种更新，后面的选择全靠它</span><b>质量更新</b>（累积更新，KB 编号，每月一次）——修漏洞、修 bug，体积小、装得快，<b>可以卸载</b>。<br><b>功能更新</b>（版本升级，比如 23H2 → 24H2）——相当于换了个系统大版本，装机时间长，<b>10 天内可以"返回"上一个版本</b>，超期或清理了 Windows.old 就回不去了。</div>
 
-<h2 id="二、先分清：真是更新惹的祸吗"><a href="#二、先分清：真是更新惹的祸吗" class="headerlink" title="二、先分清：真是更新惹的祸吗"></a>二、先分清：真是更新惹的祸吗</h2><p>别急着卸载。**”更新后出问题”不等于”更新导致的问题”**——只是时间上撞到一起了。花一分钟排除一下：</p>
+<h2 id="二、先分清：真是更新惹的祸吗"><a href="#二、先分清：真是更新惹的祸吗" class="headerlink" title="二、先分清：真是更新惹的祸吗"></a>二、先分清：真是更新惹的祸吗</h2><p>别急着卸载。<strong>“更新后出问题”不等于”更新导致的问题”</strong>——只是时间上撞到一起了。花一分钟排除一下：</p>
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">① 更新是多久之前装的？</span><br><span class="line">   设置 → Windows 更新 → 更新历史记录，看最近一条的「安装时间」</span><br><span class="line">   → 症状是否紧跟着它出现？（时间上对得上，嫌疑才大）</span><br><span class="line"></span><br><span class="line">② 蓝屏的话，看转储文件里有谁</span><br><span class="line">   用《蓝屏不再靠拍照》里的 BlueScreenView 打开最新的 minidump</span><br><span class="line">   → 报错驱动是显卡/网卡/杀毒软件的 .sys？→ 大概率是兼容性</span><br><span class="line"></span><br><span class="line">③ 有没有别的时间巧合？</span><br><span class="line">   最近装过新软件 / 换过硬件 / 插过新外设 / 清过灰拆过机？</span><br><span class="line"></span><br><span class="line">④ 先做一次最基础的动作</span><br><span class="line">   彻底关机（不是重启）→ 等 30 秒 → 开机</span><br><span class="line">   → 有时只是更新后的第一次初始化没走完</span><br></pre></td></tr></table></div></div></div>
 
 <p>四项都指向”就是这次更新”，再往下走。</p>
@@ -218,7 +218,7 @@
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">疑难解答 → 高级选项 → 卸载更新</span><br><span class="line">   ├─ 卸载最新的质量更新   ← 先试这个（累积更新惹的祸）</span><br><span class="line">   └─ 卸载最新的功能更新   ← 功能更新惹的祸，或上面那条没用</span><br></pre></td></tr></table></div></div></div>
 
 <p><strong>预期看到</strong>：执行完自动重启，系统回到更新前。</p>
-<div class="note note--tip"><span class="note-title">💡 先试"质量更新"，不行再试"功能更新"</span>两条的差别只是卸载的对象不同。如果你不确定是哪个惹的祸，<b>先点"卸载最新的质量更新"</b>——它更快、影响更小。如果卸载完还是进不去，再回来点"卸载最新的功能更新"。<br><br>这一步**不会删除你的个人文件**，可以放心试。</div>
+<div class="note note--tip"><span class="note-title">💡 先试"质量更新"，不行再试"功能更新"</span>两条的差别只是卸载的对象不同。如果你不确定是哪个惹的祸，<b>先点"卸载最新的质量更新"</b>——它更快、影响更小。如果卸载完还是进不去，再回来点"卸载最新的功能更新"。<br><br>这一步<strong>不会删除你的个人文件</strong>，可以放心试。</div>
 
 <h2 id="七、更硬核的兜底：命令行移除更新包"><a href="#七、更硬核的兜底：命令行移除更新包" class="headerlink" title="七、更硬核的兜底：命令行移除更新包"></a>七、更硬核的兜底：命令行移除更新包</h2><p>如果连”卸载更新”这一项都执行失败（少见，但确实会遇到），就在恢复环境的命令行里手动移除安装包：</p>
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">高级选项 → 命令提示符</span><br></pre></td></tr></table></div></div></div>
@@ -230,7 +230,7 @@
 <div class="code-block" data-lang="bat" data-file="bat"><div class="code-bar"><span class="code-lang">bat</span><span class="code-file">bat</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dism /Image:D:\ /Remove-Package /PackageName:包名 /Remove</span><br></pre></td></tr></table></div></div></div>
 
 <p><strong>预期看到</strong>：逐步输出 <code>[=====100.0%=====]</code>，最后提示”操作成功完成”。</p>
-<div class="note note--warn"><span class="note-title">⚠️ 这一招的门槛与风险</span>命令行移除包是本文**最不推荐新手单独使用**的一步——盘符认错、包名打错都可能白忙一场。<b>务必先用 <code>dir</code> 确认哪个盘有 Windows 目录，包名直接用复制粘贴，别手打。</b><br><br>另外注意：<b>恢复环境里的盘符和正常系统里的盘符经常不一致</b>，这是最容易踩的坑。</div>
+<div class="note note--warn"><span class="note-title">⚠️ 这一招的门槛与风险</span>命令行移除包是本文<strong>最不推荐新手单独使用</strong>的一步——盘符认错、包名打错都可能白忙一场。<b>务必先用 <code>dir</code> 确认哪个盘有 Windows 目录，包名直接用复制粘贴，别手打。</b><br><br>另外注意：<b>恢复环境里的盘符和正常系统里的盘符经常不一致</b>，这是最容易踩的坑。</div>
 
 <h2 id="八、救回来之后，立刻做三件事"><a href="#八、救回来之后，立刻做三件事" class="headerlink" title="八、救回来之后，立刻做三件事"></a>八、救回来之后，立刻做三件事</h2><p><strong>不做这三件事，今晚它就会自己装回来。</strong> 这是很多人”明明卸载了还是没用”的唯一原因：</p>
 <p><img src="/Blog/images/update/03-post-rollback-checklist.svg" alt="卸载更新后必须立刻做的三件事：暂停更新、拦住重装、建还原点"></p>
@@ -240,7 +240,7 @@
 
 <p><strong>② 阻止它单独装回来</strong></p>
 <ul>
-<li>把当前 Wi-Fi &#x2F; 以太网设为**”按流量计费的连接”**（设置 → 网络和 Internet → 该连接属性）——Windows 在计量连接下会推迟大部分更新</li>
+<li>把当前 Wi-Fi &#x2F; 以太网设为<strong>“按流量计费的连接”</strong>（设置 → 网络和 Internet → 该连接属性）——Windows 在计量连接下会推迟大部分更新</li>
 <li>微软官方曾提供”<strong>显示或隐藏更新</strong>“疑难解答工具（<code>wushowhide.diagcab</code>）来隐藏指定的更新，阻止它再次自动安装；这个工具年代较久，新系统上不一定还能拿到，拿不到就用”暂停更新 + 计量连接”兜底</li>
 <li>专业版可以用组策略把更新模式改为”通知下载”而不是”自动安装”，见下一节</li>
 </ul>
@@ -308,13 +308,13 @@
 
 <div class="note note--warn"><span class="note-title">⚠️ 坑二：别急着删 Windows.old</span>功能更新后 C 盘会多出一个 `Windows.old` 文件夹，十几个 GB。<b>它是"返回上一个版本"的唯一凭证</b>——删了就真回不去了。系统会在 10 天后自动清理它，在那之前忍住，别用"磁盘清理"把它勾掉。</div>
 
-<div class="note note--warn"><span class="note-title">⚠️ 坑三：别手动删 WinSxS</span>`C:\Windows\WinSxS` 是个巨大又看起来"没用"的文件夹，但它是系统的组件仓库，**直接删会导致系统彻底无法修复**。要清理只能用官方命令：`DISM /Online /Cleanup-Image /StartComponentCleanup`。<br><br>同理，第三方"系统瘦身"工具动 WinSxS 的，一律别用——省下的空间远不如风险大。</div>
+<div class="note note--warn"><span class="note-title">⚠️ 坑三：别手动删 WinSxS</span>`C:\Windows\WinSxS` 是个巨大又看起来"没用"的文件夹，但它是系统的组件仓库，<strong>直接删会导致系统彻底无法修复</strong>。要清理只能用官方命令：`DISM /Online /Cleanup-Image /StartComponentCleanup`。<br><br>同理，第三方"系统瘦身"工具动 WinSxS 的，一律别用——省下的空间远不如风险大。</div>
 
-<div class="note note--tip"><span class="note-title">💡 经验一：先等 20 分钟，再下结论</span>功能更新后第一次开机**本来就很慢**——要完成后台初始化、重建索引、配置组件。机械硬盘的机器上，卡在转圈十几分钟是正常的。<b>先等，等到明显超出合理范围（比如超过半小时毫无动静，或反复重启），再动手回滚。</b></div>
+<div class="note note--tip"><span class="note-title">💡 经验一：先等 20 分钟，再下结论</span>功能更新后第一次开机<strong>本来就很慢</strong>——要完成后台初始化、重建索引、配置组件。机械硬盘的机器上，卡在转圈十几分钟是正常的。<b>先等，等到明显超出合理范围（比如超过半小时毫无动静，或反复重启），再动手回滚。</b></div>
 
-<div class="note note--tip"><span class="note-title">💡 经验二：黑屏只有鼠标指针，也是有救的</span>更新后黑屏、只有鼠标能动，通常是**桌面进程没起来**，不是系统坏了。按 `Ctrl + Alt + Del` → 任务管理器 → 文件 → 运行新任务 → 输入 `explorer.exe` → 回车。桌面往往就回来了。这招也同样适用《开机黑屏完全攻略》里的软件层黑屏。</div>
+<div class="note note--tip"><span class="note-title">💡 经验二：黑屏只有鼠标指针，也是有救的</span>更新后黑屏、只有鼠标能动，通常是<strong>桌面进程没起来</strong>，不是系统坏了。按 `Ctrl + Alt + Del` → 任务管理器 → 文件 → 运行新任务 → 输入 `explorer.exe` → 回车。桌面往往就回来了。这招也同样适用《开机黑屏完全攻略》里的软件层黑屏。</div>
 
-<div class="note note--tip"><span class="note-title">💡 经验三：蓝屏先看转储，别猜</span>更新后蓝屏，**别凭感觉判断是哪个更新惹的**——用《蓝屏不再靠拍照：读内存转储》里的方法打开最新的 minidump，看一眼报错的驱动名。是显卡驱动、网卡驱动还是杀毒软件，一目了然。<b>定位准了，才知道该卸更新还是该卸驱动。</b></div>
+<div class="note note--tip"><span class="note-title">💡 经验三：蓝屏先看转储，别猜</span>更新后蓝屏，<strong>别凭感觉判断是哪个更新惹的</strong>——用《蓝屏不再靠拍照：读内存转储》里的方法打开最新的 minidump，看一眼报错的驱动名。是显卡驱动、网卡驱动还是杀毒软件，一目了然。<b>定位准了，才知道该卸更新还是该卸驱动。</b></div>
 
 <div class="note note--info"><span class="note-title">※ 什么时候该放弃回滚，直接重装</span>回滚连试两次都失败、或者系统已经被折腾得半死不活（这也不行那也不行），那就别耗了。先按上一节确认数据都备份出来，再走《<a href="https://molunanli.github.io/Blog/2026/09/windows-reinstall-guide/">Windows 重装完全指南</a>》。<b>回滚是绕路，重装是重新出发——绕不过去的时候，重新出发更快。</b></div>
 
@@ -322,7 +322,7 @@
 
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">【案例 B · 卸了又装回来的&quot;假解决&quot;型】2026-06-25</span><br><span class="line">【现象】累积更新后打印机驱动反复报错，用户自己卸载了那个更新，</span><br><span class="line">       当时好了；第二天开机又坏了</span><br><span class="line">【排查】① 更新历史记录 → 发现同一个 KB 在&quot;已安装 / 已卸载&quot;之间反复横跳</span><br><span class="line">      ② 判断：卸载后 Windows 当晚又自动重装了它</span><br><span class="line">      ③ 用户没做任何&quot;阻止重装&quot;的动作</span><br><span class="line">【结论】再卸一次 → 这次连着做：暂停更新 3 周 + 把常用网络设为计量连接</span><br><span class="line">       → 同时去打印机官网装了适配新版本的驱动，等驱动到位后再恢复更新</span><br><span class="line">       → 一周后复查：未再复发。教训：卸载不配暂停，等于没卸载</span><br></pre></td></tr></table></div></div></div>
 
-<p><strong>两个案例对读</strong>：案例 A 说明**”进不去桌面”不等于”系统废了”<strong>——高级启动里的”卸载更新”就是专门为它准备的，不用格盘；案例 B 说明</strong>回滚是个两步动作**——卸载（退回去）+ 暂停（拦住它），只做前一步，系统当晚就会把问题原样还给你。</p>
+<p><strong>两个案例对读</strong>：案例 A 说明<strong>“进不去桌面”不等于”系统废了”</strong>——高级启动里的”卸载更新”就是专门为它准备的，不用格盘；案例 B 说明<strong>回滚是个两步动作</strong>——卸载（退回去）+ 暂停（拦住它），只做前一步，系统当晚就会把问题原样还给你。</p>
 <h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
 <li>《<a href="https://molunanli.github.io/Blog/2026/09/windows-reinstall-guide/">Windows 重装完全指南：从做启动盘到装完设置</a>》——<strong>回滚全都失败之后的最终答案</strong>；装完记得建还原点</li>
 <li>《<a href="https://molunanli.github.io/Blog/2026/09/bsod-dump-guide/">蓝屏不再靠拍照：读内存转储文件</a>》——更新后蓝屏，<strong>先用它定位再动手</strong>，别凭感觉卸更新</li>
@@ -332,7 +332,7 @@
 </ul>
 <p>更新翻车这件事，最反直觉的一点是：<strong>它几乎总是可逆的</strong>。Windows 给你留了三条退路——卸载更新、系统还原、高级启动里的卸载更新，其中第三条专门为”开不了机”准备。</p>
 <p>真正让人把机器搞坏的，不是这次更新，而是<strong>在慌乱中直接格盘</strong>。</p>
-<p>所以记住两句话就够了：<strong>能进桌面走”设置”，进不去走”高级启动”<strong>；</strong>卸载完立刻暂停更新，否则今晚它还会回来。</strong></p>
+<p>所以记住两句话就够了：<strong>能进桌面走”设置”，进不去走”高级启动”</strong>；<strong>卸载完立刻暂停更新，否则今晚它还会回来。</strong></p>
 
             </article>
 
@@ -434,11 +434,11 @@
                     
                         <li><a href="/Blog/2026/09/bsod-dump-guide/">蓝屏不再靠拍照：读内存转储文件，精确到是哪个驱动干的</a></li>
                     
+                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
+                    
                         <li><a href="/Blog/2026/09/malware-popup-cleanup/">弹窗广告与流氓软件清理：从安全模式清场到 Autoruns 揪根</a></li>
                     
                         <li><a href="/Blog/2026/09/pc-random-restart/">电脑不定时自动重启/关机？三步定位真凶，别急着换电源</a></li>
-                    
-                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
                     
                 </ul>
             </section>

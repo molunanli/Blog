@@ -174,7 +174,7 @@
 </tr>
 </tbody></table></div>
 <p>外加一种”被动进入”：开机报错，比如 “Reboot and Select proper Boot device”、”CPU Fan Error”、CMOS 校验失败要你按 F1——这些都在把你往这个界面推。</p>
-<div class="note note--info"><span class="note-title">※ 一句话定位</span>主板设置界面管的是**"开机之后、操作系统之前"那几秒钟**的事：先找谁、按什么模式找、硬件按什么参数跑。Windows 里改不了的东西，基本都在这儿。</div>
+<div class="note note--info"><span class="note-title">※ 一句话定位</span>主板设置界面管的是<strong>"开机之后、操作系统之前"那几秒钟</strong>的事：先找谁、按什么模式找、硬件按什么参数跑。Windows 里改不了的东西，基本都在这儿。</div>
 
 <h2 id="二、先分清：BIOS-和-UEFI-不是一个东西"><a href="#二、先分清：BIOS-和-UEFI-不是一个东西" class="headerlink" title="二、先分清：BIOS 和 UEFI 不是一个东西"></a>二、先分清：BIOS 和 UEFI 不是一个东西</h2><p>日常说话混着用没关系，但你要动启动设置时，这个区别很关键。</p>
 <div class="table-scroll"><table>
@@ -224,7 +224,7 @@
 <p>关键的一句：<strong>现在的”BIOS 设置界面”其实已经是 UEFI 界面了</strong>，只是大家习惯还叫 BIOS。你在里面看到的 <code>CSM</code>、<code>Legacy</code>、<code>Legacy+UEFI</code> 选项，就是它模拟老 BIOS 的那部分。</p>
 <p><img src="/Blog/images/bios/01-uefi-vs-legacy.svg" alt="UEFI 与 Legacy 两套启动链路对照"></p>
 <p><em>图 1：两条链路各自完整、互不相通。混着用就是”找不到启动设备”。</em></p>
-<div class="note note--warn"><span class="note-title">⚠️ 这条最容易踩</span>用 UEFI 模式装的系统，把启动模式改成 Legacy/CSM 之后，主板就**看不见它了**——不是系统坏了，是找的方法变了。反过来也一样。所以在改 `Boot Mode` 之前，先确认系统盘是 GPT 还是 MBR：磁盘管理 → 右键那块盘 → 属性 → 卷 → 看"分区样式"。</div>
+<div class="note note--warn"><span class="note-title">⚠️ 这条最容易踩</span>用 UEFI 模式装的系统，把启动模式改成 Legacy/CSM 之后，主板就<strong>看不见它了</strong>——不是系统坏了，是找的方法变了。反过来也一样。所以在改 `Boot Mode` 之前，先确认系统盘是 GPT 还是 MBR：磁盘管理 → 右键那块盘 → 属性 → 卷 → 看"分区样式"。</div>
 
 <h2 id="三、怎么进：三条路，按不上就换下一条"><a href="#三、怎么进：三条路，按不上就换下一条" class="headerlink" title="三、怎么进：三条路，按不上就换下一条"></a>三、怎么进：三条路，按不上就换下一条</h2><p><img src="/Blog/images/bios/02-enter-uefi.svg" alt="进入主板设置界面的三条路径"></p>
 <p><em>图 2：第一条最快但吃时机，第二条最稳但绕路，第三条最省事但有前提。</em></p>
@@ -286,7 +286,7 @@
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">设置 → 系统 → 恢复 → 高级启动 → 点「立即重新启动」</span><br><span class="line">重启后依次选：疑难解答 → 高级选项 → UEFI 固件设置 → 重启</span><br></pre></td></tr></table></div></div></div>
 
 <p>Win10 的路径是：设置 → 更新和安全 → 恢复 → 高级启动。</p>
-<div class="note note--tip"><span class="note-title">💡 装机时特别好用</span>如果你要把系统盘全删了重装，装到一半发现启动模式不对、想回去改设置——这时候系统已经没了，路径一又按不上，就只剩"清 CMOS"一条路。**所以装系统之前，先用这条路径进去把该改的改好。**</div>
+<div class="note note--tip"><span class="note-title">💡 装机时特别好用</span>如果你要把系统盘全删了重装，装到一半发现启动模式不对、想回去改设置——这时候系统已经没了，路径一又按不上，就只剩"清 CMOS"一条路。<strong>所以装系统之前，先用这条路径进去把该改的改好。</strong></div>
 
 <h3 id="3-3-路径三：一行命令"><a href="#3-3-路径三：一行命令" class="headerlink" title="3.3 路径三：一行命令"></a>3.3 路径三：一行命令</h3><p>管理员权限的命令行（或 Win+X → 终端(管理员)）：</p>
 <div class="code-block" data-lang="bat" data-file="bat"><div class="code-bar"><span class="code-lang">bat</span><span class="code-file">bat</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutdown /r /fw /t <span class="number">0</span></span><br></pre></td></tr></table></div></div></div>
@@ -347,7 +347,7 @@
 <td><code>F10</code></td>
 </tr>
 </tbody></table></div>
-<div class="note note--warn"><span class="note-title">⚠️ 动手前的十秒钟</span>进任何一项之前，**先用手机把当前界面拍下来**。改坏了两件事：一是不知道自己改了什么，二是不知道原来是什么值。这一张照片能省你半小时。</div>
+<div class="note note--warn"><span class="note-title">⚠️ 动手前的十秒钟</span>进任何一项之前，<strong>先用手机把当前界面拍下来</strong>。改坏了两件事：一是不知道自己改了什么，二是不知道原来是什么值。这一张照片能省你半小时。</div>
 
 <h2 id="五、启动顺序：改得最多的一项"><a href="#五、启动顺序：改得最多的一项" class="headerlink" title="五、启动顺序：改得最多的一项"></a>五、启动顺序：改得最多的一项</h2><p>装系统、U 盘救援、双系统，都要改它。但这里有个几乎人人都踩过的坑：</p>
 <h3 id="5-1-两种”启动顺序”，别搞混"><a href="#5-1-两种”启动顺序”，别搞混" class="headerlink" title="5.1 两种”启动顺序”，别搞混"></a>5.1 两种”启动顺序”，别搞混</h3><div class="table-scroll"><table>
@@ -415,7 +415,7 @@
 <li>所以：开完先跑一遍压力测试（MemTest86 或 Windows 内存诊断），稳定再长期用</li>
 </ul>
 <h3 id="6-2-开了开不了机怎么办"><a href="#6-2-开了开不了机怎么办" class="headerlink" title="6.2 开了开不了机怎么办"></a>6.2 开了开不了机怎么办</h3><p>多数主板有保护机制：连续几次自检失败会自动回退到默认频率。但也有不回退的，那就清 CMOS（第九节）。</p>
-<div class="note note--tip"><span class="note-title">💡 先想清楚要不要开</span>日常办公、看视频、写代码，2133 和 3200 的差别你基本感觉不到。**真正吃内存带宽的是游戏核显、视频渲染、大批量数据处理。** 如果你的机器本来就稳，为了一个看不见的数字去冒"开不了机"的险，不划算。</div>
+<div class="note note--tip"><span class="note-title">💡 先想清楚要不要开</span>日常办公、看视频、写代码，2133 和 3200 的差别你基本感觉不到。<strong>真正吃内存带宽的是游戏核显、视频渲染、大批量数据处理。</strong> 如果你的机器本来就稳，为了一个看不见的数字去冒"开不了机"的险，不划算。</div>
 
 <h2 id="七、安全启动与-TPM：Win11-的门槛，也是-BitLocker-的雷"><a href="#七、安全启动与-TPM：Win11-的门槛，也是-BitLocker-的雷" class="headerlink" title="七、安全启动与 TPM：Win11 的门槛，也是 BitLocker 的雷"></a>七、安全启动与 TPM：Win11 的门槛，也是 BitLocker 的雷</h2><p>这两个概念经常被绑在一起说，其实管的是两件事。</p>
 <h3 id="7-1-Secure-Boot（安全启动）"><a href="#7-1-Secure-Boot（安全启动）" class="headerlink" title="7.1 Secure Boot（安全启动）"></a>7.1 Secure Boot（安全启动）</h3><p>它做的事很单纯：<strong>只允许”签名过”的引导程序运行</strong>。</p>
@@ -426,14 +426,14 @@
 </ul>
 <h3 id="7-2-TPM-2-0"><a href="#7-2-TPM-2-0" class="headerlink" title="7.2 TPM 2.0"></a>7.2 TPM 2.0</h3><p>一个专门存密钥的小芯片（或 CPU 里的固件实现：Intel 叫 PTT，AMD 叫 fTPM）。Windows 用它做磁盘加密、Windows Hello、凭据保护。</p>
 <p>Win11 把它设成了<strong>硬性门槛</strong>——没有 TPM 2.0，官方渠道装不了。这也是为什么一堆老机器”明明还能用”却被挡在门外。</p>
-<div class="note note--warn"><span class="note-title">⚠️ 动这两个之前，先导出 BitLocker 恢复密钥</span>如果系统盘开了 BitLocker（很多品牌机默认开），**改 Secure Boot、清 TPM、刷 BIOS 都可能触发"恢复模式"**，要求你输入一长串 48 位恢复密钥。找不到密钥 = 数据全丢，没有例外。<br><br>先查状态：管理员命令行跑 `manage-bde -status`。如果是"已开启"，立刻去导出：控制面板 → BitLocker 驱动器加密 → 备份恢复密钥（存到微软账户，同时截图/打印一份）。<br><br>这一步只要两分钟，但它是本文里**唯一一个"不做就可能永久丢数据"的操作**。</div>
+<div class="note note--warn"><span class="note-title">⚠️ 动这两个之前，先导出 BitLocker 恢复密钥</span>如果系统盘开了 BitLocker（很多品牌机默认开），<strong>改 Secure Boot、清 TPM、刷 BIOS 都可能触发"恢复模式"</strong>，要求你输入一长串 48 位恢复密钥。找不到密钥 = 数据全丢，没有例外。<br><br>先查状态：管理员命令行跑 `manage-bde -status`。如果是"已开启"，立刻去导出：控制面板 → BitLocker 驱动器加密 → 备份恢复密钥（存到微软账户，同时截图/打印一份）。<br><br>这一步只要两分钟，但它是本文里<strong>唯一一个"不做就可能永久丢数据"的操作</strong>。</div>
 
 <h2 id="八、风险分级：哪些能改，哪些改了会出事"><a href="#八、风险分级：哪些能改，哪些改了会出事" class="headerlink" title="八、风险分级：哪些能改，哪些改了会出事"></a>八、风险分级：哪些能改，哪些改了会出事</h2><p><img src="/Blog/images/bios/03-bios-risk.svg" alt="主板设置选项按风险分三档：放心改、先备份再改、别碰"></p>
 <p><em>图 3：判断标准只有一条——改完开不了机，你能靠清 CMOS 救回来吗？</em></p>
 <p><strong>放心改（绿色）</strong>：启动顺序、XMP&#x2F;EXPO、风扇曲线、虚拟化开关。这四项覆盖了普通人九成的需求，改错了最多恢复默认。</p>
 <p><strong>先备份再改（黄色）</strong>：Secure Boot、CSM&#x2F;Legacy 模式、Above 4G Decoding、内存时序手调。这些改完<strong>可能直接开不了机</strong>，需要你会清 CMOS；而且 CSM 和 Secure Boot 还牵着已装好的系统能不能启动。</p>
 <p><strong>别碰（红色）</strong>：CPU 核心电压、内存电压、看不懂的 Advanced 子菜单、笔记本的隐藏菜单。这些不是”难”，是<strong>错了没有后悔药</strong>——电压给高了会烧供电，笔记本的隐藏菜单改错可能连清 CMOS 都救不回来（电池在主板背面）。</p>
-<div class="note note--info"><span class="note-title">※ 一句话原则</span>看不懂的选项，**默认值就是最优解**。厂商把默认值调到"能开机、能稳定跑"，不是为了坑你；你改它的收益，通常小于改坏它的风险。</div>
+<div class="note note--info"><span class="note-title">※ 一句话原则</span>看不懂的选项，<strong>默认值就是最优解</strong>。厂商把默认值调到"能开机、能稳定跑"，不是为了坑你；你改它的收益，通常小于改坏它的风险。</div>
 
 <h2 id="九、改坏了怎么退：清-CMOS"><a href="#九、改坏了怎么退：清-CMOS" class="headerlink" title="九、改坏了怎么退：清 CMOS"></a>九、改坏了怎么退：清 CMOS</h2><p>这是所有”进不去系统”的兜底手段，也是你在第八节里敢动黄色档的底气。</p>
 <h3 id="9-1-先试最轻的：设置界面里恢复默认"><a href="#9-1-先试最轻的：设置界面里恢复默认" class="headerlink" title="9.1 先试最轻的：设置界面里恢复默认"></a>9.1 先试最轻的：设置界面里恢复默认</h3><p>还能进设置界面的话，直接 <code>Load Optimized Defaults</code>（华硕 F5 &#x2F; 微星 F6 &#x2F; 技嘉 F7 &#x2F; 联想 F9），然后 F10 保存。</p>
@@ -455,9 +455,9 @@
 <li>支持了新的硬件特性（比如更大容量的内存、新的接口）</li>
 </ul>
 <p><strong>“想试试新版本”不是理由。</strong></p>
-<h3 id="10-2-三条红线"><a href="#10-2-三条红线" class="headerlink" title="10.2 三条红线"></a>10.2 三条红线</h3><div class="note note--warn"><span class="note-title">⚠️ 红线一：全程不能断电</span>刷写过程中断电 = 大概率变砖。笔记本**必须插着电源**（电量 50% 以上），台式机最好接 UPS。别在雷雨天、别在电压不稳的老房子里刷。</div>
+<h3 id="10-2-三条红线"><a href="#10-2-三条红线" class="headerlink" title="10.2 三条红线"></a>10.2 三条红线</h3><div class="note note--warn"><span class="note-title">⚠️ 红线一：全程不能断电</span>刷写过程中断电 = 大概率变砖。笔记本<strong>必须插着电源</strong>（电量 50% 以上），台式机最好接 UPS。别在雷雨天、别在电压不稳的老房子里刷。</div>
 
-<div class="note note--warn"><span class="note-title">⚠️ 红线二：型号必须完全一致</span>不是"同系列"，不是"同芯片组"，是**主板型号一字不差**。华硕 B760M-K 和 B760M-A 是两个东西，刷错了轻则不认硬件，重则直接不亮。下载页面一定要从官网按型号进，别从论坛拿"通用版"。</div>
+<div class="note note--warn"><span class="note-title">⚠️ 红线二：型号必须完全一致</span>不是"同系列"，不是"同芯片组"，是<strong>主板型号一字不差</strong>。华硕 B760M-K 和 B760M-A 是两个东西，刷错了轻则不认硬件，重则直接不亮。下载页面一定要从官网按型号进，别从论坛拿"通用版"。</div>
 
 <div class="note note--info"><span class="note-title">※ 红线三：别跨大版本跳刷</span>很多厂商要求逐版本升级（比如 1.0 → 1.2 → 1.5），中间不能跳。刷之前把官网的版本说明读一遍，它会写清楚"升级前需先刷到某版本"。</div>
 
@@ -487,11 +487,11 @@
 </tr>
 </tbody></table></div>
 <p>买主板时如果在意这个，Flashback 是个值得看一眼的功能——它把”刷 BIOS”从高风险动作降成了中风险。</p>
-<h2 id="十一、避坑-3-条-经验-3-条"><a href="#十一、避坑-3-条-经验-3-条" class="headerlink" title="十一、避坑 3 条 + 经验 3 条"></a>十一、避坑 3 条 + 经验 3 条</h2><div class="note note--warn"><span class="note-title">⚠️ 避坑一：别在系统还能用时改启动模式</span>觉得"UEFI 是不是比 Legacy 快"，就把 `Boot Mode` 从 UEFI 改成 Legacy——结果系统直接进不去。启动模式和已装系统的分区表是绑定的，**要改就得重装**，不能只改设置。</div>
+<h2 id="十一、避坑-3-条-经验-3-条"><a href="#十一、避坑-3-条-经验-3-条" class="headerlink" title="十一、避坑 3 条 + 经验 3 条"></a>十一、避坑 3 条 + 经验 3 条</h2><div class="note note--warn"><span class="note-title">⚠️ 避坑一：别在系统还能用时改启动模式</span>觉得"UEFI 是不是比 Legacy 快"，就把 `Boot Mode` 从 UEFI 改成 Legacy——结果系统直接进不去。启动模式和已装系统的分区表是绑定的，<strong>要改就得重装</strong>，不能只改设置。</div>
 
-<div class="note note--warn"><span class="note-title">⚠️ 避坑二：改完一定要按 F10 保存</span>不少人改完启动顺序，直接点右上角的 × 或按 Esc，界面关了，设置没存。下次开机一看全白干。**F10 → 确认 Yes**，这是唯一可靠的保存方式。</div>
+<div class="note note--warn"><span class="note-title">⚠️ 避坑二：改完一定要按 F10 保存</span>不少人改完启动顺序，直接点右上角的 × 或按 Esc，界面关了，设置没存。下次开机一看全白干。<strong>F10 → 确认 Yes</strong>，这是唯一可靠的保存方式。</div>
 
-<div class="note note--warn"><span class="note-title">⚠️ 避坑三：别信"优化 BIOS 设置"的教程</span>网上大量"关闭 C-State 提升性能""关掉节能让电脑更快"的帖子，多数是十年前的硬件语境，对现在的平台要么无效要么有害。**没有具体问题，就不要做没有具体收益的改动。**</div>
+<div class="note note--warn"><span class="note-title">⚠️ 避坑三：别信"优化 BIOS 设置"的教程</span>网上大量"关闭 C-State 提升性能""关掉节能让电脑更快"的帖子，多数是十年前的硬件语境，对现在的平台要么无效要么有害。<strong>没有具体问题，就不要做没有具体收益的改动。</strong></div>
 
 <div class="note note--tip"><span class="note-title">💡 经验一：先拍照，再动手</span>每一项改动前拍一张当前界面。改坏之后你至少有据可查，不用凭记忆猜"原来是 Auto 还是 Enabled"。</div>
 
@@ -526,7 +526,11 @@
             </div>
 
             <nav class="post-nav" id="postNav" aria-label="上下篇导航">
-                <span></span>
+                
+                    <a class="post-nav-item" href="/Blog/2026/11/data-backup-321/">
+                        <span class="k">← 上一篇</span><span class="t">数据备份 3-2-1 落地：从&#34;知道该备份&#34;到&#34;真的能恢复&#34;</span>
+                    </a>
+                
                 
                     <a class="post-nav-item post-nav-item--next" href="/Blog/2026/11/toc-overflow-fix/">
                         <span class="k">下一篇 →</span><span class="t">一条目录项被压扁了：flex 收缩、省略号与悬浮提示</span>
@@ -643,13 +647,13 @@
                 <h2 class="card-title" id="relTitle">📎 相关文章</h2>
                 <ul class="related-list" id="relatedList">
                     
-                        <li><a href="/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a></li>
-                    
-                        <li><a href="/Blog/2026/09/pc-random-restart/">电脑不定时自动重启/关机？三步定位真凶，别急着换电源</a></li>
-                    
                         <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
                     
-                        <li><a href="/Blog/2026/09/pc-slow-checkup/">电脑卡到怀疑人生？重装前的 7 步体检，别急着清空 C 盘</a></li>
+                        <li><a href="/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a></li>
+                    
+                        <li><a href="/Blog/2026/11/pc-upgrade-decision/">旧电脑焕新：先换哪个、加多少、什么时候该停手</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-random-restart/">电脑不定时自动重启/关机？三步定位真凶，别急着换电源</a></li>
                     
                 </ul>
             </section>

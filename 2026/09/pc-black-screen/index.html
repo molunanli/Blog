@@ -264,7 +264,7 @@
 </tbody></table></div>
 <div class="note note--warn"><span class="note-title">⚠️ 报警音千万别硬背</span>报警音的含义取决于主板的 BIOS 品牌（AMI / Award / Phoenix 各不相同），同一串"滴滴"在不同主板上可能指向完全不同的部件。正确做法是：<b>用手机录下声音或拍下亮着的 DEBUG 灯，然后按「主板品牌 + 型号 + beep code」去搜</b>，官方手册和论坛里有精确对照表。硬背通用表，很容易误判。</div>
 
-<h2 id="四、路线-A：卡在-POST（连-BIOS-都进不去）——最小系统法实战"><a href="#四、路线-A：卡在-POST（连-BIOS-都进不去）——最小系统法实战" class="headerlink" title="四、路线 A：卡在 POST（连 BIOS 都进不去）——最小系统法实战"></a>四、路线 A：卡在 POST（连 BIOS 都进不去）——最小系统法实战</h2><p>如果你走的是这条路，说明硬件没通过自检。<strong>核心思路是”做减法”<strong>：把系统缩到最小，逐个排除。下面按”从最可能、最省事”到”最麻烦”的顺序走查，</strong>每做完一步就开机测一次，别一次改好几个地方</strong>（第一篇铁律三）。</p>
+<h2 id="四、路线-A：卡在-POST（连-BIOS-都进不去）——最小系统法实战"><a href="#四、路线-A：卡在-POST（连-BIOS-都进不去）——最小系统法实战" class="headerlink" title="四、路线 A：卡在 POST（连 BIOS 都进不去）——最小系统法实战"></a>四、路线 A：卡在 POST（连 BIOS 都进不去）——最小系统法实战</h2><p>如果你走的是这条路，说明硬件没通过自检。<strong>核心思路是”做减法”</strong>：把系统缩到最小，逐个排除。下面按”从最可能、最省事”到”最麻烦”的顺序走查，<strong>每做完一步就开机测一次，别一次改好几个地方</strong>（第一篇铁律三）。</p>
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">准备：关机 → 拔掉电源线 → 按住开机键 5 秒放余电 → 摸金属机箱放静电</span><br><span class="line">      （笔记本：能拆就拔电池排线；在保机器先确认别撕保修贴）</span><br></pre></td></tr></table></div></div></div>
 
 <p><strong>第 1 步：显示输出链路（最容易被忽略，先查它）</strong></p>

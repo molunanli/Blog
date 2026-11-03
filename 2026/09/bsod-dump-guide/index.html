@@ -187,7 +187,7 @@
 </tbody></table></div>
 <div class="note note--tip"><span class="note-title">💡 你其实只需要看一个文件夹</span>不用管那么多类型，记住一个路径就够：<b><code>C:\Windows\Minidump\</code></b>。这里的小内存转储文件命名为 <code>MMDDYY-序号-第几份.dmp</code>（例如 <code>091726-12345-01.dmp</code>），每个通常只有几百 KB。<b>有几个文件 ≈ 蓝屏过几次</b>——顺手就能看出问题多频繁。</div>
 
-<p>**开工前先确认有没有”尸体”**：Win+R → 输入 <code>C:\Windows\Minidump</code> 回车。</p>
+<p><strong>开工前先确认有没有”尸体”</strong>：Win+R → 输入 <code>C:\Windows\Minidump</code> 回车。</p>
 <ul>
 <li>看到一堆 <code>.dmp</code> 文件 → 太好了，直接跳到第三节</li>
 <li>文件夹不存在或空空如也 → 说明系统没保留（可能被清理工具删了，或没配置转储），先看第二节</li>
@@ -195,7 +195,7 @@
 <div class="note note--warn"><span class="note-title">⚠️ 注意：很多"优化软件"会清掉 dump</span>各种"电脑加速/清理大师"常把 Minidump 当垃圾清空——一旦清了，下次蓝屏就没有证据了，只能干等重犯。<b>排查蓝屏期间，别让清理工具碰这个目录</b>；也可以把重要 dump 复制一份到桌面留档。</div>
 
 <h2 id="二、第二步：确保下次蓝屏会留证"><a href="#二、第二步：确保下次蓝屏会留证" class="headerlink" title="二、第二步：确保下次蓝屏会留证"></a>二、第二步：确保下次蓝屏会留证</h2><p>如果 Minidump 是空的，先做好这三件事，让下一次蓝屏能留下完整证据。</p>
-<p>**① 关掉”蓝屏自动重启”**（第二篇讲过，这里快速回顾）：</p>
+<p><strong>① 关掉”蓝屏自动重启”</strong>（第二篇讲过，这里快速回顾）：</p>
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Win+R → sysdm.cpl → 「高级」→ 「启动和故障恢复」→ 设置</span><br><span class="line">→ 取消勾选「自动重新启动」→ 确定</span><br></pre></td></tr></table></div></div></div>
 
 <p>这样蓝屏会<strong>停在画面上</strong>，你有时间拍照记录代码。</p>
@@ -245,7 +245,7 @@
 <div class="note note--warn"><span class="note-title">⚠️ Caused By Driver 只是"启发式猜测"</span>BlueScreenView 会从崩溃时的调用栈里挑一个"最像凶手"的驱动标出来，<b>它经常猜对，但不保证</b>。尤其当它标的是 <code>ntoskrnl.exe</code>、<code>ntfs.sys</code>、<code>win32k.sys</code> 这类 Windows 自带核心文件时，多半是误报（第六节专门讲）。<b>要下判决，得看第四节 WinDbg 的调用栈。</b></div>
 
 <p><strong>接下来做什么</strong>：拿到那个 <code>.sys</code> 文件名，先别急着动，跳到<strong>第五节</strong>——那里教你把这个名字翻译成”到底是哪台设备&#x2F;哪个软件”。想确认判断无误，再走第四节的 WinDbg。</p>
-<h2 id="四、进阶路线：WinDbg-看调用栈，抓到真凶"><a href="#四、进阶路线：WinDbg-看调用栈，抓到真凶" class="headerlink" title="四、进阶路线：WinDbg 看调用栈，抓到真凶"></a>四、进阶路线：WinDbg 看调用栈，抓到真凶</h2><p>BlueScreenView 给你”嫌疑人”，**WinDbg 给你”证据链”**——它能还原崩溃发生时完整的函数调用顺序，从而区分”谁是真凶”和”谁只是被牵连”。</p>
+<h2 id="四、进阶路线：WinDbg-看调用栈，抓到真凶"><a href="#四、进阶路线：WinDbg-看调用栈，抓到真凶" class="headerlink" title="四、进阶路线：WinDbg 看调用栈，抓到真凶"></a>四、进阶路线：WinDbg 看调用栈，抓到真凶</h2><p>BlueScreenView 给你”嫌疑人”，<strong>WinDbg 给你”证据链”</strong>——它能还原崩溃发生时完整的函数调用顺序，从而区分”谁是真凶”和”谁只是被牵连”。</p>
 <p><strong>安装：</strong></p>
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 打开 Microsoft Store，搜索「WinDbg」</span><br><span class="line">2. 安装微软官方那款（新版本已统一叫 WinDbg，旧名 WinDbg Preview）</span><br><span class="line">3. 首次启动会自动配置好符号服务器，无需手工设置</span><br></pre></td></tr></table></div></div></div>
 
@@ -382,7 +382,7 @@
 <h2 id="八、验证与预防"><a href="#八、验证与预防" class="headerlink" title="八、验证与预防"></a>八、验证与预防</h2><p><strong>怎么确认真的修好了：</strong></p>
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 复原环境：把引发蓝屏的场景完整复现（同一游戏/同一个操作）</span><br><span class="line">2. 加码验证：比原来更狠地跑——原来 10 分钟崩，就连续跑 1 小时</span><br><span class="line">3. 清空旧 dump，观察两周：C:\Windows\Minidump 不再新增文件</span><br><span class="line">   （⚠️ 清理前先把旧 dump 备份走，否则无法比对&quot;是不是同一个驱动&quot;）</span><br></pre></td></tr></table></div></div></div>
 
-<p>第三条最靠谱：**”最近没犯”不是证据，”一段时间内不再新增 dump”才是**。</p>
+<p>第三条最靠谱：<strong>“最近没犯”不是证据，”一段时间内不再新增 dump”才是</strong>。</p>
 <p><strong>预防清单：</strong></p>
 <ul>
 <li>保持”小内存转储”设置别关——下次出问题时，它就是你的证据</li>
@@ -496,11 +496,11 @@
                     
                         <li><a href="/Blog/2026/10/driver-guide/">驱动那点事：该不该更新、去哪下、显卡驱动怎么卸干净</a></li>
                     
+                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
+                    
                         <li><a href="/Blog/2026/09/malware-popup-cleanup/">弹窗广告与流氓软件清理：从安全模式清场到 Autoruns 揪根</a></li>
                     
                         <li><a href="/Blog/2026/09/pc-random-restart/">电脑不定时自动重启/关机？三步定位真凶，别急着换电源</a></li>
-                    
-                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
                     
                 </ul>
             </section>

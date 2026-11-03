@@ -189,7 +189,7 @@
 <h2 id="二、第一步：先确认不是”系统脏”"><a href="#二、第一步：先确认不是”系统脏”" class="headerlink" title="二、第一步：先确认不是”系统脏”"></a>二、第一步：先确认不是”系统脏”</h2><p>升级要花钱，而”系统脏”是免费的。<strong>动手买东西之前，先花半小时排除这一项。</strong></p>
 <p><strong>判断方法（对照看）：</strong></p>
 <ul>
-<li>开机后什么都不做，看任务管理器 → **磁盘是不是长期 100%**？是 → 大概率是机械盘本身的性能天花板，也可能是系统在后台狂读写</li>
+<li>开机后什么都不做，看任务管理器 → <strong>磁盘是不是长期 100%</strong>？是 → 大概率是机械盘本身的性能天花板，也可能是系统在后台狂读写</li>
 <li><strong>启动应用</strong>里是不是堆了十几个”已启用”？是 → 先禁用（见《弹窗广告与流氓软件清理》第四节）</li>
 <li><strong>C 盘剩余空间</strong>是不是低于 10%？是 → 先清理，这本身就会显著变慢</li>
 <li>半年没清过灰、风扇一直响？→ 先清灰（见《风扇狂转与高温降频》），高温降频也会”卡”</li>
@@ -212,22 +212,22 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>**磁盘 100%**，CPU&#x2F;内存都很闲</td>
+<td><strong>磁盘 100%</strong>，CPU&#x2F;内存都很闲</td>
 <td>硬盘瓶颈</td>
 <td>换固态（第五节）</td>
 </tr>
 <tr>
-<td>**内存接近 100%**，磁盘也在疯狂读写</td>
+<td><strong>内存接近 100%</strong>，磁盘也在疯狂读写</td>
 <td>内存不足，在用硬盘当内存</td>
 <td>加内存（第六节）</td>
 </tr>
 <tr>
-<td>**GPU 100%**，CPU 有余量</td>
+<td><strong>GPU 100%</strong>，CPU 有余量</td>
 <td>显卡瓶颈</td>
 <td>换显卡（第七节）</td>
 </tr>
 <tr>
-<td>**CPU 100%**，GPU 上不去</td>
+<td><strong>CPU 100%</strong>，GPU 上不去</td>
 <td>CPU 瓶颈</td>
 <td>通常不建议换（第八节）</td>
 </tr>
@@ -464,11 +464,11 @@
 
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">【案例 B · 换显卡但电源带不动型】2026-08-06</span><br><span class="line">【现象】用户给一台老机器换了中端显卡，结果开机风扇转但屏幕不亮，</span><br><span class="line">       偶尔能亮也是进系统就重启</span><br><span class="line">【排查】① 显卡插好、供电线接了 → 排除接触问题</span><br><span class="line">      ② 电源标称 400W，已用了 7 年</span><br><span class="line">      ③ 新显卡功耗比原来高 100W 左右，加上 CPU 和硬盘，</span><br><span class="line">         整机峰值超过电源的稳定输出能力</span><br><span class="line">      ④ 判断：电源带不动（老化后实际输出还要再打折）</span><br><span class="line">【结论】换了一个额定 650W 的正规品牌电源 → 一次点亮</span><br><span class="line">       → 教训：换显卡不是&quot;插上就行&quot;，电源功率、供电接口、</span><br><span class="line">         机箱长度三样都要先量。老电源还要额外留余量</span><br></pre></td></tr></table></div></div></div>
 
-<p><strong>两个案例对读</strong>：案例 A 说明**”升了没效果”往往是因为升错了地方<strong>——瓶颈在硬盘，加内存自然没用；案例 B 说明</strong>升级是一项系统工程<strong>，显卡不只是显卡，它牵着电源、供电线、机箱空间和 CPU。</strong>先测瓶颈，再算总账**，这两步做好，升级几乎不会翻车。</p>
+<p><strong>两个案例对读</strong>：案例 A 说明<strong>“升了没效果”往往是因为升错了地方</strong>——瓶颈在硬盘，加内存自然没用；案例 B 说明<strong>升级是一项系统工程</strong>，显卡不只是显卡，它牵着电源、供电线、机箱空间和 CPU。<strong>先测瓶颈，再算总账</strong>，这两步做好，升级几乎不会翻车。</p>
 <h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
 <li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-slow-checkup/">电脑卡到怀疑人生？重装前的 7 步体检</a>》——<strong>升级之前必读</strong>，先分清是系统脏、硬件瓶颈还是散热问题</li>
 <li>《<a href="https://molunanli.github.io/Blog/2026/09/disk-health-guide/">硬盘告急：坏道、掉盘、SMART 黄了</a>》——换固态前先查旧盘健康；克隆有坏道的盘会带病</li>
-<li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-overheat-fan/">风扇狂转与高温降频：清灰、换硅脂全流程</a>》——**最便宜的”升级”**，几十块能让降频的机器恢复大半性能</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-overheat-fan/">风扇狂转与高温降频：清灰、换硅脂全流程</a>》——<strong>最便宜的”升级”</strong>，几十块能让降频的机器恢复大半性能</li>
 <li>《<a href="https://molunanli.github.io/Blog/2026/09/windows-reinstall-guide/">Windows 重装完全指南</a>》——换固态后如果选择”全新安装”，走这一篇</li>
 <li>《<a href="https://molunanli.github.io/Blog/2026/10/driver-guide/">驱动那点事</a>》——<strong>上一篇</strong>；换了显卡&#x2F;网卡之后要装驱动，以及为什么别用”驱动大师”</li>
 <li>下一篇（系列第 13 篇）：<strong>《BIOS&#x2F;UEFI 入门》</strong>——怎么进 BIOS、启动顺序怎么改、XMP&#x2F;EXPO 是什么、安全启动与 TPM 在管什么，以及刷 BIOS 的风险红线在哪。</li>
@@ -589,11 +589,11 @@
                     
                         <li><a href="/Blog/2026/11/bios-uefi-guide/">BIOS/UEFI 入门：怎么进、改什么、哪一步会变砖</a></li>
                     
+                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
+                    
                         <li><a href="/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a></li>
                     
                         <li><a href="/Blog/2026/09/pc-random-restart/">电脑不定时自动重启/关机？三步定位真凶，别急着换电源</a></li>
-                    
-                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
                     
                 </ul>
             </section>

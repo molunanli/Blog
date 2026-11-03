@@ -146,7 +146,7 @@
             <article class="card article-body" id="articleBody">
                 <p>驱动是硬件和 Windows 之间的<strong>翻译官</strong>。显卡、网卡、声卡、打印机、蓝牙——每一件硬件要能被系统用起来，都得先装上一份”说明书”，这份说明书就是驱动。</p>
 <p>问题在于，驱动出故障的样子<strong>千奇百怪</strong>：没声音、没网、屏幕花屏、蓝屏、游戏掉帧、外接显示器不亮、触控板手势失灵。它们看上去毫无关联，根子却都在同一处。</p>
-<p>但比”驱动坏了”更常见的一个坑，是**”我什么毛病都没有，就是想更新一下驱动”**。这一篇的核心观点可能和你听过的相反：</p>
+<p>但比”驱动坏了”更常见的一个坑，是<strong>“我什么毛病都没有，就是想更新一下驱动”</strong>。这一篇的核心观点可能和你听过的相反：</p>
 <p><strong>驱动不是越新越好，是越稳越好。绝大多数时候，能正常用的驱动就不该动。</strong></p>
 <p>下面按”该不该装 → 去哪下 → 怎么卸干净”三步走。</p>
 <h2 id="一、现象：驱动坏了是什么样子"><a href="#一、现象：驱动坏了是什么样子" class="headerlink" title="一、现象：驱动坏了是什么样子"></a>一、现象：驱动坏了是什么样子</h2><p>同样是驱动问题，表现可以分成几类，处理路径完全不同：</p>
@@ -282,7 +282,7 @@
 <td>认准硬件 ID 再下</td>
 </tr>
 </tbody></table></div>
-<h3 id="③-Windows-Update（兜底，能用但坑最多）"><a href="#③-Windows-Update（兜底，能用但坑最多）" class="headerlink" title="③ Windows Update（兜底，能用但坑最多）"></a>③ Windows Update（兜底，能用但坑最多）</h3><p>系统自带的驱动库覆盖广、装得省事，但它是**”保证能用”，不是”保证好用”**——细节见下一节。</p>
+<h3 id="③-Windows-Update（兜底，能用但坑最多）"><a href="#③-Windows-Update（兜底，能用但坑最多）" class="headerlink" title="③ Windows Update（兜底，能用但坑最多）"></a>③ Windows Update（兜底，能用但坑最多）</h3><p>系统自带的驱动库覆盖广、装得省事，但它是<strong>“保证能用”，不是”保证好用”</strong>——细节见下一节。</p>
 <h3 id="④-第三方”驱动大师-驱动人生”类工具（不要用）"><a href="#④-第三方”驱动大师-驱动人生”类工具（不要用）" class="headerlink" title="④ 第三方”驱动大师 &#x2F; 驱动人生”类工具（不要用）"></a>④ 第三方”驱动大师 &#x2F; 驱动人生”类工具（不要用）</h3><p><strong>这一格是本文明确反对的。</strong> 原因很直接：</p>
 <ul>
 <li>它们是<strong>捆绑软件的重灾区</strong>——装一个驱动工具，顺手带进来三五个”优化助手””安全卫士”</li>
@@ -308,7 +308,7 @@
 <p><code>回退驱动程序</code>这个按钮<strong>只在有上一版残留时可用</strong>——这也是它值得优先尝试的原因：它比你重新找驱动快得多。</p>
 <div class="note note--warn"><span class="note-title">⚠️ 回退之后要"堵住入口"</span>和上一篇讲的"卸载更新"一样：<b>回退完不采取任何措施，Windows Update 会把同一个驱动再推一遍。</b>解决办法见下面。</div>
 
-<h3 id="6-2-阻止-Windows-Update-更新驱动（治本）"><a href="#6-2-阻止-Windows-Update-更新驱动（治本）" class="headerlink" title="6.2 阻止 Windows Update 更新驱动（治本）"></a>6.2 阻止 Windows Update 更新驱动（治本）</h3><p>**给常用网络设”按流量计费的连接”**——最简单，但只是延缓。</p>
+<h3 id="6-2-阻止-Windows-Update-更新驱动（治本）"><a href="#6-2-阻止-Windows-Update-更新驱动（治本）" class="headerlink" title="6.2 阻止 Windows Update 更新驱动（治本）"></a>6.2 阻止 Windows Update 更新驱动（治本）</h3><p><strong>给常用网络设”按流量计费的连接”</strong>——最简单，但只是延缓。</p>
 <p><strong>组策略关闭驱动更新</strong>（Windows 专业版）：</p>
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Win + R → gpedit.msc → 回车</span><br><span class="line">  计算机配置 → 管理模板 → Windows 组件 → Windows 更新</span><br><span class="line">    → 管理最终用户体验</span><br><span class="line">    → 「Windows 更新不包括驱动程序」→ 双击 → 选「已启用」→ 确定</span><br></pre></td></tr></table></div></div></div>
 
@@ -374,7 +374,7 @@
 
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">【案例 B · 显卡驱动反复覆盖导致花屏型】2026-07-21</span><br><span class="line">【现象】用户的机器打游戏偶尔花屏、驱动偶尔&quot;掉&quot;一下（屏幕黑一秒又回来）。</span><br><span class="line">       半年来装过很多次显卡驱动，有时官网版有时 Windows Update 推的版本</span><br><span class="line">【排查】① 设备管理器里显卡正常、无感叹号，dxdiag 驱动的版本和日期正常</span><br><span class="line">      ② 但花屏是间歇性的 → 怀疑是残留冲突，不是缺驱动</span><br><span class="line">      ③ 检查发现：系统里同时存在多个版本的驱动残留目录</span><br><span class="line">【结论】断网 → 进安全模式 → DDU「Clean and restart」</span><br><span class="line">       → 重启后（保持断网）装 NVIDIA 官网最新版，勾选&quot;执行清洁安装&quot;</span><br><span class="line">       → 装完联网，dxdiag 核对版本</span><br><span class="line">       → 连续玩两周未再花屏。教训：反复覆盖安装会积累残留，</span><br><span class="line">         普通卸载清不掉，必须用 DDU 回到&quot;从未装过&quot;的状态</span><br></pre></td></tr></table></div></div></div>
 
-<p><strong>两个案例对读</strong>：案例 A 说明**驱动问题的成本主要在”没提前准备”<strong>——网卡驱动放个 U 盘就解决的事，没准备就卡一整晚；案例 B 说明</strong>“驱动没坏”不等于”驱动是干净的”**——反复覆盖安装留下的残留不会自己消失，只会间歇性发作，而 DDU 的价值就在于把状态归零。</p>
+<p><strong>两个案例对读</strong>：案例 A 说明<strong>驱动问题的成本主要在”没提前准备”</strong>——网卡驱动放个 U 盘就解决的事，没准备就卡一整晚；案例 B 说明<strong>“驱动没坏”不等于”驱动是干净的”</strong>——反复覆盖安装留下的残留不会自己消失，只会间歇性发作，而 DDU 的价值就在于把状态归零。</p>
 <h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
 <li>《<a href="https://molunanli.github.io/Blog/2026/09/windows-reinstall-guide/">Windows 重装完全指南：从做启动盘到装完设置</a>》——装系统的驱动顺序（芯片组 → 网卡 → 其他）与”网卡驱动死循环”的完整解法</li>
 <li>《<a href="https://molunanli.github.io/Blog/2026/10/windows-update-rollback/">Windows 更新翻车怎么办：更新后蓝屏、黑屏、卡死的自救手册</a>》——<strong>上一篇</strong>；驱动被系统更新换掉属于同一类问题，还原点的建法在那里</li>
@@ -504,9 +504,9 @@
                     
                         <li><a href="/Blog/2026/11/bios-uefi-guide/">BIOS/UEFI 入门：怎么进、改什么、哪一步会变砖</a></li>
                     
-                        <li><a href="/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a></li>
+                        <li><a href="/Blog/2026/11/data-backup-321/">数据备份 3-2-1 落地：从&#34;知道该备份&#34;到&#34;真的能恢复&#34;</a></li>
                     
-                        <li><a href="/Blog/2026/09/malware-popup-cleanup/">弹窗广告与流氓软件清理：从安全模式清场到 Autoruns 揪根</a></li>
+                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
                     
                 </ul>
             </section>

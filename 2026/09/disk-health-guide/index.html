@@ -343,7 +343,7 @@
 <p><strong>第 3 步：整盘镜像，一次拷完</strong></p>
 <p>这是最关键的一步，推荐用 <strong>DiskGenius</strong>（免费版即可）的「克隆硬盘 &#x2F; 备份分区到镜像」功能：</p>
 <ul>
-<li><strong>优先做”镜像”而不是”直接往新盘拷文件”<strong>——镜像是从头到尾</strong>顺序读取</strong>，对病盘最温柔、耗时最短</li>
+<li><strong>优先做”镜像”而不是”直接往新盘拷文件”</strong>——镜像是从头到尾<strong>顺序读取</strong>，对病盘最温柔、耗时最短</li>
 <li>遇到读不出来的扇区，镜像工具会<strong>跳过并记录</strong>，不会卡死在那里反复重试</li>
 <li>镜像做完，数据就”冻结”在一个健康的文件里了，之后随便分析</li>
 </ul>
@@ -382,7 +382,7 @@
 <li><strong>定期看 SMART</strong>：每季度 2 分钟，早发现黄灯早备份</li>
 <li><strong>备份走 3-2-1</strong>：重要数据至少 3 份、2 种介质、1 份异地（这份方案的落地会在后面的《数据备份 3-2-1 落地》展开）</li>
 <li><strong>控制温度</strong>：机械盘 &lt; 50℃、SSD &lt; 70℃</li>
-<li>**别贪便宜买”翻新盘&#x2F;矿盘”**：二手盘的通电时间可能已经几万小时，省下的钱不够赔数据的</li>
+<li><strong>别贪便宜买”翻新盘&#x2F;矿盘”</strong>：二手盘的通电时间可能已经几万小时，省下的钱不够赔数据的</li>
 </ol>
 <h2 id="八、避坑与经验"><a href="#八、避坑与经验" class="headerlink" title="八、避坑与经验"></a>八、避坑与经验</h2><div class="note note--warn"><span class="note-title">⚠️ 坑一：发现坏道后的第一件事是备份，不是"修复"</span>很多人一看到坏道就去跑 <code>chkdsk /f</code>、全盘扫描修复、低格。<b>这些操作都会造成大量读写，可能直接把濒死的盘拖死。</b>正确顺序永远是：先镜像备份 → 数据安全后再随便折腾旧盘。</div>
 
@@ -513,11 +513,11 @@
                     
                         <li><a href="/Blog/2026/11/bios-uefi-guide/">BIOS/UEFI 入门：怎么进、改什么、哪一步会变砖</a></li>
                     
+                        <li><a href="/Blog/2026/11/data-backup-321/">数据备份 3-2-1 落地：从&#34;知道该备份&#34;到&#34;真的能恢复&#34;</a></li>
+                    
+                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
+                    
                         <li><a href="/Blog/2026/09/pc-overheat-fan/">风扇狂转与高温降频：清灰、换硅脂全流程，把温度压回去</a></li>
-                    
-                        <li><a href="/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课：不开机、蓝屏、卡顿，一套排查思路走天下</a></li>
-                    
-                        <li><a href="/Blog/2026/09/pc-random-restart/">电脑不定时自动重启/关机？三步定位真凶，别急着换电源</a></li>
                     
                 </ul>
             </section>

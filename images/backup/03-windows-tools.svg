@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 410" role="img" aria-label="Windows 自带三个备份工具的能力对比：文件历史记录、备份与还原、系统映像">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .ch { font-size: 12.5px; font-weight: 700; }
+    .rh { font-size: 11.5px; fill: #4c463e; }
+    .vv { font-size: 11.5px; }
+    .ok { fill: #3d6338; font-weight: 700; }
+    .no { fill: #b02f2f; font-weight: 700; }
+    .mid { fill: #a8791f; font-weight: 700; }
+    .ft { font-size: 10.5px; fill: #6b6459; }
+    .card { fill: #fffdf6; stroke: #e0d6c0; stroke-width: 1.5; }
+    .hd { fill: #f1e8d4; }
+    .ln { stroke: #e5dbc5; stroke-width: 1; }
+  </style>
+
+  <rect class="bg" width="680" height="410"/>
+
+  <text class="t th" x="34" y="38">Windows 自带的三样东西，各自能救什么</text>
+  <text class="t ts" x="34" y="60">搞混它们的边界，是"我备份了啊"却救不回来的主要原因</text>
+
+  <rect class="card" x="30" y="78" width="620" height="266" rx="8"/>
+  <rect class="hd" x="30" y="78" width="620" height="40" rx="8"/>
+
+  <text class="t ch" x="46" y="104">能力</text>
+  <text class="t ch" x="222" y="104">文件历史记录</text>
+  <text class="t ch" x="372" y="104">备份与还原(7)</text>
+  <text class="t ch" x="522" y="104">系统映像</text>
+
+  <line class="ln" x1="30" y1="118" x2="650" y2="118"/>
+  <text class="t rh" x="46" y="146">误删的文件</text>
+  <text class="t vv ok" x="222" y="146">能</text>
+  <text class="t vv ok" x="372" y="146">能</text>
+  <text class="t vv no" x="522" y="146">不能</text>
+
+  <line class="ln" x1="30" y1="162" x2="650" y2="162"/>
+  <text class="t rh" x="46" y="190">文件的旧版本</text>
+  <text class="t vv ok" x="222" y="190">能</text>
+  <text class="t vv mid" x="372" y="190">部分</text>
+  <text class="t vv no" x="522" y="190">不能</text>
+
+  <line class="ln" x1="30" y1="206" x2="650" y2="206"/>
+  <text class="t rh" x="46" y="234">系统崩了 / 开不了机</text>
+  <text class="t vv no" x="222" y="234">不能</text>
+  <text class="t vv ok" x="372" y="234">能</text>
+  <text class="t vv ok" x="522" y="234">能</text>
+
+  <line class="ln" x1="30" y1="250" x2="650" y2="250"/>
+  <text class="t rh" x="46" y="278">要另备一块盘</text>
+  <text class="t vv mid" x="222" y="278">要</text>
+  <text class="t vv mid" x="372" y="278">要</text>
+  <text class="t vv mid" x="522" y="278">要</text>
+
+  <line class="ln" x1="30" y1="294" x2="650" y2="294"/>
+  <text class="t rh" x="46" y="322">现在还推荐吗</text>
+  <text class="t vv ok" x="222" y="322">推荐</text>
+  <text class="t vv no" x="372" y="322">不推荐</text>
+  <text class="t vv mid" x="522" y="322">仅应急</text>
+
+  <text class="t ft" x="34" y="368">文件历史记录默认只盯「库 / 桌面 / 收藏夹」，其它目录要手动加。</text>
+  <text class="t ft" x="34" y="388">系统映像恢复是整盘覆盖——它能救系统，但不能拿来单独捞一个文件。</text>
+</svg>

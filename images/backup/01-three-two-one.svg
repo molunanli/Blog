@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 470" role="img" aria-label="3-2-1 备份原则示意：三份副本、两种介质、一份异地，以及每条规则对应的三类事故">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .nm { font-size: 13px; font-weight: 700; }
+    .sub { font-size: 10.5px; fill: #6b6459; }
+    .plus { font-size: 20px; font-weight: 700; fill: #b9ae98; }
+    .cap { font-size: 11.5px; fill: #4c463e; }
+    .ct { font-size: 14px; font-weight: 700; }
+    .cd { font-size: 10.5px; fill: #6b6459; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .blk { fill: #fffdf6; stroke: #2f5d8a; stroke-width: 2; }
+    .blk2 { fill: #fffdf6; stroke: #4f7f47; stroke-width: 2; }
+    .blk3 { fill: #fffdf6; stroke: #c9962a; stroke-width: 2; }
+    .ca { fill: #fffdf6; stroke: #cc3b3b; stroke-width: 1.5; }
+    .cb { fill: #fffdf6; stroke: #c9962a; stroke-width: 1.5; }
+    .cc { fill: #fffdf6; stroke: #2f5d8a; stroke-width: 1.5; }
+    .t1 { fill: #2f5d8a; }
+    .t2 { fill: #cc3b3b; }
+    .t3 { fill: #a8791f; }
+    .no { font-size: 10px; font-weight: 700; fill: #fffdf6; }
+    .b1 { fill: #2f5d8a; }
+    .b2 { fill: #cc3b3b; }
+    .b3 { fill: #c9962a; }
+  </style>
+
+  <rect class="bg" width="680" height="470"/>
+
+  <text class="t th" x="34" y="38">3-2-1：一句话记住备份该长什么样</text>
+  <text class="t ts" x="34" y="60">3 份副本、2 种介质、1 份在别处——三条各挡一类事故</text>
+
+  <!-- 三份副本 -->
+  <rect class="blk" x="40" y="86" width="180" height="80" rx="8"/>
+  <text class="t nm" x="56" y="114">本机硬盘</text>
+  <text class="t cap" x="56" y="136">原件，每天在改</text>
+  <text class="t sub" x="56" y="155">① 原件</text>
+
+  <text class="t plus" x="228" y="132">+</text>
+
+  <rect class="blk2" x="250" y="86" width="180" height="80" rx="8"/>
+  <text class="t nm" x="266" y="114">移动硬盘</text>
+  <text class="t cap" x="266" y="136">插上才通电</text>
+  <text class="t sub" x="266" y="155">② 副本</text>
+
+  <text class="t plus" x="438" y="132">+</text>
+
+  <rect class="blk3" x="460" y="86" width="180" height="80" rx="8"/>
+  <text class="t nm" x="476" y="114">云端或异地</text>
+  <text class="t cap" x="476" y="136">不在这间屋子里</text>
+  <text class="t sub" x="476" y="155">③ 副本</text>
+
+  <text class="t cap" x="40" y="192">同一张桌子上放着两块一模一样的硬盘，只能算"1.5 份"——它们怕的是同一件事。</text>
+
+  <!-- 三类事故 -->
+  <rect class="ca" x="30" y="216" width="196" height="150" rx="10"/>
+  <rect class="b2" x="30" y="216" width="196" height="5" rx="2"/>
+  <text class="t ct t2" x="48" y="252">误删 / 中毒</text>
+  <text class="t cd" x="48" y="278">手滑删了、被勒索病毒加密</text>
+  <text class="t cd" x="48" y="298">——你当场就发现了</text>
+  <text class="t cap" x="48" y="330">靠②③ 那份</text>
+  <text class="t cd" x="48" y="350">但它必须是没插着的那份</text>
+
+  <rect class="cb" x="242" y="216" width="196" height="150" rx="10"/>
+  <rect class="b3" x="242" y="216" width="196" height="5" rx="2"/>
+  <text class="t ct t3" x="260" y="252">硬盘坏</text>
+  <text class="t cd" x="260" y="278">原盘突然不认、掉盘、坏道</text>
+  <text class="t cd" x="260" y="298">——毫无预兆</text>
+  <text class="t cap" x="260" y="330">靠②③ 独立介质</text>
+  <text class="t cd" x="260" y="350">所以不能只有一块盘</text>
+
+  <rect class="cc" x="454" y="216" width="196" height="150" rx="10"/>
+  <rect class="b1" x="454" y="216" width="196" height="5" rx="2"/>
+  <text class="t ct t1" x="472" y="252">火灾 / 被盗 / 进水</text>
+  <text class="t cd" x="472" y="278">整间屋子里的东西一起没了</text>
+  <text class="t cd" x="472" y="298">——包括你的备份盘</text>
+  <text class="t cap" x="472" y="330">靠③ 异地</text>
+  <text class="t cd" x="472" y="350">所以有一份要在别处</text>
+
+  <text class="t ft" x="34" y="400">三条不是"越多越好"的叠加，而是各挡一类事故——缺哪条，就有一类事故能一次性带走你全部数据。</text>
+  <text class="t ft" x="34" y="424">最低配的落地版本：本机 + 一块移动硬盘 + 一个网盘。总花费：一块硬盘的钱。</text>
+</svg>

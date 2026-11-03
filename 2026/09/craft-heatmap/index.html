@@ -189,7 +189,7 @@
 <td>像漫画里的对话框旁注</td>
 </tr>
 </tbody></table></div>
-<p>一句话原则：**参考实现解决”交互细节”，主题变量决定”长什么样”**。</p>
+<p>一句话原则：<strong>参考实现解决”交互细节”，主题变量决定”长什么样”</strong>。</p>
 <h2 id="二、数据从哪来：让-Hexo-在构建时把日期聚合成-JSON"><a href="#二、数据从哪来：让-Hexo-在构建时把日期聚合成-JSON" class="headerlink" title="二、数据从哪来：让 Hexo 在构建时把日期聚合成 JSON"></a>二、数据从哪来：让 Hexo 在构建时把日期聚合成 JSON</h2><p>静态博客没有数据库，热力图的”发文记录”其实在构建那一刻就全部知道了——<code>site.posts</code> 里有每一篇的日期。所以思路是：<strong>构建时聚合，运行时只渲染</strong>。</p>
 <p>做法是在归档页模板 <code>archive.ejs</code> 里用 EJS 遍历所有文章，按 <code>YYYY-MM-DD</code> 归并成计数对象：</p>
 <div class="code-block" data-lang="plaintext" data-file="plaintext"><div class="code-bar"><span class="code-lang">plaintext</span><span class="code-file">plaintext</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">// 在模板顶部（archive.ejs）做数据准备</span><br><span class="line">var heatmapData = &#123;&#125;;</span><br><span class="line">var heatmapYears = [];</span><br><span class="line">site.posts.each(function (p) &#123;</span><br><span class="line">    var d = p.date; // Hexo 的 moment 对象</span><br><span class="line">    var key = d.format(&#x27;YYYY-MM-DD&#x27;);</span><br><span class="line">    heatmapData[key] = (heatmapData[key] || 0) + 1;</span><br><span class="line">    var y = d.year();</span><br><span class="line">    if (heatmapYears.indexOf(y) === -1) heatmapYears.push(y);</span><br><span class="line">&#125;);</span><br><span class="line">heatmapYears.sort();</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 聚合结果直接以 JSON 形式嵌进页面，交给前端 JS --&gt;</span><br><span class="line">&lt;script id=&quot;heatData&quot; type=&quot;application/json&quot;&gt;&lt;%- JSON.stringify(heatmapData) %&gt;&lt;/script&gt;</span><br><span class="line">&lt;script id=&quot;heatYears&quot; type=&quot;application/json&quot;&gt;&lt;%- JSON.stringify(heatmapYears) %&gt;&lt;/script&gt;</span><br></pre></td></tr></table></div></div></div>
@@ -238,7 +238,7 @@
 <p>渲染时机有个隐蔽的坑：内联脚本执行时 DOM 可能还没解析完，直接 <code>render()</code> 会扑空。稳妥做法是判断 <code>document.readyState</code>：</p>
 <div class="code-block" data-lang="js" data-file="js"><div class="code-bar"><span class="code-lang">js</span><span class="code-file">js</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable language_">document</span>.<span class="property">readyState</span> === <span class="string">&#x27;loading&#x27;</span>) &#123;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;DOMContentLoaded&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="title function_">render</span>(viewYear); &#125;);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title function_">render</span>(viewYear);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></div></div>
 
-<p>这个 bug 的真实惨状是：点任何按钮都正常、首次加载却一片空白——因为重构时把初次调用弄丢了，只剩点击事件里的 <code>render</code>。**交互逻辑改完，一定要先验证”首次加载路径”**。</p>
+<p>这个 bug 的真实惨状是：点任何按钮都正常、首次加载却一片空白——因为重构时把初次调用弄丢了，只剩点击事件里的 <code>render</code>。<strong>交互逻辑改完，一定要先验证”首次加载路径”</strong>。</p>
 <h2 id="六、值得收进清单的小细节"><a href="#六、值得收进清单的小细节" class="headerlink" title="六、值得收进清单的小细节"></a>六、值得收进清单的小细节</h2><ul>
 <li><strong>颜色用主题变量</strong>：别在 JS&#x2F;CSS 里散落十六进制，换主题时你会感谢自己。</li>
 <li><strong>今天要能一眼找到</strong>：金边 + 呼吸动画，且和朱红的发文色系天然区分。</li>
@@ -262,13 +262,13 @@
 
             <nav class="post-nav" id="postNav" aria-label="上下篇导航">
                 
-                    <a class="post-nav-item" href="/Blog/2026/09/deploy-hexo-github-pages/">
-                        <span class="k">← 上一篇</span><span class="t">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</span>
+                    <a class="post-nav-item" href="/Blog/2026/09/writing-publishing-manual/">
+                        <span class="k">← 上一篇</span><span class="t">mangaka 写作与发布手册：从新建文章到上线</span>
                     </a>
                 
                 
-                    <a class="post-nav-item post-nav-item--next" href="/Blog/2026/09/welcome/">
-                        <span class="k">下一篇 →</span><span class="t">欢迎使用 mangaka 主题</span>
+                    <a class="post-nav-item post-nav-item--next" href="/Blog/2026/09/deploy-hexo-github-pages/">
+                        <span class="k">下一篇 →</span><span class="t">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</span>
                     </a>
                 
             </nav>

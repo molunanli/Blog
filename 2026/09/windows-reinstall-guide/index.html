@@ -242,7 +242,7 @@
 <td>登录账号同步即可，但前提是你记得账号</td>
 </tr>
 </tbody></table></div>
-<h3 id="3-3-驱动（尤其是网卡驱动）"><a href="#3-3-驱动（尤其是网卡驱动）" class="headerlink" title="3.3 驱动（尤其是网卡驱动）"></a>3.3 驱动（尤其是网卡驱动）</h3><div class="note note--warn"><span class="note-title">⚠️ 最大的坑：装完发现上不了网</span>全新安装的系统**通常不带你主板的网卡驱动**——结果就是：装完系统 → 没有网络 → 下载不了驱动 → 陷入死循环。<br><br><b>提前做一件事：</b>找一台能上网的电脑，下载好你这台机器<b>主板（或整机品牌）的网卡驱动</b>，存到 U 盘里。台式机认准主板型号官网，笔记本认准品牌官网。</div>
+<h3 id="3-3-驱动（尤其是网卡驱动）"><a href="#3-3-驱动（尤其是网卡驱动）" class="headerlink" title="3.3 驱动（尤其是网卡驱动）"></a>3.3 驱动（尤其是网卡驱动）</h3><div class="note note--warn"><span class="note-title">⚠️ 最大的坑：装完发现上不了网</span>全新安装的系统<strong>通常不带你主板的网卡驱动</strong>——结果就是：装完系统 → 没有网络 → 下载不了驱动 → 陷入死循环。<br><br><b>提前做一件事：</b>找一台能上网的电脑，下载好你这台机器<b>主板（或整机品牌）的网卡驱动</b>，存到 U 盘里。台式机认准主板型号官网，笔记本认准品牌官网。</div>
 
 <p>如果忘了提前准备，也不是没救——<strong>用手机救急</strong>（第六节有详细做法）。</p>
 <h3 id="3-4-工具"><a href="#3-4-工具" class="headerlink" title="3.4 工具"></a>3.4 工具</h3><ul>
@@ -325,7 +325,7 @@
 </ul>
 <div class="note note--info"><span class="note-title">※ 关于"必须联网登录微软账号"</span>较新版本的 Windows 11 家庭版要求联网并登录微软账号才能完成设置。社区流传过若干绕过方法，但微软一直在封堵，实际可用性随版本变化——<b>不建议当作常规操作依赖</b>。<br><br>顺带一提：登录微软账号对你是<b>有利</b>的——数字许可证会绑定账号，以后重装登录同一账号就能自动激活。</div>
 
-<h2 id="七、装完之后的-10-分钟清单"><a href="#七、装完之后的-10-分钟清单" class="headerlink" title="七、装完之后的 10 分钟清单"></a>七、装完之后的 10 分钟清单</h2><p>系统装好了，但事情还没完。**这一步做不做，决定了新系统是”用着舒服”还是”三天后开始卡”**：</p>
+<h2 id="七、装完之后的-10-分钟清单"><a href="#七、装完之后的-10-分钟清单" class="headerlink" title="七、装完之后的 10 分钟清单"></a>七、装完之后的 10 分钟清单</h2><p>系统装好了，但事情还没完。<strong>这一步做不做，决定了新系统是”用着舒服”还是”三天后开始卡”</strong>：</p>
 <p><img src="/Blog/images/reinstall/03-post-setup-checklist.svg" alt="Windows 装完之后的设置清单：必做、可选与别做"></p>
 <p><em>图 3：装完之后的设置清单——先保证联网，再谈其他。</em></p>
 <h3 id="7-1-必做，按顺序"><a href="#7-1-必做，按顺序" class="headerlink" title="7.1 必做，按顺序"></a>7.1 必做，按顺序</h3><p><strong>① 确认能上网</strong></p>
@@ -350,7 +350,7 @@
 <li><strong>别同时装多个杀毒软件</strong>：互相打架，反而拖慢系统</li>
 <li><strong>别用盗版激活工具</strong>：这是恶意软件的常见载体</li>
 <li><strong>别长期关闭系统更新</strong>：安全补丁是刚需</li>
-<li>**别装”精简版 &#x2F; Ghost 镜像”**：被删减过的系统往往无法正常更新，还可能被植入后门</li>
+<li><strong>别装”精简版 &#x2F; Ghost 镜像”</strong>：被删减过的系统往往无法正常更新，还可能被植入后门</li>
 </ul>
 <h2 id="八、验证与预防"><a href="#八、验证与预防" class="headerlink" title="八、验证与预防"></a>八、验证与预防</h2><p><strong>验证（装完确认这几项）：</strong></p>
 <ul>
@@ -381,7 +381,7 @@
 
 <div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">【案例 B · 全新安装后的&quot;上不了网&quot;】2026-08-22</span><br><span class="line">【现象】U 盘全新装完 Win11，进桌面右下角没有网络图标，连 Wi-Fi 都搜不到</span><br><span class="line">【排查】① 设备管理器 → 网络适配器 → 黄色感叹号，连型号都认不出</span><br><span class="line">      ② 判断：新系统不带这块主板的网卡驱动</span><br><span class="line">      ③ 手边没有其他电脑，也没有提前下驱动</span><br><span class="line">【结论】用数据线连手机开「USB 网络共享」→ 电脑临时上网</span><br><span class="line">       → 下载主板官网的网卡驱动装上 → 网络恢复</span><br><span class="line">       → 教训：如果装系统前先把网卡驱动放进 U 盘，这件事根本不会发生</span><br></pre></td></tr></table></div></div></div>
 
-<p><strong>两个案例对读</strong>：案例 A 说明**”系统坏了”不等于”要格盘”<strong>——先试覆盖安装，可能省掉一整天；案例 B 说明</strong>重装的坑往往不在系统本身，而在那些”你没想到要准备”的东西上**。装前多花十分钟做准备，装后少折腾三小时。</p>
+<p><strong>两个案例对读</strong>：案例 A 说明<strong>“系统坏了”不等于”要格盘”</strong>——先试覆盖安装，可能省掉一整天；案例 B 说明<strong>重装的坑往往不在系统本身，而在那些”你没想到要准备”的东西上</strong>。装前多花十分钟做准备，装后少折腾三小时。</p>
 <h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
 <li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-slow-checkup/">电脑卡到怀疑人生？重装前的 7 步体检</a>》——<strong>决定要不要重装之前必读</strong>，避免白忙一场</li>
 <li>《<a href="https://molunanli.github.io/Blog/2026/09/disk-health-guide/">硬盘告急：坏道、掉盘、SMART 黄了</a>》——重装前先看硬盘健康，坏盘重装是浪费时间；数据抢救流程也在那篇</li>
@@ -515,11 +515,11 @@
                     
                         <li><a href="/Blog/2026/09/bsod-dump-guide/">蓝屏不再靠拍照：读内存转储文件，精确到是哪个驱动干的</a></li>
                     
+                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
+                    
                         <li><a href="/Blog/2026/09/malware-popup-cleanup/">弹窗广告与流氓软件清理：从安全模式清场到 Autoruns 揪根</a></li>
                     
                         <li><a href="/Blog/2026/09/pc-random-restart/">电脑不定时自动重启/关机？三步定位真凶，别急着换电源</a></li>
-                    
-                        <li><a href="/Blog/2026/09/pc-black-screen/">开机黑屏完全攻略：先分清&#34;进不了 BIOS&#34;还是&#34;进不了系统&#34;，再照着修</a></li>
                     
                 </ul>
             </section>
