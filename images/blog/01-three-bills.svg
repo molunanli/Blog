@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 500" role="img" aria-label="自建博客与平台托管的三笔账对比：钱、时间、维护，外加一笔失控风险">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .nm { font-size: 14.5px; font-weight: 700; }
+    .vl { font-size: 11.5px; fill: #4c463e; }
+    .num { font-size: 20px; font-weight: 700; }
+    .cap { font-size: 10.5px; fill: #8a8175; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .wt { font-size: 11.5px; font-weight: 700; fill: #fffdf6; }
+    .card { fill: #fffdf6; stroke: #e0d6c0; stroke-width: 1.5; }
+    .c1 { fill: #2f5d8a; }
+    .c2 { fill: #4f7f47; }
+    .c3 { fill: #c9962a; }
+    .c4 { fill: #cc3b3b; }
+    .t1 { fill: #2f5d8a; }
+    .t2 { fill: #3d6338; }
+    .t3 { fill: #a8791f; }
+    .t4 { fill: #cc3b3b; }
+  </style>
+
+  <rect class="bg" width="680" height="500"/>
+
+  <text class="t th" x="34" y="38">自建博客到底贵不贵：三笔账，外加一笔</text>
+  <text class="t ts" x="34" y="60">和平台托管逐项对比——数字比立场好用</text>
+
+  <!-- ① 钱 -->
+  <rect class="card" x="30" y="84" width="620" height="88" rx="10"/>
+  <circle class="c1" cx="58" cy="118" r="15"/>
+  <text class="t wt" x="58" y="123" text-anchor="middle">1</text>
+  <text class="t nm" x="84" y="123">第一笔：钱</text>
+  <text class="t vl" x="84" y="146">平台托管：0 元，域名和带宽都由平台出</text>
+  <text class="t vl" x="84" y="163">自建博客：0 元起，买域名约 60~120 元 / 年</text>
+  <text class="t num t1" x="634" y="131" text-anchor="end">≈ 0 元</text>
+  <text class="t cap" x="634" y="151" text-anchor="end">一年的全部开销</text>
+
+  <!-- ② 时间 -->
+  <rect class="card" x="30" y="182" width="620" height="88" rx="10"/>
+  <circle class="c2" cx="58" cy="216" r="15"/>
+  <text class="t wt" x="58" y="221" text-anchor="middle">2</text>
+  <text class="t nm" x="84" y="221">第二笔：时间</text>
+  <text class="t vl" x="84" y="244">平台托管：注册就能写，五分钟</text>
+  <text class="t vl" x="84" y="261">自建博客：首次搭站约 5 小时，之后每篇多 1 分钟</text>
+  <text class="t num t2" x="634" y="229" text-anchor="end">5 小时</text>
+  <text class="t cap" x="634" y="249" text-anchor="end">一次性，不是每篇</text>
+
+  <!-- ③ 维护 -->
+  <rect class="card" x="30" y="280" width="620" height="88" rx="10"/>
+  <circle class="c3" cx="58" cy="314" r="15"/>
+  <text class="t wt" x="58" y="319" text-anchor="middle">3</text>
+  <text class="t nm" x="84" y="319">第三笔：维护</text>
+  <text class="t vl" x="84" y="342">平台托管：有人修，但会改版、会调推荐</text>
+  <text class="t vl" x="84" y="359">自建博客：纯静态无数据库，攻击面接近零</text>
+  <text class="t num t3" x="634" y="327" text-anchor="end">2 小时 / 年</text>
+  <text class="t cap" x="634" y="347" text-anchor="end">一年体检两次就够</text>
+
+  <!-- ④ 失控风险 -->
+  <rect class="card" x="30" y="378" width="620" height="88" rx="10"/>
+  <circle class="c4" cx="58" cy="412" r="15"/>
+  <text class="t wt" x="58" y="417" text-anchor="middle">4</text>
+  <text class="t nm" x="84" y="417">外加一笔：失控风险</text>
+  <text class="t vl" x="84" y="440">平台托管：改版、限流、误判封号，都发生过</text>
+  <text class="t vl" x="84" y="457">自建博客：只有你自己能关掉它</text>
+  <text class="t num t4" x="634" y="425" text-anchor="end">1 个人</text>
+  <text class="t cap" x="634" y="445" text-anchor="end">出问题没人兜底</text>
+
+  <text class="t ft" x="34" y="490">前三笔都是一次性成本，长期要付的只有最后一笔：没人替你兜底。</text>
+</svg>

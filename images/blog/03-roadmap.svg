@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 490" role="img" aria-label="独立博客实战栏目十二条路线图，分四条线：上线线四篇、内容线三篇、体验线三篇、增长线两篇">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 13px; fill: #4c463e; }
+    .nm { font-size: 13.5px; font-weight: 700; }
+    .cnt { font-size: 10.5px; fill: #8a8175; }
+    .ds { font-size: 11.5px; fill: #4c463e; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .wt { font-size: 11px; font-weight: 700; fill: #fffdf6; }
+    .card { fill: #fffdf6; stroke: #e0d6c0; stroke-width: 1.5; }
+    .c1 { fill: #2f5d8a; }
+    .c2 { fill: #4f7f47; }
+    .c3 { fill: #c9962a; }
+    .c4 { fill: #cc3b3b; }
+    .t1 { fill: #2f5d8a; }
+    .t2 { fill: #3d6338; }
+    .t3 { fill: #a8791f; }
+    .t4 { fill: #cc3b3b; }
+  </style>
+
+  <rect class="bg" width="680" height="490"/>
+
+  <text class="t th" x="34" y="38">全季 12 篇：四条线，顺序不能反</text>
+  <text class="t ts" x="34" y="60">先能打开，再能读，最后才谈有没有人来</text>
+
+  <!-- ① 上线线 -->
+  <rect class="card" x="30" y="84" width="620" height="82" rx="10"/>
+  <rect x="36" y="96" width="4" height="58" rx="2" class="c1"/>
+  <text class="t nm t1" x="54" y="114">上线线</text>
+  <text class="t cnt" x="54" y="134">4 篇 · 第 1~4 篇</text>
+  <circle class="c1" cx="196" cy="125" r="14"/>
+  <text class="t wt" x="196" y="129" text-anchor="middle">1</text>
+  <circle class="c1" cx="236" cy="125" r="14"/>
+  <text class="t wt" x="236" y="129" text-anchor="middle">2</text>
+  <circle class="c1" cx="276" cy="125" r="14"/>
+  <text class="t wt" x="276" y="129" text-anchor="middle">3</text>
+  <circle class="c1" cx="316" cy="125" r="14"/>
+  <text class="t wt" x="316" y="129" text-anchor="middle">4</text>
+  <text class="t ds" x="352" y="118">从空目录到能被访问的站</text>
+  <text class="t ds" x="352" y="138">含"暂时不买域名"的留后路方案</text>
+
+  <!-- ② 内容线 -->
+  <rect class="card" x="30" y="174" width="620" height="82" rx="10"/>
+  <rect x="36" y="186" width="4" height="58" rx="2" class="c2"/>
+  <text class="t nm t2" x="54" y="204">内容线</text>
+  <text class="t cnt" x="54" y="224">3 篇 · 第 5~7 篇</text>
+  <circle class="c2" cx="196" cy="215" r="14"/>
+  <text class="t wt" x="196" y="219" text-anchor="middle">5</text>
+  <circle class="c2" cx="236" cy="215" r="14"/>
+  <text class="t wt" x="236" y="219" text-anchor="middle">6</text>
+  <circle class="c2" cx="276" cy="215" r="14"/>
+  <text class="t wt" x="276" y="219" text-anchor="middle">7</text>
+  <text class="t ds" x="352" y="208">怎么写得不崩、配图不糊</text>
+  <text class="t ds" x="352" y="228">换个渲染器也不散架</text>
+
+  <!-- ③ 体验线 -->
+  <rect class="card" x="30" y="264" width="620" height="82" rx="10"/>
+  <rect x="36" y="276" width="4" height="58" rx="2" class="c3"/>
+  <text class="t nm t3" x="54" y="294">体验线</text>
+  <text class="t cnt" x="54" y="314">3 篇 · 第 8~10 篇</text>
+  <circle class="c3" cx="196" cy="305" r="14"/>
+  <text class="t wt" x="196" y="309" text-anchor="middle">8</text>
+  <circle class="c3" cx="236" cy="305" r="14"/>
+  <text class="t wt" x="236" y="309" text-anchor="middle">9</text>
+  <circle class="c3" cx="276" cy="305" r="14"/>
+  <text class="t wt" x="276" y="309" text-anchor="middle">10</text>
+  <text class="t ds" x="352" y="298">搜索、评论、手机端</text>
+  <text class="t ds" x="352" y="318">决定读者留不留得住</text>
+
+  <!-- ④ 增长线 -->
+  <rect class="card" x="30" y="354" width="620" height="82" rx="10"/>
+  <rect x="36" y="366" width="4" height="58" rx="2" class="c4"/>
+  <text class="t nm t4" x="54" y="384">增长线</text>
+  <text class="t cnt" x="54" y="404">2 篇 · 第 11~12 篇</text>
+  <circle class="c4" cx="196" cy="395" r="14"/>
+  <text class="t wt" x="196" y="399" text-anchor="middle">11</text>
+  <circle class="c4" cx="236" cy="395" r="14"/>
+  <text class="t wt" x="236" y="399" text-anchor="middle">12</text>
+  <text class="t ds" x="352" y="388">SEO 与统计</text>
+  <text class="t ds" x="352" y="408">决定有没有人看得到</text>
+
+  <text class="t ft" x="34" y="468">第 2、5 篇是本站已有的旧文，只加系列导航，不重写；其余按编号推进。</text>
+</svg>
