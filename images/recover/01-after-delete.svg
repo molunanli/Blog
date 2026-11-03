@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" role="img" aria-label="发现误删后的黄金十分钟：马上要做的三件事，和三个绝对不能做的动作">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .hd { font-size: 14px; font-weight: 700; }
+    .nm { font-size: 12.5px; font-weight: 700; }
+    .ds { font-size: 10.5px; fill: #4c463e; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .wt { font-size: 11.5px; font-weight: 700; fill: #fffdf6; }
+    .ca { fill: #fffdf6; stroke: #4f7f47; stroke-width: 1.5; }
+    .cb { fill: #fffdf6; stroke: #cc3b3b; stroke-width: 1.5; }
+    .g { fill: #4f7f47; }
+    .r { fill: #cc3b3b; }
+    .tg1 { fill: #3d6338; }
+    .tg2 { fill: #b02f2f; }
+    .ln { stroke: #e2d8c2; stroke-width: 1; }
+  </style>
+
+  <rect class="bg" width="680" height="400"/>
+
+  <text class="t th" x="34" y="38">发现误删后的十分钟：做什么，和千万别做什么</text>
+  <text class="t ts" x="34" y="60">你在这十分钟里的每一个动作，都在决定数据还能不能被找回来</text>
+
+  <!-- 左：马上做 -->
+  <rect class="ca" x="30" y="84" width="300" height="232" rx="10"/>
+  <text class="t hd tg1" x="48" y="116">✔ 马上做</text>
+  <line class="ln" x1="48" y1="128" x2="312" y2="128"/>
+
+  <circle class="g" cx="54" cy="158" r="12"/>
+  <text class="t wt" x="54" y="162" text-anchor="middle">1</text>
+  <text class="t nm" x="76" y="154">停止一切写入</text>
+  <text class="t ds" x="76" y="172">别再存文件、别下载、别装东西</text>
+
+  <circle class="g" cx="54" cy="212" r="12"/>
+  <text class="t wt" x="54" y="216" text-anchor="middle">2</text>
+  <text class="t nm" x="76" y="208">拔掉那块盘，或直接关机</text>
+  <text class="t ds" x="76" y="226">移动硬盘/存储卡：立刻拔；系统盘：关机</text>
+
+  <circle class="g" cx="54" cy="266" r="12"/>
+  <text class="t wt" x="54" y="270" text-anchor="middle">3</text>
+  <text class="t nm" x="76" y="262">换一台电脑，或用 U 盘启动</text>
+  <text class="t ds" x="76" y="280">正常情况下别在这台机器上做任何操作</text>
+
+  <!-- 右：千万别 -->
+  <rect class="cb" x="350" y="84" width="300" height="232" rx="10"/>
+  <text class="t hd tg2" x="368" y="116">✘ 千万别</text>
+  <line class="ln" x1="368" y1="128" x2="632" y2="128"/>
+
+  <circle class="r" cx="374" cy="158" r="12"/>
+  <text class="t wt" x="374" y="162" text-anchor="middle">1</text>
+  <text class="t nm" x="396" y="154">把恢复软件装到原盘</text>
+  <text class="t ds" x="396" y="172">安装过程本身就是写入，直接覆盖</text>
+
+  <circle class="r" cx="374" cy="212" r="12"/>
+  <text class="t wt" x="374" y="216" text-anchor="middle">2</text>
+  <text class="t nm" x="396" y="208">跑 chkdsk、整理碎片</text>
+  <text class="t ds" x="396" y="226">它们会改文件系统，把线索一起抹掉</text>
+
+  <circle class="r" cx="374" cy="266" r="12"/>
+  <text class="t wt" x="374" y="270" text-anchor="middle">3</text>
+  <text class="t nm" x="396" y="262">反复重启、反复试</text>
+  <text class="t ds" x="396" y="280">每次开机都在往系统盘写入新东西</text>
+
+  <text class="t ft" x="34" y="348">一句话：你在抢救一具"还没凉"的现场，别动它。写入一次，覆盖一次，覆盖了就真的没了。</text>
+  <text class="t ft" x="34" y="372">唯一例外：如果那块盘已经在咔咔响，别做任何软件操作，直接断电送专业恢复。</text>
+</svg>

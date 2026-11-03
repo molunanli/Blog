@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" role="img" aria-label="能不能救的判断矩阵：机械硬盘、固态硬盘、U 盘与存储卡，在删除、快速格式化、完全格式化后的恢复可能性">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .ch { font-size: 12px; font-weight: 700; }
+    .rh { font-size: 11.5px; font-weight: 700; fill: #1c1a17; }
+    .v1 { font-size: 11.5px; font-weight: 700; fill: #3d6338; }
+    .v2 { font-size: 11.5px; font-weight: 700; fill: #a8791f; }
+    .v3 { font-size: 11.5px; font-weight: 700; fill: #b02f2f; }
+    .sub { font-size: 10px; fill: #8a8175; }
+    .ft { font-size: 11px; fill: #6b6459; }
+    .card { fill: #fffdf6; stroke: #e0d6c0; stroke-width: 1.5; }
+    .hd { fill: #f1e8d4; }
+    .ln { stroke: #e5dbc5; stroke-width: 1; }
+    .warnt { font-size: 11.5px; font-weight: 700; fill: #b02f2f; }
+  </style>
+
+  <rect class="bg" width="680" height="380"/>
+
+  <text class="t th" x="34" y="38">能不能救：先看介质，再看你做错了什么</text>
+  <text class="t ts" x="34" y="60">同样是"删了"，机械盘和固态盘的结局可能完全相反</text>
+
+  <rect class="card" x="30" y="78" width="620" height="222" rx="8"/>
+  <rect class="hd" x="30" y="78" width="620" height="38" rx="8"/>
+
+  <text class="t ch" x="46" y="102">介质</text>
+  <text class="t ch" x="200" y="102">刚删除</text>
+  <text class="t ch" x="350" y="102">快速格式化</text>
+  <text class="t ch" x="510" y="102">完全格式化 / 写满过</text>
+
+  <line class="ln" x1="30" y1="116" x2="650" y2="116"/>
+  <text class="t rh" x="46" y="146">机械硬盘 HDD</text>
+  <text class="t sub" x="46" y="162">数据在盘片上</text>
+  <text class="t v1" x="200" y="152">大概率能救</text>
+  <text class="t v1" x="350" y="152">大多能救</text>
+  <text class="t v3" x="510" y="152">救不回来</text>
+
+  <line class="ln" x1="30" y1="176" x2="650" y2="176"/>
+  <text class="t rh" x="46" y="206">固态硬盘 SSD</text>
+  <text class="t sub" x="46" y="222">数据在闪存颗粒</text>
+  <text class="t v2" x="200" y="212">窗口极短</text>
+  <text class="t v3" x="350" y="212">通常没戏</text>
+  <text class="t v3" x="510" y="212">救不回来</text>
+
+  <line class="ln" x1="30" y1="236" x2="650" y2="236"/>
+  <text class="t rh" x="46" y="266">U 盘 / 存储卡</text>
+  <text class="t sub" x="46" y="282">看主控是否支持</text>
+  <text class="t v2" x="200" y="272">多半能救</text>
+  <text class="t v2" x="350" y="272">看情况</text>
+  <text class="t v3" x="510" y="272">救不回来</text>
+
+  <text class="t warnt" x="34" y="330">SSD 为什么不一样：TRIM 会在删除后主动擦除数据块，几秒到几分钟就完成。</text>
+  <text class="t ft" x="34" y="350">所以"删了马上关机能救回来"这条经验，只对机械硬盘成立；对固态盘，时间以分钟计。</text>
+  <text class="t ft" x="34" y="368">另外：任何介质，只要在删除后又往这块盘写过东西，对应位置的数据就已经被覆盖了。</text>
+</svg>

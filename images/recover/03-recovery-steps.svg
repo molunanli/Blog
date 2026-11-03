@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" role="img" aria-label="恢复文件六步流程：接对介质、扫描、筛选、恢复到另一块盘、校验、修复与再备份">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .nm { font-size: 12.5px; font-weight: 700; }
+    .ds { font-size: 10px; fill: #4c463e; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .wt { font-size: 11.5px; font-weight: 700; fill: #fffdf6; }
+    .card { fill: #fffdf6; stroke: #e0d6c0; stroke-width: 1.5; }
+    .key { fill: #fffdf6; stroke: #cc3b3b; stroke-width: 2; }
+    .c { fill: #2f5d8a; }
+    .cr { fill: #cc3b3b; }
+    .tn { fill: #2f5d8a; }
+    .tr { fill: #b02f2f; }
+  </style>
+
+  <rect class="bg" width="680" height="400"/>
+
+  <text class="t th" x="34" y="38">六步走完：从"删掉了"到"文件回来了"</text>
+  <text class="t ts" x="34" y="60">第 1 步和第 4 步是红线，踩了就白忙</text>
+
+  <!-- 第 1 行 -->
+  <rect class="key" x="30" y="84" width="196" height="118" rx="10"/>
+  <circle class="cr" cx="54" cy="110" r="13"/>
+  <text class="t wt" x="54" y="114" text-anchor="middle">1</text>
+  <text class="t nm tr" x="76" y="115">接对介质</text>
+  <text class="t ds" x="44" y="142">把那块盘接到另一台电脑</text>
+  <text class="t ds" x="44" y="160">或 PE 启动盘上</text>
+  <text class="t ds" x="44" y="182">绝不在原系统里直接操作</text>
+
+  <rect class="card" x="242" y="84" width="196" height="118" rx="10"/>
+  <circle class="c" cx="266" cy="110" r="13"/>
+  <text class="t wt" x="266" y="114" text-anchor="middle">2</text>
+  <text class="t nm tn" x="288" y="115">扫描</text>
+  <text class="t ds" x="256" y="142">选对模式：按文件表扫，还是</text>
+  <text class="t ds" x="256" y="160">按文件签名盲扫</text>
+  <text class="t ds" x="256" y="182">盘大就耐心等，几小时正常</text>
+
+  <rect class="card" x="454" y="84" width="196" height="118" rx="10"/>
+  <circle class="c" cx="478" cy="110" r="13"/>
+  <text class="t wt" x="478" y="114" text-anchor="middle">3</text>
+  <text class="t nm tn" x="500" y="115">筛选</text>
+  <text class="t ds" x="468" y="142">按类型、大小、修改时间筛</text>
+  <text class="t ds" x="468" y="160">先看预览缩略图</text>
+  <text class="t ds" x="468" y="182">预览都打不开的就别恢复了</text>
+
+  <!-- 第 2 行 -->
+  <rect class="key" x="30" y="216" width="196" height="118" rx="10"/>
+  <circle class="cr" cx="54" cy="242" r="13"/>
+  <text class="t wt" x="54" y="246" text-anchor="middle">4</text>
+  <text class="t nm tr" x="76" y="247">恢复到另一块盘</text>
+  <text class="t ds" x="44" y="274">目标是另一个物理硬盘</text>
+  <text class="t ds" x="44" y="292">存回原盘 = 边恢复边覆盖</text>
+  <text class="t ds" x="44" y="314">这一步做错，前功尽弃</text>
+
+  <rect class="card" x="242" y="216" width="196" height="118" rx="10"/>
+  <circle class="c" cx="266" cy="242" r="13"/>
+  <text class="t wt" x="266" y="246" text-anchor="middle">5</text>
+  <text class="t nm tn" x="288" y="247">校验</text>
+  <text class="t ds" x="256" y="274">逐个打开，别只看文件名</text>
+  <text class="t ds" x="256" y="292">照片看能不能解码，文档看</text>
+  <text class="t ds" x="256" y="310">能不能打开</text>
+
+  <rect class="card" x="454" y="216" width="196" height="118" rx="10"/>
+  <circle class="c" cx="478" cy="242" r="13"/>
+  <text class="t wt" x="478" y="246" text-anchor="middle">6</text>
+  <text class="t nm tn" x="500" y="247">修复与再备份</text>
+  <text class="t ds" x="468" y="274">打不开的照片/文档用修复</text>
+  <text class="t ds" x="468" y="292">工具过一遍</text>
+  <text class="t ds" x="468" y="314">救回来的立刻进备份</text>
+
+  <text class="t ft" x="34" y="366">红色两步是关于"别再弄坏"的；中间三步是关于"尽量多捞一点"的。顺序不能调。</text>
+</svg>
