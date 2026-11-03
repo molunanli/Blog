@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 330" role="img" aria-label="三种悬浮提示做法对比：原生 title、CSS 伪元素、JS 浮层，推荐 JS 浮层">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .nm { font-size: 13.5px; font-weight: 700; }
+    .k { font-size: 10px; font-weight: 700; fill: #8a8175; }
+    .v { font-size: 11px; fill: #4c463e; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .wt { font-size: 11.5px; font-weight: 700; fill: #fffdf6; }
+    .ca { fill: #fffdf6; stroke: #c6bba3; stroke-width: 1.5; }
+    .cb { fill: #fffdf6; stroke: #c6bba3; stroke-width: 1.5; }
+    .cc { fill: #fffdf6; stroke: #2f5d8a; stroke-width: 2; }
+    .c1 { fill: #8a8175; }
+    .c3 { fill: #2f5d8a; }
+    .t1 { fill: #6b6459; }
+    .t3 { fill: #2f5d8a; }
+    .ln { stroke: #e2d8c2; stroke-width: 1; }
+    .badge { fill: #2f5d8a; }
+  </style>
+
+  <rect class="bg" width="680" height="330"/>
+
+  <text class="t th" x="34" y="38">三种做法，差别比想象的大</text>
+  <text class="t ts" x="34" y="60">都叫"悬浮提示"，能做的事完全不是一回事</text>
+
+  <!-- ① 原生 title -->
+  <rect class="ca" x="30" y="84" width="196" height="176" rx="10"/>
+  <circle class="c1" cx="54" cy="112" r="13"/>
+  <text class="t wt" x="54" y="116" text-anchor="middle">1</text>
+  <text class="t nm t1" x="76" y="117">原生 title</text>
+  <line class="ln" x1="44" y1="132" x2="212" y2="132"/>
+  <text class="t k" x="44" y="154">优点</text>
+  <text class="t v" x="44" y="172">零代码，浏览器自带</text>
+  <text class="t k" x="44" y="198">缺点</text>
+  <text class="t v" x="44" y="216">延迟约 1 秒</text>
+  <text class="t v" x="44" y="234">样式完全不可控</text>
+
+  <!-- ② CSS ::after -->
+  <rect class="cb" x="242" y="84" width="196" height="176" rx="10"/>
+  <circle class="c1" cx="266" cy="112" r="13"/>
+  <text class="t wt" x="266" y="116" text-anchor="middle">2</text>
+  <text class="t nm t1" x="288" y="117">CSS ::after</text>
+  <line class="ln" x1="256" y1="132" x2="424" y2="132"/>
+  <text class="t k" x="256" y="154">优点</text>
+  <text class="t v" x="256" y="172">零 JS，纯样式</text>
+  <text class="t k" x="256" y="198">缺点</text>
+  <text class="t v" x="256" y="216">被滚动容器裁掉</text>
+  <text class="t v" x="256" y="234">判断不了是否截断</text>
+
+  <!-- ③ JS 浮层 -->
+  <rect class="cc" x="454" y="84" width="196" height="176" rx="10"/>
+  <circle class="c3" cx="478" cy="112" r="13"/>
+  <text class="t wt" x="478" y="116" text-anchor="middle">3</text>
+  <text class="t nm t3" x="500" y="117">JS 浮层</text>
+  <rect class="badge" x="598" y="102" width="40" height="18" rx="9"/>
+  <text class="t wt" x="618" y="115" text-anchor="middle">推荐</text>
+  <line class="ln" x1="468" y1="132" x2="636" y2="132"/>
+  <text class="t k" x="468" y="154">优点</text>
+  <text class="t v" x="468" y="172">只在真截断时出现</text>
+  <text class="t k" x="468" y="198">缺点</text>
+  <text class="t v" x="468" y="216">多写约 30 行</text>
+  <text class="t v" x="468" y="234">要自己管位置</text>
+
+  <text class="t ft" x="34" y="292">第 3 种的额外好处：位置能夹进视口，键盘 Tab 聚焦时也能显示。</text>
+  <text class="t ft" x="34" y="312">钩子是 scrollWidth &gt; clientWidth —— 这一行代码顺手解决了"该不该弹"。</text>
+</svg>

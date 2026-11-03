@@ -409,11 +409,87 @@
         var tocEls = headings.map(function (h) { return document.getElementById(h.id); })
             .filter(function (el) { return !!el; });
 
+        /* 目录长标题：单行省略后，用自绘提示展示完整文本。
+           不用纯 CSS ::after 的原因：.toc-list 是滚动容器，
+           overflow 会把溢出的伪元素裁掉。 */
+        (function initTocTip() {
+            if (!tocLinks.length) return;
+            var canHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+            var tip = null;
+
+            function ensureTip() {
+                if (tip) return tip;
+                tip = document.createElement('div');
+                tip.className = 'toc-tip';
+                tip.setAttribute('role', 'tooltip');
+                document.body.appendChild(tip);
+                return tip;
+            }
+
+            function place(link) {
+                var t = ensureTip();
+                var r = link.getBoundingClientRect();
+                var left = Math.max(10, Math.min(r.left, window.innerWidth - t.offsetWidth - 10));
+                var top = r.bottom + 8;
+                if (top + t.offsetHeight > window.innerHeight - 10) {
+                    top = Math.max(10, r.top - t.offsetHeight - 8);
+                }
+                t.style.transform = 'translate(' + Math.round(left) + 'px,' + Math.round(top) + 'px)';
+            }
+
+            function show(link) {
+                // 没被截断就不弹，避免"提示和原文一模一样"的噪音
+                if (link.scrollWidth <= link.clientWidth + 1) return;
+                var t = ensureTip();
+                var full = link.getAttribute('data-toc-text') || link.textContent;
+                t.textContent = full;
+                t.classList.add('is-on');
+                place(link);
+            }
+
+            function hide() {
+                if (tip) tip.classList.remove('is-on');
+            }
+
+            tocLinks.forEach(function (link) {
+                var full = link.getAttribute('data-toc-text');
+                if (!canHover) return;
+                link.addEventListener('mouseenter', function () {
+                    if (full) link.removeAttribute('title'); // 屏蔽原生 title，改用自绘提示
+                    show(link);
+                });
+                link.addEventListener('mouseleave', function () {
+                    if (full) link.setAttribute('title', full);
+                    hide();
+                });
+                link.addEventListener('focus', function () { show(link); });
+                link.addEventListener('blur', hide);
+            });
+
+            window.addEventListener('scroll', hide, { passive: true });
+            window.addEventListener('resize', hide);
+        })();
+
+        /* 让当前高亮项保持在目录可视范围内（只滚容器，不滚页面） */
+        function keepTocVisible(link) {
+            var box = window.innerWidth >= 900
+                ? link.closest('.toc-sticky')
+                : document.getElementById('tocList');
+            if (!box || box.scrollHeight - box.clientHeight < 8) return;
+            var lr = link.getBoundingClientRect();
+            var br = box.getBoundingClientRect();
+            if (br.height < 8) return;
+            var pad = 6;
+            if (lr.top < br.top + pad) box.scrollTop -= (br.top + pad - lr.top);
+            else if (lr.bottom > br.bottom - pad) box.scrollTop += (lr.bottom - br.bottom + pad);
+        }
+
         function setActiveToc(activeId) {
             tocLinks.forEach(function (l) { l.classList.remove('is-active', 'is-parent'); });
             var cur = linkById[activeId];
             if (!cur) return;
             cur.classList.add('is-active');
+            keepTocVisible(cur);
             if (cur.classList.contains('toc-link--h3')) {
                 var node = document.getElementById(activeId);
                 while (node && node !== articleBody) {

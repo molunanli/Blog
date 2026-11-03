@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 460" role="img" aria-label="目录项被 flex 压扁的对比图：改前两行文字溢出一行到下一项上，改后单行省略">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .cap { font-size: 12px; font-weight: 700; }
+    .tx { font-size: 11.5px; fill: #1c1a17; }
+    .bad { font-size: 11.5px; fill: #cc3b3b; font-weight: 700; }
+    .why { font-size: 11.5px; font-weight: 700; fill: #8a8175; }
+    .ln { font-size: 11.5px; fill: #4c463e; }
+    .box { fill: none; stroke: #b9ae98; stroke-width: 1.5; stroke-dasharray: 5 4; }
+    .item { fill: #fffdf6; stroke: #e0d6c0; stroke-width: 1.5; }
+    .itemBad { fill: #fffdf6; stroke: #cc3b3b; stroke-width: 2; }
+    .itemOk { fill: #fffdf6; stroke: #2f5d8a; stroke-width: 2; }
+    .band { fill: #fffdf6; stroke: #e0d6c0; stroke-width: 1.5; }
+    .red { fill: #cc3b3b; }
+    .blue { fill: #2f5d8a; }
+  </style>
+
+  <rect class="bg" width="680" height="460"/>
+
+  <text class="t th" x="34" y="38">一条目录项，是怎么被压扁的</text>
+  <text class="t ts" x="34" y="60">同样一段文字，改前改后各是什么样子</text>
+
+  <!-- 改前 -->
+  <text class="t cap red" x="36" y="92">改前：两行 → 被压回 40px</text>
+  <rect class="box" x="36" y="104" width="300" height="210" rx="6"/>
+  <rect class="itemBad" x="46" y="114" width="280" height="40" rx="3"/>
+  <text class="t tx" x="56" y="139">一、先把两件事分开：写东西，和拥</text>
+  <text class="t bad" x="56" y="157">有一个站</text>
+  <rect class="item" x="46" y="162" width="280" height="40" rx="3"/>
+  <text class="t tx" x="56" y="187">二、三笔账</text>
+  <rect class="item" x="46" y="208" width="280" height="40" rx="3"/>
+  <text class="t tx" x="56" y="233">三、自建能得到什么</text>
+  <rect class="item" x="46" y="254" width="280" height="40" rx="3"/>
+  <text class="t tx" x="56" y="279">四、自建会失去什么</text>
+
+  <!-- 改后 -->
+  <text class="t cap blue" x="352" y="92">改后：单行 → 省略号收尾</text>
+  <rect class="box" x="352" y="104" width="300" height="210" rx="6"/>
+  <rect class="itemOk" x="362" y="114" width="280" height="40" rx="3"/>
+  <text class="t tx" x="372" y="139">一、先把两件事分开：写东西…</text>
+  <rect class="item" x="362" y="162" width="280" height="40" rx="3"/>
+  <text class="t tx" x="372" y="187">二、三笔账</text>
+  <rect class="item" x="362" y="208" width="280" height="40" rx="3"/>
+  <text class="t tx" x="372" y="233">三、自建能得到什么</text>
+  <rect class="item" x="362" y="254" width="280" height="40" rx="3"/>
+  <text class="t tx" x="372" y="279">四、自建会失去什么</text>
+
+  <!-- 解释 -->
+  <rect class="band" x="30" y="326" width="620" height="110" rx="8"/>
+  <text class="t why" x="46" y="350">为什么会这样</text>
+  <text class="t ln" x="46" y="374">① 这段文字要两行，实高 56px；但 .toc-link 只给了 min-height: 40px</text>
+  <text class="t ln" x="46" y="396">② .toc-list 限高，列向 flex 默认 flex-shrink: 1，把它压回 40px</text>
+  <text class="t ln" x="46" y="418">③ overflow 还是 visible，多出来的那行就垮到下一项上</text>
+</svg>

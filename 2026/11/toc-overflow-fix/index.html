@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>一条目录项被压扁了：flex 收缩、省略号与悬浮提示 · 我的博客</title>
+<meta name="description" content="文章目录里有个长标题，换行之后第二行跑到了下一项的头上。第一反应是加省略号，但加了才发现没用——真正把它压扁的不是文字太长，是 flex-shrink。这篇记录一次真实的排版翻车：怎么用 DevTools 量出病灶、为什么两行 CSS 就能修好、以及悬浮提示的三种做法为什么只有第三种能用。附完整代码">
+<meta name="theme-color" content="#f7f1e3">
+
+<!-- 防主题闪烁：在任何渲染前确定主题 -->
+<script>
+(function () {
+    var k = 'manga-blog-theme';
+    var saved = null;
+    try { saved = localStorage.getItem(k); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/Blog/css/style.css">
+<link rel="alternate" href="/Blog/atom.xml" title="我的博客" type="application/atom+xml">
+<script>window.SEARCH_JSON_URL = '/Blog/search.json';</script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body data-root="/Blog/">
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="site-header">
+    <div class="shell">
+        <nav class="navbar" aria-label="主导航">
+            <a class="brand" href="/Blog/" aria-label="我的博客 首页">
+                <span class="brand-seal" aria-hidden="true">博客</span>
+                我的博客
+            </a>
+
+            <ul class="nav-links">
+                
+                    
+                    <li><a href="/Blog/" data-nav="/">首页</a></li>
+                
+                    
+                    <li><a href="/Blog/archives" data-nav="/archives">归档</a></li>
+                
+                    
+                    <li><a href="/Blog/tags" data-nav="/tags">标签</a></li>
+                
+                    
+                    <li><a href="/Blog/categories" data-nav="/categories">分类</a></li>
+                
+                    
+                    <li><a href="/Blog/about" data-nav="/about">关于</a></li>
+                
+            </ul>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn" type="button" aria-label="搜索文章" title="搜索（Ctrl / ⌘ + K）">🔍</button>
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="切换至暗色模式" aria-pressed="false" title="切换至暗色模式">🌙</button>
+                <button class="icon-btn burger" id="burgerBtn" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="drawer">☰</button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<nav class="drawer" id="drawer" aria-label="移动端导航" aria-hidden="true">
+    <div class="drawer-head">
+        <span class="drawer-title">📖 目录导航</span>
+        <button class="icon-btn" id="drawerClose" type="button" aria-label="关闭菜单">✕</button>
+    </div>
+    
+        
+        <a href="/Blog/" data-nav="/">首页</a>
+    
+        
+        <a href="/Blog/archives" data-nav="/archives">归档</a>
+    
+        
+        <a href="/Blog/tags" data-nav="/tags">标签</a>
+    
+        
+        <a href="/Blog/categories" data-nav="/categories">分类</a>
+    
+        
+        <a href="/Blog/about" data-nav="/about">关于</a>
+    
+    <p class="drawer-note">我的博客 — 日式漫画风 · Hexo 主题</p>
+</nav>
+
+
+
+<main class="site-main" id="articleRoot"
+      data-post-id="toc-overflow-fix"
+      data-post-title="一条目录项被压扁了：flex 收缩、省略号与悬浮提示"
+      data-post-likes="0">
+
+    
+
+<script>
+    /* 供 app.js 的目录滚动高亮使用（headings 由模板计算） */
+    var headings = [{"level":"2","id":"一、先把现象说准","text":"一、先把现象说准"},{"level":"2","id":"二、为什么加了省略号也没用","text":"二、为什么加了省略号也没用"},{"level":"2","id":"三、定位：把盒子量一遍","text":"三、定位：把盒子量一遍"},{"level":"2","id":"四、修法：两行-CSS","text":"四、修法：两行 CSS"},{"level":"2","id":"五、顺手修掉的第二个问题","text":"五、顺手修掉的第二个问题"},{"level":"2","id":"六、省略号之后：完整标题怎么看","text":"六、省略号之后：完整标题怎么看"},{"level":"2","id":"七、模板层要配合改一行","text":"七、模板层要配合改一行"},{"level":"2","id":"八、滚动时高亮项跑出视野","text":"八、滚动时高亮项跑出视野"},{"level":"2","id":"九、验证清单","text":"九、验证清单"},{"level":"2","id":"十、三条经验","text":"十、三条经验"},{"level":"2","id":"相关阅读","text":"相关阅读"}];
+</script>
+
+<div class="shell">
+    <nav class="crumbs" aria-label="面包屑导航">
+        <a href="/Blog/">首页</a><span class="sep" aria-hidden="true">›</span>
+        
+            <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a><span class="sep" aria-hidden="true">›</span>
+        
+        <span id="crumbCurrent">一条目录项被压扁了：flex 收缩、省略号与悬浮提示</span>
+    </nav>
+</div>
+
+<div class="shell">
+    <div class="grid grid--sidebar">
+
+        <!-- ============ 正文 ============ -->
+        <div class="stack">
+            <section class="article-head" id="articleHead">
+                
+                    <a class="chip chip--cat" href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                
+                <h1 class="article-title">一条目录项被压扁了：flex 收缩、省略号与悬浮提示</h1>
+                <div class="article-meta">
+                    <span>✍️ 博主</span>
+                    <span>📅 令和8年11月3日</span>
+                    <span>⏱ 阅读约 15 分钟</span>
+                    
+                    
+                </div>
+                <div class="tag-list" style="margin-top:14px">
+                    
+                        <a class="tag-chip" href="/Blog/tags/CSS/">#CSS</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/JavaScript/">#JavaScript</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%8B%AC%E7%AB%8B%E5%8D%9A%E5%AE%A2/">#独立博客</a>
+                    
+                </div>
+            </section>
+
+            <article class="card article-body" id="articleBody">
+                <p>新文章发出去不到半小时，读者（其实是我自己）就发现目录坏了。</p>
+<p>截图是这样的：红色高亮的那一项里，标题被切成两行，第一行在色块里，第二行「有一个站」掉到了色块外面，正好压在下一项「二、三笔账」的头上。</p>
+<p>第一反应很直接：加个省略号不就完了。</p>
+<p>加了，没用。</p>
+<p>这篇记录一下这个坑——它比我一开始想的深一点，而且<strong>犯错的不是「忘了写省略号」，是把 CSS 的一个默认值当成了没事</strong>。</p>
+<h2 id="一、先把现象说准"><a href="#一、先把现象说准" class="headerlink" title="一、先把现象说准"></a>一、先把现象说准</h2><p>目录的结构很简单，侧栏里一个卡片，里面一列链接：</p>
+<div class="code-block" data-lang="html" data-file="html"><div class="code-bar"><span class="code-lang">html</span><span class="code-file">html</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">&quot;card toc-card toc-panel&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">&quot;card-title&quot;</span>&gt;</span>📑 目录<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;toc-list&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;toc-link toc-link--h2&quot;</span> <span class="attr">href</span>=<span class="string">&quot;#...&quot;</span>&gt;</span>一、先把两件事分开：写东西，和拥有一个站<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;toc-link toc-link--h2&quot;</span> <span class="attr">href</span>=<span class="string">&quot;#...&quot;</span>&gt;</span>二、三笔账<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br></pre></td></tr></table></div></div></div>
+
+<p>对应的样式（改之前）：</p>
+<div class="code-block" data-lang="css" data-file="css"><div class="code-bar"><span class="code-lang">css</span><span class="code-file">css</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.toc-list</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">flex-direction</span>: column;</span><br><span class="line">    <span class="attribute">gap</span>: <span class="number">2px</span>;</span><br><span class="line">    <span class="attribute">max-height</span>: <span class="number">62vh</span>;   <span class="comment">/* ← 关键之一 */</span></span><br><span class="line">    <span class="attribute">overflow-y</span>: auto;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.toc-link</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">8px</span> <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">min-height</span>: <span class="number">40px</span>;   <span class="comment">/* ← 关键之二 */</span></span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">1.5</span>;</span><br><span class="line">    <span class="comment">/* 没有 white-space / overflow，也就是没做截断 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></div></div>
+
+<p>于是那一条长标题就换行了，两行高度 56px 左右，盒子被撑高，然后把下面的项往下推——如果只是这样，虽然丑，但不至于「溢出」。</p>
+<h2 id="二、为什么加了省略号也没用"><a href="#二、为什么加了省略号也没用" class="headerlink" title="二、为什么加了省略号也没用"></a>二、为什么加了省略号也没用</h2><p>我第一版是这么改的：</p>
+<div class="code-block" data-lang="css" data-file="css"><div class="code-bar"><span class="code-lang">css</span><span class="code-file">css</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.toc-link</span> &#123;</span><br><span class="line">    <span class="attribute">white-space</span>: nowrap;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">    <span class="attribute">text-overflow</span>: ellipsis;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></div></div>
+
+<p>省略号确实出现了鸡生蛋的问题：<strong>它让文字变成一行，但容器还在压它</strong>，所以看到的还是一个 40px 高的盒子，文字在盒子里被截断——视觉上从「掉到下一项」变成了「下半截被切掉」。</p>
+<p>问题回到根上：<strong>为什么这个盒子是 40px，而不是内容需要的 56px？</strong></p>
+<p><code>.toc-link</code> 上写的是 <code>min-height: 40px</code>，那是<strong>下限</strong>，不是上限。内容 56px 时它应该长到 56px 才对。</p>
+<p>除非——它被别的东西压了。</p>
+<p><img src="/Blog/images/blog/04-toc-squeeze.svg" alt="目录项被 flex 压扁的对比：改前两行文字溢出一行到下一项上，改后单行省略"></p>
+<p><em>图 1：同一个组件，左边是「被压回 40px 的盒子」，右边是「单行省略」。</em></p>
+<h2 id="三、定位：把盒子量一遍"><a href="#三、定位：把盒子量一遍" class="headerlink" title="三、定位：把盒子量一遍"></a>三、定位：把盒子量一遍</h2><p>这种问题的正确姿势不是猜，是量。打开 DevTools，选中那个目录项：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Elements → 选中 .toc-link</span><br><span class="line">右下 Computed → height: 40px        ← 盒子的实际高度</span><br><span class="line">               └ 但内容呢？看 Layout 面板的 scrollHeight，或者直接在</span><br><span class="line">                 Console 里敲：$0.scrollHeight</span><br><span class="line"></span><br><span class="line">Console:</span><br><span class="line">  $0.clientHeight   → 40    盒子的可见高度</span><br><span class="line">  $0.scrollHeight   → 56    内容实际需要的高度</span><br><span class="line">  getComputedStyle($0).flexShrink → &quot;1&quot;</span><br></pre></td></tr></table></div></div></div>
+
+<p>三个数字一摆，结论就出来了：</p>
+<blockquote>
+<p><strong>内容要 56px，盒子只有 40px，而且它还是 <code>flex-shrink: 1</code>。</strong></p>
+</blockquote>
+<p><code>.toc-list</code> 是 <code>display: flex; flex-direction: column</code>，并且有 <code>max-height: 62vh</code>。二十来个目录项加起来远超这个高度，于是 <strong>flex 容器开始压缩子项</strong>——这是 flexbox 的默认行为（<code>flex-shrink: 1</code>）。</p>
+<p>而 <code>min-height: 40px</code> 恰好把「能被压到多小」钉在 40px。所以：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">每项内容高度 56px（两行）</span><br><span class="line">     ↓ flex-shrink 想把它压小</span><br><span class="line">     ↓ 但 min-height 挡住，最多压到 40px</span><br><span class="line">结果：盒子 40px，内容 56px，overflow 是 visible</span><br><span class="line">     ↓</span><br><span class="line">多出来的 16px 无处可去，直接画在盒子外面</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>这就是「文字跑出框外」的完整机制。</strong> 加省略号只是让内容从两行变一行，但如果盒子仍然被压到 40px，视觉上依然是截断而不是省略。</p>
+<div class="note note--tip"><span class="note-title">💡 一个判断口诀</span>凡是「盒子明明该撑开却没撑开」，先查两件事：**父级是不是 flex/grid 且尺寸受限**，**子项是不是默认会收缩**。90% 的诡异溢出都在这两条里。</div>
+
+<h2 id="四、修法：两行-CSS"><a href="#四、修法：两行-CSS" class="headerlink" title="四、修法：两行 CSS"></a>四、修法：两行 CSS</h2><p>知道病因就好办了，两件事一起做：</p>
+<div class="code-block" data-lang="css" data-file="css"><div class="code-bar"><span class="code-lang">css</span><span class="code-file">css</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.toc-link</span> &#123;</span><br><span class="line">    <span class="comment">/* ① 不许被 flex 压扁 */</span></span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">0</span> <span class="number">0</span> auto;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* ② 单行 + 省略号 */</span></span><br><span class="line">    <span class="attribute">white-space</span>: nowrap;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">    <span class="attribute">text-overflow</span>: ellipsis;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></div></div>
+
+<p>第一条是关键，也是我一开始漏掉的。<code>flex: 0 0 auto</code> &#x3D; <code>flex-grow: 0 / flex-shrink: 0 / flex-basis: auto</code>，意思是「别长、<strong>也别缩</strong>、按内容自然高度」。加上它，盒子就是稳稳的 40~56px，不会再被挤。</p>
+<p>第二条让每项恒为一行，于是 <code>min-height: 40px</code> 变成实际高度 40px，长度恒定、视觉整齐。</p>
+<div class="note note--warn"><span class="note-title">⚠️ 只加第二条的后果</span>`white-space: nowrap` + `overflow: hidden` 单独用，确实不会「溢出到下一项」了，但盒子仍可能被 flex 压到 40px 以下（如果你的 `min-height` 更小），文字会被**切掉半截**——比溢出更难看，因为你都不知道少读了什么。</div>
+
+<h2 id="五、顺手修掉的第二个问题"><a href="#五、顺手修掉的第二个问题" class="headerlink" title="五、顺手修掉的第二个问题"></a>五、顺手修掉的第二个问题</h2><p>改的时候才发现，截图右边有<strong>两条滚动条</strong>：外侧一条（侧栏的），内侧一条（目录的）。</p>
+<p>原因是两层容器都设了限高加滚动：</p>
+<div class="code-block" data-lang="css" data-file="css"><div class="code-bar"><span class="code-lang">css</span><span class="code-file">css</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.toc-sticky</span> &#123; <span class="attribute">max-height</span>: <span class="built_in">calc</span>(<span class="number">100vh</span> - <span class="built_in">var</span>(--nav-h) - <span class="number">48px</span>); <span class="attribute">overflow-y</span>: auto; &#125;  <span class="comment">/* 外层 */</span></span><br><span class="line"><span class="selector-class">.toc-list</span>   &#123; <span class="attribute">max-height</span>: <span class="number">62vh</span>; <span class="attribute">overflow-y</span>: auto; &#125;                               <span class="comment">/* 内层 */</span></span><br></pre></td></tr></table></div></div></div>
+
+<p>桌面端其实只需要外层滚——侧栏里还有「相关文章」，让它们一起滚更自然。所以按断点拆开：</p>
+<div class="code-block" data-lang="css" data-file="css"><div class="code-bar"><span class="code-lang">css</span><span class="code-file">css</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 桌面端：交给外层 .toc-sticky 统一滚 */</span></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">900px</span>) &#123;</span><br><span class="line">    <span class="selector-class">.toc-list</span> &#123;</span><br><span class="line">        <span class="attribute">max-height</span>: none;</span><br><span class="line">        <span class="attribute">overflow</span>: visible;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 移动端：面板展开后长度不可控，自己滚，并阻止滚动穿透 */</span></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">max-width</span>: <span class="number">899px</span>) &#123;</span><br><span class="line">    <span class="selector-class">.toc-list</span> &#123;</span><br><span class="line">        <span class="attribute">max-height</span>: <span class="number">58vh</span>;</span><br><span class="line">        <span class="attribute">overflow-y</span>: auto;</span><br><span class="line">        <span class="attribute">overscroll-behavior</span>: contain;</span><br><span class="line">        <span class="attribute">padding-right</span>: <span class="number">2px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></div></div>
+
+<p><code>overscroll-behavior: contain</code> 这一行很值：手机上一旦滚到底，继续滑不会把整页也带着滚。没有它，读者会有一种「滑不动了页面还在跳」的烦躁感。</p>
+<h2 id="六、省略号之后：完整标题怎么看"><a href="#六、省略号之后：完整标题怎么看" class="headerlink" title="六、省略号之后：完整标题怎么看"></a>六、省略号之后：完整标题怎么看</h2><p>标题被截了，得让人能看到全文。这有三种做法，差别比想象中大。</p>
+<p><img src="/Blog/images/blog/05-tooltip-options.svg" alt="三种悬浮提示做法对比：原生 title、CSS 伪元素、JS 浮层"></p>
+<p><em>图 2：都叫「悬浮提示」，能做的事完全不是一回事。</em></p>
+<p><strong>① 原生 <code>title</code> 属性</strong>——最简单，模板里加一句 <code>title=&quot;&lt;%= h.text %&gt;&quot;</code> 就完事。但它延迟约一秒、样式完全不可控、移动端长按才出，而且会把浏览器的灰色小框硬生生盖在这套手绘风格上。</p>
+<p><strong>② 纯 CSS 的 <code>::after</code><strong>——<code>content: attr(data-toc-text)</code>，样式随你定。但它有个致命问题：</strong><code>.toc-list</code> 是滚动容器，<code>overflow</code> 会把溢出的伪元素直接裁掉</strong>。提示框要么被切一半，要么完全不显示。这就是「纯 CSS 更优雅」在真实场景里的翻车点。</p>
+<p><strong>③ JS 浮层</strong>——自己建一个 <code>position: fixed</code> 的元素挂在 <code>body</code> 上，不受任何祖先的 <code>overflow</code> 影响。多写三十行，换来三件事：<strong>只在真截断时出现</strong>、<strong>位置能夹进视口</strong>、<strong>键盘聚焦也能显示</strong>。</p>
+<p>我选了第三种。核心就一行判断：</p>
+<div class="code-block" data-lang="js" data-file="js"><div class="code-bar"><span class="code-lang">js</span><span class="code-file">js</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">isClipped</span>(<span class="params">el</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> el.<span class="property">scrollWidth</span> &gt; el.<span class="property">clientWidth</span> + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></div></div>
+
+<p><code>scrollWidth</code> 是内容宽度，<code>clientWidth</code> 是可见宽度。<strong>只有内容真的超出去了才弹提示</strong>——否则每一项都弹，提示和原文一模一样，纯噪音。</p>
+<p>具体实现：</p>
+<div class="code-block" data-lang="js" data-file="js"><div class="code-bar"><span class="code-lang">js</span><span class="code-file">js</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span> <span class="title function_">initTocTip</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!tocLinks.<span class="property">length</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">var</span> canHover = <span class="variable language_">window</span>.<span class="property">matchMedia</span> &amp;&amp; <span class="variable language_">window</span>.<span class="title function_">matchMedia</span>(<span class="string">&#x27;(hover: hover)&#x27;</span>).<span class="property">matches</span>;</span><br><span class="line">    <span class="keyword">var</span> tip = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">ensureTip</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (tip) <span class="keyword">return</span> tip;</span><br><span class="line">        tip = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">        tip.<span class="property">className</span> = <span class="string">&#x27;toc-tip&#x27;</span>;</span><br><span class="line">        tip.<span class="title function_">setAttribute</span>(<span class="string">&#x27;role&#x27;</span>, <span class="string">&#x27;tooltip&#x27;</span>);</span><br><span class="line">        <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(tip);</span><br><span class="line">        <span class="keyword">return</span> tip;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">place</span>(<span class="params">link</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> t = <span class="title function_">ensureTip</span>();</span><br><span class="line">        <span class="keyword">var</span> r = link.<span class="title function_">getBoundingClientRect</span>();</span><br><span class="line">        <span class="comment">// 水平方向夹进视口</span></span><br><span class="line">        <span class="keyword">var</span> left = <span class="title class_">Math</span>.<span class="title function_">max</span>(<span class="number">10</span>, <span class="title class_">Math</span>.<span class="title function_">min</span>(r.<span class="property">left</span>, <span class="variable language_">window</span>.<span class="property">innerWidth</span> - t.<span class="property">offsetWidth</span> - <span class="number">10</span>));</span><br><span class="line">        <span class="keyword">var</span> top = r.<span class="property">bottom</span> + <span class="number">8</span>;</span><br><span class="line">        <span class="comment">// 下方空间不够就翻到上面</span></span><br><span class="line">        <span class="keyword">if</span> (top + t.<span class="property">offsetHeight</span> &gt; <span class="variable language_">window</span>.<span class="property">innerHeight</span> - <span class="number">10</span>) &#123;</span><br><span class="line">            top = <span class="title class_">Math</span>.<span class="title function_">max</span>(<span class="number">10</span>, r.<span class="property">top</span> - t.<span class="property">offsetHeight</span> - <span class="number">8</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        t.<span class="property">style</span>.<span class="property">transform</span> = <span class="string">&#x27;translate(&#x27;</span> + <span class="title class_">Math</span>.<span class="title function_">round</span>(left) + <span class="string">&#x27;px,&#x27;</span> + <span class="title class_">Math</span>.<span class="title function_">round</span>(top) + <span class="string">&#x27;px)&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">show</span>(<span class="params">link</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (link.<span class="property">scrollWidth</span> &lt;= link.<span class="property">clientWidth</span> + <span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">var</span> t = <span class="title function_">ensureTip</span>();</span><br><span class="line">        t.<span class="property">textContent</span> = link.<span class="title function_">getAttribute</span>(<span class="string">&#x27;data-toc-text&#x27;</span>) || link.<span class="property">textContent</span>;</span><br><span class="line">        t.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;is-on&#x27;</span>);</span><br><span class="line">        <span class="title function_">place</span>(link);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">hide</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (tip) tip.<span class="property">classList</span>.<span class="title function_">remove</span>(<span class="string">&#x27;is-on&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    tocLinks.<span class="title function_">forEach</span>(<span class="keyword">function</span> (<span class="params">link</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> full = link.<span class="title function_">getAttribute</span>(<span class="string">&#x27;data-toc-text&#x27;</span>);</span><br><span class="line">        <span class="keyword">if</span> (!canHover) <span class="keyword">return</span>;</span><br><span class="line">        link.<span class="title function_">addEventListener</span>(<span class="string">&#x27;mouseenter&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (full) link.<span class="title function_">removeAttribute</span>(<span class="string">&#x27;title&#x27;</span>);  <span class="comment">// 屏蔽原生提示，避免两个一起弹</span></span><br><span class="line">            <span class="title function_">show</span>(link);</span><br><span class="line">        &#125;);</span><br><span class="line">        link.<span class="title function_">addEventListener</span>(<span class="string">&#x27;mouseleave&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (full) link.<span class="title function_">setAttribute</span>(<span class="string">&#x27;title&#x27;</span>, full);</span><br><span class="line">            <span class="title function_">hide</span>();</span><br><span class="line">        &#125;);</span><br><span class="line">        link.<span class="title function_">addEventListener</span>(<span class="string">&#x27;focus&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="title function_">show</span>(link); &#125;);</span><br><span class="line">        link.<span class="title function_">addEventListener</span>(<span class="string">&#x27;blur&#x27;</span>, hide);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;scroll&#x27;</span>, hide, &#123; <span class="attr">passive</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">    <span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;resize&#x27;</span>, hide);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></div></div></div>
+
+<p>配套样式：</p>
+<div class="code-block" data-lang="css" data-file="css"><div class="code-bar"><span class="code-lang">css</span><span class="code-file">css</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.toc-tip</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: fixed;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">max-width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">8px</span> <span class="number">11px</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: .<span class="number">78rem</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">1.55</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">var</span>(--card);</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">var</span>(--ink);</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">4px</span>;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">4px</span> <span class="number">4px</span> <span class="number">0</span> <span class="built_in">var</span>(--shadow-col);</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">visibility</span>: hidden;</span><br><span class="line">    <span class="attribute">pointer-events</span>: none;</span><br><span class="line">    <span class="attribute">transition</span>: opacity .<span class="number">15s</span> ease;</span><br><span class="line">    <span class="attribute">will-change</span>: transform;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.toc-tip</span><span class="selector-class">.is-on</span> &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">visibility</span>: visible;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></div></div>
+
+<p><code>pointer-events: none</code> 必须有——否则提示框可能挡住鼠标，触发 <code>mouseleave</code>，然后提示消失、鼠标又落回链接、提示又出现，闪成癫痫。</p>
+<h2 id="七、模板层要配合改一行"><a href="#七、模板层要配合改一行" class="headerlink" title="七、模板层要配合改一行"></a>七、模板层要配合改一行</h2><p>提示要显示全文，就得把全文带在 DOM 上。目录是模板渲染的，改一行：</p>
+<div class="code-block" data-lang="plaintext" data-file="plaintext"><div class="code-bar"><span class="code-lang">plaintext</span><span class="code-file">plaintext</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;a class=&quot;toc-link toc-link--h&lt;%= h.level %&gt;&quot;</span><br><span class="line">   href=&quot;#&lt;%= h.id %&gt;&quot;</span><br><span class="line">   title=&quot;&lt;%= h.text %&gt;&quot;</span><br><span class="line">   data-toc-text=&quot;&lt;%= h.text %&gt;&quot;&gt;&lt;%= h.text %&gt;&lt;/a&gt;</span><br></pre></td></tr></table></div></div></div>
+
+<p><code>data-toc-text</code> 给 JS 用，<code>title</code> 给<strong>没开 JS 的读者</strong>兜底（JS 启动后会在悬停时临时摘掉它，避免两个提示一起弹）。</p>
+<div class="note note--tip"><span class="note-title">💡 为什么不用 JS 直接读 textContent</span>因为文字被 CSS 截断时，`textContent` 拿到的仍是完整文本——这没错。但一旦以后给目录项加了「序号徽章」「状态点」之类的子元素，`textContent` 就会把它们的文字也混进来。**用一个显式的 `data-` 属性存，比依赖 DOM 结构稳。**</div>
+
+<h2 id="八、滚动时高亮项跑出视野"><a href="#八、滚动时高亮项跑出视野" class="headerlink" title="八、滚动时高亮项跑出视野"></a>八、滚动时高亮项跑出视野</h2><p>改完之后还有个连带问题：目录项现在是定高单行，总高变短了，但侧栏滚动时，当前高亮的那一项可能滚出可视区，读者就不知道自己在哪。</p>
+<p><code>scrollIntoView()</code> 能做，但它会<strong>连页面一起滚</strong>——在 sticky 侧栏里用它会跳得莫名其妙。所以自己算：</p>
+<div class="code-block" data-lang="js" data-file="js"><div class="code-bar"><span class="code-lang">js</span><span class="code-file">js</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">keepTocVisible</span>(<span class="params">link</span>) &#123;</span><br><span class="line">    <span class="comment">// 桌面端滚外层，移动端滚目录本身</span></span><br><span class="line">    <span class="keyword">var</span> box = <span class="variable language_">window</span>.<span class="property">innerWidth</span> &gt;= <span class="number">900</span></span><br><span class="line">        ? link.<span class="title function_">closest</span>(<span class="string">&#x27;.toc-sticky&#x27;</span>)</span><br><span class="line">        : <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;tocList&#x27;</span>);</span><br><span class="line">    <span class="keyword">if</span> (!box || box.<span class="property">scrollHeight</span> - box.<span class="property">clientHeight</span> &lt; <span class="number">8</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> lr = link.<span class="title function_">getBoundingClientRect</span>();</span><br><span class="line">    <span class="keyword">var</span> br = box.<span class="title function_">getBoundingClientRect</span>();</span><br><span class="line">    <span class="keyword">if</span> (br.<span class="property">height</span> &lt; <span class="number">8</span>) <span class="keyword">return</span>;          <span class="comment">// 移动端面板收起时 rect 全 0，直接跳过</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> pad = <span class="number">6</span>;</span><br><span class="line">    <span class="keyword">if</span> (lr.<span class="property">top</span> &lt; br.<span class="property">top</span> + pad) box.<span class="property">scrollTop</span> -= (br.<span class="property">top</span> + pad - lr.<span class="property">top</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (lr.<span class="property">bottom</span> &gt; br.<span class="property">bottom</span> - pad) box.<span class="property">scrollTop</span> += (lr.<span class="property">bottom</span> - br.<span class="property">bottom</span> + pad);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></div></div>
+
+<p>只动 <code>box.scrollTop</code>，页面纹丝不动。然后把它挂到原有的高亮函数里：</p>
+<div class="code-block" data-lang="js" data-file="js"><div class="code-bar"><span class="code-lang">js</span><span class="code-file">js</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">setActiveToc</span>(<span class="params">activeId</span>) &#123;</span><br><span class="line">    tocLinks.<span class="title function_">forEach</span>(<span class="keyword">function</span> (<span class="params">l</span>) &#123; l.<span class="property">classList</span>.<span class="title function_">remove</span>(<span class="string">&#x27;is-active&#x27;</span>, <span class="string">&#x27;is-parent&#x27;</span>); &#125;);</span><br><span class="line">    <span class="keyword">var</span> cur = linkById[activeId];</span><br><span class="line">    <span class="keyword">if</span> (!cur) <span class="keyword">return</span>;</span><br><span class="line">    cur.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;is-active&#x27;</span>);</span><br><span class="line">    <span class="title function_">keepTocVisible</span>(cur);   <span class="comment">// ← 新增这一行</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></div></div>
+
+<h2 id="九、验证清单"><a href="#九、验证清单" class="headerlink" title="九、验证清单"></a>九、验证清单</h2><p>改完不能只看一眼「好像好了」，要能一条条过：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">□ 长标题那一项：只有一行，末尾是省略号，没有第二行</span><br><span class="line">□ 那一项的高度：40px（DevTools → Computed），不是 56 也不是被压到 30</span><br><span class="line">□ 鼠标悬停：提示出现，内容与标题完全一致</span><br><span class="line">□ 短标题悬停：不弹提示（说明 scrollWidth 判断生效）</span><br><span class="line">□ 侧栏只有一条滚动条（桌面端）</span><br><span class="line">□ 手机宽度（&lt;900px）：目录面板展开后自己能滚，滚到底不带动整页</span><br><span class="line">□ 键盘 Tab 到目录项：提示出现，移开后消失</span><br><span class="line">□ 滚动页面时：提示自动消失，不会残留在屏幕上</span><br><span class="line">□ 缩放窗口到 320px 宽：提示不超出左边或右边</span><br></pre></td></tr></table></div></div></div>
+
+<p>第 4 条最容易被忽略，也最能说明「你做对了没有」——<strong>没被截断的项也弹提示，等于没做</strong>。</p>
+<h2 id="十、三条经验"><a href="#十、三条经验" class="headerlink" title="十、三条经验"></a>十、三条经验</h2><p><strong>① 「加省略号」不是排版问题的解药。</strong><br><code>text-overflow: ellipsis</code> 只负责「把溢出的文字换成省略号」，它不管盒子为什么小。盒子尺寸错了，省略号也会跟着错。<strong>先量尺寸，再谈截断。</strong></p>
+<p><strong>② flex 的默认值是会咬人的。</strong><br><code>flex-shrink: 1</code> 在「容器高度受限 + 子项内容变高」时会主动压扁子项，而 <code>min-height</code> 只是兜底，不是保护。凡是列向 flex + <code>max-height</code> 的组合，子项都该显式写 <code>flex: 0 0 auto</code>。</p>
+<p><strong>③ 纯 CSS 方案在「滚动容器里」经常失效。</strong><br><code>:hover::after</code> 看起来最优雅，但祖先一旦有 <code>overflow</code>，绝对定位的伪元素就会被裁。<strong>要判断一件事：「这个元素会不会被祖先裁掉」——答不上来就别省那三十行 JS。</strong></p>
+<div class="note note--info"><span class="note-title">※ 顺带一句</span>这次没做浏览器截图验证——无头 Chrome 在当前环境下截不出图（`rc=0` 但文件不生成）。上面的验证清单是靠 DevTools 规则推算 + 逐条人工核对的，交付时也如实说明了这一点。**没有视觉证据的时候，就把判断依据写清楚，别含糊过去。**</div>
+
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
+<li>《<a href="https://molunanli.github.io/Blog/2026/11/why-self-host-blog/">为什么 2026 年还要自己搭一个博客</a>》——本栏目开篇；自建的代价之一就是「这类事只能自己修」</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/writing-publishing-manual/">mangaka 写作与发布手册</a>》——主题的模板与样式结构，改样式前先看这篇</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/deploy-hexo-github-pages/">Hexo + GitHub Pages 完整部署指南</a>》——改完主题怎么发上去</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/pc-repair-first-lesson/">电脑维修第一课</a>》——另一套「先量再改」的方法论：二分定位、一次只改一个变量</li>
+</ul>
+<p>一条 CSS 默认值，藏了半小时。值不值？值——<strong>下次再遇到「盒子没撑开」，我知道先看 <code>flex-shrink</code> 了。</strong></p>
+
+            </article>
+
+            <div class="share-row" id="shareRow">
+                <span class="share-label">分享这篇文章：</span>
+            </div>
+
+            <nav class="post-nav" id="postNav" aria-label="上下篇导航">
+                <span></span>
+                
+                    <a class="post-nav-item post-nav-item--next" href="/Blog/2026/11/why-self-host-blog/">
+                        <span class="k">下一篇 →</span><span class="t">为什么 2026 年还要自己搭一个博客：三笔账算完再决定</span>
+                    </a>
+                
+            </nav>
+
+            <!-- ---- 评论（Giscus：数据存于 GitHub Discussions） ---- -->
+            
+            
+            
+            <section class="card comments" aria-labelledby="commentTitle">
+                <h2 class="card-title" id="commentTitle" style="text-align:left">
+                    💬 读者留言
+                </h2>
+                <p style="margin:0 0 18px;font-size:.76rem;color:var(--ink-3)">
+                    评论由 GitHub Discussions 托管，需登录 GitHub 后参与（评论区的 +1 即点赞）。
+                </p>
+                <script src="https://giscus.app/client.js"
+                        data-repo="molunanli/Blog"
+                        data-repo-id="R_kgDOUMGUlQ"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOUMGUlc4DEuis"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                </script>
+            </section>
+            
+            
+        </div>
+
+        <!-- ============ 侧边栏 ============ -->
+        <aside class="sidebar toc-sticky" aria-label="文章侧边信息">
+
+            
+            <button class="toc-toggle-mobile" id="tocToggle" type="button" aria-expanded="false" aria-controls="tocPanel">
+                📑 目录导航 <span class="arrow" aria-hidden="true">▼</span>
+            </button>
+
+            <nav class="card toc-card toc-panel" id="tocPanel" aria-label="文章目录">
+                <h2 class="card-title">📑 目录</h2>
+                <div class="toc-list" id="tocList">
+                    
+                        <a class="toc-link toc-link--h2" href="#一、先把现象说准" title="一、先把现象说准" data-toc-text="一、先把现象说准">一、先把现象说准</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#二、为什么加了省略号也没用" title="二、为什么加了省略号也没用" data-toc-text="二、为什么加了省略号也没用">二、为什么加了省略号也没用</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#三、定位：把盒子量一遍" title="三、定位：把盒子量一遍" data-toc-text="三、定位：把盒子量一遍">三、定位：把盒子量一遍</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#四、修法：两行-CSS" title="四、修法：两行 CSS" data-toc-text="四、修法：两行 CSS">四、修法：两行 CSS</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#五、顺手修掉的第二个问题" title="五、顺手修掉的第二个问题" data-toc-text="五、顺手修掉的第二个问题">五、顺手修掉的第二个问题</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#六、省略号之后：完整标题怎么看" title="六、省略号之后：完整标题怎么看" data-toc-text="六、省略号之后：完整标题怎么看">六、省略号之后：完整标题怎么看</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#七、模板层要配合改一行" title="七、模板层要配合改一行" data-toc-text="七、模板层要配合改一行">七、模板层要配合改一行</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#八、滚动时高亮项跑出视野" title="八、滚动时高亮项跑出视野" data-toc-text="八、滚动时高亮项跑出视野">八、滚动时高亮项跑出视野</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#九、验证清单" title="九、验证清单" data-toc-text="九、验证清单">九、验证清单</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#十、三条经验" title="十、三条经验" data-toc-text="十、三条经验">十、三条经验</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#相关阅读" title="相关阅读" data-toc-text="相关阅读">相关阅读</a>
+                    
+                </div>
+            </nav>
+            
+
+            
+            <section class="card" aria-labelledby="relTitle">
+                <h2 class="card-title" id="relTitle">📎 相关文章</h2>
+                <ul class="related-list" id="relatedList">
+                    
+                        <li><a href="/Blog/2026/09/craft-heatmap/">手把手：给博客做一张漫画风「创作热力图」</a></li>
+                    
+                        <li><a href="/Blog/2026/11/why-self-host-blog/">为什么 2026 年还要自己搭一个博客：三笔账算完再决定</a></li>
+                    
+                        <li><a href="/Blog/2026/09/deploy-hexo-github-pages/">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</a></li>
+                    
+                        <li><a href="/Blog/2026/09/publish-hexo-theme/">把你的 Hexo 主题发布出去：GitHub + npm + 官方主题列表，小白完整指南</a></li>
+                    
+                </ul>
+            </section>
+            
+
+            <section class="card" aria-labelledby="authorTitle">
+                <h2 class="card-title" id="authorTitle">✍️ 关于作者</h2>
+                <div class="profile-avatar" style="width:76px;height:76px;font-size:2.3rem" aria-hidden="true">🐱</div>
+                <p class="profile-name" style="text-align:center">博主</p>
+                <p class="profile-role" style="text-align:center">BLOGGER</p>
+                <p class="profile-bio" style="text-align:center;font-size:.82rem">这里是作者简介。
+用一两句话介绍你自己，或者这个博客打算写些什么。
+</p>
+                <p style="text-align:center;margin-top:12px">
+                    <a class="link-more" href="/Blog/about">▶ 了解更多</a>
+                </p>
+            </section>
+
+        </aside>
+    </div>
+</div>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="shell">
+        <div class="footer-grid">
+            <div>
+                <span class="footer-h">关于本站</span>
+                <p style="font-size:.88rem;color:var(--ink-2);line-height:1.8">
+                    这里是页脚简介。用一两句话说明这个博客的内容方向，
+让读者一眼知道这里在写什么。
+
+                </p>
+                <p style="margin-top:12px">
+                    <span class="footer-seal" aria-hidden="true">我的<br>博客</span>
+                </p>
+            </div>
+            <div>
+                <span class="footer-h">快速导航</span>
+                <nav class="footer-list" aria-label="页脚导航">
+                    
+                        
+                        <a href="/Blog/">首页</a>
+                    
+                        
+                        <a href="/Blog/archives">归档</a>
+                    
+                        
+                        <a href="/Blog/tags">标签</a>
+                    
+                        
+                        <a href="/Blog/categories">分类</a>
+                    
+                        
+                        <a href="/Blog/about">关于</a>
+                    
+                </nav>
+            </div>
+            <div>
+                <span class="footer-h">热门分类</span>
+                <nav class="footer-list" aria-label="分类导航">
+                    
+                        <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                    
+                        <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <span>&copy; 2026 我的博客 — 保持热爱，持续记录。</span>
+            <span>Made with Hexo</span>
+        </div>
+    </div>
+</footer>
+
+<div class="fabs">
+    <button class="fab fab--top" id="topBtn" type="button" data-tip="回到顶部" title="回到顶部" aria-label="回到顶部" aria-hidden="true">⬆</button>
+    <button class="fab" id="fabSearch" type="button" data-tip="搜索文章" title="搜索文章" aria-label="搜索文章">🔍</button>
+</div>
+
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="站内搜索" aria-hidden="true">
+    <div class="search-panel">
+        <div class="search-field">
+            <span aria-hidden="true" style="font-size:1.1rem">🔍</span>
+            <input class="search-input" id="searchInput" type="search" placeholder="搜索文章标题、标签或关键词…" aria-label="搜索关键词" autocomplete="off">
+            <button class="icon-btn" id="searchClose" type="button" aria-label="关闭搜索">✕</button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+        <div class="search-hint">
+            <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
+            <span><kbd>Enter</kbd> 打开</span>
+            <span><kbd>Esc</kbd> 关闭</span>
+            <span><kbd>Ctrl</kbd>+<kbd>K</kbd> 随时唤起</span>
+        </div>
+    </div>
+</div>
+
+
+<script src="/Blog/js/app.js" defer></script>
+</body>
+</html>

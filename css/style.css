@@ -2180,23 +2180,30 @@ button.chip {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    max-height: 62vh;
-    overflow-y: auto;
     scrollbar-width: thin;
+    scrollbar-color: var(--line-soft) transparent;
 }
 
 .toc-link {
     display: block;
-    padding: 8px 12px;
+    /* 关键：列向 flex 容器高度受限时，默认 flex-shrink:1 会把
+       「两行高」的目录项压回 min-height，文字就从盒子里溢出来。
+       这里禁止收缩，再配合下面的单行省略。 */
+    flex: 0 0 auto;
+    padding: 9px 12px;
     min-height: 40px;
     font-size: .84rem;
     line-height: 1.5;
     color: var(--ink-2);
     text-decoration: none;
+    /* 长标题单行省略；完整文本在 data-toc-text，由悬浮提示展示 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     border: 2px solid transparent;
     border-radius: 3px;
     border-left: 3px solid var(--line-faint);
-    transition: all .2s;
+    transition: color .18s, background-color .18s, border-color .18s;
 }
 
 .toc-link:hover {
@@ -2208,6 +2215,7 @@ button.chip {
 .toc-link--h3 {
     padding-left: 26px;
     font-size: .8rem;
+    color: var(--ink-3);
 }
 
 .toc-link.is-active {
@@ -2222,6 +2230,51 @@ button.chip {
     color: var(--vermilion-ink);
     font-weight: 700;
     border-left-color: var(--vermilion);
+}
+
+/* 桌面端由 .toc-sticky 统一滚动，目录自身不再滚动：
+   否则侧栏会出现内外两条滚动条 */
+@media (min-width: 900px) {
+    .toc-list {
+        max-height: none;
+        overflow: visible;
+    }
+}
+
+/* 移动端面板展开后长度不可控，限高并让目录自己滚 */
+@media (max-width: 899px) {
+    .toc-list {
+        max-height: 58vh;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding-right: 2px;
+    }
+}
+
+/* 目录长标题的悬浮提示：只在确实被截断时出现（由 app.js 控制） */
+.toc-tip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 80;
+    max-width: 300px;
+    padding: 8px 11px;
+    font-size: .78rem;
+    line-height: 1.55;
+    color: var(--card);
+    background: var(--ink);
+    border-radius: 4px;
+    box-shadow: 4px 4px 0 var(--shadow-col);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .15s ease;
+    will-change: transform;
+}
+
+.toc-tip.is-on {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* ==========================================================================
