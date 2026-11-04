@@ -105,47 +105,38 @@
 
 <!-- ---- 自我介绍 ---- -->
 <section class="card about-hero" aria-labelledby="aboutTitle">
-<div class="about-avatar" aria-hidden="true">🐱</div>
+<div class="about-avatar" aria-hidden="true">🌱</div>
 <div>
-<span class="chip chip--cat">BLOGGER</span>
-<h1 class="article-title" id="aboutTitle" style="margin-top:10px">你好，我是博主</h1>
+<span class="chip chip--cat">个人笔记</span>
+<h1 class="article-title" id="aboutTitle" style="margin-top:10px">这里是一个人的技术笔记</h1>
 <p style="font-size:.95rem;color:var(--ink-2);line-height:1.85">
-这里是自我介绍的位置。写写你是谁、在做什么，以及为什么会开这个博客。
+我是 LJS。这个站只写两类东西：<strong>电脑出问题怎么自己查明白</strong>，以及<strong>怎么把一个独立博客从零搭起来、并且让它两年后还活着</strong>。
 </p>
 <p style="font-size:.95rem;color:var(--ink-2);line-height:1.85;margin-top:12px">
-下面几张卡片都是主题自带的组件示例。内容可以直接替换，用不上的整段删掉也不影响页面。
+写这些的原因很实际：搜到的答案大多只给结论不给判断依据，照着做经常越修越坏。所以这里的每篇都尽量写清三件事——<strong>先确认什么、什么时候该停手、以及我这么说的依据是什么</strong>。
 </p>
 </div>
 </section>
 
-<!-- ---- 技能条 ---- -->
-<section class="card" id="skillRoot" aria-labelledby="skillTitle">
-<h2 class="card-title" id="skillTitle">📊 技能雷达</h2>
-
-<div class="skill-row">
-<span class="skill-name">内容创作</span>
-<span class="meter"><span class="meter-fill" data-v="80"></span></span>
-<span class="meter-val">80</span>
-</div>
-<div class="skill-row">
-<span class="skill-name">设计排版</span>
-<span class="meter"><span class="meter-fill" data-v="65"></span></span>
-<span class="meter-val">65</span>
-</div>
-<div class="skill-row">
-<span class="skill-name">前端开发</span>
-<span class="meter"><span class="meter-fill" data-v="70"></span></span>
-<span class="meter-val">70</span>
-</div>
-<div class="skill-row">
-<span class="skill-name">摄影记录</span>
-<span class="meter"><span class="meter-fill" data-v="55"></span></span>
-<span class="meter-val">55</span>
-</div>
-
-<p style="margin-top:16px;font-size:.78rem;color:var(--ink-3)">
-※ 示例数据。改数值请编辑本文件中的 data-v 属性，范围 0–100。
+<!-- ---- 两个栏目 ---- -->
+<section class="card" aria-labelledby="colTitle">
+<h2 class="card-title" id="colTitle">📚 两个栏目</h2>
+<p style="font-size:.88rem;color:var(--ink-2);line-height:1.8;margin-bottom:14px">
+不用按时间翻。想修东西看第一个，想搭站看第二个。
 </p>
+
+<div class="cv">
+<div class="cv-item">
+<span class="cv-year">16 篇 · 已完结</span>
+<span class="cv-role"><a href="/2026/11/pc-repair-handbook-index/">电脑维修手册 →</a></span>
+<p class="cv-desc">从"按电源键没反应"到"误删了怎么救"，按症状排序的完整目录。包含自查 / 动手 / 送修的分界线，以及一份能照着念的故障自检卡。</p>
+</div>
+<div class="cv-item">
+<span class="cv-year">连载中</span>
+<span class="cv-role"><a href="/2026/11/why-self-host-blog/">独立博客实战 →</a></span>
+<p class="cv-desc">为什么不用公众号、怎么用 Hexo + GitHub Pages 上线、写作与排版怎么组织。原则是低维护、低成本、能自己掌控。</p>
+</div>
+</div>
 </section>
 
 <!-- ---- 站点里程碑 ---- -->
@@ -153,48 +144,21 @@
 <h2 class="card-title" id="cvTitle">🗂 站点里程碑</h2>
 <div class="cv">
 <div class="cv-item">
-<span class="cv-year">令和8年（2026）</span>
+<span class="cv-year">2026.09</span>
 <span class="cv-role">博客开张</span>
-<p class="cv-desc">用 Hexo 搭起这个站点，写下第一篇文章。</p>
+<p class="cv-desc">用 Hexo 搭起这个站，写下第一篇。同月完成「电脑维修」的现象排障线七篇。</p>
 </div>
 <div class="cv-item">
-<span class="cv-year">令和8年（2026）</span>
-<span class="cv-role">启用 mangaka 主题</span>
-<p class="cv-desc">换成日式漫画风的外观，开始在这里持续记录。</p>
+<span class="cv-year">2026.10</span>
+<span class="cv-role">系统与软件线</span>
+<p class="cv-desc">补上重装、流氓软件、系统更新、驱动四篇，把"系统层面能自己做的活"讲完。</p>
+</div>
+<div class="cv-item">
+<span class="cv-year">2026.11</span>
+<span class="cv-role">电脑维修栏目收官</span>
+<p class="cv-desc">15 篇正文完成，另写一篇总目录作为落地页。同月开新系列「独立博客实战」。</p>
 </div>
 </div>
-</section>
-
-<!-- ---- 联系表单 ---- -->
-<section class="card" aria-labelledby="contactTitle">
-<h2 class="card-title" id="contactTitle">✉️ 给我留言</h2>
-<p class="subscribe-note">
-有什么想聊的都可以写在这里。表单是前端演示，内容不会真正发送出去。
-</p>
-<form id="contactForm" novalidate>
-<div class="field" style="margin-bottom:14px">
-<label class="field-label" for="contactName">称呼 <span class="req" aria-hidden="true">*</span></label>
-<input class="input" id="contactName" name="name" type="text" maxlength="24"
-placeholder="你的名字或昵称" autocomplete="name" aria-describedby="contactNameError">
-<p class="field-error" id="contactNameError" role="alert"></p>
-</div>
-<div class="field" style="margin-bottom:14px">
-<label class="field-label" for="contactEmail">邮箱 <span class="req" aria-hidden="true">*</span></label>
-<input class="input" id="contactEmail" name="email" type="email" inputmode="email"
-placeholder="your@email.com" autocomplete="email" aria-describedby="contactEmailError">
-<p class="field-error" id="contactEmailError" role="alert"></p>
-</div>
-<div class="field" style="margin-bottom:16px">
-<label class="field-label" for="contactMsg">内容 <span class="req" aria-hidden="true">*</span></label>
-<textarea class="textarea" id="contactMsg" name="message" maxlength="800"
-placeholder="想聊点什么？（至少 8 个字）" aria-describedby="contactMsgError"></textarea>
-<p class="field-error" id="contactMsgError" role="alert"></p>
-</div>
-<button class="btn btn--primary" id="contactBtn" type="submit">📮 发送</button>
-<p style="margin-top:10px;font-size:.76rem;color:var(--ink-3)">
-演示环境：内容不会真正发送，校验失败时输入框内容会完整保留。
-</p>
-</form>
 </section>
 
 </div>
@@ -205,28 +169,34 @@ placeholder="想聊点什么？（至少 8 个字）" aria-describedby="contactM
 <section class="card" aria-labelledby="factTitle">
 <h2 class="card-title" id="factTitle">📌 快速档案</h2>
 <ul class="archive-list">
-<li><a href="/">🏠 站点<span class="n">我的博客</span></a></li>
-<li><a href="/archives/">📚 文章<span class="n">1 篇</span></a></li>
-<li><a href="/tags/">🏷 更新<span class="n">不定期</span></a></li>
-<li><a href="/categories/">🗂 分类<span class="n">1 个</span></a></li>
+<li><a href="/archives/">📚 文章<span class="n">23 篇</span></a></li>
+<li><a href="/categories/">🗂 分类<span class="n">2 个</span></a></li>
+<li><a href="/tags/">🏷 标签<span class="n">16 个</span></a></li>
+<li><a href="/2026/11/pc-repair-handbook-index/">🧭 从手册开始<span class="n">推荐</span></a></li>
+</ul>
+</section>
+
+<section class="card" aria-labelledby="startTitle">
+<h2 class="card-title" id="startTitle">🚀 从哪开始看</h2>
+<ul class="related-list">
+<li><a href="/2026/11/pc-repair-handbook-index/">电脑维修手册：15 篇总目录</a></li>
+<li><a href="/2026/09/pc-repair-first-lesson/">电脑维修第一课</a></li>
+<li><a href="/2026/11/data-backup-321/">数据备份 3-2-1 落地</a></li>
+<li><a href="/2026/11/why-self-host-blog/">为什么自己搭一个博客</a></li>
 </ul>
 </section>
 
 <section class="card" aria-labelledby="disclaimerTitle">
 <h2 class="card-title" id="disclaimerTitle">⚠️ 一点说明</h2>
 <p style="font-size:.85rem;color:var(--ink-2);line-height:1.8">
-本页内容均为示例，记得替换成你自己的介绍。
+维修类文章里的操作都有风险。<strong>拆机、刷固件、重装系统之前请先备份数据</strong>——这一步省掉，后面所有步骤都是在赌。
 </p>
 <p style="font-size:.85rem;color:var(--ink-2);line-height:1.8;margin-top:10px">
-本站观点仅代表个人，文中引用的价格与规格请以官方最新信息为准。
+文中涉及的硬件价格、系统版本与菜单路径会随时间变化，请以官方最新信息为准。查不到的我会标注"待确认"，不编。
 </p>
-</section>
-
-<section class="card" aria-labelledby="startTitle">
-<h2 class="card-title" id="startTitle">🚀 从哪开始看</h2>
-<ul class="related-list">
-<li><a href="/2026/09/welcome/">欢迎使用 mangaka 主题</a></li>
-</ul>
+<p style="font-size:.85rem;color:var(--ink-2);line-height:1.8;margin-top:10px">
+本站观点仅代表个人。评论区在文章页底部，用 GitHub 账号即可留言。
+</p>
 </section>
 
 </aside>
