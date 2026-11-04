@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 410" role="img" aria-label="三条阅读路径：按症状跳读、系统学一遍、只关心数据安全">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .lb { font-size: 13px; font-weight: 700; }
+    .ls { font-size: 10px; fill: #6b6459; }
+    .pt { font-size: 10.5px; font-weight: 700; }
+    .ps { font-size: 9px; fill: #4c463e; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .card { fill: #fdf8ec; stroke: #e5dcc9; stroke-width: 1.2; }
+    .p1 { fill: #fffdf6; stroke: #2f5d8a; stroke-width: 1.6; }
+    .p2 { fill: #fffdf6; stroke: #c9962a; stroke-width: 1.6; }
+    .p3 { fill: #fffdf6; stroke: #4f7f47; stroke-width: 1.6; }
+    .s1 { fill: #e8eef5; }
+    .s2 { fill: #f6ecd6; }
+    .s3 { fill: #e6efe3; }
+    .c1 { fill: #2f5d8a; }
+    .c2 { fill: #8a6a12; }
+    .c3 { fill: #3f6b38; }
+  </style>
+
+  <rect class="bg" width="680" height="410"/>
+
+  <text class="t th" x="30" y="38">三条读法：你是哪一种</text>
+  <text class="t ts" x="30" y="60">不用从第一篇读到第十五篇，先选一条路</text>
+
+  <!-- A -->
+  <rect class="card" x="30" y="84" width="580" height="84" rx="10"/>
+  <text class="t lb c1" x="44" y="118">A 修好眼前这台</text>
+  <text class="t ls" x="44" y="138">按症状跳读</text>
+  <text class="t ls" x="44" y="154">不必按顺序</text>
+
+  <rect class="p1" x="150" y="98" width="116" height="52" rx="8"/>
+  <text class="t pt c1" x="164" y="120">① 先分诊</text>
+  <text class="t ps" x="164" y="138">#1 第一课</text>
+
+  <rect class="p1" x="278" y="98" width="116" height="52" rx="8"/>
+  <text class="t pt c1" x="292" y="120">② 对号入座</text>
+  <text class="t ps" x="292" y="138">找对应那一篇</text>
+
+  <rect class="p1" x="406" y="98" width="116" height="52" rx="8"/>
+  <text class="t pt c1" x="420" y="120">③ 照着做</text>
+  <text class="t ps" x="420" y="138">决策树 + 步骤</text>
+
+  <rect class="p1" x="534" y="98" width="116" height="52" rx="8"/>
+  <text class="t pt c1" x="548" y="120">④ 验收</text>
+  <text class="t ps" x="548" y="138">跑一遍清单</text>
+
+  <!-- B -->
+  <rect class="card" x="30" y="180" width="580" height="84" rx="10"/>
+  <text class="t lb c2" x="44" y="214">B 系统学一遍</text>
+  <text class="t ls" x="44" y="234">按依赖顺序</text>
+  <text class="t ls" x="44" y="250">约 9 小时</text>
+
+  <rect class="s1" x="150" y="194" width="236" height="52" rx="8"/>
+  <text class="t pt c1" x="164" y="216">P0 现象排障 · 7 篇</text>
+  <text class="t ps" x="164" y="234">#1 ~ #7：从开不了机到修完</text>
+
+  <rect class="s2" x="398" y="194" width="126" height="52" rx="8"/>
+  <text class="t pt c2" x="412" y="216">P1 系统软件</text>
+  <text class="t ps" x="412" y="234">#8 ~ #11</text>
+
+  <rect class="s3" x="536" y="194" width="114" height="52" rx="8"/>
+  <text class="t pt c3" x="550" y="216">P2 硬件数据</text>
+  <text class="t ps" x="550" y="234">#12 ~ #15</text>
+
+  <!-- C -->
+  <rect class="card" x="30" y="276" width="580" height="84" rx="10"/>
+  <text class="t lb c3" x="44" y="310">C 只关心数据</text>
+  <text class="t ls" x="44" y="330">最短的一条</text>
+  <text class="t ls" x="44" y="346">3 篇够了</text>
+
+  <rect class="p3" x="150" y="290" width="160" height="52" rx="8"/>
+  <text class="t pt c3" x="164" y="312">#6 硬盘还能用多久</text>
+  <text class="t ps" x="164" y="330">先判断盘是否在坏</text>
+
+  <rect class="p3" x="320" y="290" width="160" height="52" rx="8"/>
+  <text class="t pt c3" x="334" y="312">#14 备份 3-2-1</text>
+  <text class="t ps" x="334" y="330">别丢：三份两份异地</text>
+
+  <rect class="p3" x="490" y="290" width="160" height="52" rx="8"/>
+  <text class="t pt c3" x="504" y="312">#15 误删恢复</text>
+  <text class="t ps" x="504" y="330">丢了：先停手再谈救</text>
+
+  <text class="t ft" x="30" y="390">三条路不是三选一：C 里的两篇，是 A 和 B 都会用到的兜底。</text>
+</svg>

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" role="img" aria-label="自查、动手、送修三个区间：各自的判据与典型动作，以及跨界的条件">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .hd { font-size: 12px; font-weight: 700; fill: #fffdf6; }
+    .li { font-size: 10.5px; fill: #4c463e; }
+    .ac { font-size: 10px; font-weight: 700; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .card { fill: #fffdf6; stroke: #e0d6c0; stroke-width: 1.5; }
+    .z1 { fill: #2f5d8a; }
+    .z2 { fill: #c9962a; }
+    .z3 { fill: #cc3b3b; }
+    .a1 { fill: #2f5d8a; }
+    .a2 { fill: #a87c1c; }
+    .a3 { fill: #b02f2f; }
+    .dot { fill: #b9ae98; }
+    .div { stroke: #c9bfa8; stroke-width: 1.5; stroke-dasharray: 4 4; }
+  </style>
+
+  <rect class="bg" width="680" height="400"/>
+
+  <text class="t th" x="30" y="38">自查 / 动手 / 送修：先确认你在哪一格</text>
+  <text class="t ts" x="30" y="60">越界操作是二次损坏的主要来源，每一格都有自己的退出条件</text>
+
+  <!-- 分界虚线 -->
+  <line class="div" x1="234" y1="88" x2="234" y2="330"/>
+  <line class="div" x1="447" y1="88" x2="447" y2="330"/>
+
+  <!-- 自查 -->
+  <rect class="card" x="30" y="84" width="194" height="248" rx="10"/>
+  <rect class="z1" x="30" y="84" width="194" height="32" rx="10"/>
+  <rect class="z1" x="30" y="102" width="194" height="14"/>
+  <text class="t hd" x="44" y="105">① 自查（不用工具）</text>
+  <circle class="dot" cx="46" cy="142" r="2.5"/>
+  <text class="t li" x="56" y="146">按电源键有没有任何反应</text>
+  <circle class="dot" cx="46" cy="180" r="2.5"/>
+  <text class="t li" x="56" y="184">屏幕有没有信号、有没有背光</text>
+  <circle class="dot" cx="46" cy="218" r="2.5"/>
+  <text class="t li" x="56" y="222">风扇转不转、指示灯什么颜色</text>
+  <circle class="dot" cx="46" cy="256" r="2.5"/>
+  <text class="t li" x="56" y="260">最近装过什么、改过什么</text>
+  <text class="t ac a1" x="44" y="298">动作：观察 + 记录 + 排除外设</text>
+  <text class="t li" x="44" y="316">十分钟内能做完</text>
+
+  <!-- 动手 -->
+  <rect class="card" x="243" y="84" width="194" height="248" rx="10"/>
+  <rect class="z2" x="243" y="84" width="194" height="32" rx="10"/>
+  <rect class="z2" x="243" y="102" width="194" height="14"/>
+  <text class="t hd" x="257" y="105">② 动手（有备份有工具）</text>
+  <circle class="dot" cx="259" cy="142" r="2.5"/>
+  <text class="t li" x="269" y="146">拆得开、记得住、装得回</text>
+  <circle class="dot" cx="259" cy="180" r="2.5"/>
+  <text class="t li" x="269" y="184">能进 BIOS 或 PE，能重装</text>
+  <circle class="dot" cx="259" cy="218" r="2.5"/>
+  <text class="t li" x="269" y="222">重要数据已备份、或可放弃</text>
+  <circle class="dot" cx="259" cy="256" r="2.5"/>
+  <text class="t li" x="269" y="260">弄坏了能接受、能补救</text>
+  <text class="t ac a2" x="257" y="298">动作：清灰、换件、重装</text>
+  <text class="t li" x="257" y="316">四条缺一条就先别动</text>
+
+  <!-- 送修 -->
+  <rect class="card" x="456" y="84" width="194" height="248" rx="10"/>
+  <rect class="z3" x="456" y="84" width="194" height="32" rx="10"/>
+  <rect class="z3" x="456" y="102" width="194" height="14"/>
+  <text class="t hd" x="470" y="105">③ 送修（别自己碰）</text>
+  <circle class="dot" cx="472" cy="142" r="2.5"/>
+  <text class="t li" x="482" y="146">盘在响、有焦味、进过水</text>
+  <circle class="dot" cx="472" cy="180" r="2.5"/>
+  <text class="t li" x="482" y="184">摔过、压过、烧过</text>
+  <circle class="dot" cx="472" cy="218" r="2.5"/>
+  <text class="t li" x="482" y="222">拆完还多出螺丝</text>
+  <circle class="dot" cx="472" cy="256" r="2.5"/>
+  <text class="t li" x="482" y="260">数据价值高于机器本身</text>
+  <text class="t ac a3" x="470" y="298">动作：断电、拍照、写清故障</text>
+  <text class="t li" x="470" y="316">说清"我做过什么"</text>
+
+  <text class="t ft" x="30" y="362">能从 ① 走到 ② 靠的是备份和工具；停在 ③ 不是能力问题，是工具问题。</text>
+  <text class="t ft" x="30" y="382">反过来，从 ② 退回 ① 往往更值钱：多观察十分钟，少拆一次机。</text>
+</svg>
