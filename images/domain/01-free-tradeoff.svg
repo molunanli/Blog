@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" role="img" aria-label="免费子域名的取舍：左边是拿到的五项好处，右边是要付的五项代价">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .hd { font-size: 12px; font-weight: 700; fill: #fffdf6; }
+    .li { font-size: 10.5px; fill: #4c463e; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .card { fill: #fffdf6; stroke: #e0d6c0; stroke-width: 1.5; }
+    .g1 { fill: #4f7f47; }
+    .g2 { fill: #cc3b3b; }
+    .dot1 { fill: #7aa370; }
+    .dot2 { fill: #d08b85; }
+    .hi { font-size: 10.5px; font-weight: 700; fill: #b02f2f; }
+  </style>
+
+  <rect class="bg" width="680" height="400"/>
+
+  <text class="t th" x="30" y="38">不买域名：你拿到什么，付出什么</text>
+  <text class="t ts" x="30" y="60">两栏的分界线，是"现在省的钱"和"将来付的成本"</text>
+
+  <!-- 左：得到的 -->
+  <rect class="card" x="30" y="84" width="298" height="248" rx="10"/>
+  <rect class="g1" x="30" y="84" width="298" height="32" rx="10"/>
+  <rect class="g1" x="30" y="102" width="298" height="14"/>
+  <text class="t hd" x="44" y="105">✔ 你拿到的</text>
+  <circle class="dot1" cx="46" cy="142" r="2.5"/>
+  <text class="t li" x="56" y="146">零成本，域名费用为 0</text>
+  <circle class="dot1" cx="46" cy="180" r="2.5"/>
+  <text class="t li" x="56" y="184">HTTPS 自动签发，不用管证书</text>
+  <circle class="dot1" cx="46" cy="218" r="2.5"/>
+  <text class="t li" x="56" y="222">服务器在境外，不涉及备案</text>
+  <circle class="dot1" cx="46" cy="256" r="2.5"/>
+  <text class="t li" x="56" y="260">零运维：推分支就上线</text>
+  <circle class="dot1" cx="46" cy="294" r="2.5"/>
+  <text class="t li" x="56" y="298">今天就可用，不用等解析生效</text>
+
+  <!-- 右：付出的 -->
+  <rect class="card" x="352" y="84" width="298" height="248" rx="10"/>
+  <rect class="g2" x="352" y="84" width="298" height="32" rx="10"/>
+  <rect class="g2" x="352" y="102" width="298" height="14"/>
+  <text class="t hd" x="366" y="105">✘ 你要付的</text>
+  <circle class="dot2" cx="368" cy="142" r="2.5"/>
+  <text class="t li" x="378" y="146">网址长，分享出去像一串编号</text>
+  <circle class="dot2" cx="368" cy="180" r="2.5"/>
+  <text class="t li" x="378" y="184">多一层子路径 /Blog/</text>
+  <circle class="dot2" cx="368" cy="218" r="2.5"/>
+  <text class="t li" x="378" y="222">国内访问时好时坏</text>
+  <circle class="dot2" cx="368" cy="256" r="2.5"/>
+  <text class="t li" x="378" y="260">品牌记在别人的域名下</text>
+  <circle class="dot2" cx="368" cy="294" r="2.5"/>
+  <text class="t hi" x="378" y="298">将来换域名，所有链接要重做</text>
+
+  <text class="t ft" x="30" y="362">右边五项里，前四项只有买了域名才会消失；只有最后一项，现在就能提前付掉。</text>
+  <text class="t ft" x="30" y="382">这篇讲的就是那一项。</text>
+</svg>

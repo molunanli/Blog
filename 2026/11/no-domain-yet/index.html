@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>先不买域名，但把后路留好 · 我的博客</title>
+<meta name="description" content="这个站现在跑在 molunanli.github.io/Blog，没有自己的域名。这篇不写&#34;怎么买域名&#34;，写的是：不买能撑到什么时候、免费子域名真正要付的代价是什么、以及现在就该做的几件&#34;留后路&#34;的准备。文中把本站的真实数据摊开了——111 处写死的绝对地址、7 个刚被我写错成 404 的链接、和一">
+<meta name="theme-color" content="#f7f1e3">
+
+<!-- 防主题闪烁：在任何渲染前确定主题 -->
+<script>
+(function () {
+    var k = 'manga-blog-theme';
+    var saved = null;
+    try { saved = localStorage.getItem(k); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/Blog/css/style.css">
+<link rel="alternate" href="/Blog/atom.xml" title="我的博客" type="application/atom+xml">
+<script>window.SEARCH_JSON_URL = '/Blog/search.json';</script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body data-root="/Blog/">
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="site-header">
+    <div class="shell">
+        <nav class="navbar" aria-label="主导航">
+            <a class="brand" href="/Blog/" aria-label="我的博客 首页">
+                <span class="brand-seal" aria-hidden="true">博客</span>
+                我的博客
+            </a>
+
+            <ul class="nav-links">
+                
+                    
+                    <li><a href="/Blog/" data-nav="/">首页</a></li>
+                
+                    
+                    <li><a href="/Blog/archives" data-nav="/archives">归档</a></li>
+                
+                    
+                    <li><a href="/Blog/tags" data-nav="/tags">标签</a></li>
+                
+                    
+                    <li><a href="/Blog/categories" data-nav="/categories">分类</a></li>
+                
+                    
+                    <li><a href="/Blog/about" data-nav="/about">关于</a></li>
+                
+            </ul>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn" type="button" aria-label="搜索文章" title="搜索（Ctrl / ⌘ + K）">🔍</button>
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="切换至暗色模式" aria-pressed="false" title="切换至暗色模式">🌙</button>
+                <button class="icon-btn burger" id="burgerBtn" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="drawer">☰</button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<nav class="drawer" id="drawer" aria-label="移动端导航" aria-hidden="true">
+    <div class="drawer-head">
+        <span class="drawer-title">📖 目录导航</span>
+        <button class="icon-btn" id="drawerClose" type="button" aria-label="关闭菜单">✕</button>
+    </div>
+    
+        
+        <a href="/Blog/" data-nav="/">首页</a>
+    
+        
+        <a href="/Blog/archives" data-nav="/archives">归档</a>
+    
+        
+        <a href="/Blog/tags" data-nav="/tags">标签</a>
+    
+        
+        <a href="/Blog/categories" data-nav="/categories">分类</a>
+    
+        
+        <a href="/Blog/about" data-nav="/about">关于</a>
+    
+    <p class="drawer-note">我的博客 — 日式漫画风 · Hexo 主题</p>
+</nav>
+
+
+
+<main class="site-main" id="articleRoot"
+      data-post-id="no-domain-yet"
+      data-post-title="先不买域名，但把后路留好"
+      data-post-likes="0">
+
+    
+
+<script>
+    /* 供 app.js 的目录滚动高亮使用（headings 由模板计算） */
+    var headings = [{"level":"2","id":"一、什么时候该买域名","text":"一、什么时候该买域名"},{"level":"2","id":"二、免费的账：拿到五项，付出五项","text":"二、免费的账：拿到五项，付出五项"},{"level":"2","id":"三、五项代价里，只有一项现在能付","text":"三、五项代价里，只有一项现在能付"},{"level":"2","id":"四、一个网址，其实由三段拼起来","text":"四、一个网址，其实由三段拼起来"},{"level":"2","id":"五、把本站的实际情况摊开","text":"五、把本站的实际情况摊开"},{"level":"2","id":"六、三种写法，怎么选","text":"六、三种写法，怎么选"},{"level":"2","id":"七、现在就该做的四件事","text":"七、现在就该做的四件事"},{"level":"2","id":"八、真到那天：迁移六步","text":"八、真到那天：迁移六步"},{"level":"2","id":"九、别被”换域名会掉权重”吓住","text":"九、别被”换域名会掉权重”吓住"},{"level":"2","id":"十、把”留后路”当成一种习惯","text":"十、把”留后路”当成一种习惯"},{"level":"2","id":"相关阅读","text":"相关阅读"}];
+</script>
+
+<div class="shell">
+    <nav class="crumbs" aria-label="面包屑导航">
+        <a href="/Blog/">首页</a><span class="sep" aria-hidden="true">›</span>
+        
+            <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a><span class="sep" aria-hidden="true">›</span>
+        
+        <span id="crumbCurrent">先不买域名，但把后路留好</span>
+    </nav>
+</div>
+
+<div class="shell">
+    <div class="grid grid--sidebar">
+
+        <!-- ============ 正文 ============ -->
+        <div class="stack">
+            <section class="article-head" id="articleHead">
+                
+                    <a class="chip chip--cat" href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                
+                <h1 class="article-title">先不买域名，但把后路留好</h1>
+                <div class="article-meta">
+                    <span>✍️ 博主</span>
+                    <span>📅 令和8年11月5日</span>
+                    <span>⏱ 阅读约 16 分钟</span>
+                    
+                    
+                </div>
+                <div class="tag-list" style="margin-top:14px">
+                    
+                        <a class="tag-chip" href="/Blog/tags/Hexo/">#Hexo</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E6%95%99%E7%A8%8B/">#教程</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%8B%AC%E7%AB%8B%E5%8D%9A%E5%AE%A2/">#独立博客</a>
+                    
+                </div>
+            </section>
+
+            <article class="card article-body" id="articleBody">
+                <div class="note note--tip"><span class="note-title">📚 独立博客实战 · 第 3 篇（上线线）</span>第 2 篇把站推上了线，这一篇处理"地址"这件事。第 1 篇《<a href="https://molunanli.github.io/Blog/2026/11/why-self-host-blog/">为什么 2026 年还要自己搭一个博客</a>》算过总账，结论是"一年 0 元"——其中省掉的最大一笔就是域名。所以这一篇要回答的是：<strong>这笔钱现在不花，代价是什么，怎么把代价压到最低。</strong></div>
+
+<p>先把我这个站的真实配置摊开，省得你猜：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项</th>
+<th>现在的值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>站点地址</td>
+<td><code>https://molunanli.github.io/Blog/</code></td>
+</tr>
+<tr>
+<td>根路径（root）</td>
+<td><code>/Blog/</code></td>
+</tr>
+<tr>
+<td>永久链接</td>
+<td><code>:year/:month/:slug/</code>，即 <code>/2026/09/xxx/</code></td>
+</tr>
+<tr>
+<td>域名</td>
+<td><strong>没有</strong></td>
+</tr>
+<tr>
+<td>评论</td>
+<td>Giscus，绑定 <code>molunanli/Blog</code> 仓库，mapping 为 <code>pathname</code></td>
+</tr>
+<tr>
+<td>费用</td>
+<td>域名 0 元 + 托管 0 元</td>
+</tr>
+</tbody></table></div>
+<p>这不是”推荐配置”，只是<strong>一个刚好够用、且还没到必须升级的配置</strong>。这篇讲的就是它为什么够用、以及什么时候会不够用。</p>
+<h2 id="一、什么时候该买域名"><a href="#一、什么时候该买域名" class="headerlink" title="一、什么时候该买域名"></a>一、什么时候该买域名</h2><p>先给判断标准，再谈技术。下面五条里<strong>任何一条成立</strong>，就该买了：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>信号</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>要当作品集或简历里的链接</td>
+<td><code>xxx.github.io/repo/</code> 挂在简历上，说服力打折</td>
+</tr>
+<tr>
+<td>国内读者占多数，且要求稳定打开</td>
+<td><code>github.io</code> 在国内访问时好时坏，这是最硬的痛点</td>
+</tr>
+<tr>
+<td>需要用域名做邮箱</td>
+<td><code>hi@yourname.com</code> 需要一个你能改 MX 记录的域名</td>
+</tr>
+<tr>
+<td>已经有稳定读者</td>
+<td>此时迁移成本最低——读者会跟着你走，越晚越难</td>
+</tr>
+<tr>
+<td>想摆脱”随时可能变”的托管策略</td>
+<td>域名是你的，托管可以随时换；反过来不行</td>
+</tr>
+</tbody></table></div>
+<p>反过来说：<strong>如果一条都不成立，不买是对的。</strong> 域名不是”技术人的成年礼”，一年几十块也不是关键，关键是<strong>买早了会带来维护负担</strong>（续费、DNS、证书、备案判断），而你现在没有需要它解决的问题。</p>
+<p>我的情况是：五条都不成立。所以这篇文章写的是”怎么把不买这件事做扎实”，不是”怎么买”。</p>
+<h2 id="二、免费的账：拿到五项，付出五项"><a href="#二、免费的账：拿到五项，付出五项" class="headerlink" title="二、免费的账：拿到五项，付出五项"></a>二、免费的账：拿到五项，付出五项</h2><p><img src="/Blog/images/domain/01-free-tradeoff.svg" alt="不买域名的取舍：左边是拿到的五项好处，右边是要付的五项代价"></p>
+<p><em>图 1：右栏五项里，只有最后一项是现在能提前处理的。</em></p>
+<p><strong>你拿到的：</strong> 零成本、HTTPS 自动签发（GitHub 用 Let’s Encrypt 签，到期自动续，你什么都不用管）、不用备案、零运维、今天就可用。</p>
+<p><strong>你付出的：</strong> 网址长、多一层 <code>/Blog/</code> 子路径、国内访问波动、品牌记在别人的域名下、<strong>将来换域名时所有链接要重做</strong>。</p>
+<p>第三项值得展开一句，因为它被误解得最多。</p>
+<div class="note note--info"><span class="note-title">📌 澄清一个常见误解</span>"用 GitHub Pages 不用备案"——对，但原因不是"你没有域名"，而是<strong>服务器在境外</strong>。备案管的是境内服务器。所以：<br>① 现在没域名 + GitHub Pages → 不用备案<br>② 买了域名 + 仍指向 GitHub Pages → <strong>依然不用备案</strong><br>③ 买了域名 + 指向国内服务器 → <strong>必须备案</strong><br>换句话说，备案跟你买不买域名无关，跟你把站放在哪有关。这一条想清楚了，将来做决定会轻松很多。</div>
+
+<h2 id="三、五项代价里，只有一项现在能付"><a href="#三、五项代价里，只有一项现在能付" class="headerlink" title="三、五项代价里，只有一项现在能付"></a>三、五项代价里，只有一项现在能付</h2><p>前四项——网址长、子路径、访问速度、品牌——<strong>只有买了域名才会消失</strong>，现在做什么都无用。你不可能靠写代码让 <code>github.io</code> 变短。</p>
+<p>只有第五项「将来换域名的成本」，是<strong>现在就能提前付掉的</strong>。而且现在付，几乎不花钱；等有五十篇文章再付，就是一场大扫除。</p>
+<p>这就是这篇的全部意义：<strong>把一次未来的大改，拆成现在的小习惯。</strong></p>
+<h2 id="四、一个网址，其实由三段拼起来"><a href="#四、一个网址，其实由三段拼起来" class="headerlink" title="四、一个网址，其实由三段拼起来"></a>四、一个网址，其实由三段拼起来</h2><p>要谈”改哪里会断”，先得看清网址的解剖结构。</p>
+<p><img src="/Blog/images/domain/02-url-anatomy.svg" alt="一个网址由域名、根路径、永久链接三段组成，改每一段分别会断什么"></p>
+<p><em>图 2：<code>https://molunanli.github.io</code> + <code>/Blog</code> + <code>/2026/09/pc-repair-first-lesson/</code>，三段各有各的配置项。</em></p>
+<p><strong>① 域名</strong> 对应 <code>_config.yml</code> 的 <code>url</code>。换它，等于换门牌号。</p>
+<p><strong>② 根路径</strong> 对应 <code>_config.yml</code> 的 <code>root</code>。现在因为站挂在仓库子路径下，所以是 <code>/Blog/</code>。<strong>如果买了域名并把站放到域名根目录，这里就变成 <code>/</code>。</strong> 这是很多人忽略的一段。</p>
+<p><strong>③ 永久链接</strong> 对应 <code>permalink: :year/:month/:slug/</code>。它决定每篇文章的具体地址。</p>
+<p>现在关键问题来了：</p>
+<p><strong>换了域名，旧地址会不会自动跳转到新地址？</strong></p>
+<p>GitHub 官方文档的说法是：为 Pages 站点配置自定义域名后，<strong>Pages 的默认域名会重定向到自定义域名</strong>。所以 <code>molunanli.github.io</code> 这一层，大概率会由 GitHub 帮你跳。</p>
+<p>但这里有个我必须标”待确认”的地方：</p>
+<div class="note note--warn"><span class="note-title">⚠️ 重定向只解决域名，不解决路径</span>官方文档讲的是"默认域名重定向到自定义域名"，但<strong>没有明确说明 project site 的子路径会怎么处理</strong>——`molunanli.github.io/Blog/2026/09/x/` 到底跳到 `example.com/2026/09/x/`，还是 `example.com/Blog/2026/09/x/`，我没有实测，标<strong>待确认</strong>。<br>而这个区别恰恰是要命的：前者说明 root 从 `/Blog/` 变成了 `/`，所有含 `/Blog/` 的链接全断；后者说明 root 没变，链接还能活。<br><strong>验证方法</strong>：买之前先用一个不重要的子域（比如 `test.yourdomain.com`）挂上去试一次，看旧地址落在哪。十分钟的事，能省掉一场迁移事故。</div>
+
+<p>工程上的正确做法不是”赌 GitHub 会救我”，而是：<strong>假设旧链接全断，倒推出现在该做什么。</strong></p>
+<h2 id="五、把本站的实际情况摊开"><a href="#五、把本站的实际情况摊开" class="headerlink" title="五、把本站的实际情况摊开"></a>五、把本站的实际情况摊开</h2><p>写这一节之前我查了一遍自己的站，结果不太好看。</p>
+<p><strong>111 处</strong>写死的绝对地址 <code>https://molunanli.github.io/Blog/...</code>，分布在 20 篇文章里。<strong>0 处</strong>用了 root 相对路径。也就是说：<strong>全站只用了一种写法，而那种写法对域名变化最敏感。</strong></p>
+<p>更难看的是另一件事。我在写这个栏目总目录那篇时，给 about 页加了 7 个链接，写成了：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">href=&quot;/2026/11/pc-repair-handbook-index/&quot;</span><br></pre></td></tr></table></div></div></div>
+
+<p>少了 <code>/Blog/</code> 前缀。构建没报错，页面看起来也正常，点下去<strong>全是 404</strong>。这不是理论推演，是昨天刚发生、今天才发现的事故。</p>
+<div class="note note--warn"><span class="note-title">⚠️ 这类错误为什么特别难发现</span>因为<strong>它在构建和本地预览里都是"成功"的</strong>。Hexo 不会检查你手写的 href 指向哪里，`hexo generate` 的报告里只有"Generated: XX files"。本地用 server 预览时，`/2026/...` 这个路径甚至可能真的能打开（取决于 server 的 root 处理），一上线就死。<br><strong>唯一可靠的检查方式</strong>：对生成后的 HTML 提取所有站内 href，逐个去线上 curl 状态码。肉眼扫是扫不出来的。</div>
+
+<p>有意思的是：<strong>同一个站里，图片路径从来没出过这个问题。</strong></p>
+<p>图片我写的是相对路径 <code>images/domain/01.svg</code>，构建后自动变成 <code>/Blog/images/domain/01.svg</code>。原因在渲染器：<code>hexo-renderer-marked</code> 默认开着 <code>prependRoot</code>，会把<strong>相对路径的图片和链接</strong>自动补上 root 前缀。</p>
+<p>所以规律很清楚：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>你写的</th>
+<th>构建后</th>
+<th>换域名</th>
+<th>换 root</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>images/x.svg</code>（相对）</td>
+<td>自动补 root ✅</td>
+<td>安全</td>
+<td>安全</td>
+</tr>
+<tr>
+<td><code>/2026/09/x/</code>（手写绝对）</td>
+<td>原样输出 ❌</td>
+<td>安全</td>
+<td><strong>断</strong></td>
+</tr>
+<tr>
+<td><code>https://molunanli.github.io/Blog/2026/09/x/</code></td>
+<td>原样输出 ❌</td>
+<td><strong>断</strong></td>
+<td><strong>断</strong></td>
+</tr>
+</tbody></table></div>
+<p><strong>图片是安全的，链接不是。</strong> 因为图片走了渲染器，链接走了你自己的手。</p>
+<h2 id="六、三种写法，怎么选"><a href="#六、三种写法，怎么选" class="headerlink" title="六、三种写法，怎么选"></a>六、三种写法，怎么选</h2><p><img src="/Blog/images/domain/03-link-styles.svg" alt="三种站内链接写法在换域名、换根路径后的存活情况"></p>
+<p><em>图 3：③ 最稳，但代价最大——它把文章绑死在 Hexo 上。</em></p>
+<p><strong>① 写死的绝对地址</strong>（本站现状）。优点是<strong>可移植</strong>：文章复制到 Typora、Notion、公众号后台，链接照样能点。缺点是换域名要批量替换。111 处替换听起来多，其实一条 sed 就完了——真正的风险不是数量，是<strong>混用</strong>：如果站里同时有绝对地址和 root 相对路径，一次替换改不干净，你会漏掉一半。</p>
+<p><strong>② 以 root 开头的路径</strong>（<code>/Blog/2026/...</code>）。换域名不怕，换 root 要替换。缺点是在本地 Markdown 编辑器里点不开（它不知道 <code>/Blog/</code> 是哪个站）。<strong>注意：这恰恰是我昨天写 404 的那种写法</strong>——省掉一个前缀就死，而且不留痕迹。</p>
+<p><strong>③ post_link 标签</strong>（Hexo 内置的标签插件，构建时按 slug 解析成真实地址）。它是唯一”换什么都不怕”的写法，因为它只依赖 slug。代价是：<strong>文章一旦离开 Hexo 就废了</strong>，粘到别处是一串没人认识的标签。</p>
+<p>这里必须诚实说取舍。如果你的文章要长期保持”纯 Markdown、随时能搬到别处”（我确实是这么要求的），那就<strong>不该用 ③</strong>。可选的是 ① 或 ②，而且必须<strong>全站只用一种</strong>。</p>
+<p>我的选择是 ①（绝对地址），理由很实际：文章的可移植性 &gt; 迁移时的替换成本。111 处替换是十分钟的活，而文章绑死在某个生成器上，是永久性的债。</p>
+<div class="note note--tip"><span class="note-title">💡 一条比"选哪种"更重要的纪律</span><strong>全站只允许一种站内链接写法。</strong>混用才是最贵的：你会同时承担两种写法的缺点，而且每次替换都要人工判断"这处改了没有"。<br>定规矩的方式很简单：写完一篇，跑一次 <code>grep -o</code> 统计各写法的数量，只要出现第二种写法，当场改掉。成本一分钟。</div>
+
+<h2 id="七、现在就该做的四件事"><a href="#七、现在就该做的四件事" class="headerlink" title="七、现在就该做的四件事"></a>七、现在就该做的四件事</h2><p><strong>第一件：统一下链接写法。</strong> 见上一节。本站现状是全绝对地址（111 处）——已经统一，不用动。你要做的是检查自己有没有混用。</p>
+<p><strong>第二件：图片坚持相对写法。</strong> 这一条不用做，<strong>别改就行</strong>。<code>prependRoot</code> 已经帮你处理了，反而是”为了保险”改成绝对地址会把安全的东西弄不安全。</p>
+<p><strong>第三件：把 Giscus 的 mapping 从 <code>pathname</code> 换掉。</strong> 这条最容易被漏，因为它在主题配置里，不在文章里。</p>
+<p>现在本站的配置是：</p>
+<div class="code-block" data-lang="yaml" data-file="yaml"><div class="code-bar"><span class="code-lang">yaml</span><span class="code-file">yaml</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">giscus:</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">molunanli/Blog</span>        <span class="comment"># 与域名无关，安全</span></span><br><span class="line">  <span class="attr">repoId:</span> <span class="string">R_kgDOUMGUlQ</span>        <span class="comment"># 与域名无关，安全</span></span><br><span class="line">  <span class="attr">mapping:</span> <span class="string">pathname</span>           <span class="comment"># ← 这里有问题</span></span><br></pre></td></tr></table></div></div></div>
+
+<p><code>repo</code> 和 <code>repoId</code> 指向的是<strong>仓库</strong>，跟域名没关系，换了域名也不用改——这点设计得很好。</p>
+<p>但 <code>mapping: pathname</code> 的意思是：<strong>用页面的路径去匹配对应的 Discussion。</strong> 现在每篇文章的 pathname 是 <code>/Blog/2026/09/xxx/</code>。一旦 root 从 <code>/Blog/</code> 变成 <code>/</code>，pathname 就变成 <code>/2026/09/xxx/</code>——<strong>对不上原来的 Discussion，所有历史评论全部”消失”</strong>（其实还在 GitHub 上，只是页面上匹配不到）。</p>
+<p>Giscus 支持几种 mapping：<code>pathname</code>（路径）、<code>url</code>（完整 URL，换域名就死，最差）、<code>title</code>（页面标题）、<code>og:title</code>、<code>specific</code>（自己指定固定词条）。</p>
+<p><strong>和路径、域名都无关的是后三种。</strong> 对 Hexo 站点最实用的是 <code>title</code>——用文章标题做匹配，改域名、改 root、改 permalink 都不影响。代价是：<strong>以后改文章标题，评论会对不上</strong>。</p>
+<div class="note note--tip"><span class="note-title">💡 什么时候换最划算：现在</span>这个决定跟"评论数量"直接相关。<strong>评论为 0 时换，成本是 0；有 50 条评论时换，就是 50 条评论失联。</strong>本站评论还很少，所以现在改一行配置，就是最便宜的时刻。<br>改法：主题 <code>_config.yml</code> 的 giscus 段把 <code>mapping: pathname</code> 改成 <code>mapping: title</code>，重新生成即可。</div>
+
+<p><strong>第四件：<code>permalink</code> 定死别再动。</strong> <code>:year/:month/:slug/</code> 这个结构一旦有文章被搜索引擎收录、被外部引用，改它就是全站 404。想加分类前缀、想去掉月份——<strong>在只有三篇文章的时候改，别在三十篇的时候改</strong>。</p>
+<p>至于 CNAME 文件：现在不用建。它是给自定义域名用的，等买了再放——但你现在就该知道它放在哪（<code>source/CNAME</code>，内容只有一行域名，构建后会出现在 <code>public/CNAME</code>），免得到时候现查。</p>
+<h2 id="八、真到那天：迁移六步"><a href="#八、真到那天：迁移六步" class="headerlink" title="八、真到那天：迁移六步"></a>八、真到那天：迁移六步</h2><p>假设半年后你买了域名，按这个顺序做：</p>
+<p><strong>第 1 步 · 买域名，先别急着解析。</strong> 在 GitHub 账号设置里做一次域名验证（加一条 TXT 记录），防止别人抢注你的子域挂内容。</p>
+<p><strong>第 2 步 · 加 DNS 记录。</strong> 根域名用四条 A 记录指向 GitHub Pages 的 IP；<code>www</code> 用 CNAME 指向 <code>你的用户名.github.io</code>。<strong>别用通配符 <code>*.example.com</code></strong>，那会留下被接管的口子。</p>
+<p><strong>第 3 步 · 仓库设置里填自定义域名，勾上 Enforce HTTPS。</strong> 证书签发可能要等几十分钟到几小时。</p>
+<p><strong>第 4 步 · 改 <code>_config.yml</code>。</strong> <code>url</code> 换成新域名，<code>root</code> 按实际情况改（放根目录就是 <code>/</code>）。</p>
+<p><strong>第 5 步 · 批量替换站内链接。</strong> 这一步取决于你走的是哪种写法：</p>
+<div class="code-block" data-lang="bash" data-file="bash"><div class="code-bar"><span class="code-lang">bash</span><span class="code-file">bash</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 若 root 由 /Blog/ 变为 /，且链接是绝对地址</span></span><br><span class="line"><span class="comment"># 注意：先备份，再替换，别在生产目录上试</span></span><br><span class="line">grep -rl <span class="string">&#x27;molunanli.github.io/Blog&#x27;</span> <span class="built_in">source</span>/_posts/ | xargs sed -i <span class="string">&#x27;s|molunanli.github.io/Blog|yourdomain.com|g&#x27;</span></span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>第 6 步 · 重新提交 sitemap，并在旧地址留一句”已迁移”。</strong> 搜索引擎需要主动通知，等它自己发现要好几天。</p>
+<h2 id="九、别被”换域名会掉权重”吓住"><a href="#九、别被”换域名会掉权重”吓住" class="headerlink" title="九、别被”换域名会掉权重”吓住"></a>九、别被”换域名会掉权重”吓住</h2><p>网上流传”换域名 SEO 归零”，这话不准确，但也别当耳旁风。客观地说：</p>
+<ul>
+<li><strong>会掉，但通常是暂时的</strong>。搜索排名会波动几天到几周，然后按新地址重新稳定</li>
+<li><strong>前提是旧地址能正确跳转</strong>。而 GitHub Pages 是静态托管，<strong>你自己没法配 301 规则</strong>（没有 <code>.htaccess</code>、没有服务端）。能做的只有：依赖 GitHub 对默认域名的重定向、重新提交 sitemap、把站内链接全部指向新地址</li>
+<li><strong>对个人博客影响有限</strong>。你的流量大头通常是社交分享和搜索长尾，不是首页权重</li>
+</ul>
+<p>所以真实的结论是：<strong>换域名对小站的影响被高估了，但”旧链接全断”这件事被低估了。</strong> 前者是玄学，后者是实打实的 404。</p>
+<div class="note note--info"><span class="note-title">📌 一个诚实的边界</span>这一节里关于"GitHub 重定向行为"和"SEO 波动幅度"的描述，一部分来自官方文档，一部分来自社区经验，<strong>我没有做过 A/B 实测</strong>。真正要买之前，建议按第四节说的用临时子域跑一遍——那个结果比任何文章都可靠。</div>
+
+<h2 id="十、把”留后路”当成一种习惯"><a href="#十、把”留后路”当成一种习惯" class="headerlink" title="十、把”留后路”当成一种习惯"></a>十、把”留后路”当成一种习惯</h2><p>写完这一篇，我回头把 about 页那 7 个 404 修了。修的时候有个感受：</p>
+<p><strong>这类问题从来不是”技术难”，是”没人检查”。</strong> 一条 sed、一个 grep、一次线上 curl，任何一步都能提前发现它。但我当时写完看了一眼页面觉得”挺正常”，就发布了。</p>
+<p>所以”留后路”的真正含义，不是提前研究域名怎么买，而是：</p>
+<ul>
+<li>全站只有一种链接写法，将来一条命令改完</li>
+<li>图片和链接的处理方式心里有数，不靠猜</li>
+<li>评论绑定用与地址无关的键，锁死内容</li>
+<li>每发一篇，跑一次链接检查，而不是”看着没问题”</li>
+</ul>
+<p><strong>这四件事都不花钱，但能让你在真正需要换地址的那天，只花半小时。</strong></p>
+<p>下一篇回到”怎么发”这件具体的事：《<strong>本地一键部署脚本：push 即上线</strong>》。这一季不用 GitHub Actions，全靠手动推 <code>gh-pages</code>，所以那一篇要把这套五条命令的流程包成一条——顺便把”改完忘了 generate 就推送”这类事故一起消掉。</p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
+<li>《<a href="https://molunanli.github.io/Blog/2026/11/why-self-host-blog/">为什么 2026 年还要自己搭一个博客</a>》——<strong>系列第 1 篇</strong>；三笔账（钱、时间、维护）算完再决定要不要自建</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/deploy-hexo-github-pages/">Hexo + GitHub Pages 完整部署指南</a>》——<strong>系列第 2 篇</strong>；<code>root</code> 与子路径那一节跟本文第四节是同一个坑的两面</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/writing-publishing-manual/">mangaka 写作与发布手册</a>》——<strong>系列第 5 篇</strong>；本站的写作与发布约定</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/11/toc-overflow-fix/">文章目录超出后省略并加浮层提示</a>》——<strong>番外</strong>；一次真实的样式翻车与修法，排查思路和本文第五节很像</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/11/pc-repair-handbook-index/">电脑维修手册：15 篇总目录</a>》——上一季的落地页。<strong>顺手说明：本文第五节提到的 7 个 404，就是这篇发布时给 about 页加链接写错的，已经修了</strong></li>
+</ul>
+
+            </article>
+
+            <div class="share-row" id="shareRow">
+                <span class="share-label">分享这篇文章：</span>
+            </div>
+
+            <nav class="post-nav" id="postNav" aria-label="上下篇导航">
+                <span></span>
+                
+                    <a class="post-nav-item post-nav-item--next" href="/Blog/2026/11/pc-repair-handbook-index/">
+                        <span class="k">下一篇 →</span><span class="t">电脑维修手册：15 篇总目录 + 什么时候该送修</span>
+                    </a>
+                
+            </nav>
+
+            <!-- ---- 评论（Giscus：数据存于 GitHub Discussions） ---- -->
+            
+            
+            
+            <section class="card comments" aria-labelledby="commentTitle">
+                <h2 class="card-title" id="commentTitle" style="text-align:left">
+                    💬 读者留言
+                </h2>
+                <p style="margin:0 0 18px;font-size:.76rem;color:var(--ink-3)">
+                    评论由 GitHub Discussions 托管，需登录 GitHub 后参与（评论区的 +1 即点赞）。
+                </p>
+                <script src="https://giscus.app/client.js"
+                        data-repo="molunanli/Blog"
+                        data-repo-id="R_kgDOUMGUlQ"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOUMGUlc4DEuis"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                </script>
+            </section>
+            
+            
+        </div>
+
+        <!-- ============ 侧边栏 ============ -->
+        <aside class="sidebar toc-sticky" aria-label="文章侧边信息">
+
+            
+            <button class="toc-toggle-mobile" id="tocToggle" type="button" aria-expanded="false" aria-controls="tocPanel">
+                📑 目录导航 <span class="arrow" aria-hidden="true">▼</span>
+            </button>
+
+            <nav class="card toc-card toc-panel" id="tocPanel" aria-label="文章目录">
+                <h2 class="card-title">📑 目录</h2>
+                <div class="toc-list" id="tocList">
+                    
+                        <a class="toc-link toc-link--h2" href="#一、什么时候该买域名" title="一、什么时候该买域名" data-toc-text="一、什么时候该买域名">一、什么时候该买域名</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#二、免费的账：拿到五项，付出五项" title="二、免费的账：拿到五项，付出五项" data-toc-text="二、免费的账：拿到五项，付出五项">二、免费的账：拿到五项，付出五项</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#三、五项代价里，只有一项现在能付" title="三、五项代价里，只有一项现在能付" data-toc-text="三、五项代价里，只有一项现在能付">三、五项代价里，只有一项现在能付</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#四、一个网址，其实由三段拼起来" title="四、一个网址，其实由三段拼起来" data-toc-text="四、一个网址，其实由三段拼起来">四、一个网址，其实由三段拼起来</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#五、把本站的实际情况摊开" title="五、把本站的实际情况摊开" data-toc-text="五、把本站的实际情况摊开">五、把本站的实际情况摊开</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#六、三种写法，怎么选" title="六、三种写法，怎么选" data-toc-text="六、三种写法，怎么选">六、三种写法，怎么选</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#七、现在就该做的四件事" title="七、现在就该做的四件事" data-toc-text="七、现在就该做的四件事">七、现在就该做的四件事</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#八、真到那天：迁移六步" title="八、真到那天：迁移六步" data-toc-text="八、真到那天：迁移六步">八、真到那天：迁移六步</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#九、别被”换域名会掉权重”吓住" title="九、别被”换域名会掉权重”吓住" data-toc-text="九、别被”换域名会掉权重”吓住">九、别被”换域名会掉权重”吓住</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#十、把”留后路”当成一种习惯" title="十、把”留后路”当成一种习惯" data-toc-text="十、把”留后路”当成一种习惯">十、把”留后路”当成一种习惯</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#相关阅读" title="相关阅读" data-toc-text="相关阅读">相关阅读</a>
+                    
+                </div>
+            </nav>
+            
+
+            
+            <section class="card" aria-labelledby="relTitle">
+                <h2 class="card-title" id="relTitle">📎 相关文章</h2>
+                <ul class="related-list" id="relatedList">
+                    
+                        <li><a href="/Blog/2026/11/why-self-host-blog/">为什么 2026 年还要自己搭一个博客：三笔账算完再决定</a></li>
+                    
+                        <li><a href="/Blog/2026/09/deploy-hexo-github-pages/">零成本拥有自己的博客：Hexo + GitHub Pages 完整部署指南</a></li>
+                    
+                        <li><a href="/Blog/2026/09/publish-hexo-theme/">把你的 Hexo 主题发布出去：GitHub + npm + 官方主题列表，小白完整指南</a></li>
+                    
+                        <li><a href="/Blog/2026/09/writing-publishing-manual/">mangaka 写作与发布手册：从新建文章到上线</a></li>
+                    
+                </ul>
+            </section>
+            
+
+            <section class="card" aria-labelledby="authorTitle">
+                <h2 class="card-title" id="authorTitle">✍️ 关于作者</h2>
+                <div class="profile-avatar" style="width:76px;height:76px;font-size:2.3rem" aria-hidden="true">🐱</div>
+                <p class="profile-name" style="text-align:center">博主</p>
+                <p class="profile-role" style="text-align:center">BLOGGER</p>
+                <p class="profile-bio" style="text-align:center;font-size:.82rem">这里是作者简介。
+用一两句话介绍你自己，或者这个博客打算写些什么。
+</p>
+                <p style="text-align:center;margin-top:12px">
+                    <a class="link-more" href="/Blog/about">▶ 了解更多</a>
+                </p>
+            </section>
+
+        </aside>
+    </div>
+</div>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="shell">
+        <div class="footer-grid">
+            <div>
+                <span class="footer-h">关于本站</span>
+                <p style="font-size:.88rem;color:var(--ink-2);line-height:1.8">
+                    这里是页脚简介。用一两句话说明这个博客的内容方向，
+让读者一眼知道这里在写什么。
+
+                </p>
+                <p style="margin-top:12px">
+                    <span class="footer-seal" aria-hidden="true">我的<br>博客</span>
+                </p>
+            </div>
+            <div>
+                <span class="footer-h">快速导航</span>
+                <nav class="footer-list" aria-label="页脚导航">
+                    
+                        
+                        <a href="/Blog/">首页</a>
+                    
+                        
+                        <a href="/Blog/archives">归档</a>
+                    
+                        
+                        <a href="/Blog/tags">标签</a>
+                    
+                        
+                        <a href="/Blog/categories">分类</a>
+                    
+                        
+                        <a href="/Blog/about">关于</a>
+                    
+                </nav>
+            </div>
+            <div>
+                <span class="footer-h">热门分类</span>
+                <nav class="footer-list" aria-label="分类导航">
+                    
+                        <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                    
+                        <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <span>&copy; 2026 我的博客 — 保持热爱，持续记录。</span>
+            <span>Made with Hexo</span>
+        </div>
+    </div>
+</footer>
+
+<div class="fabs">
+    <button class="fab fab--top" id="topBtn" type="button" data-tip="回到顶部" title="回到顶部" aria-label="回到顶部" aria-hidden="true">⬆</button>
+    <button class="fab" id="fabSearch" type="button" data-tip="搜索文章" title="搜索文章" aria-label="搜索文章">🔍</button>
+</div>
+
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="站内搜索" aria-hidden="true">
+    <div class="search-panel">
+        <div class="search-field">
+            <span aria-hidden="true" style="font-size:1.1rem">🔍</span>
+            <input class="search-input" id="searchInput" type="search" placeholder="搜索文章标题、标签或关键词…" aria-label="搜索关键词" autocomplete="off">
+            <button class="icon-btn" id="searchClose" type="button" aria-label="关闭搜索">✕</button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+        <div class="search-hint">
+            <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
+            <span><kbd>Enter</kbd> 打开</span>
+            <span><kbd>Esc</kbd> 关闭</span>
+            <span><kbd>Ctrl</kbd>+<kbd>K</kbd> 随时唤起</span>
+        </div>
+    </div>
+</div>
+
+
+<script src="/Blog/js/app.js" defer></script>
+</body>
+</html>

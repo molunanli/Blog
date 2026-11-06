@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" role="img" aria-label="一个网址由三段组成：域名、根路径、永久链接结构，改哪一段会断什么">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .m { font-family: ui-monospace, Consolas, "Courier New", monospace; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .seg { font-size: 13px; font-weight: 700; fill: #fffdf6; }
+    .lb { font-size: 11px; font-weight: 700; }
+    .li { font-size: 10.5px; fill: #4c463e; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .card { fill: #fffdf6; stroke: #e0d6c0; stroke-width: 1.5; }
+    .c1 { fill: #2f5d8a; }
+    .c2 { fill: #c9962a; }
+    .c3 { fill: #cc3b3b; }
+    .t1 { fill: #2f5d8a; }
+    .t2 { fill: #a87c1c; }
+    .t3 { fill: #b02f2f; }
+  </style>
+
+  <rect class="bg" width="680" height="420"/>
+
+  <text class="t th" x="30" y="38">一个网址，其实由三段拼起来</text>
+  <text class="t ts" x="30" y="60">换域名只动第一段；真正容易断的，是后两段</text>
+
+  <!-- URL 拼条 -->
+  <rect class="c1" x="34" y="78" width="216" height="52" rx="8"/>
+  <text class="t m seg" x="46" y="110">https://molunanli.github.io</text>
+
+  <rect class="c2" x="254" y="78" width="72" height="52" rx="8"/>
+  <text class="t m seg" x="266" y="110">/Blog</text>
+
+  <rect class="c3" x="330" y="78" width="316" height="52" rx="8"/>
+  <text class="t m seg" x="342" y="110">/2026/09/pc-repair-first-lesson/</text>
+
+  <text class="t lb t1" x="34" y="150">① 域名 url</text>
+  <text class="t lb t2" x="254" y="150">② 根路径</text>
+  <text class="t lb t3" x="330" y="150">③ 永久链接</text>
+
+  <!-- 三行：改了会怎样 -->
+  <rect class="card" x="30" y="168" width="616" height="56" rx="8"/>
+  <text class="t lb t1" x="44" y="192">改 ①  换自己的域名</text>
+  <text class="t li" x="44" y="212">写死的绝对地址全断；giscus 用 url 模式会丢评论。域名本身 GitHub 会做重定向。</text>
+
+  <rect class="card" x="30" y="234" width="616" height="56" rx="8"/>
+  <text class="t lb t2" x="44" y="258">改 ②  /Blog/ → /</text>
+  <text class="t li" x="44" y="278">以 /Blog/ 开头的站内链接全断；giscus 的 pathname 模式跟着变，评论对不上。</text>
+
+  <rect class="card" x="30" y="300" width="616" height="56" rx="8"/>
+  <text class="t lb t3" x="44" y="324">改 ③  :year/:month/:slug/</text>
+  <text class="t li" x="44" y="344">所有已收录页面的地址都变；外部反链、搜索结果的缓存全部失效。最不该动。</text>
+
+  <text class="t ft" x="30" y="386">所以"留后路"的真正含义是：让 ①②③ 的任何一处变化，都只需要改配置，而不是改文章。</text>
+  <text class="t ft" x="30" y="406">这三段里，你现在能控制的只有后两段——第一段还没买。</text>
+</svg>
