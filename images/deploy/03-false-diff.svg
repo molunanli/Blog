@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" role="img" aria-label="假 diff 的成因与消除：迭代顺序不确定导致每次构建产生无关变更，加兜底排序后两次构建完全一致">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .m { font-family: ui-monospace, Consolas, "Courier New", monospace; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .hd { font-size: 11.5px; font-weight: 700; }
+    .li { font-size: 10px; fill: #4c463e; }
+    .bd { font-size: 10.5px; fill: #1c1a17; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .bad { fill: #f7e3e0; stroke: #cc3b3b; stroke-width: 1.6; }
+    .good { fill: #e8f0e4; stroke: #4f7f47; stroke-width: 1.6; }
+    .t1 { fill: #b02f2f; }
+    .t2 { fill: #3f6b38; }
+    .no { fill: #fffdf6; stroke: #e5dcc9; stroke-width: 1; }
+  </style>
+
+  <rect class="bg" width="680" height="400"/>
+
+  <text class="t th" x="30" y="36">修完才发现：每次部署都在提交"假变更"</text>
+  <text class="t ts" x="30" y="58">第一版脚本跑通的那一刻，它 commit 了 17 个文件——而我一个字都没改</text>
+
+  <!-- 左：不排序 -->
+  <rect class="bad" x="30" y="78" width="300" height="104" rx="8"/>
+  <text class="t hd t1" x="44" y="100">✗ 不排序（修复前）</text>
+  <text class="t li" x="44" y="120">同分/同数量的项，迭代顺序取决于</text>
+  <text class="t li" x="44" y="136">文件系统读取顺序，每次都不同</text>
+  <text class="t li" x="44" y="156">→ 两次构建产物不一致</text>
+  <text class="t li" x="44" y="172">→ 每次 commit 夹带 17~33 个无关文件</text>
+
+  <!-- 右：加兜底排序 -->
+  <rect class="good" x="350" y="78" width="300" height="104" rx="8"/>
+  <text class="t hd t2" x="364" y="100">✓ 加兜底排序（修复后）</text>
+  <text class="t li" x="364" y="120">分数相同就用第二个键（时间 / 名称），</text>
+  <text class="t li" x="364" y="136">绝不留下顺序未定义的全等项</text>
+  <text class="t li" x="364" y="156">→ 连续两次 generate</text>
+  <text class="t li" x="364" y="172">→ diff 结果：<tspan font-weight="700">0 个文件</tspan></text>
+
+  <!-- 五处修复点 -->
+  <text class="t hd" x="34" y="212">同一类问题，在五个地方各出现一次</text>
+
+  <rect class="no" x="30" y="222" width="616" height="26" rx="5"/>
+  <text class="t m bd" x="42" y="240">layout/post.ejs</text>
+  <text class="t li" x="200" y="240">相关文章只按分数排序，同分时顺序不定 → 加 date / path 兜底</text>
+
+  <rect class="no" x="30" y="252" width="616" height="26" rx="5"/>
+  <text class="t m bd" x="42" y="270">layout/post.ejs</text>
+  <text class="t li" x="200" y="270">page.tags 直接 forEach，原始顺序不稳 → 按名称排序</text>
+
+  <rect class="no" x="30" y="282" width="616" height="26" rx="5"/>
+  <text class="t m bd" x="42" y="300">_partial/post-card.ejs</text>
+  <text class="t li" x="200" y="300">列表卡片的标签同上 → 按名称排序</text>
+
+  <rect class="no" x="30" y="312" width="616" height="26" rx="5"/>
+  <text class="t m bd" x="42" y="330">_partial/sidebar.ejs</text>
+  <text class="t li" x="200" y="330">热门标签按数量取前 10，边界同数量 → 名称兜底</text>
+
+  <rect class="no" x="30" y="342" width="616" height="26" rx="5"/>
+  <text class="t m bd" x="42" y="360">layout/archive.ejs</text>
+  <text class="t li" x="200" y="360">热力图 JSON 的键序随遍历顺序变化 → 按日期升序构建</text>
+
+  <text class="t ft" x="30" y="388">这类 bug 没有报错、页面看着完全正常，只有"比两次构建产物"才能发现。</text>
+</svg>

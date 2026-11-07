@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" role="img" aria-label="两条部署路径对比：hexo deploy 在属主检查处失败，直接调用 git 可以成功">
+  <style>
+    .bg { fill: #f7f1e3; }
+    .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
+    .m { font-family: ui-monospace, Consolas, "Courier New", monospace; }
+    .th { font-size: 19px; font-weight: 700; }
+    .ts { font-size: 12.5px; fill: #4c463e; }
+    .bx { font-size: 10.5px; font-weight: 700; }
+    .bs { font-size: 9.5px; fill: #4c463e; }
+    .ft { font-size: 11.5px; fill: #6b6459; }
+    .box { fill: #fffdf6; stroke: #e0d6c0; stroke-width: 1.5; }
+    .bad { fill: #f7e3e0; stroke: #cc3b3b; stroke-width: 1.8; }
+    .good { fill: #e8f0e4; stroke: #4f7f47; stroke-width: 1.8; }
+    .ar { stroke: #b9ae98; stroke-width: 1.6; fill: none; }
+    .t1 { fill: #b02f2f; }
+    .t2 { fill: #3f6b38; }
+    .tt { fill: #2f5d8a; }
+  </style>
+
+  <rect class="bg" width="680" height="400"/>
+
+  <text class="t th" x="30" y="38">为什么不用 hexo deploy：两条路径的差别</text>
+  <text class="t ts" x="30" y="60">差别不在"能不能部署"，在"谁在调 git、用的是谁的身份"</text>
+
+  <!-- 路径 A -->
+  <text class="t m ft" x="34" y="92">路径 A · npx hexo deploy</text>
+
+  <rect class="box" x="34" y="102" width="140" height="66" rx="8"/>
+  <text class="t bx tt" x="46" y="124">hexo deploy</text>
+  <text class="t bs" x="46" y="142">调 deployer-git</text>
+  <text class="t bs" x="46" y="158">准备推送 .deploy_git</text>
+
+  <path class="ar" d="M178 135 h20" marker-end="url(#a1)"/>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#b9ae98"/>
+    </marker>
+  </defs>
+
+  <rect class="box" x="202" y="102" width="140" height="66" rx="8"/>
+  <text class="t bx" x="214" y="124">hexo 内部 spawn git</text>
+  <text class="t bs" x="214" y="142">带上 hexo 的运行环境</text>
+  <text class="t bs" x="214" y="158">HOME / 身份与原 shell 不同</text>
+
+  <path class="ar" d="M346 135 h20" marker-end="url(#a1)"/>
+
+  <rect class="bad" x="370" y="102" width="140" height="66" rx="8"/>
+  <text class="t bx t1" x="382" y="124">dubious ownership</text>
+  <text class="t bs" x="382" y="142">.deploy_git 属主 SID</text>
+  <text class="t bs" x="382" y="158">与当前用户不一致</text>
+
+  <path class="ar" d="M514 135 h20" marker-end="url(#a1)"/>
+
+  <rect class="bad" x="538" y="102" width="108" height="66" rx="8"/>
+  <text class="t bx t1" x="550" y="128">退出，未推送</text>
+  <text class="t bs" x="550" y="148">工作树看起来</text>
+  <text class="t bs" x="550" y="163">却像是"做了事"</text>
+
+  <!-- 路径 B -->
+  <text class="t m ft" x="34" y="208">路径 B · ./deploy.sh（本文的做法）</text>
+
+  <rect class="box" x="34" y="218" width="140" height="66" rx="8"/>
+  <text class="t bx tt" x="46" y="240">deploy.sh</text>
+  <text class="t bs" x="46" y="258">显式 cd 到 .deploy_git</text>
+  <text class="t bs" x="46" y="274">不经过 hexo</text>
+
+  <path class="ar" d="M178 251 h20" marker-end="url(#a1)"/>
+
+  <rect class="box" x="202" y="218" width="140" height="66" rx="8"/>
+  <text class="t bx" x="214" y="240">直接调 git</text>
+  <text class="t bs" x="214" y="258">用的就是当前 shell</text>
+  <text class="t bs" x="214" y="274">的身份与配置</text>
+
+  <path class="ar" d="M346 251 h20" marker-end="url(#a1)"/>
+
+  <rect class="good" x="370" y="218" width="140" height="66" rx="8"/>
+  <text class="t bx t2" x="382" y="240">属主检查通过</text>
+  <text class="t bs" x="382" y="258">昨天还在同一个仓库里</text>
+  <text class="t bs" x="382" y="274">正常 add / commit</text>
+
+  <path class="ar" d="M514 251 h20" marker-end="url(#a1)"/>
+
+  <rect class="good" x="538" y="218" width="108" height="66" rx="8"/>
+  <text class="t bx t2" x="550" y="244">推送成功</text>
+  <text class="t bs" x="550" y="264">gh-pages 更新</text>
+  <text class="t bs" x="550" y="280">可被线上验证</text>
+
+  <text class="t ft" x="30" y="330">同一台机器、同一个仓库、同一个 SSH key——唯一变量是"谁在调 git"。</text>
+  <text class="t ft" x="30" y="352">所以这类问题别急着改权限，先换调用方式；permission 往往是"环境不一致"的替罪羊。</text>
+  <text class="t ft" x="30" y="374">代价：路径 B 需要自己实现 hexo deploy 帮你做的那些事（下一篇式的麻烦换来确定性）。</text>
+</svg>

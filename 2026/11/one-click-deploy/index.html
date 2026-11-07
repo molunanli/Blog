@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>本地一键部署脚本：push 即上线 · 我的博客</title>
+<meta name="description" content="这一季不用 GitHub Actions，全靠手动推 gh-pages。手动不是问题，问题是五条命令里任何一条出错都可能是静默的——推了以为没推、没推以为推了。这篇把整套流程压成一条命令，并且把最容易骗过自己的三个环节都加了检查。文末还写了一个真实发现：脚本跑通的那一刻，它 commit 了 17 ">
+<meta name="theme-color" content="#f7f1e3">
+
+<!-- 防主题闪烁：在任何渲染前确定主题 -->
+<script>
+(function () {
+    var k = 'manga-blog-theme';
+    var saved = null;
+    try { saved = localStorage.getItem(k); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/Blog/css/style.css">
+<link rel="alternate" href="/Blog/atom.xml" title="我的博客" type="application/atom+xml">
+<script>window.SEARCH_JSON_URL = '/Blog/search.json';</script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body data-root="/Blog/">
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="site-header">
+    <div class="shell">
+        <nav class="navbar" aria-label="主导航">
+            <a class="brand" href="/Blog/" aria-label="我的博客 首页">
+                <span class="brand-seal" aria-hidden="true">博客</span>
+                我的博客
+            </a>
+
+            <ul class="nav-links">
+                
+                    
+                    <li><a href="/Blog/" data-nav="/">首页</a></li>
+                
+                    
+                    <li><a href="/Blog/archives" data-nav="/archives">归档</a></li>
+                
+                    
+                    <li><a href="/Blog/tags" data-nav="/tags">标签</a></li>
+                
+                    
+                    <li><a href="/Blog/categories" data-nav="/categories">分类</a></li>
+                
+                    
+                    <li><a href="/Blog/about" data-nav="/about">关于</a></li>
+                
+            </ul>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn" type="button" aria-label="搜索文章" title="搜索（Ctrl / ⌘ + K）">🔍</button>
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="切换至暗色模式" aria-pressed="false" title="切换至暗色模式">🌙</button>
+                <button class="icon-btn burger" id="burgerBtn" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="drawer">☰</button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<nav class="drawer" id="drawer" aria-label="移动端导航" aria-hidden="true">
+    <div class="drawer-head">
+        <span class="drawer-title">📖 目录导航</span>
+        <button class="icon-btn" id="drawerClose" type="button" aria-label="关闭菜单">✕</button>
+    </div>
+    
+        
+        <a href="/Blog/" data-nav="/">首页</a>
+    
+        
+        <a href="/Blog/archives" data-nav="/archives">归档</a>
+    
+        
+        <a href="/Blog/tags" data-nav="/tags">标签</a>
+    
+        
+        <a href="/Blog/categories" data-nav="/categories">分类</a>
+    
+        
+        <a href="/Blog/about" data-nav="/about">关于</a>
+    
+    <p class="drawer-note">我的博客 — 日式漫画风 · Hexo 主题</p>
+</nav>
+
+
+
+<main class="site-main" id="articleRoot"
+      data-post-id="one-click-deploy"
+      data-post-title="本地一键部署脚本：push 即上线"
+      data-post-likes="0">
+
+    
+
+<script>
+    /* 供 app.js 的目录滚动高亮使用（headings 由模板计算） */
+    var headings = [{"level":"2","id":"一、为什么不用-hexo-deploy","text":"一、为什么不用 hexo deploy"},{"level":"2","id":"二、脚本长什么样","text":"二、脚本长什么样"},{"level":"2","id":"三、每一道检查在挡什么","text":"三、每一道检查在挡什么"},{"level":"2","id":"四、脚本跑通之后，我发现它在提交假变更","text":"四、脚本跑通之后，我发现它在提交假变更"},{"level":"3","id":"先看改了什么","text":"先看改了什么"},{"level":"3","id":"根因：排序没有兜底","text":"根因：排序没有兜底"},{"level":"3","id":"修它：给排序加第二个键","text":"修它：给排序加第二个键"},{"level":"3","id":"然后发现，同样的问题有五处","text":"然后发现，同样的问题有五处"},{"level":"3","id":"怎么验证修好了","text":"怎么验证修好了"},{"level":"2","id":"五、失败排查表","text":"五、失败排查表"},{"level":"2","id":"六、什么时候才值得换-GitHub-Actions","text":"六、什么时候才值得换 GitHub Actions"},{"level":"2","id":"七、一个还没解决的问题","text":"七、一个还没解决的问题"},{"level":"2","id":"相关阅读","text":"相关阅读"}];
+</script>
+
+<div class="shell">
+    <nav class="crumbs" aria-label="面包屑导航">
+        <a href="/Blog/">首页</a><span class="sep" aria-hidden="true">›</span>
+        
+            <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a><span class="sep" aria-hidden="true">›</span>
+        
+        <span id="crumbCurrent">本地一键部署脚本：push 即上线</span>
+    </nav>
+</div>
+
+<div class="shell">
+    <div class="grid grid--sidebar">
+
+        <!-- ============ 正文 ============ -->
+        <div class="stack">
+            <section class="article-head" id="articleHead">
+                
+                    <a class="chip chip--cat" href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                
+                <h1 class="article-title">本地一键部署脚本：push 即上线</h1>
+                <div class="article-meta">
+                    <span>✍️ 博主</span>
+                    <span>📅 令和8年11月7日</span>
+                    <span>⏱ 阅读约 18 分钟</span>
+                    
+                    
+                </div>
+                <div class="tag-list" style="margin-top:14px">
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E7%8B%AC%E7%AB%8B%E5%8D%9A%E5%AE%A2/">#独立博客</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/%E6%95%99%E7%A8%8B/">#教程</a>
+                    
+                        <a class="tag-chip" href="/Blog/tags/Hexo/">#Hexo</a>
+                    
+                </div>
+            </section>
+
+            <article class="card article-body" id="articleBody">
+                <div class="note note--tip"><span class="note-title">📚 独立博客实战 · 第 4 篇（上线线）</span>第 2 篇把站推上线，第 3 篇处理地址，这一篇处理"每次发文章都要重复一遍的那五条命令"。全季定位是<strong>不用 GitHub Actions</strong>，所以这条脚本要自己写。写完顺手发现了一个存在很久的问题——每次部署都在提交无关变更。</div>
+
+<p>先复盘一次真实事故。</p>
+<p>那天我发完第 15 篇，链条是这样的：</p>
+<div class="code-block" data-lang="bash" data-file="bash"><div class="code-bar"><span class="code-lang">bash</span><span class="code-file">bash</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;post: ...&quot;</span> &amp;&amp; git push -f origin gh-pages</span><br></pre></td></tr></table></div></div></div>
+
+<p>执行完，终端打印了 <code>On branch gh-pages / nothing to commit, working tree clean</code>，退出码 1。我扫了一眼，心想”大概是没变更，那应该已经推过了”，就去干别的了。</p>
+<p>半小时后检查线上，文章是 404。</p>
+<p>真实原因是：<strong>这条命令被环境重跑了一次。</strong> 第一次跑时 commit 成功、push 也成功；第二次跑时 commit 返回”没有变更”，<code>&amp;&amp;</code> 短路，push 被跳过——但我的终端输出没有区分这两次。而 commit 里的 <code>-q</code> 又把成功那次的输出吞了。</p>
+<p><strong>这五条命令的危险不在于麻烦，在于每一步失败都可能是安静的。</strong></p>
+<p>这篇就是把它们收进一条命令，并且给每一步加上”失败必须吵醒我”的检查。</p>
+<h2 id="一、为什么不用-hexo-deploy"><a href="#一、为什么不用-hexo-deploy" class="headerlink" title="一、为什么不用 hexo deploy"></a>一、为什么不用 <code>hexo deploy</code></h2><p>Hexo 自带部署能力，装个 <code>hexo-deployer-git</code> 就能 <code>hexo deploy</code> 一把梭。我不用它，原因很具体——<strong>在这台机器上它是坏的</strong>。</p>
+<p><img src="/Blog/images/deploy/01-why-not-deploy.svg" alt="两条部署路径对比：hexo deploy 在属主检查处失败，直接调用 git 可以成功"></p>
+<p><em>图 1：同一台机器、同一个仓库、同一个 SSH key，唯一变量是”谁在调 git”。</em></p>
+<p>现象是 <code>hexo deploy</code> 退出，工作树看起来”做了事”（<code>.deploy_git</code> 里内容变了），但远端没更新。真实原因是 Git 的 <code>dubious ownership</code> 检查：<code>.deploy_git</code> 目录的属主 SID 与当前用户不一致，hexo 内部 spawn 的 git 进程用的身份和我在 shell 里用的不同，于是被拒绝。</p>
+<p>最省事的解法不是修权限，而是<strong>绕过 hexo，直接调 git</strong>——我在 shell 里 <code>cd .deploy_git</code> 之后，<code>git add / commit / push</code> 一直都能正常工作。</p>
+<div class="note note--info"><span class="note-title">📌 一个通用判断</span>当工具 A（hexo）调用工具 B（git）失败，而你手动跑 B 成功时，问题在<strong>"A 给 B 的环境"</strong>，不在 B 本身。改权限、改所有者、加 <code>safe.directory</code> 都是在猜；最快的验证是"手动跑一遍同样的命令"，能过就说明该换调用方式。</div>
+
+<p>代价也很明确：<code>hexo deploy</code> 帮我做的那些事（清目录、复制产物、切分支、提交、推送），现在要自己写。</p>
+<h2 id="二、脚本长什么样"><a href="#二、脚本长什么样" class="headerlink" title="二、脚本长什么样"></a>二、脚本长什么样</h2><p>一条命令：<strong>生成 → 核验 → 推送 → 线上确认</strong>。放在站点根目录，命名 <code>deploy.sh</code>。</p>
+<div class="code-block" data-lang="bash" data-file="bash"><div class="code-bar"><span class="code-lang">bash</span><span class="code-file">bash</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"><span class="built_in">set</span> -euo pipefail</span><br><span class="line"></span><br><span class="line">BRANCH=<span class="string">&quot;gh-pages&quot;</span></span><br><span class="line">SITE_URL=<span class="string">&quot;https://molunanli.github.io/Blog&quot;</span></span><br><span class="line">PORT=4000</span><br><span class="line">MSG=<span class="string">&quot;<span class="variable">$&#123;1:-post: update $(date &#x27;+%Y-%m-%d %H:%M&#x27;)&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">say</span></span>()  &#123; <span class="built_in">printf</span> <span class="string">&#x27;\033[36m▸ %s\033[0m\n&#x27;</span> <span class="string">&quot;$*&quot;</span>; &#125;</span><br><span class="line"><span class="function"><span class="title">ok</span></span>()   &#123; <span class="built_in">printf</span> <span class="string">&#x27;\033[32m✓ %s\033[0m\n&#x27;</span> <span class="string">&quot;$*&quot;</span>; &#125;</span><br><span class="line"><span class="function"><span class="title">die</span></span>()  &#123; <span class="built_in">printf</span> <span class="string">&#x27;\033[31m✗ %s\033[0m\n&#x27;</span> <span class="string">&quot;$*&quot;</span> &gt;&amp;2; <span class="built_in">exit</span> 1; &#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> <span class="string">&quot;<span class="subst">$(dirname <span class="string">&quot;<span class="variable">$0</span>&quot;</span>)</span>&quot;</span></span><br><span class="line">[ -f <span class="string">&quot;_config.yml&quot;</span> ] || die <span class="string">&quot;这里不是 Hexo 站点根目录&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 端口占用</span></span><br><span class="line"><span class="keyword">if</span> netstat -ano 2&gt;/dev/null | grep -q <span class="string">&quot;:<span class="variable">$PORT</span> .*LISTENING&quot;</span>; <span class="keyword">then</span></span><br><span class="line">    die <span class="string">&quot;端口 <span class="variable">$PORT</span> 有 hexo server 在跑，它会把 db.json 写回去&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2-3. 清缓存 + 生成</span></span><br><span class="line"><span class="built_in">rm</span> -f db.json</span><br><span class="line">npx hexo generate &gt; /tmp/hexo-gen.log 2&gt;&amp;1 || &#123; <span class="built_in">tail</span> -20 /tmp/hexo-gen.log &gt;&amp;2; die <span class="string">&quot;generate 失败&quot;</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 核验：最新文章的 slug 必须出现在首页</span></span><br><span class="line">NEWEST=$(<span class="built_in">ls</span> -t <span class="built_in">source</span>/_posts/*.md | <span class="built_in">head</span> -1)</span><br><span class="line">SLUG=$(<span class="built_in">basename</span> <span class="string">&quot;<span class="variable">$NEWEST</span>&quot;</span> .md)</span><br><span class="line">grep -q <span class="string">&quot;<span class="variable">$SLUG</span>&quot;</span> public/index.html || die <span class="string">&quot;首页里找不到 <span class="variable">$SLUG</span> —— 大概率是缓存问题&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 推送（commit 与 push 必须是两条独立命令）</span></span><br><span class="line"><span class="built_in">cd</span> .deploy_git</span><br><span class="line">[ -f .git/index.lock ] &amp;&amp; <span class="built_in">rm</span> -f .git/index.lock</span><br><span class="line">git remote remove origin 2&gt;/dev/null || <span class="literal">true</span></span><br><span class="line">git remote add origin git@github.com:molunanli/Blog.git</span><br><span class="line">git checkout -B <span class="string">&quot;<span class="variable">$BRANCH</span>&quot;</span> &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">find . -mindepth 1 -maxdepth 1 ! -name <span class="string">&#x27;.git&#x27;</span> -<span class="built_in">exec</span> <span class="built_in">rm</span> -rf &#123;&#125; +</span><br><span class="line"><span class="built_in">cp</span> -rf ../public/. .</span><br><span class="line">git add -A</span><br><span class="line">git diff --cached --quiet &amp;&amp; say <span class="string">&quot;无变更&quot;</span> || git commit -q -m <span class="string">&quot;<span class="variable">$MSG</span>&quot;</span></span><br><span class="line">git push -f origin <span class="string">&quot;<span class="variable">$BRANCH</span>&quot;</span> 2&gt;&amp;1 | <span class="built_in">tail</span> -2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6. 线上确认</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(<span class="built_in">seq</span> 1 8); <span class="keyword">do</span></span><br><span class="line">    code=$(curl -s -o /tmp/chk.html -w <span class="string">&#x27;%&#123;http_code&#125;&#x27;</span> <span class="string">&quot;<span class="variable">$SITE_URL</span>/&quot;</span>)</span><br><span class="line">    [ <span class="string">&quot;<span class="variable">$code</span>&quot;</span> = <span class="string">&quot;200&quot;</span> ] &amp;&amp; grep -q <span class="string">&quot;<span class="variable">$SLUG</span>&quot;</span> /tmp/chk.html &amp;&amp; &#123; ok <span class="string">&quot;线上已生效&quot;</span>; <span class="built_in">exit</span> 0; &#125;</span><br><span class="line">    <span class="built_in">printf</span> <span class="string">&#x27;  第 %d 次：%s，15 秒后重试\n&#x27;</span> <span class="string">&quot;<span class="variable">$i</span>&quot;</span> <span class="string">&quot;<span class="variable">$code</span>&quot;</span></span><br><span class="line">    <span class="built_in">sleep</span> 15</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">die <span class="string">&quot;推送成功但线上未生效，稍后再看&quot;</span></span><br></pre></td></tr></table></div></div></div>
+
+<p>（完整版比我贴的多了颜色输出、日志落盘和错误信息，逻辑一样。）</p>
+<h2 id="三、每一道检查在挡什么"><a href="#三、每一道检查在挡什么" class="headerlink" title="三、每一道检查在挡什么"></a>三、每一道检查在挡什么</h2><p><img src="/Blog/images/deploy/02-deploy-flow.svg" alt="部署脚本的六个步骤，以及每一步不做的后果"></p>
+<p><em>图 2：红框两步最容易被省掉，也最容易骗过自己。</em></p>
+<p><strong>第 1 步：查 4000 端口。</strong> 这个坑我踩过——本地开着 <code>hexo server</code> 时，它会周期性地把 <code>db.json</code> 写回去。你删了缓存、重新 generate，读到的还是旧 db，于是<strong>文章详情页更新了，但首页和归档里没有这篇</strong>。表现是”页面能打开，列表里找不到”，很容易误判成”是不是标签没配对”。</p>
+<p><strong>第 2 步：删 <code>db.json</code>。</strong> 同理。这是 Hexo 的数据库缓存，删了没有副作用，只是下次生成慢一点。<strong>我把它当成”生成前必做的清场”。</strong></p>
+<p><strong>第 3 步：<code>generate</code>。</strong> 注意把输出重定向到日志，失败时打印尾部——否则 <code>hexo generate</code> 的报错会被后续步骤的输出淹没。</p>
+<p><strong>第 4 步：核验产物。</strong> 这是整个脚本里我最喜欢的一步，也是最容易被省掉的一步。</p>
+<p>它做的事很土：<strong>取最近修改的那篇文章，看它的 slug 有没有出现在 <code>public/index.html</code> 里。</strong> 就这么一句 <code>grep</code>，能挡住上面第 1、2 步漏掉的缓存问题，也能挡住”改了文章但拼错文件名”这类事。</p>
+<p><strong>“构建成功”和”构建出了你要的东西”是两件事。</strong> 少这一步，你永远只能靠肉眼去线上确认。</p>
+<p><strong>第 5 步：五条命令分开跑。</strong> 具体的坑：</p>
+<ul>
+<li><code>commit</code> 和 <code>push</code> <strong>不能</strong>用 <code>&amp;&amp;</code> 串（本文开头那起事故）</li>
+<li><code>git add -A</code> 在文件多时会跑十几秒，别把它和别的命令串在一条长链里，容易被中断</li>
+<li>先删 <code>.git/index.lock</code>（上次异常退出会留下锁，之后所有 git 操作都报错）</li>
+</ul>
+<p><strong>第 6 步：线上轮询。</strong> 推送成功不等于上线成功。GitHub Pages 收到推送后还要构建，通常几十秒；这段时间访问新地址是 404。我固定重试 8 次、每次 15 秒，够了。</p>
+<h2 id="四、脚本跑通之后，我发现它在提交假变更"><a href="#四、脚本跑通之后，我发现它在提交假变更" class="headerlink" title="四、脚本跑通之后，我发现它在提交假变更"></a>四、脚本跑通之后，我发现它在提交假变更</h2><p>第一次跑这个脚本，一切正常。但它的输出里有一行让我停下来看了两遍：</p>
+<div class="code-block" data-lang="plaintext" data-file="plaintext"><div class="code-bar"><span class="code-lang">plaintext</span><span class="code-file">plaintext</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">✓ 已提交 b0150f7</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>我那次并没有改任何内容。</strong> 只是把流程重跑了一遍，它却提交了 17 个文件。</p>
+<h3 id="先看改了什么"><a href="#先看改了什么" class="headerlink" title="先看改了什么"></a>先看改了什么</h3><div class="code-block" data-lang="bash" data-file="bash"><div class="code-bar"><span class="code-lang">bash</span><span class="code-file">bash</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git show --<span class="built_in">stat</span> b0150f7 | <span class="built_in">head</span> -20</span><br></pre></td></tr></table></div></div></div>
+
+<div class="code-block" data-lang="plaintext" data-file="plaintext"><div class="code-bar"><span class="code-lang">plaintext</span><span class="code-file">plaintext</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2026/09/disk-health-guide/index.html        | 4 ++--</span><br><span class="line">2026/10/driver-guide/index.html             | 4 ++--</span><br><span class="line">2026/11/bios-uefi-guide/index.html          | 4 ++--</span><br><span class="line">...</span><br><span class="line">17 files changed, 21 insertions(+), 21 deletions(-)</span><br></pre></td></tr></table></div></div></div>
+
+<p>再看单文件差异：</p>
+<div class="code-block" data-lang="bash" data-file="bash"><div class="code-bar"><span class="code-lang">bash</span><span class="code-file">bash</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git show b0150f7 -- 2026/09/disk-health-guide/index.html | <span class="built_in">head</span> -20</span><br></pre></td></tr></table></div></div></div>
+
+<p>差异是这样的——<strong>同样的两条链接，换了个顺序</strong>：</p>
+<div class="code-block" data-lang="text" data-file="text"><div class="code-bar"><span class="code-lang">text</span><span class="code-file">text</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- &lt;li&gt;...数据备份 3-2-1 落地...&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;...误删 / 格式化恢复指南...&lt;/li&gt;</span><br><span class="line">+ &lt;li&gt;...数据备份 3-2-1 落地...&lt;/li&gt;</span><br></pre></td></tr></table></div></div></div>
+
+<p>内容一个字没变，只是”相关文章”列表里两篇的先后换了位置。</p>
+<h3 id="根因：排序没有兜底"><a href="#根因：排序没有兜底" class="headerlink" title="根因：排序没有兜底"></a>根因：排序没有兜底</h3><p>主题里”相关文章”的算法是：<strong>同分类 +3 分、每个共同标签 +1 分，按分数排序取前 4。</strong> 问题在于：</p>
+<div class="code-block" data-lang="javascript" data-file="javascript"><div class="code-bar"><span class="code-lang">javascript</span><span class="code-file">javascript</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.<span class="title function_">sort</span>(<span class="keyword">function</span> (<span class="params">a, b</span>) &#123; <span class="keyword">return</span> b.<span class="property">s</span> - a.<span class="property">s</span>; &#125;)</span><br></pre></td></tr></table></div></div></div>
+
+<p>当两篇文章得分<strong>完全相等</strong>时，比较函数返回 0，谁在前面取决于<strong>输入顺序</strong>。而输入来自 <code>site.posts.data</code>——一个 Warehouse 集合，它的迭代顺序跟文件系统读取顺序有关，<strong>每次构建都可能不同</strong>。</p>
+<p>于是：同分 → 顺序随机 → 每次构建产出不同 → 每次部署都夹带一堆无关 diff。</p>
+<h3 id="修它：给排序加第二个键"><a href="#修它：给排序加第二个键" class="headerlink" title="修它：给排序加第二个键"></a>修它：给排序加第二个键</h3><div class="code-block" data-lang="javascript" data-file="javascript"><div class="code-bar"><span class="code-lang">javascript</span><span class="code-file">javascript</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.<span class="title function_">sort</span>(<span class="keyword">function</span> (<span class="params">a, b</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (b.<span class="property">s</span> - a.<span class="property">s</span>)</span><br><span class="line">        || (b.<span class="property">p</span>.<span class="property">date</span>.<span class="title function_">valueOf</span>() - a.<span class="property">p</span>.<span class="property">date</span>.<span class="title function_">valueOf</span>())</span><br><span class="line">        || (a.<span class="property">p</span>.<span class="property">path</span> &lt; b.<span class="property">p</span>.<span class="property">path</span> ? -<span class="number">1</span> : a.<span class="property">p</span>.<span class="property">path</span> &gt; b.<span class="property">p</span>.<span class="property">path</span> ? <span class="number">1</span> : <span class="number">0</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>规则很简单：永远不要让”顺序未定义”的全等项存在。</strong> 分数相同就比时间，时间相同就比路径。总有一个键能把顺序定死。</p>
+<h3 id="然后发现，同样的问题有五处"><a href="#然后发现，同样的问题有五处" class="headerlink" title="然后发现，同样的问题有五处"></a>然后发现，同样的问题有五处</h3><p><img src="/Blog/images/deploy/03-false-diff.svg" alt="假 diff 的成因与消除，以及五处修复点"></p>
+<p><em>图 3：五个地方，同一个病根——迭代 Warehouse 集合时没排序。</em></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>位置</th>
+<th>症状</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>post.ejs</code> 相关文章</td>
+<td>同分文章互换位置</td>
+</tr>
+<tr>
+<td><code>post.ejs</code> 文章标签</td>
+<td><code>page.tags</code> 原始顺序不稳</td>
+</tr>
+<tr>
+<td><code>post-card.ejs</code> 列表标签</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><code>sidebar.ejs</code> 热门标签</td>
+<td>按数量取前 10，数量相同时入选的标签会变</td>
+</tr>
+<tr>
+<td><code>archive.ejs</code> 热力图</td>
+<td>JSON 的键序随遍历顺序变化</td>
+</tr>
+</tbody></table></div>
+<p>修法都一样：<code>site.tags.sort(&#39;length&#39;, -1)</code> 改成先 <code>toArray()</code> 再 <code>.sort((a,b) =&gt; (b.length - a.length) || a.name.localeCompare(b.name))</code>；<code>forEach</code> 集合前先 <code>toArray().sort(...)</code>。</p>
+<h3 id="怎么验证修好了"><a href="#怎么验证修好了" class="headerlink" title="怎么验证修好了"></a>怎么验证修好了</h3><p>不用肉眼看页面。<strong>连续构建两次，比产物。</strong></p>
+<div class="code-block" data-lang="bash" data-file="bash"><div class="code-bar"><span class="code-lang">bash</span><span class="code-file">bash</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -f db.json &amp;&amp; npx hexo generate &amp;&amp; <span class="built_in">cp</span> -r public /tmp/build-a</span><br><span class="line"><span class="built_in">rm</span> -f db.json &amp;&amp; npx hexo generate</span><br><span class="line">diff -rq /tmp/build-a public | <span class="built_in">wc</span> -l   <span class="comment"># 修好之后：0</span></span><br></pre></td></tr></table></div></div></div>
+
+<p>我修之前这个数字是 33，修完是 0。</p>
+<div class="note note--warn"><span class="note-title">⚠️ 为什么值得花时间修这个</span>不是因为"强迫症"。假 diff 会<strong>掩盖真变更</strong>：一次提交里 17 个文件的顺序变化，加上你真正改的那 1 个文件，你根本没法从 commit 里看出"这次发版到底动了什么"。<br>而且它会持续污染部署分支的历史——三个月后回头看，全是无意义的 commit。这类问题的特点是<strong>没有报错、页面完全正常</strong>，只有"比两次构建产物"才能发现。</div>
+
+<h2 id="五、失败排查表"><a href="#五、失败排查表" class="headerlink" title="五、失败排查表"></a>五、失败排查表</h2><p>跑这个脚本时实际遇到过的错，按出现频率排：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>原因</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>nothing to commit</code> 但确实改了</td>
+<td><code>hexo generate</code> 没跑或跑失败</td>
+<td>看 <code>/tmp/hexo-gen.log</code>；先手动 generate 一次</td>
+</tr>
+<tr>
+<td>git 报 <code>index.lock</code> 存在</td>
+<td>上次异常退出留下的锁</td>
+<td>确认没有 git 进程在跑，再删 <code>.git/index.lock</code></td>
+</tr>
+<tr>
+<td><code>dubious ownership</code></td>
+<td>目录属主与当前用户不符</td>
+<td>别用 <code>hexo deploy</code>，直接调 git；或加 <code>safe.directory</code></td>
+</tr>
+<tr>
+<td>文章能打开，但首页&#x2F;归档里没有</td>
+<td><code>db.json</code> 缓存 + server 占用</td>
+<td>停 server → 删 db.json → 重新生成</td>
+</tr>
+<tr>
+<td>推送成功但线上 404</td>
+<td>Pages 还在构建</td>
+<td>等 30~60 秒重试；先确认旧页面仍 200 证明站点活着</td>
+</tr>
+<tr>
+<td><code>generate</code> 突然失败、报写入错误</td>
+<td>磁盘满（ENOSPC）</td>
+<td>清 <code>public/</code> 与临时目录；这台机器上会周期性出现</td>
+</tr>
+<tr>
+<td>脚本跑到一半被中断</td>
+<td>命令行太长被掐</td>
+<td>拆成短命令；脚本里避免超长 <code>&amp;&amp;</code> 链</td>
+</tr>
+</tbody></table></div>
+<p>最后一行补充一句：<strong>长命令链是脆的</strong>。我现在连”清树 + 复制”都拆成两步写，就是为了出错时能知道断在哪。</p>
+<h2 id="六、什么时候才值得换-GitHub-Actions"><a href="#六、什么时候才值得换-GitHub-Actions" class="headerlink" title="六、什么时候才值得换 GitHub Actions"></a>六、什么时候才值得换 GitHub Actions</h2><p>这一季不用 Actions，理由不是”反对工具”，是<strong>现在不需要</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>情况</th>
+<th>用本地脚本</th>
+<th>用 Actions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一个人、一台机器写作</td>
+<td>✅ 简单，零配置</td>
+<td>多一层 YAML 要维护</td>
+</tr>
+<tr>
+<td>想在手机上发文章</td>
+<td>❌ 做不到</td>
+<td>✅ 推到仓库就自动发布</td>
+</tr>
+<tr>
+<td>多台电脑轮流写</td>
+<td>⚠️ 每台都要装环境</td>
+<td>✅ 环境统一</td>
+</tr>
+<tr>
+<td>想定时发布 &#x2F; 定时构建</td>
+<td>❌ 得开着电脑</td>
+<td>✅ cron 天然支持</td>
+</tr>
+<tr>
+<td>出问题时要能一眼看懂</td>
+<td>✅ 一百行 bash，全是自己写的</td>
+<td>⚠️ 要读 workflow 日志</td>
+</tr>
+</tbody></table></div>
+<p>我自己的判断线是：<strong>只要还满足”一台电脑、想发的时候人在电脑前”这两条，本地脚本就够了。</strong> 一旦想在地铁上用手机改错别字发出去，就该切 Actions 了——那时候这笔复杂度是值得付的。</p>
+<h2 id="七、一个还没解决的问题"><a href="#七、一个还没解决的问题" class="headerlink" title="七、一个还没解决的问题"></a>七、一个还没解决的问题</h2><p>脚本放在 <code>my-blog/deploy.sh</code>，但<strong>站点源码本身没有版本控制</strong>——只有 <code>.deploy_git</code> 是 git 仓库（那是产物，不是源码）。也就是说：</p>
+<ul>
+<li>脚本丢了就没了，没有历史可回滚</li>
+<li>主题改动、文章源文件都没有版本记录</li>
+<li>想换机器时，只能整目录拷</li>
+</ul>
+<p>这是个真实的结构性问题。正确做法是把 <code>my-blog</code>（排除 <code>public/</code>、<code>node_modules/</code>、<code>.deploy_git/</code>）也纳入一个仓库——但那是另一篇的事，我还没做。</p>
+<p>所以这篇的结尾不是”大功告成”，是：<strong>工具链能用了，但地基还差一层。</strong></p>
+<p>下一篇回到内容本身：《<strong>Markdown 与排版规范</strong>》——为什么这个站死守标准 Markdown（不用自定义 HTML 组件）、标题层级怎么定、表格和提示框分别在什么场合用，以及那个最容易翻车的细节：<strong>HTML 块在 Markdown 里一旦缩进四个空格，就会被当成代码块原样输出</strong>。</p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
+<li>《<a href="https://molunanli.github.io/Blog/2026/11/no-domain-yet/">先不买域名，但把后路留好</a>》——<strong>上一篇</strong>；这篇的脚本里那个 <code>root</code> 前缀问题，是那篇留下的</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/deploy-hexo-github-pages/">Hexo + GitHub Pages 完整部署指南</a>》——<strong>第 2 篇</strong>；手动部署的原始五条命令，本文是它的自动化版本</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/11/why-self-host-blog/">为什么 2026 年还要自己搭一个博客</a>》——<strong>第 1 篇</strong>；”低维护”这条原则，本文的脚本就是它在部署环节的具体化</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/09/writing-publishing-manual/">mangaka 写作与发布手册</a>》——<strong>第 5 篇</strong>；发布前的检查约定</li>
+<li>《<a href="https://molunanli.github.io/Blog/2026/11/toc-overflow-fix/">文章目录超出后省略并加浮层提示</a>》——<strong>番外</strong>；同样是一次”页面看着正常但实际有问题”的排查</li>
+</ul>
+
+            </article>
+
+            <div class="share-row" id="shareRow">
+                <span class="share-label">分享这篇文章：</span>
+            </div>
+
+            <nav class="post-nav" id="postNav" aria-label="上下篇导航">
+                <span></span>
+                
+                    <a class="post-nav-item post-nav-item--next" href="/Blog/2026/11/no-domain-yet/">
+                        <span class="k">下一篇 →</span><span class="t">先不买域名，但把后路留好</span>
+                    </a>
+                
+            </nav>
+
+            <!-- ---- 评论（Giscus：数据存于 GitHub Discussions） ---- -->
+            
+            
+            
+            <section class="card comments" aria-labelledby="commentTitle">
+                <h2 class="card-title" id="commentTitle" style="text-align:left">
+                    💬 读者留言
+                </h2>
+                <p style="margin:0 0 18px;font-size:.76rem;color:var(--ink-3)">
+                    评论由 GitHub Discussions 托管，需登录 GitHub 后参与（评论区的 +1 即点赞）。
+                </p>
+                <script src="https://giscus.app/client.js"
+                        data-repo="molunanli/Blog"
+                        data-repo-id="R_kgDOUMGUlQ"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOUMGUlc4DEuis"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                </script>
+            </section>
+            
+            
+        </div>
+
+        <!-- ============ 侧边栏 ============ -->
+        <aside class="sidebar toc-sticky" aria-label="文章侧边信息">
+
+            
+            <button class="toc-toggle-mobile" id="tocToggle" type="button" aria-expanded="false" aria-controls="tocPanel">
+                📑 目录导航 <span class="arrow" aria-hidden="true">▼</span>
+            </button>
+
+            <nav class="card toc-card toc-panel" id="tocPanel" aria-label="文章目录">
+                <h2 class="card-title">📑 目录</h2>
+                <div class="toc-list" id="tocList">
+                    
+                        <a class="toc-link toc-link--h2" href="#一、为什么不用-hexo-deploy" title="一、为什么不用 hexo deploy" data-toc-text="一、为什么不用 hexo deploy">一、为什么不用 hexo deploy</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#二、脚本长什么样" title="二、脚本长什么样" data-toc-text="二、脚本长什么样">二、脚本长什么样</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#三、每一道检查在挡什么" title="三、每一道检查在挡什么" data-toc-text="三、每一道检查在挡什么">三、每一道检查在挡什么</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#四、脚本跑通之后，我发现它在提交假变更" title="四、脚本跑通之后，我发现它在提交假变更" data-toc-text="四、脚本跑通之后，我发现它在提交假变更">四、脚本跑通之后，我发现它在提交假变更</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#先看改了什么" title="先看改了什么" data-toc-text="先看改了什么">先看改了什么</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#根因：排序没有兜底" title="根因：排序没有兜底" data-toc-text="根因：排序没有兜底">根因：排序没有兜底</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#修它：给排序加第二个键" title="修它：给排序加第二个键" data-toc-text="修它：给排序加第二个键">修它：给排序加第二个键</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#然后发现，同样的问题有五处" title="然后发现，同样的问题有五处" data-toc-text="然后发现，同样的问题有五处">然后发现，同样的问题有五处</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#怎么验证修好了" title="怎么验证修好了" data-toc-text="怎么验证修好了">怎么验证修好了</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#五、失败排查表" title="五、失败排查表" data-toc-text="五、失败排查表">五、失败排查表</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#六、什么时候才值得换-GitHub-Actions" title="六、什么时候才值得换 GitHub Actions" data-toc-text="六、什么时候才值得换 GitHub Actions">六、什么时候才值得换 GitHub Actions</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#七、一个还没解决的问题" title="七、一个还没解决的问题" data-toc-text="七、一个还没解决的问题">七、一个还没解决的问题</a>
+                    
+                        <a class="toc-link toc-link--h2" href="#相关阅读" title="相关阅读" data-toc-text="相关阅读">相关阅读</a>
+                    
+                </div>
+            </nav>
+            
+
+            
+            <section class="card" aria-labelledby="relTitle">
+                <h2 class="card-title" id="relTitle">📎 相关文章</h2>
+                <ul class="related-list" id="relatedList">
+                    
+                        <li><a href="/Blog/2026/11/no-domain-yet/">先不买域名，但把后路留好</a></li>
+                    
+                        <li><a href="/Blog/2026/11/why-self-host-blog/">为什么 2026 年还要自己搭一个博客：三笔账算完再决定</a></li>
+                    
+                        <li><a href="/Blog/2026/09/publish-hexo-theme/">把你的 Hexo 主题发布出去：GitHub + npm + 官方主题列表，小白完整指南</a></li>
+                    
+                        <li><a href="/Blog/2026/09/writing-publishing-manual/">mangaka 写作与发布手册：从新建文章到上线</a></li>
+                    
+                </ul>
+            </section>
+            
+
+            <section class="card" aria-labelledby="authorTitle">
+                <h2 class="card-title" id="authorTitle">✍️ 关于作者</h2>
+                <div class="profile-avatar" style="width:76px;height:76px;font-size:2.3rem" aria-hidden="true">🐱</div>
+                <p class="profile-name" style="text-align:center">博主</p>
+                <p class="profile-role" style="text-align:center">BLOGGER</p>
+                <p class="profile-bio" style="text-align:center;font-size:.82rem">这里是作者简介。
+用一两句话介绍你自己，或者这个博客打算写些什么。
+</p>
+                <p style="text-align:center;margin-top:12px">
+                    <a class="link-more" href="/Blog/about">▶ 了解更多</a>
+                </p>
+            </section>
+
+        </aside>
+    </div>
+</div>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="shell">
+        <div class="footer-grid">
+            <div>
+                <span class="footer-h">关于本站</span>
+                <p style="font-size:.88rem;color:var(--ink-2);line-height:1.8">
+                    这里是页脚简介。用一两句话说明这个博客的内容方向，
+让读者一眼知道这里在写什么。
+
+                </p>
+                <p style="margin-top:12px">
+                    <span class="footer-seal" aria-hidden="true">我的<br>博客</span>
+                </p>
+            </div>
+            <div>
+                <span class="footer-h">快速导航</span>
+                <nav class="footer-list" aria-label="页脚导航">
+                    
+                        
+                        <a href="/Blog/">首页</a>
+                    
+                        
+                        <a href="/Blog/archives">归档</a>
+                    
+                        
+                        <a href="/Blog/tags">标签</a>
+                    
+                        
+                        <a href="/Blog/categories">分类</a>
+                    
+                        
+                        <a href="/Blog/about">关于</a>
+                    
+                </nav>
+            </div>
+            <div>
+                <span class="footer-h">热门分类</span>
+                <nav class="footer-list" aria-label="分类导航">
+                    
+                        <a href="/Blog/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a>
+                    
+                        <a href="/Blog/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <span>&copy; 2026 我的博客 — 保持热爱，持续记录。</span>
+            <span>Made with Hexo</span>
+        </div>
+    </div>
+</footer>
+
+<div class="fabs">
+    <button class="fab fab--top" id="topBtn" type="button" data-tip="回到顶部" title="回到顶部" aria-label="回到顶部" aria-hidden="true">⬆</button>
+    <button class="fab" id="fabSearch" type="button" data-tip="搜索文章" title="搜索文章" aria-label="搜索文章">🔍</button>
+</div>
+
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="站内搜索" aria-hidden="true">
+    <div class="search-panel">
+        <div class="search-field">
+            <span aria-hidden="true" style="font-size:1.1rem">🔍</span>
+            <input class="search-input" id="searchInput" type="search" placeholder="搜索文章标题、标签或关键词…" aria-label="搜索关键词" autocomplete="off">
+            <button class="icon-btn" id="searchClose" type="button" aria-label="关闭搜索">✕</button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+        <div class="search-hint">
+            <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
+            <span><kbd>Enter</kbd> 打开</span>
+            <span><kbd>Esc</kbd> 关闭</span>
+            <span><kbd>Ctrl</kbd>+<kbd>K</kbd> 随时唤起</span>
+        </div>
+    </div>
+</div>
+
+
+<script src="/Blog/js/app.js" defer></script>
+</body>
+</html>
