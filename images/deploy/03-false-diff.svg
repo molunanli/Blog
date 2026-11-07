@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" role="img" aria-label="假 diff 的成因与消除：迭代顺序不确定导致每次构建产生无关变更，加兜底排序后两次构建完全一致">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 424" role="img" aria-label="假 diff 的成因与消除：迭代顺序不确定导致每次构建产生无关变更，加兜底排序后两次构建完全一致">
   <style>
     .bg { fill: #f7f1e3; }
     .t { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1c1a17; }
@@ -16,7 +16,7 @@
     .no { fill: #fffdf6; stroke: #e5dcc9; stroke-width: 1; }
   </style>
 
-  <rect class="bg" width="680" height="400"/>
+  <rect class="bg" width="680" height="424"/>
 
   <text class="t th" x="30" y="36">修完才发现：每次部署都在提交"假变更"</text>
   <text class="t ts" x="30" y="58">第一版脚本跑通的那一刻，它 commit 了 17 个文件——而我一个字都没改</text>
@@ -38,7 +38,7 @@
   <text class="t li" x="364" y="172">→ diff 结果：<tspan font-weight="700">0 个文件</tspan></text>
 
   <!-- 五处修复点 -->
-  <text class="t hd" x="34" y="212">同一类问题，在五个地方各出现一次</text>
+  <text class="t hd" x="34" y="212">主题层：同一类问题，在五个模板里各出现一次</text>
 
   <rect class="no" x="30" y="222" width="616" height="26" rx="5"/>
   <text class="t m bd" x="42" y="240">layout/post.ejs</text>
@@ -60,5 +60,6 @@
   <text class="t m bd" x="42" y="360">layout/archive.ejs</text>
   <text class="t li" x="200" y="360">热力图 JSON 的键序随遍历顺序变化 → 按日期升序构建</text>
 
-  <text class="t ft" x="30" y="388">这类 bug 没有报错、页面看着完全正常，只有"比两次构建产物"才能发现。</text>
+  <text class="t ft" x="30" y="382">还有两处在生成器产物里（search.json 的 tags、atom.xml 的 category）：模板管不到，只能构建后处理。</text>
+  <text class="t ft" x="30" y="398">这类 bug 没有报错、页面看着完全正常，只有"比两次构建产物"才能发现。</text>
 </svg>

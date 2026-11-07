@@ -102,7 +102,7 @@
 
 <script>
     /* 供 app.js 的目录滚动高亮使用（headings 由模板计算） */
-    var headings = [{"level":"2","id":"一、为什么不用-hexo-deploy","text":"一、为什么不用 hexo deploy"},{"level":"2","id":"二、脚本长什么样","text":"二、脚本长什么样"},{"level":"2","id":"三、每一道检查在挡什么","text":"三、每一道检查在挡什么"},{"level":"2","id":"四、脚本跑通之后，我发现它在提交假变更","text":"四、脚本跑通之后，我发现它在提交假变更"},{"level":"3","id":"先看改了什么","text":"先看改了什么"},{"level":"3","id":"根因：排序没有兜底","text":"根因：排序没有兜底"},{"level":"3","id":"修它：给排序加第二个键","text":"修它：给排序加第二个键"},{"level":"3","id":"然后发现，同样的问题有五处","text":"然后发现，同样的问题有五处"},{"level":"3","id":"怎么验证修好了","text":"怎么验证修好了"},{"level":"2","id":"五、失败排查表","text":"五、失败排查表"},{"level":"2","id":"六、什么时候才值得换-GitHub-Actions","text":"六、什么时候才值得换 GitHub Actions"},{"level":"2","id":"七、一个还没解决的问题","text":"七、一个还没解决的问题"},{"level":"2","id":"相关阅读","text":"相关阅读"}];
+    var headings = [{"level":"2","id":"一、为什么不用-hexo-deploy","text":"一、为什么不用 hexo deploy"},{"level":"2","id":"二、脚本长什么样","text":"二、脚本长什么样"},{"level":"2","id":"三、每一道检查在挡什么","text":"三、每一道检查在挡什么"},{"level":"2","id":"四、脚本跑通之后，我发现它在提交假变更","text":"四、脚本跑通之后，我发现它在提交假变更"},{"level":"3","id":"先看改了什么","text":"先看改了什么"},{"level":"3","id":"根因：排序没有兜底","text":"根因：排序没有兜底"},{"level":"3","id":"修它：给排序加第二个键","text":"修它：给排序加第二个键"},{"level":"3","id":"然后发现，同样的问题有五处","text":"然后发现，同样的问题有五处"},{"level":"3","id":"还有两处，模板根本管不到","text":"还有两处，模板根本管不到"},{"level":"3","id":"怎么验证修好了","text":"怎么验证修好了"},{"level":"2","id":"五、失败排查表","text":"五、失败排查表"},{"level":"2","id":"六、什么时候才值得换-GitHub-Actions","text":"六、什么时候才值得换 GitHub Actions"},{"level":"2","id":"七、一个还没解决的问题","text":"七、一个还没解决的问题"},{"level":"2","id":"相关阅读","text":"相关阅读"}];
 </script>
 
 <div class="shell">
@@ -206,7 +206,7 @@
 
 <p><strong>规则很简单：永远不要让”顺序未定义”的全等项存在。</strong> 分数相同就比时间，时间相同就比路径。总有一个键能把顺序定死。</p>
 <h3 id="然后发现，同样的问题有五处"><a href="#然后发现，同样的问题有五处" class="headerlink" title="然后发现，同样的问题有五处"></a>然后发现，同样的问题有五处</h3><p><img src="/Blog/images/deploy/03-false-diff.svg" alt="假 diff 的成因与消除，以及五处修复点"></p>
-<p><em>图 3：五个地方，同一个病根——迭代 Warehouse 集合时没排序。</em></p>
+<p><em>图 3：五个模板，同一个病根——迭代 Warehouse 集合时没排序。</em></p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -236,10 +236,39 @@
 </tr>
 </tbody></table></div>
 <p>修法都一样：<code>site.tags.sort(&#39;length&#39;, -1)</code> 改成先 <code>toArray()</code> 再 <code>.sort((a,b) =&gt; (b.length - a.length) || a.name.localeCompare(b.name))</code>；<code>forEach</code> 集合前先 <code>toArray().sort(...)</code>。</p>
-<h3 id="怎么验证修好了"><a href="#怎么验证修好了" class="headerlink" title="怎么验证修好了"></a>怎么验证修好了</h3><p>不用肉眼看页面。<strong>连续构建两次，比产物。</strong></p>
-<div class="code-block" data-lang="bash" data-file="bash"><div class="code-bar"><span class="code-lang">bash</span><span class="code-file">bash</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -f db.json &amp;&amp; npx hexo generate &amp;&amp; <span class="built_in">cp</span> -r public /tmp/build-a</span><br><span class="line"><span class="built_in">rm</span> -f db.json &amp;&amp; npx hexo generate</span><br><span class="line">diff -rq /tmp/build-a public | <span class="built_in">wc</span> -l   <span class="comment"># 修好之后：0</span></span><br></pre></td></tr></table></div></div></div>
+<h3 id="还有两处，模板根本管不到"><a href="#还有两处，模板根本管不到" class="headerlink" title="还有两处，模板根本管不到"></a>还有两处，模板根本管不到</h3><p>五处改完，我以为结束了。再比一次构建产物——还剩 2 个文件在变：</p>
+<div class="code-block" data-lang="plaintext" data-file="plaintext"><div class="code-bar"><span class="code-lang">plaintext</span><span class="code-file">plaintext</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Files buildA/search.json and public/search.json differ</span><br><span class="line">Files buildA/atom.xml    and public/atom.xml differ</span><br></pre></td></tr></table></div></div></div>
 
-<p>我修之前这个数字是 33，修完是 0。</p>
+<p>这两个不是模板渲染的，是<strong>生成器直接吐出来的</strong>：<code>search.json</code> 里每篇文章的 <code>tags</code> 数组，<code>atom.xml</code> 里每个 entry 的 <code>&lt;category&gt;</code> 顺序。前者来自 <code>hexo-generator-searchdb</code>，后者来自 <code>hexo-generator-feed</code>——你改主题模板，它们一个字都不会变。</p>
+<p>所以只能<strong>在生成之后补一刀</strong>。加一个 <code>scripts/stable-output.js</code>，挂在 <code>after_generate</code> 上：</p>
+<div class="code-block" data-lang="javascript" data-file="javascript"><div class="code-bar"><span class="code-lang">javascript</span><span class="code-file">javascript</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fixSearchJson</span>(<span class="params">file</span>) &#123;          <span class="comment">// 把每个条目的 tags 数组排序</span></span><br><span class="line">  <span class="keyword">const</span> raw = fs.<span class="title function_">readFileSync</span>(file, <span class="string">&#x27;utf8&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> next = raw.<span class="title function_">replace</span>(<span class="regexp">/&quot;tags&quot;:\[(.*?)\]/g</span>, <span class="function">(<span class="params">whole, inner</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> items = inner.<span class="title function_">split</span>(<span class="string">&#x27;,&#x27;</span>).<span class="title function_">map</span>(<span class="function"><span class="params">s</span> =&gt;</span> s.<span class="title function_">trim</span>()).<span class="title function_">filter</span>(<span class="title class_">Boolean</span>);</span><br><span class="line">    <span class="keyword">if</span> (items.<span class="property">length</span> &lt; <span class="number">2</span>) <span class="keyword">return</span> whole;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&quot;tags&quot;:[&#x27;</span> + items.<span class="title function_">slice</span>().<span class="title function_">sort</span>(cmp).<span class="title function_">join</span>(<span class="string">&#x27;,&#x27;</span>) + <span class="string">&#x27;]&#x27;</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">if</span> (next === raw) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  fs.<span class="title function_">writeFileSync</span>(file, next, <span class="string">&#x27;utf8&#x27;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fixAtomXml</span>(<span class="params">file</span>) &#123;             <span class="comment">// 把同一 entry 里连续的 &lt;category&gt; 行排序</span></span><br><span class="line">  <span class="comment">// 逐行扫描，收集连续的 &lt;category .../&gt; 行，排序后写回</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">filter</span>.<span class="title function_">register</span>(<span class="string">&#x27;after_generate&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="title function_">fixSearchJson</span>(path.<span class="title function_">join</span>(hexo.<span class="property">public_dir</span>, <span class="string">&#x27;search.json&#x27;</span>));</span><br><span class="line">  <span class="title function_">fixAtomXml</span>(path.<span class="title function_">join</span>(hexo.<span class="property">public_dir</span>, <span class="string">&#x27;atom.xml&#x27;</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></div></div></div>
+
+<p><strong>注意这里是”改产物”而不是”改源头”</strong>——严格说是治标。但对这两个文件，源头在第三方生成器里，改它等于 fork 一个包；而这个排序是纯粹的规范化，不影响语义。<strong>在边界上做一次确定化，比改别人的代码划算。</strong></p>
+<h3 id="怎么验证修好了"><a href="#怎么验证修好了" class="headerlink" title="怎么验证修好了"></a>怎么验证修好了</h3><p>不用肉眼看页面。<strong>连续构建两次，比产物。</strong></p>
+<div class="code-block" data-lang="bash" data-file="bash"><div class="code-bar"><span class="code-lang">bash</span><span class="code-file">bash</span><button type="button" class="code-btn js-copy">📋 复制</button><button type="button" class="code-btn js-fold">展开 ▼</button></div><div class="code-wrap"><div class="table-scroll"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> public buildA &amp;&amp; <span class="built_in">rm</span> -f db.json &amp;&amp; npx hexo generate</span><br><span class="line">diff -rq buildA public | <span class="built_in">wc</span> -l</span><br></pre></td></tr></table></div></div></div>
+
+<p>数字变化的完整过程：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>差异文件数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>什么都没改</td>
+<td>33</td>
+</tr>
+<tr>
+<td>修完主题五处</td>
+<td>12</td>
+</tr>
+<tr>
+<td>再加 <code>stable-output.js</code></td>
+<td><strong>0</strong></td>
+</tr>
+</tbody></table></div>
+<p>那个 0 我一直留到最后才相信——连跑三次都是 0，才敢写进这篇。</p>
 <div class="note note--warn"><span class="note-title">⚠️ 为什么值得花时间修这个</span>不是因为"强迫症"。假 diff 会<strong>掩盖真变更</strong>：一次提交里 17 个文件的顺序变化，加上你真正改的那 1 个文件，你根本没法从 commit 里看出"这次发版到底动了什么"。<br>而且它会持续污染部署分支的历史——三个月后回头看，全是无意义的 commit。这类问题的特点是<strong>没有报错、页面完全正常</strong>，只有"比两次构建产物"才能发现。</div>
 
 <h2 id="五、失败排查表"><a href="#五、失败排查表" class="headerlink" title="五、失败排查表"></a>五、失败排查表</h2><p>跑这个脚本时实际遇到过的错，按出现频率排：</p>
@@ -415,6 +444,8 @@
                         <a class="toc-link toc-link--h3" href="#修它：给排序加第二个键" title="修它：给排序加第二个键" data-toc-text="修它：给排序加第二个键">修它：给排序加第二个键</a>
                     
                         <a class="toc-link toc-link--h3" href="#然后发现，同样的问题有五处" title="然后发现，同样的问题有五处" data-toc-text="然后发现，同样的问题有五处">然后发现，同样的问题有五处</a>
+                    
+                        <a class="toc-link toc-link--h3" href="#还有两处，模板根本管不到" title="还有两处，模板根本管不到" data-toc-text="还有两处，模板根本管不到">还有两处，模板根本管不到</a>
                     
                         <a class="toc-link toc-link--h3" href="#怎么验证修好了" title="怎么验证修好了" data-toc-text="怎么验证修好了">怎么验证修好了</a>
                     
